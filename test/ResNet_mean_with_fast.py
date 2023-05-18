@@ -1,9 +1,56 @@
-
-
 import torch
 import torch.nn as nn
 import torch.nn.functional as F
 import torch.utils.model_zoo as model_zoo
+import numpy as np
+from functools import partial
+from torch.autograd import Function
+import math
+from compact_bilinear_pooling import CountSketch, CompactBilinearPooling
+
+
+class Conv1x1WeightedSum(nn.Module):
+    def __init__(self, input_dim_1, input_dim_2, output_dim):
+        super(Conv1x1WeightedSum, self).__init__()
+        self.conv = nn.Conv1d(input_dim_1 + input_dim_2, output_dim, 1)
+        self.global_pool = nn.AdaptiveAvgPool1d(output_size=1)
+        self.batch_norm = nn.BatchNorm1d(output_dim)
+        self.sigmoid = nn.Sigmoid()
+
+    def forward(self, x1, x2):
+        # reshape the input tensors to (batch_size, channels, sequence_length)
+        x1 = x1.view(x1.size(0), x1.size(1), -1)
+        x2 = x2.view(x2.size(0), x2.size(1), -1)
+        # concatenate the two feature vectors along the channel dimension
+        x = torch.cat((x1, x2), dim=1)
+        # apply a 1x1 convolutional layer to generate weights
+        weights = self.sigmoid(self.conv(x))
+        # compute the weighted sum of the two feature vectors
+        output = weights * x1 + (1 - weights) * x2
+        # apply global average pooling to the output tensor
+        output = self.global_pool(output)
+        # apply batch normalization to the output tensor
+        output = self.batch_norm(output.squeeze(-1))
+        return output
+
+
+class MultiplyFeatureVectors(nn.Module):
+    def __init__(self, in_features):
+        super(MultiplyFeatureVectors, self).__init__()
+        self.conv1 = nn.Conv1d(in_channels=in_features, out_channels=in_features, kernel_size=1)
+        self.global_pool = nn.AdaptiveAvgPool1d(output_size=1)
+        self.batch_norm = nn.BatchNorm1d(in_features)
+
+    def forward(self, x1, x2):
+        # concatenate the two feature vectors along the channel dimension
+        x = torch.cat([x1.unsqueeze(2), x2.unsqueeze(2)], dim=2)
+        # apply a 1D convolutional layer to the concatenated tensor
+        output = self.conv1(x)
+        # apply global average pooling to the output tensor
+        output = self.global_pool(output)
+        # apply batch normalization to the output tensor
+        output = self.batch_norm(output)
+        return output.squeeze()
 
 def global_std_pool2d(x):
     """2D global standard variation pooling"""
@@ -125,7 +172,7 @@ class Bottleneck(nn.Module):
 
 class ResNet(nn.Module):
 
-    def __init__(self, block, layers, num_classes=1000, zero_init_residual=False,
+    def __init__(self, block, layers, feature_fusion_method, num_classes=1000, zero_init_residual=False,
                  groups=1, width_per_group=64, replace_stride_with_dilation=None,
                  norm_layer=None):
         super(ResNet, self).__init__()
@@ -160,11 +207,34 @@ class ResNet(nn.Module):
         self.bn_img = nn.BatchNorm1d(128)
         self.bn_video = nn.BatchNorm1d(128)
         self.avgpool = nn.AdaptiveAvgPool2d((1, 1))
-        self.adjust1 = nn.Linear(2048,128)
-        self.adjust2 = nn.Linear(256,128)
-        self.quality = nn.Linear(128+128,1)
-        
-        
+        if feature_fusion_method==0:
+            print("[WARN]: Feature Fusion By Concat")
+            self.adjust1 = nn.Linear(2048,128)
+            self.adjust2 = nn.Linear(256,128)
+            self.quality = nn.Linear(128+128,1)
+            self.feature_fusion = self.concat_
+        elif feature_fusion_method==1:
+            print("[WARN]: Feature Fusion By Multiply")
+            self.adjust1 = nn.Linear(2048,128)
+            self.adjust2 = nn.Linear(256,128)
+            self.feature_fusion = self.multiply
+            self.fconv = MultiplyFeatureVectors(128)
+            self.quality = nn.Linear(128,1)
+        elif feature_fusion_method==2:
+            print("[WARN]: Feature Fusion By 1x1Conv")
+            self.adjust1 = nn.Linear(2048,128)
+            self.adjust2 = nn.Linear(256,128)
+            self.fconv = Conv1x1WeightedSum(128,128,128)
+            self.feature_fusion = self.convolve1x1
+            self.quality = nn.Linear(128,1)
+        elif feature_fusion_method==3:
+            print("[WARN]: Feature Fusion By CompactMultiLinearPooling")
+            self.fconv = CompactBilinearPooling(256,256,512)
+            self.adjust1 = nn.Linear(2048,256)
+            self.bn_img = nn.BatchNorm1d(256)
+            self.feature_fusion = self.cmap
+            self.quality = nn.Linear(512,1)
+
 
         for m in self.modules():
             if isinstance(m, nn.Conv2d):
@@ -182,6 +252,36 @@ class ResNet(nn.Module):
                     nn.init.constant_(m.bn3.weight, 0)
                 elif isinstance(m, BasicBlock):
                     nn.init.constant_(m.bn2.weight, 0)
+
+    def flatten(self, itensors):
+        itensors[0] = torch.flatten(itensors[0],1)
+        itensors[1] = torch.flatten(itensors[1],1)
+        return itensors
+
+    def normalize(self, itensors):
+        itensors[0] = self.bn_img((self.adjust1(itensors[0])))
+        itensors[1] = self.bn_video(self.adjust2(itensors[1]))
+        return itensors
+
+    def concat_(self,itensors,**kwargs):
+        itensors = self.flatten(itensors)
+        itensors = self.normalize(itensors)
+        return torch.cat(tuple(itensors),dim=1)
+
+    def multiply(self,itensors,**kwargs):
+        itensors = self.flatten(itensors)
+        itensors = self.normalize(itensors)
+        return self.fconv(itensors[0],itensors[1])
+
+    def convolve1x1(self,itensors,**kwargs):
+        itensors = self.flatten(itensors)
+        itensors = self.normalize(itensors)
+        return self.fconv(itensors[0],itensors[1])
+
+    def cmap(self,itensors,**kwargs):
+      itensors = self.flatten(itensors)
+      itensors[0] = self.bn_img((self.adjust1(itensors[0])))
+      return self.fconv(itensors[0], itensors[1])
 
     def _make_layer(self, block, planes, blocks, stride=1, dilate=False):
         norm_layer = self._norm_layer
@@ -210,13 +310,13 @@ class ResNet(nn.Module):
     def quality_pred(self,in_channels,middle_channels,out_channels):
         regression_block = nn.Sequential(
             nn.Linear(in_channels, middle_channels),
-            nn.Linear(middle_channels, out_channels),          
+            nn.Linear(middle_channels, out_channels),
         )
 
         return regression_block
 
     def hyper_structure1(self,in_channels,out_channels):
- 
+
         hyper_block = nn.Sequential(
             nn.Conv2d(in_channels,in_channels//4,kernel_size=1,stride=1, padding=0,bias=False),
             nn.Conv2d(in_channels//4,in_channels//4,kernel_size=3,stride=1, padding=1,bias=False),
@@ -241,7 +341,6 @@ class ResNet(nn.Module):
         x_fast_features_size = x_fast_features.shape
         x = x.view(-1, x_size[2], x_size[3], x_size[4])
         x_fast_features = x_fast_features.view(-1, x_fast_features_size[2])
-
         x = self.conv1(x)
         x = self.bn1(x)
         x = self.relu(x)
@@ -251,15 +350,11 @@ class ResNet(nn.Module):
         x = self.layer2(x)
         x = self.layer3(x)
 
-
         x = self.layer4(x)
-
-
-        x_avg = self.avgpool(x)
-        x = torch.flatten(x_avg, 1)
-        x = torch.cat((self.bn_img((self.adjust1(x))), self.bn_video(self.adjust2(x_fast_features))), dim=1)
-   
-
+        x = self.avgpool(x)
+        # This is where we would mess around with the feature vector adaptation
+        #x = torch.cat((self.bn_img((self.adjust1(x))), self.bn_video(self.adjust2(x_fast_features))), dim=1)
+        x = self.feature_fusion([x,x_fast_features], dim=1,x_size=x_size)
         output = self.quality(x)
         output = output.view(x_size[0],x_size[1])
         output = torch.mean(output,dim=1)
@@ -310,7 +405,8 @@ def resnet50(pretrained=False, progress=True, **kwargs):
         pretrained (bool): If True, returns a model pre-trained on ImageNet
         progress (bool): If True, displays a progress bar of the download to stderr
     """
-    model = ResNet(Bottleneck, [3, 4, 6, 3], **kwargs)
+    print(kwargs)
+    model = ResNet(Bottleneck, [3, 4, 6, 3], kwargs.pop('feature_fusion_method',0))
     # input = torch.randn(1, 3, 224, 224)
     # flops, params = profile(model, inputs=(input, ))
     # print('The flops is {:.4f}, and the params is {:.4f}'.format(flops/10e9, params/10e6))
@@ -447,4 +543,4 @@ if __name__ == '__main__':
     video = torch.randn(1,4,3,448,448).cuda()
     features = torch.randn(1,4,2048).cuda()
     print(net(video,features))
-    
+

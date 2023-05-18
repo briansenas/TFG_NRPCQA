@@ -1,5 +1,3 @@
-
-
 # -*- coding: utf-8 -*-
 
 import argparse
@@ -38,7 +36,7 @@ def main(config):
     device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
     
     # Load pre-trained model
-    model = ResNet_mean_with_fast.resnet50(pretrained=False)   
+    model = ResNet_mean_with_fast.resnet50(pretrained=False, feature_fusion_method=config.feature_fusion_method)
     model.load_state_dict(torch.load(config.pretrained_model_path))
     model = model.to(device)
     model.eval()
@@ -61,7 +59,7 @@ def main(config):
     # begin inference
     with torch.no_grad():
         for i, (imgs, features, labels, video_name) in enumerate(test_loader):  
-            print(video_name[0])
+            # print(video_name[0])
             imgs = imgs.to(device)
             features = features.to(device)
             y_test[i] = labels.item()
@@ -90,6 +88,7 @@ if __name__ == '__main__':
     parser.add_argument('--data_info', type=str)
     parser.add_argument('--num_workers', type=int, default=10)
     parser.add_argument('--output_csv_path', type=str, default = 'prediction.csv')
+    parser.add_argument('--feature_fusion_method', type=str, default = 2)
 
     config = parser.parse_args()
 
