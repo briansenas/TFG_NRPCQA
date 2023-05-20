@@ -14,9 +14,14 @@ from scipy.optimize import curve_fit
 from sklearn.neighbors import KNeighborsRegressor
 from scipy import stats
 
+np.random.seed(140421)
+
 # get data according to the train test name lists, return scaled train and test set
-def get_data(train_name_list,test_name_list, scaler):
-    feature_data = pd.read_csv("features.csv",index_col = 0,keep_default_na=False)
+def get_data(train_name_list,test_name_list, scaler, config):
+    feature_data = pd.read_csv(config.input_dir,index_col = 0,keep_default_na=False)
+    if config.merge: 
+        more_feat = pd.read_csv(config.more_feat,index_col = 0,keep_default_na=False)
+        feature_data = feature_data.join(more_feat, on='name', how='inner')
     feature_data = feature_data[feature_data.columns.values]
     score_data = pd.read_csv("mos.csv")
     train_set = []
@@ -47,6 +52,16 @@ def get_data(train_name_list,test_name_list, scaler):
 
 
 if __name__ == '__main__':
+    parser = argparse.ArgumentParser()
+    parser.add_argument('--input-dir', type=str, 
+                        default='./features.csv'
+                        )
+    parser.add_argument('--more-feat', type=str, 
+                        default='../feature_extract_pc/features/choosen_features.csv'
+                        )
+    parser.add_argument('--merge', action='store_true')
+    config = parser.parse_args()
+
     cnt = 0
 
     valid_scalers = ["MinMaxScaler", "StandardScaler",
@@ -77,7 +92,7 @@ if __name__ == '__main__':
             cnt =cnt+1
             train_name_list = ['redandblack','Romanoillamp','loot','soldier','ULB Unicorn','longdress','statue','shiva','hhi']
             test_name_list = [train_name_list.pop(i)]
-            train_set,train_score,test_set,test_score = get_data(train_name_list,test_name_list, scaler)
+            train_set,train_score,test_set,test_score = get_data(train_name_list,test_name_list, scaler, config)
 
             for i ,func in enumerate(functions): 
 
