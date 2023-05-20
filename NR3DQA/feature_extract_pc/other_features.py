@@ -12,12 +12,7 @@ from pyntcloud import PyntCloud
 from tqdm import tqdm 
 from scipy import stats
 from IsoScore import IsoScore
-
-def Entropy(labels):
-    #probs = pd.Series(labels).value_counts() / len(labels)
-    probs = pd.Series(labels).value_counts(bins = 2000) / len(labels)
-    en = stats.entropy(probs)
-    return en
+from nss_functions import Entropy
 
 def generate_dir(path):
     if not os.path.exists(path):
@@ -56,6 +51,16 @@ def get_new_features(
     omnivariance = cloud.points['omnivariance(31)'].to_numpy()
     eigenentropy = cloud.points['eigenentropy(31)'].to_numpy()
 
+    generate_dir(config.save_npy) 
+    save_dir = os.path.join(config.save_npy, name) 
+    generate_dir(save_dir) 
+    varnames = [i for i, k in locals().items() if isinstance(k, np.ndarray) 
+                and np.array_equal(k, k_neighbors) and np.array_equal(k, lambda_)
+                and np.array_equal(k, eigen_value_sum)]
+    # Save variable based on the string name of the variable using synmbol
+    for var in varnames:  
+        np.save(os.path.join(save_dir, var + ".npy"), locals()[var])
+    
     eigdf = pl.DataFrame({
         'pca1_mean': np.mean(pca1), 
         'pca2_mean': np.mean(pca2), 
@@ -99,17 +104,20 @@ def get_new_features(
     df = pl.concat([df, eigdf], how='horizontal') 
     
     return df 
-
 def main(config: dict) -> None: 
     path = os.path.join(config.input_dir, '*.ply')
     objs = glob.glob(path, recursive=True)
     df = pl.DataFrame() 
-    for obj in tqdm(objs[:1]): 
-        name = os.path.basename(obj) 
+    until = 1
+    if __debug__: 
+        until = None
+    for obj in tqdm(objs[:until]): 
         df = pl.concat([df, get_new_features(obj)], how='vertical')
         break 
 
-    print(df)
+    if __debug__: 
+        with pl.Config(tbl_rows=50):
+            print(df)
     df.write_csv(config.output_dir)
 
 if __name__ == '__main__': 
@@ -118,11 +126,9 @@ if __name__ == '__main__':
     parser.add_argument('--input-dir', type=str, 
                         default='/home/briansenas/Desktop/PCQA-Databases/SJTU-PCQA/SJTU-PCQA/reference/'
                         )
-    parser.add_argument('--output-dir', type=str, default="./new_features.csv") 
+    parser.add_argument('--output-dir', type=str, default="./features/new_features.csv") 
+    parser.add_argument('--save_npy', type=str, default='./rawnp')
 
     config = parser.parse_args()
 
     main(config) 
-
-
-    config = parser.parse_args()
