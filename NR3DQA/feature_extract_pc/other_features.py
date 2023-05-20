@@ -84,12 +84,11 @@ def get_new_features(
         pow(lambda_[:, 0] * lambda_[:, 1] * lambda_[:, 2] + epsilon, 1.0 / 3.0)
     )
 
-    l1 = lambda_[:, 0]
-    l2 = lambda_[:, 1]
-    l3 = lambda_[:, 2]
     eigenentropy = np.nan_to_num(
-        np.negative(l1 * np.log(l1+epsilon) + l2 * np.log(l2+epsilon) 
-                 + l3 * np.log(l3+epsilon))
+        np.negative(
+            lambda_[:,0] * np.log(lambda_[:, 0]+epsilon) 
+                + lambda_[:, 1] * np.log(lambda_[:, 1]+epsilon) 
+                + lambda_[:, 2] * np.log(lambda_[:, 2]+epsilon))
     )
     
     # cloud = PyntCloud.from_file(cloud)
@@ -106,7 +105,10 @@ def get_new_features(
     generate_dir(save_dir) 
     varnames = [i for i, k in locals().items() if isinstance(k, np.ndarray) 
                 and not np.array_equal(k, lambda_)
-                and not np.array_equal(k, eigen_value_sum)]
+                and not np.array_equal(k, eigen_value_sum)
+                and not np.array_equal(k, eigvector)
+                and not np.array_equal(k, xyz)
+    ]
     # Save variable based on the string name of the variable using synmbol
     for var in varnames:  
         np.save(os.path.join(save_dir, var + ".npy"), locals()[var])
