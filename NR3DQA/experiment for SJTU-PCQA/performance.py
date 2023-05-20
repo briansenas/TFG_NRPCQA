@@ -50,14 +50,13 @@ def get_data(train_name_list,test_name_list, scaler, config):
 
 
 
-
 if __name__ == '__main__':
     parser = argparse.ArgumentParser()
     parser.add_argument('--input-dir', type=str, 
                         default='./features.csv'
                         )
     parser.add_argument('--more-feat', type=str, 
-                        default='../feature_extract_pc/features/choosen_features.csv'
+                        default='../feature_extract_pc/features/SJTU.csv'
                         )
     parser.add_argument('--merge', action='store_true')
     config = parser.parse_args()
