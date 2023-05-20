@@ -13,78 +13,75 @@ from tqdm import tqdm
 from scipy import stats
 from IsoScore import IsoScore
 from nss_functions import get_geometry_nss_param, estimate_basic_param
+import functools
 
 def generate_dir(path):
     if not os.path.exists(path):
         os.mkdir(path)
     return path
 
-def get_new_features(
-    cloud 
+def get_choosen_features(
+    cloud: str, 
 ) -> pl.DataFrame: 
-    name = os.path.basename(cloud)
+    name = os.path.basename(cloud).split('.')[0]
     df = pl.DataFrame({'name': name})
-    nn_ = 30
-    epsilon = 1e-6
-    pcd = o3d.io.read_point_cloud(cloud) 
-    pcd.estimate_normals() 
-    pcd.estimate_covariances()
-    pcd.orient_normals_consistent_tangent_plane(10)
-    xyz = np.asarray(pcd.points) 
-    covariance_matrix = pcd.covariances
-    lambda_, eigvector = np.linalg.eig(covariance_matrix)
-    
-    eigen_value_sum = lambda_[:, 0] + lambda_[:, 1] + lambda_[:, 2] + epsilon
+    nn_ = 10
+
+    cloud = PyntCloud.from_file(cloud)
+
+    # begin geometry projection
+    # print("Begin geometry feature extraction.")
+    k_neighbors = cloud.get_neighbors(k=nn_)
+    ev = cloud.add_scalar_field("eigen_decomposition",k_neighbors=k_neighbors)
+    cloud.add_scalar_field("omnivariance", ev=ev)
+    cloud.add_scalar_field("eigenentropy",ev=ev)
+    cloud.add_scalar_field("eigen_sum",ev=ev)
+    omnivariance = cloud.points[f'omnivariance({nn_+1})'].to_numpy() 
+    eigenentropy = cloud.points[f'eigenentropy({nn_+1})'].to_numpy() 
+    eigen_sum = cloud.points[f'eigen_sum({nn_+1})'].to_numpy() 
+    eigvec_height = cloud.points[f'ev3_z({nn_+1})'].to_numpy()
+    ev1 = cloud.points[f'e1({nn_+1})'].to_numpy()
+
     # Omnivariance 
-    pca1 = lambda_[:, 0] / eigen_value_sum[:]
-    pca2 = lambda_[:, 1] / eigen_value_sum[:]
-    verticality = 1.0 - abs(eigvector[:, 2, 2])
+    pca2 = ev1[:] / eigen_sum[:]
+    verticality = 1.0 - abs(eigvec_height[:]) 
 
-    omnivariance = np.nan_to_num(
-        pow(lambda_[:, 0] * lambda_[:, 1] * lambda_[:, 2] + epsilon, 1.0 / 3.0)
-    )
-
-    eigenentropy = np.nan_to_num(
-        np.negative(
-            lambda_[:,0] * np.log(lambda_[:, 0]+epsilon) 
-                + lambda_[:, 1] * np.log(lambda_[:, 1]+epsilon) 
-                + lambda_[:, 2] * np.log(lambda_[:, 2]+epsilon)
-        )
-    )
-    
     pca2 = [i for item in get_geometry_nss_param(pca2) for i in item]
     omni = [i for item in get_geometry_nss_param(omnivariance) for i in item]
     egen = [i for item in get_geometry_nss_param(eigenentropy) for i in item]
     vert = [item for item in estimate_basic_param(verticality) ]
 
     # Compute the uniformity
+    xyz = cloud.points.to_numpy()
     uniformity = IsoScore.IsoScore(xyz.transpose())
-
-    dictdf = {} 
-    params = ["mean","std","entropy","ggd1","ggd2","aggd1","aggd2","aggd3","aggd4","gamma1","gamma2"]
-    gdnames = ['pca2', 'omni', 'egen' ]
-    varlist = [pca2,  omni, egen]
-    for i, var in enumerate(gdnames):
-        for j, name in enumerate(params): 
-            key_ = var + "_" + name 
-            dictdf.update({key_: varlist[i][j]}) 
-    dictdf.update({'vert_mean': vert[0], 'vert_std': vert[1], 'vert_entropy': vert[2]}) 
-    dictdf.update({'uniformity': uniformity})
-    df = pl.concat([df, pl.DataFrame(dictdf)], how='horizontal') 
     
-    return df 
+    return [name, *pca2, *omni, *egen, *vert, uniformity]
 
 
 def main(config: dict) -> None: 
-    path = os.path.join(config.input_dir, '*.ply')
+    path = os.path.join(config.input_dir, '**/*.ply')
     objs = glob.glob(path, recursive=True)
-    df = pl.DataFrame() 
     until = None
     if __debug__: 
         until = 1
-    for obj in tqdm(objs[:until]): 
-        df = pl.concat([df, get_new_features(obj)], how='vertical')
+    with mp.get_context('forkserver').Pool(processes=mp.cpu_count()) as pool:  
+        feat = []
+        for res in tqdm(pool.imap_unordered(get_choosen_features, objs[:until]), 
+                        total=len(objs[:until])):
+            feat.append(res) 
 
+    features = [f for f in feat] 
+    features = np.array(features) 
+    df = pl.DataFrame() 
+    params = ["mean","std","entropy","ggd1","ggd2","aggd1","aggd2","aggd3","aggd4","gamma1","gamma2"]
+    gdnames = ['pca2', 'omni', 'egen' ]
+    names = [g + "_" + p for g in gdnames for p in params]
+    names.insert(0, "name") 
+    names += ['vert_mean', 'vert_std', 'vert_entropy', 'uniformity'] 
+    dictdf = {}
+    for i, name in enumerate(names): 
+        dictdf.update({name: features[:, i]}) 
+    df = pl.DataFrame(dictdf) 
     if __debug__: 
         with pl.Config(tbl_rows=50):
             print(df)
@@ -98,7 +95,6 @@ if __name__ == '__main__':
                         default='./models'
                         )
     parser.add_argument('--output-dir', type=str, default="./features/choosen_features.csv") 
-    parser.add_argument('--save_npy', type=str, default='./rawnp')
 
     config = parser.parse_args()
 

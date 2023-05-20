@@ -158,7 +158,7 @@ def get_new_features(
 
 
 def main(config: dict) -> None: 
-    path = os.path.join(config.input_dir, '*.ply')
+    path = os.path.join(config.input_dir, '**/*.ply')
     objs = glob.glob(path, recursive=True)
     df = pl.DataFrame() 
     until = None
