@@ -23,7 +23,7 @@ def generate_dir(path):
 def get_choosen_features(
     cloud: str, 
 ) -> pl.DataFrame: 
-    name = os.path.basename(cloud).split('.')[0]
+    name = os.path.basename(cloud).split('.')[0].replace('_','')
     df = pl.DataFrame({'name': name})
     nn_ = 10
 
