@@ -91,15 +91,6 @@ def get_new_features(
                 + lambda_[:, 2] * np.log(lambda_[:, 2]+epsilon))
     )
     
-    # cloud = PyntCloud.from_file(cloud)
-    # #begin geometry projection
-    # k_neighbors = cloud.get_neighbors(k=nn_)
-    # ev = cloud.add_scalar_field("eigen_values", k_neighbors=k_neighbors)
-    # cloud.add_scalar_field("omnivariance", ev=ev)
-    # cloud.add_scalar_field("eigenentropy",ev=ev)
-    # omnivariance = cloud.points['omnivariance(31)'].to_numpy()
-    # eigenentropy = cloud.points['eigenentropy(31)'].to_numpy()
-    
     generate_dir(config.save_npy) 
     save_dir = os.path.join(config.save_npy, name.split('.')[0]) 
     generate_dir(save_dir) 
@@ -164,6 +155,8 @@ def get_new_features(
     df = pl.concat([df, eigdf], how='horizontal') 
     
     return df 
+
+
 def main(config: dict) -> None: 
     path = os.path.join(config.input_dir, '*.ply')
     objs = glob.glob(path, recursive=True)
@@ -172,13 +165,13 @@ def main(config: dict) -> None:
     if __debug__: 
         until = 1
     for obj in tqdm(objs[:until]): 
-        print(obj) 
         df = pl.concat([df, get_new_features(obj)], how='vertical')
 
     if __debug__: 
         with pl.Config(tbl_rows=50):
             print(df)
     df.write_csv(config.output_dir)
+
 
 if __name__ == '__main__': 
 
