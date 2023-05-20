@@ -5,6 +5,17 @@ import open3d as o3d
 import struct 
 import glob 
 
+def estimate_point_spacing(point_cloud):
+    point_cloud = np.asarray(point_cloud.points)
+    # Compute the point density
+    point_density = point_cloud.shape[0] / np.prod(np.max(point_cloud, axis=0) - np.min(point_cloud, axis=0))
+
+    # Estimate the average point spacing
+    point_spacing = (1 / point_density) ** (1/3)
+
+    return point_spacing
+
+
 def write_pointcloud(filename,xyz, nxyz, rgb=None):
 
     """ creates a .pkl file of the point clouds generated

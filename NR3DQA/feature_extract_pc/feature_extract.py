@@ -71,7 +71,6 @@ def main(config:dict) -> None:
         until = None
     for obj in tqdm(objs[:until]): 
         df = pl.concat([df, get_feature_vector(obj)], how='vertical')
-        break 
 
     #show the features
     if __debug__: 
