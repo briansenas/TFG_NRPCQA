@@ -1,4 +1,5 @@
 NR3DQA/feature_extract_pc/rawnp/
+*.ply
 
 
 # Byte-compiled / optimized / DLL files
