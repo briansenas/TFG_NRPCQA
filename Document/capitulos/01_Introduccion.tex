@@ -1,0 +1,76 @@
+\chapter{Introducción}
+\towrite[caption={Introducción}]{
+Pequeña presentación resumen sobre el TFG y su objetivo principal
+}
+\section{Definición del Problema}
+\towrite[caption={Definción del Problema}]{
+Partir de cómo se hacen los análisis médicos, los pasos 
+para segmentar y generar el modelo 3D sobre el cúal se hace alguna inferencia 
+médica 
+\par
+(Añadir imágenes de ejemplo, su segmentación y una reconstrución).
+\par 
+Comentar algunos softwares de visualización y generación de volúmenes.
+\par 
+Hablar de las posibles distorsiones que pueden ocurrir 
+y como puede influir en el predicado médico 
+(Quizás añadir algún ejemplo visual de una distorsión que ocasione confusión). 
+\par 
+Citar superficialmente disciplinas y métodos que se intentan aplicar 
+para resolver este problema.
+}
+\section{Motivación}
+\towrite[caption={Escribir Motivación}]{
+  Mencionar el avance de la IA, de los métodos IQA y la problemática de 
+  de dar al médico la mejor calidad posible. 
+  \par 
+  Hablar de la posibilidad de utilizar la métrica para desarrollar mejoras 
+  sobre los métodos de compresión y generación de volúmenes. Citar ejemplos 
+  de algunos métodos IQA o el caso de éxito de Netflix con su métrica para 
+  videos que supuso una gran mejora en el algoritmo de compresión y streaming 
+  en red.
+  \par    
+  Hablar de los altos costes que provoca tener que re-hacer exámenes médicos.
+  \par 
+  Hablar de los pocos métodos y datasets que existen para este caso especifico 
+  de imágenes biomédicas en 3D y sus distorsiones. 
+}
+\section{Objetivos}
+\towrite[caption={Objetivos}]{
+  Hablar del esquema secuencial que hemos seguido: 
+  \par 
+  1. Plantear la resolubilidad con uso de caracteríticas NSS (Natural scene 
+  statistics) y modelos de aprendizaje automático como SVR, KNNRegressor, Ridge y Tree Regressor. 
+  2. Analizar la necesidad del uso de modelos de aprendizaje profundo. (A juego con lo anterior) 
+  \par 
+  Con ello, el objetivo principal sería algo del estilo: Contribuir a la 
+  creación de una métrica de nivel de calidad de imágenes 3D automática,
+  acorde con el HVS (Human vision system), y con alto rendimiento para 
+  las distorsiones presentar en este ámbito. Generar, o más bien, demonstrar 
+  la posiblidad de generar datasets sintéticos para resolver este problema. 
+  Destacando que usaremos uno de partida, el LS-SJTU-PCQA. 
+}
+\section{Planificación del proyecto}
+\towrite[caption={Planificación de Proyecto}]{
+    Aquí lo que haría sería un diagrama de Gantt con la planificación 
+    desde el mes de febrero. Donde las primeras semanas sería apenas 
+    de lectura de artículos y evaluación del estado de arte y posiblidades.
+    \par 
+    Luego las siguientes semanas serían algo de estilo de implemetanción 
+    del modelo sencillo, implementación del modelo NSS complejo (Descomposición 
+    del vecindario de los puntos en valores singulares para calcular componentes 
+    como esfericidad, planaridad...), implementación del modelo DL, 
+    luego implementación de mejoras sobre ambos. 
+    \par 
+    Hablaría de los saltos que he hecho entre ML con NSS, a DL a ML NSS,
+    las pausas, más lecturas y vueltas a implementar más y otras mejoras.
+    \par 
+    Por último, pondría el análisis de resultados y comienzo de escritura de 
+    este documento. Pensaba utilizar el esquema de agrupación que utilizó 
+    Valentino en el diagrama de Gantt.
+    \par 
+    Para terminar este apartado lo que haría sería un presupuesto suponiendo 
+    haber trabajado X horas al día durante los días laborales con un salario Y.
+    Calcular las horas, multiplicar y asumir otros gastos aparte como lo son 
+    el portátil, colab y otros. 
+}
