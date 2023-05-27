@@ -110,20 +110,32 @@ def convert_mesh(
     o3d.io.write_point_cloud(output_name, cloud)
 
 def read_pc(file_name, *args): 
+        
     cloud = o3d.io.read_point_cloud(file_name) 
     cloud.estimate_normals() 
     # cloud = cloud.farthest_point_down_sample(num_samples=int(0.90*len(cloud.points)))
     cloud, ind = cloud.remove_statistical_outlier(nb_neighbors=32, std_ratio=5.0) 
-    o3d.visualization.draw_geometries([cloud]) 
+    axis = cloud.get_axis_aligned_bounding_box()
+    axis.color = np.asarray([0,0,0])
+    o3d.visualization.draw_geometries([cloud, axis]) 
 
 def read_all_pc(file_name, *args): 
 
-    ref_path = os.path.join(config.input_obj, '*.ply')
+    ref_path = os.path.join(config.input_obj, 'AK47_*.ply')
     ref_objs = glob.glob(ref_path, recursive=True)
+    ref_objs = sorted(ref_objs) 
 
     for obj in ref_objs: 
         cloud = read_point_cloud(obj) 
-        o3d.visualization.draw_geometries([cloud])
+        axis = cloud.get_axis_aligned_bounding_box()
+        axis.color = np.asarray([0,0,0])
+        extent = axis.get_extent() 
+        bbox = axis.get_box_points()
+        bbox = o3d.utility.Vector3dVector(bbox) 
+        pbox = o3d.geometry.PointCloud()
+        pbox.points = bbox
+        pbox.colors = o3d.utility.Vector3dVector(np.asarray([[1,0,0]] * len(bbox)) )
+        o3d.visualization.draw_geometries([cloud, axis, pbox]) 
 
 
 def read_point_cloud(
