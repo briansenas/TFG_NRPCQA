@@ -13,7 +13,9 @@ cmake_install.cmake
 install_manifest.txt
 compile_commands.json
 CTestTestfile.cmake
+build
 _deps
+.ccls-cache 
 
 ## Add c++ git ignore 
 # Prerequisites
