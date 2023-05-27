@@ -1,0 +1,200 @@
+import open3d as o3d
+import numpy as np
+import math
+import argparse
+from functools import partial 
+
+def copy_helper(
+    pcd: o3d.geometry.PointCloud,
+): 
+    new_pcd = o3d.geometry.PointCloud()
+    new_pcd.points = pcd.points
+    new_pcd.normals = pcd.normals  
+    new_pcd.colors = pcd.colors 
+    return new_pcd 
+
+""" 
+The values for this type of distortions according to 
+the paper are: 1.1 til 1.7 (vary the decimal by 0.1) 
+
+{ 'contrast_change': [1.1,1.2,1.3,1.4,1.5,1.6,1.7] } 
+""" 
+def contrast_change( 
+    pcd: o3d.geometry.PointCloud, 
+    intensity_rate: float = 0.1 
+): 
+    intensity_rate = float(intensity_rate) 
+   
+    colors = np.asarray(pcd.colors) 
+    colors = np.power(colors,intensity_rate) 
+
+    new_pcd = copy_helper(pcd) 
+    new_pcd.colors = o3d.utility.Vector3dVector(colors) 
+
+    return new_pcd 
+
+def _gamma_noise(shape, B, a):
+    c = 1/a
+    Ei = np.random.exponential(scale=c, size=(B, *shape))
+    return np.sum(Ei, axis=0) / (3*255)
+
+"""
+For this distortion we must apply it with 
+the following list of values: 
+
+{ 'gamma_noise': [0.1,0.08,0.07, 0.06, 0.05, 0.04, 0.03] } 
+"""
+def gamma_noise(
+    pcd: o3d.geometry.PointCloud(),
+    a: float = 0.1,
+    B: float = 3
+): 
+    colors = np.asarray(pcd.colors) 
+    gnoise = _gamma_noise(colors.shape, B, a)
+    gammad = copy_helper(pcd) 
+    gammad.colors = o3d.utility.Vector3dVector(colors + gnoise)
+    return gammad
+""" 
+For this one we must apply a percentage of the bounding box size: 
+{ 'gaussian_geometric_shift': [0.1, 0.25, 0.4, 0.55, 0.7, 0.85, 1] / 100 }  
+""" 
+def gaussian_geometric_shift(
+    pcd: o3d.geometry.PointCloud(),
+    intensity: float = 0.1 
+): 
+    intensity = float(intensity) 
+    assert intensity >= 0.0 and intensity <= 1.0
+    # Compute the bounding box of the point cloud
+    xyz = np.asarray(pcd.points) 
+    bbox = pcd.get_axis_aligned_bounding_box()
+    extent = bbox.get_extent()
+
+    # Define the standard deviation of the Gaussian distribution
+    stdev = [intensity * extent[i] for i in range(3)]
+
+    # Generate the random Gaussian shifts for each point
+    num_points = len(xyz)
+    shifts = np.random.normal(scale=stdev, size=(num_points, 3))
+
+    # Apply the shifts to the point cloud
+    shifted = copy_helper(pcd)
+    shifted.points = o3d.utility.Vector3dVector(xyz + shifts) 
+
+    return shifted 
+
+""" 
+{'additive_white_gaussian': [13, 11, 9, 7, 5, 3] } 
+"""                     
+def additive_white_gaussian(
+    pcd: o3d.geometry.PointCloud, 
+    target_snr: int = 13
+): 
+
+    target_snr = int(target_snr) 
+    assert target_snr >= 0 and target_snr <= 100
+    # Convert the point cloud to a numpy array
+    colors = np.asarray(pcd.colors)
+    # Calculate signal power and convert to dB 
+    sig_avg_watts = np.mean(pcd.colors)
+    sig_avg_db = 10 * np.log10(sig_avg_watts)
+    # Calculate noise according to [2] then convert to watts
+    noise_avg_db = sig_avg_db - target_snr
+    noise_avg_watts = 10 ** (noise_avg_db / 10)
+    # Generate an sample of white noise
+    mean_noise = 0
+    noise_volts = np.random.normal(mean_noise, np.sqrt(noise_avg_watts), size=colors.shape)
+    # Apply the Additive White Gaussian blur
+    awgd = copy_helper(pcd) 
+    awgd.colors = o3d.utility.Vector3dVector(colors + noise_volts)
+    return awgd
+
+""" 
+{'salt_pepper_noise': [0.02, 0.05, 0.1, 0.15, 0.2, 0.25, 0.30] } 
+""" 
+def salt_pepper_noise(
+    pcd: o3d.geometry.PointCloud,
+    intensity_rate: float = 0.05
+):
+    intensity_rate = float(intensity_rate) 
+    assert intensity_rate >= 0.0 and intensity_rate <= 1.0
+    # Get point cloud coordinates
+    colors = np.asarray(pcd.colors).copy() 
+
+    # Get number of points in the point cloud
+    num_points = colors.shape[0]
+
+    # Create a mask for selecting random points
+    noise_mask = np.random.choice([0, 1, 2], size=num_points, p=[intensity_rate, intensity_rate, 1 - 2*intensity_rate])
+
+    # Add noise to point cloud
+    colors[noise_mask == 0] = [0,0,0]
+    colors[noise_mask == 1] = [1,1,1]
+
+    # Update point cloud with noisy coordinates
+    new_pcd = o3d.geometry.PointCloud() 
+    new_pcd = copy_helper(pcd) 
+    new_pcd.colors = o3d.utility.Vector3dVector(colors)
+
+    return new_pcd
+
+""" 
+{ 'downsample_point_cloud' : [0.15,0.30,0.45,0.60,0.70,0.80,0.90]} 
+""" 
+def downsample_point_cloud(
+    point_cloud: o3d.geometry.PointCloud,
+    percentage: float = 0.2
+):
+    percentage = float(percentage) 
+    percentage = 1 - percentage  
+    assert percentage >= 0.0 and percentage <= 1.0 
+    # Downsample the point cloud using voxel grid downsampling.
+    downsampled_point_cloud = point_cloud.random_down_sample(percentage)
+    # Remove any points that were not selected in the voxel grid downsampling.
+    downsampled_point_cloud = downsampled_point_cloud.crop(point_cloud.get_axis_aligned_bounding_box())
+    # Return the downsampled point cloud.
+    return downsampled_point_cloud
+
+
+if __name__ == "__main__": 
+
+    parser = argparse.ArgumentParser()
+    parser.add_argument('--visualize', type=bool, default=True)
+    parser.add_argument('--debug', action='store_true')
+    parser.add_argument('--func', type=str, default='downsample_point_cloud') 
+    parser.add_argument('-l','--args', nargs='+', required=False)
+    parser.add_argument('--test-values', action='store_true') 
+    parser.add_argument('--N', type=int, default=2000) 
+
+    config = parser.parse_args()
+    
+    intervalos_ = { 
+        'salt_pepper_noise': [0.02, 0.05, 0.1, 0.15, 0.2, 0.25, 0.30], 
+        'downsample_point_cloud' : [0.15, 0.30, 0.45, 0.60, 0.70, 0.80, 0.90],
+        'contrast_change': [1.1, 1.2, 1.3, 1.4, 1.5, 1.6, 1.7],
+        'gamma_noise': [0.1,0.08, 0.07, 0.06, 0.05, 0.04, 0.03], 
+        'gaussian_geometric_shift': [0.001, 0.0025, 0.004, 0.0055, 0.007, 0.0085, 1], 
+        'additive_white_gaussian': [13, 11, 9, 7, 5, 3] 
+    }
+    if config.debug: 
+        N = config.N
+        pcd = o3d.io.read_point_cloud(
+            f"/home/briansenas/Desktop/PCQA-Databases/SJTU-PCQA/SJTU-PCQA/reference/hhi.ply" 
+        )
+        try: 
+            if not config.test_values: 
+                obj = locals()[config.func](pcd, *config.args)
+
+                if config.visualize and obj: 
+                    o3d.visualization.draw_geometries([pcd]) 
+                    o3d.visualization.draw_geometries([obj]) 
+            if config.test_values: 
+                o3d.visualization.draw_geometries([pcd]) 
+                _ranges = intervalos_[config.func] 
+                for r in _ranges: 
+                    obj = locals()[config.func](pcd, r) 
+                    o3d.visualization.draw_geometries([obj]) 
+
+        except KeyError as e: 
+            print("Available Functions: " + list(intervalos_.keys())) 
+        except BaseException as e: 
+            print(repr(e)) 
