@@ -3,6 +3,10 @@ import numpy as np
 import math
 import argparse
 from functools import partial 
+import random 
+
+np.random.seed(140421) 
+random.seed(140421) 
 
 def copy_helper(
     pcd: o3d.geometry.PointCloud,
@@ -154,18 +158,85 @@ def downsample_point_cloud(
     # Return the downsampled point cloud.
     return downsampled_point_cloud
 
+def generate_bounding_box(
+    xyz: np.ndarray, 
+    extent: np.ndarray
+):
+    min_coords = xyz - extent 
+    max_coords = xyz + extent 
+    bbox = o3d.geometry.AxisAlignedBoundingBox(min_bound=min_coords, max_bound=max_coords)
+    
+    return bbox
+
+def get_bbox_patch(
+    pcd: o3d.geometry.PointCloud, 
+): 
+    # Get the bounding box of the point cloud 
+    bbox = pcd.get_axis_aligned_bounding_box() 
+    # Get maximuum length on all axis 
+    extent = bbox.get_extent() 
+    # Size of the path to be selected 
+    rextent = extent * 0.3
+
+    # Select a random point  
+    xyz = np.asarray(pcd.points).copy() 
+    xyz_ =  xyz[np.random.choice(xyz.shape[0])]
+
+    # Get the bounding box surrounding the selected point: 
+    sel_bbox = generate_bounding_box(xyz_, rextent) 
+    # Get the indices of the points that are within bounds of the new bbox 
+    sel_points_indices = sel_bbox.get_point_indices_within_bounding_box(pcd.points)
+    # Now those points should be offset 5% of the maximum side length of the bounding box 
+    max_side_length = np.max(extent) 
+    to_offset = 0.05 * max_side_length
+
+    return sel_bbox, sel_points_indices, xyz, to_offset
+
+def local_offset(
+    pcd: o3d.geometry.PointCloud,
+    level: int = 1,
+): 
+    level = int(level) 
+    if level == 0: 
+        return pcd
+
+    sel_bbox, sel_points_indices, xyz, to_offset = get_bbox_patch(pcd)
+
+    xyz[sel_points_indices] += to_offset 
+
+    obj = copy_helper(pcd) 
+    obj.points = o3d.utility.Vector3dVector(xyz) 
+    obj = local_offset(obj, level-1) 
+    return obj 
+
+def local_rotation(
+    pcd: o3d.geometry.PointCloud,
+    level: int = 1,
+): 
+    level = int(level) 
+    if level == 0: 
+        return pcd 
+
+    sel_bbox, sel_points_indices, xyz, _ = get_bbox_patch(pcd)
+    raise NotImplemented("Still under development") 
+
 
 if __name__ == "__main__": 
 
     parser = argparse.ArgumentParser()
-    parser.add_argument('--visualize', type=bool, default=True)
-    parser.add_argument('--debug', action='store_true')
-    parser.add_argument('--func', type=str, default='downsample_point_cloud') 
+    parser.add_argument('-v', '--visualize', type=bool, default=True)
+    parser.add_argument('-d', '--debug', action='store_true')
+    parser.add_argument('-f', '--func', type=str, default='downsample_point_cloud') 
     parser.add_argument('-l','--args', nargs='+', required=False)
     parser.add_argument('--test-values', action='store_true') 
     parser.add_argument('--N', type=int, default=2000) 
+    parser.add_argument('-i', '--input_dir', type=str, default=f"/home/briansenas/Desktop/PCQA-Databases/SJTU-PCQA/SJTU-PCQA/reference/hhi.ply") 
+
 
     config = parser.parse_args()
+
+    if config.args is None: 
+        config.args = []
     
     intervalos_ = { 
         'salt_pepper_noise': [0.02, 0.05, 0.1, 0.15, 0.2, 0.25, 0.30], 
@@ -178,7 +249,7 @@ if __name__ == "__main__":
     if config.debug: 
         N = config.N
         pcd = o3d.io.read_point_cloud(
-            f"/home/briansenas/Desktop/PCQA-Databases/SJTU-PCQA/SJTU-PCQA/reference/hhi.ply" 
+            config.input_dir
         )
         try: 
             if not config.test_values: 
