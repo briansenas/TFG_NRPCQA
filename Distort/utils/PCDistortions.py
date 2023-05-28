@@ -177,18 +177,16 @@ def get_bbox_patch(
     extent = bbox.get_extent() 
     # Size of the path to be selected 
     rextent = extent * 0.3
-
     # Select a random point  
     xyz = np.asarray(pcd.points).copy() 
     xyz_ =  xyz[np.random.choice(xyz.shape[0])]
-
     # Get the bounding box surrounding the selected point: 
-    sel_bbox = generate_bounding_box(xyz_, rextent) 
+    sel_bbox = generate_bounding_box(xyz_, rextent/2) 
     # Get the indices of the points that are within bounds of the new bbox 
     sel_points_indices = sel_bbox.get_point_indices_within_bounding_box(pcd.points)
     # Now those points should be offset 5% of the maximum side length of the bounding box 
     max_side_length = np.max(extent) 
-    to_offset = 0.05 * max_side_length
+    to_offset = 0.04 * max_side_length
 
     return sel_bbox, sel_points_indices, xyz, to_offset
 
@@ -212,14 +210,35 @@ def local_offset(
 def local_rotation(
     pcd: o3d.geometry.PointCloud,
     level: int = 1,
+    rotation: float = 25, 
 ): 
     level = int(level) 
+    rotation = float(rotation) 
     if level == 0: 
         return pcd 
 
     sel_bbox, sel_points_indices, xyz, _ = get_bbox_patch(pcd)
-    raise NotImplemented("Still under development") 
 
+    # Convert the rotation angle to radians
+    rotation_angle_rad = np.radians(rotation)
+    # Generate a partial point cloud from the selected points 
+    partial_cloud = o3d.geometry.PointCloud() 
+    partial_cloud.points = o3d.utility.Vector3dVector(xyz[sel_points_indices].copy()) 
+    # Get the centroid of the partial point cloud  for the rotation
+    center = partial_cloud.get_center() 
+    # Get the rotation matrix for the x axis 
+    R = partial_cloud.get_rotation_matrix_from_xyz((rotation_angle_rad, 0, 0))
+    # Rotate the partial point_cloud with respect to its centroid  
+    partial_cloud.rotate(R, center=center)
+    # Re-attach the partial point cloud to the original point cloud 
+    xyz[sel_points_indices] = np.asarray(partial_cloud.points) 
+    # Use my copy_helper to create the new point cloud 
+    obj = copy_helper(pcd) 
+    obj.points = o3d.utility.Vector3dVector(xyz) 
+    # We now recursively, according to the distortion level, get a new path 
+    # and rotate with increasing rotation angle 
+    obj = local_rotation(obj, level-1, rotation + 5) 
+    return obj
 
 if __name__ == "__main__": 
 
