@@ -2,7 +2,7 @@ import os
 import re 
 import argparse
 import subprocess 
-import PCDistortions as mypcd
+import utils.distortions as mypcd
 import open3d as o3d
 import numpy as np
 import glob 

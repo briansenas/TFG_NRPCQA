@@ -9,26 +9,16 @@ import glob
 import subprocess 
 import polars as pl 
 import os 
-import pcmetrics_module as pcmm
+import utils.metrics as pcmm
 from tqdm import tqdm 
 #endregion imports 
 
-#region GLOBALS 
-# METRICS = { 
-#     '0': [0, 6, "pcqm"],
-#     '1': [7, 13, "run_pcc/mseF (p2point)"],
-#     '2': [14, 20, "hpsnryuv"],
-#     '3': [21, 27, "psnryuv"],
-#     '4': [28, 34, "run_pcc/h. (p2plane)"],
-#     '5': [35, 41, "pcqm"],
-# }
-
 METRICS = { 
-    '0': [0, 6, "pcqm"], # Should divide by 10
-    '1': [7, 13, "run_pcc/mseF (p2point)"], # SHould divide by the diagonal of the bbx
-    '2': [14, 20, "psnryuv"],
-    '3': [21, 27, "run_pcc/h. (p2plane)"],
-    '4': [28, 34, "pcqm"], # Should divide by 10
+    'octree': [0, 6, "run_pcc/h. (p2plane)"],
+    'downsample': [7, 13, "run_pcc/mseF (p2point)"], 
+    'localoffset': [14, 20, "run_pcc/mseF. (p2point)"],
+    'localrotation': [21, 27, "run_pcc/h. (p2point)"],
+    'gaussianshift': [28, 34, "run_pcc/h. (p2plane)"],
 }
 #endregion GLOBALS 
 
@@ -52,8 +42,6 @@ def get_correct_metric(config):
     df = df.with_columns(pl.lit(0).alias('metric')) 
     df = df.with_columns(pl.col('distortion').str.split('_').arr.get(1).str.split('.').arr.get(0).cast(pl.Int64).alias('order'))
     df = df.sort(['reference', 'order', 'distortion'])
-    print(df) 
-
     for key in list(METRICS.keys()): 
         # Get the lower bound, upper bound and function from the metrics 
         values = METRICS[key]
@@ -172,7 +160,7 @@ def get_all_metrics(config):
 
 def main(config: dict = None): 
     df = None 
-    if config.correct_only: 
+    if not config.all: 
         df = get_correct_metric(config)
     else: 
         df = get_all_metrics(config) 
@@ -193,7 +181,7 @@ if __name__ == '__main__':
     parser.add_argument('-o', '--dis-dir', type=str, 
                         default='/home/briansenas/Desktop/PCQA-Databases/OurData/Distortions/') 
 
-    parser.add_argument('-c', '--correct-only', action='store_true') 
+    parser.add_argument('-a', '--all', action='store_true') 
     parser.add_argument('-d', action='store_true') 
 
     config = parser.parse_args()

@@ -11,6 +11,7 @@
 #include <stdio.h>
 #include <sstream>
 #include <stdlib.h>
+#include <filesystem> 
 
 #include <string.h>    
 #include <iostream>
@@ -34,7 +35,8 @@ int main (int argc, char** argv)
   const std::string plydir  = argv[1]; 
   float resolution   = atof(argv[2]); 
   const std::string outdir  = argv[3];  
-  
+  const std::string _outdir = outdir.substr(0, outdir.find_last_of("/\\")); 
+  std::filesystem::create_directory(_outdir);   
   uint8_t visualize = 0; 
   if (argc > 4){ 
     visualize = atoi(argv[4]); 

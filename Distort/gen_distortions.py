@@ -1,24 +1,26 @@
 import os
 import argparse
-import PCDistortions as mypcd
-import pcmetrics_module as pcmm  
 import open3d as o3d
 import open3d.core as o3c
 import numpy as np
 import glob 
 import warnings 
 from tqdm import tqdm 
-import multiprocessing
+import multiprocessing as mp
 import functools 
 import struct 
+import utils.distortions as mypcd
+import utils.metrics as pcmm  
 
 DISTORTIONS = { 
-    'salt_pepper_noise': [0.02, 0.05, 0.1, 0.15, 0.2, 0.25, 0.30], 
-    'downsample_point_cloud' : [0.15, 0.30, 0.45, 0.60, 0.70, 0.80, 0.90],
-    # 'contrast_change': [1.1, 1.2, 1.3, 1.4, 1.5, 1.6, 1.7],
-    'gamma_noise': [0.1,0.08, 0.07, 0.06, 0.05, 0.04, 0.03], 
-    'gaussian_geometric_shift': [0.001, 0.0025, 0.004, 0.0055, 0.007, 0.0085, 0.01], 
-    'additive_white_gaussian': [13, 11, 9, 7, 5, 3, 1] 
+    'downsample_point_cloud' : [0.15, 0.30, 0.45, 0.60, 0.70, 0.80, 0.90], # 7 -> 13
+    'local_offset': [1,2,3,4,5,6,7], # 14 -> 20 
+    'local_rotation': [1,2,3,4,5,6,7], # 21 -> 27
+    'gaussian_geometric_shift': [0.001, 0.0025, 0.004, 0.0055, 0.007, 0.0085, 0.01], # 28 -> 34
+}
+
+OCTREE = {
+    'octree_compression': [8, 10, 12, 14, 16, 18, 20], # 0 -> 6
 }
 
 def write_pointcloud(filename,xyz, nxyz, rgb=None):
@@ -88,20 +90,30 @@ def process_object(
     obj_path: str, 
     out_path: str, 
     visualize: bool = False,  
+    outliers: bool = False
 ):  
-    global DISTORTIONS
+    global DISTORTIONS, OCTREE
     #region Preprocessing: Remove outliers to/and center point cloud 
     outname = obj_path[obj_path.rfind("/")+1:].split('.')[0]
     out_path = os.path.join(out_path, outname)
     if not os.path.exists(out_path): 
         generate_dir(out_path)
-    cloud = pcmm.read_point_cloud(obj_path, True) 
+    cloud = pcmm.read_point_cloud(obj_path, outliers) 
     #endregion
 
     #region Create all the distortions of the given file
     i = 0
+
+    # We do the octree distortion separately
+    for key in tqdm(list(OCTREE.keys()), leave=False):  
+        func = getattr(mypcd, key)
+        for value in tqdm(OCTREE[key], leave=False) : 
+            output = os.path.join(out_path, outname + "_" + str(i) + ".ply") 
+            obj = func(obj_path, output, value)
+            i += 1
+
     obj = None
-    for key in tqdm(list(DISTORTIONS.keys())):  
+    for key in tqdm(list(DISTORTIONS.keys()), leave=False):  
         func = getattr(mypcd, key)
         for value in tqdm(DISTORTIONS[key], leave=False) : 
             obj = func(cloud, value)
@@ -113,9 +125,9 @@ def process_object(
             write_pointcloud(output, points, normals, colors)
             i += 1
 
-        if visualize: 
-            o3d.visualization.draw_geometries([obj]) 
-    #endregio 
+        # if visualize: 
+        #     o3d.visualization.draw_geometries([obj]) 
+    #endregion 
 
     # Overwrite the orignal one with the gray color 
     points = np.asarray(cloud.points,dtype=np.float64) 
@@ -127,8 +139,18 @@ def process_object(
 def main(configs: dict = None):
     path = os.path.join(config.input_dir, '*.ply')
     objs = glob.glob(path, recursive=True)
-    for obj in objs: 
-        process_object(obj, config.output_dir, config.d) 
+
+    until = None
+    if __debug__: 
+        until = 1
+    func = functools.partial(process_object, out_path=config.output_dir, visualize=config.d, outliers=config.outliers) 
+    with mp.get_context('forkserver').Pool(processes=mp.cpu_count()) as pool:  
+        feat = []
+        for res in tqdm(pool.imap_unordered(func, objs[:until]), 
+                        total=len(objs[:until])):
+            continue 
+    # for obj in objs: 
+    #     process_object(obj, config.output_dir, config.d, config.outliers) 
         
 if __name__ == '__main__':
 
@@ -140,6 +162,7 @@ if __name__ == '__main__':
     parser.add_argument('-o', '--output-dir', type=str, 
                         default='/home/briansenas/Desktop/PCQA-Databases/OurData/Distortions/') 
     parser.add_argument('-d', action='store_true') 
+    parser.add_argument('-s', '--outliers', action='store_true') 
     config = parser.parse_args()
     if config.d:  
         o3d.utility.set_verbosity_level(o3d.utility.VerbosityLevel(3)) 
