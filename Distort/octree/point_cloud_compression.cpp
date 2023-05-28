@@ -49,12 +49,8 @@ int main (int argc, char** argv)
   }
 
   std::string basename = plydir.substr(plydir.find_last_of("/\\") + 1); 
-  std::cout << "Loaded "
-    << cloud->width * cloud->height
-    << " data points from " << basename 
-    << std::endl;
 
-  bool showStatistics = true;
+  bool showStatistics = false;
 
   // for a full list of profiles see: /io/include/pcl/compression/compression_profiles.h
   pcl::io::compression_Profiles_e compressionProfile = pcl::io::MED_RES_ONLINE_COMPRESSION_WITH_COLOR;

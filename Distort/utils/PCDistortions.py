@@ -4,9 +4,15 @@ import math
 import argparse
 from functools import partial 
 import random 
+import subprocess 
 
 np.random.seed(140421) 
 random.seed(140421) 
+
+def get_basepath(): 
+    basepath = __file__ 
+    basepath = basepath[:basepath.rfind('/')+1]
+    return basepath
 
 def copy_helper(
     pcd: o3d.geometry.PointCloud,
@@ -240,6 +246,17 @@ def local_rotation(
     obj = local_rotation(obj, level-1, rotation + 5) 
     return obj
 
+def octree_compression(
+    input_dir: str,  
+    output_dir: str,  
+    octree_resolution: float 
+): 
+    octree_resolution = float(octree_resolution) 
+    cmd = f'{get_basepath()}../octree/build/point_cloud_compression '
+    cmd += f'{input_dir} {octree_resolution} {output_dir} ' 
+    # execute the command and capture the output
+    output = subprocess.check_output(cmd, shell=True)
+
 if __name__ == "__main__": 
 
     parser = argparse.ArgumentParser()
@@ -250,6 +267,7 @@ if __name__ == "__main__":
     parser.add_argument('--test-values', action='store_true') 
     parser.add_argument('--N', type=int, default=2000) 
     parser.add_argument('-i', '--input_dir', type=str, default=f"/home/briansenas/Desktop/PCQA-Databases/SJTU-PCQA/SJTU-PCQA/reference/hhi.ply") 
+    parser.add_argument('-p', '--is-path-arg', action='store_true') 
 
 
     config = parser.parse_args()
@@ -267,9 +285,12 @@ if __name__ == "__main__":
     }
     if config.debug: 
         N = config.N
-        pcd = o3d.io.read_point_cloud(
-            config.input_dir
-        )
+        if not config.is_path_arg: 
+            pcd = o3d.io.read_point_cloud(
+                config.input_dir
+            )
+        else: 
+            pcd = config.input_dir
         try: 
             if not config.test_values: 
                 obj = locals()[config.func](pcd, *config.args)
