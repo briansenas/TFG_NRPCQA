@@ -31,9 +31,9 @@ int main (int argc, char** argv)
     exit(-1); 
   }
 
-  std::string plydir  = argv[1]; 
+  const std::string plydir  = argv[1]; 
   float resolution   = atof(argv[2]); 
-  std::string outdir  = argv[3];  
+  const std::string outdir  = argv[3];  
   
   uint8_t visualize = 0; 
   if (argc > 4){ 
@@ -67,19 +67,6 @@ int main (int argc, char** argv)
                                                                                    0.01, resolution);
   PointCloudDecoder = new pcl::io::OctreePointCloudCompression<pcl::PointXYZRGB> ();
 
-  // Calculate the centroid of the point cloud
-  Eigen::Vector4f centroid;
-  pcl::compute3DCentroid(*cloud, centroid);
-
-  // Calculate the transformation matrix for axis alignment
-  Eigen::Matrix4f transform = Eigen::Matrix4f::Identity();
-  transform.block<3, 1>(0, 3) = -centroid.head<3>();
-
-  // Apply the transformation to the point cloud
-  pcl::PointCloud<pcl::PointXYZRGB>::Ptr aligned_cloud(new pcl::PointCloud<pcl::PointXYZRGB>);
-  pcl::transformPointCloud(*cloud, *aligned_cloud, transform);
-
-
   std::stringstream compressedData;
   // output pointcloud
   pcl::PointCloud<pcl::PointXYZRGB>::Ptr cloudOut (new pcl::PointCloud<pcl::PointXYZRGB> ());
@@ -98,6 +85,8 @@ int main (int argc, char** argv)
     {
     }
   }
-    
+
+  pcl::io::savePLYFileASCII(outdir, *pcl::PointCloud<pcl::PointXYZRGB>::ConstPtr (cloudOut));  
+
   return (0);
 }
