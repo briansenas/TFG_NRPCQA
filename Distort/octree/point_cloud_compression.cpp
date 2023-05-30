@@ -55,14 +55,14 @@ int main (int argc, char** argv)
   bool showStatistics = false;
 
   // for a full list of profiles see: /io/include/pcl/compression/compression_profiles.h
-  pcl::io::compression_Profiles_e compressionProfile = pcl::io::MED_RES_ONLINE_COMPRESSION_WITH_COLOR;
+  pcl::io::compression_Profiles_e compressionProfile = pcl::io::MANUAL_CONFIGURATION;
 
   pcl::io::OctreePointCloudCompression<pcl::PointXYZRGB>* PointCloudEncoder;
   pcl::io::OctreePointCloudCompression<pcl::PointXYZRGB>* PointCloudDecoder;
 
   // instantiate point cloud compression for encoding and decoding
   PointCloudEncoder = new pcl::io::OctreePointCloudCompression<pcl::PointXYZRGB> (compressionProfile, showStatistics, 
-                                                                                   0.01, resolution);
+                                                                                   0.001, resolution, true);
   PointCloudDecoder = new pcl::io::OctreePointCloudCompression<pcl::PointXYZRGB> ();
 
   std::stringstream compressedData;
