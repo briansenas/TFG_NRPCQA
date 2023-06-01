@@ -9,7 +9,7 @@ from torch.utils import data
 from torchvision import transforms
 from pytorchvideo.models.hub import slowfast_r50
 import torch.nn as nn
-
+from tqdm import tqdm
 from PIL import Image
 
 
@@ -146,7 +146,7 @@ def main(config):
     # extracting features
     with torch.no_grad():
         model.eval()
-        for i, (video, video_name) in enumerate(train_loader):
+        for i, (video, video_name) in enumerate(tqdm(train_loader)):
             video_name = video_name[0].split('.')[0]
             print(video_name)
             if not os.path.exists(config.feature_save_folder + video_name):

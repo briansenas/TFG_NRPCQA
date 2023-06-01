@@ -13,6 +13,7 @@ from tqdm import tqdm
 from scipy import stats
 from IsoScore import IsoScore
 from nss_functions import get_geometry_nss_param, estimate_basic_param
+import warnings 
 import functools
 
 def generate_dir(path):
@@ -23,8 +24,9 @@ def generate_dir(path):
 def get_choosen_features(
     cloud: str, 
 ) -> pl.DataFrame: 
-    name = os.path.basename(cloud).split('.')[0].replace('_','')
-    df = pl.DataFrame({'name': name})
+    name = os.path.basename(cloud)
+    print(name)
+    # .split('.')[0].replace('_','')
     nn_ = 10
 
     cloud = PyntCloud.from_file(cloud)
@@ -53,9 +55,8 @@ def get_choosen_features(
 
     # Compute the uniformity
     xyz = cloud.points.to_numpy()
-    uniformity = IsoScore.IsoScore(xyz.transpose())
     
-    return [name, *pca2, *omni, *egen, *vert, uniformity]
+    return [name, *pca2, *omni, *egen, *vert]
 
 
 def main(config: dict) -> None: 
@@ -64,9 +65,9 @@ def main(config: dict) -> None:
     until = None
     if __debug__: 
         until = 1
-    with mp.get_context('forkserver').Pool(processes=mp.cpu_count()) as pool:  
-        feat = []
-        for res in tqdm(pool.imap_unordered(get_choosen_features, objs[:until]), 
+    feat = []
+    with mp.get_context('forkserver').Pool() as pool:  
+        for res in tqdm(pool.imap_unordered(get_choosen_features, objs[:until:]), 
                         total=len(objs[:until])):
             feat.append(res) 
 
@@ -77,7 +78,7 @@ def main(config: dict) -> None:
     gdnames = ['pca2', 'omni', 'egen' ]
     names = [g + "_" + p for g in gdnames for p in params]
     names.insert(0, "name") 
-    names += ['vert_mean', 'vert_std', 'vert_entropy', 'uniformity'] 
+    names += ['vert_mean', 'vert_std', 'vert_entropy'] 
     dictdf = {}
     for i, name in enumerate(names): 
         dictdf.update({name: features[:, i]}) 
@@ -89,7 +90,7 @@ def main(config: dict) -> None:
 
 
 if __name__ == '__main__': 
-
+    warnings.filterwarnings("ignore")
     parser = argparse.ArgumentParser()
     parser.add_argument('--input-dir', type=str, 
                         default='./models'

@@ -4,8 +4,9 @@
 \usepackage[spanish]{babel}
 
 \usepackage[loadshadowlibrary]{todonotes}
+\usepackage{float}
 
-\newcommand{\addref}{\todo[shadow, color=orange!40]{Add reference:}}
+\newcommand{\addref}[1]{\todo[shadow, color=orange!40]{Add reference: #1}}
 \newcommand{\towrite}[2][1=]{\todo[inline, shadow, color=red!40, #1]{#2}}
 \newcommand{\rewrite}[2][1=]{\todo[inline, shadow, color=yellow!40, #1]{#2}}
 

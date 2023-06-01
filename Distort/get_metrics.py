@@ -15,10 +15,10 @@ from tqdm import tqdm
 
 METRICS = { 
     'octree': [0, 6, "run_pcc/h. (p2plane)"],
-    'downsample': [7, 13, "run_pcc/mseF (p2point)"], 
-    'localoffset': [14, 20, "run_pcc/mseF (p2point)"],
-    'localrotation': [21, 27, "run_pcc/h. (p2point)"],
-    'gaussianshift': [28, 34, "run_pcc/h. (p2plane)"],
+    # 'downsample': [7, 13, "run_pcc/mseF (p2point)"], 
+    # 'localoffset': [14, 20, "run_pcc/mseF (p2point)"],
+    # 'localrotation': [21, 27, "run_pcc/h. (p2point)"],
+    # 'gaussianshift': [28, 34, "run_pcc/h. (p2plane)"],
 }
 #endregion GLOBALS 
 

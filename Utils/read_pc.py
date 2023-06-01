@@ -121,7 +121,7 @@ def read_pc(file_name, *args):
 
 def read_all_pc(file_name, *args): 
 
-    ref_path = os.path.join(config.input_obj, 'AK47_*.ply')
+    ref_path = os.path.join(config.input_dir, '**/*.ply')
     ref_objs = glob.glob(ref_path, recursive=True)
     ref_objs = sorted(ref_objs) 
 
@@ -169,9 +169,9 @@ def convert_obj_to_ply(file_name, output_file=None):
 if __name__ == "__main__":
     parser = argparse.ArgumentParser()
     parser.add_argument('-f', '--func', type=str, default="convert_mesh")
-    parser.add_argument('-i','--input-obj', type=str, default="Segmentation.obj")
-    parser.add_argument('-o','--output', type=str, default=None)
+    parser.add_argument('-i','--input-dir', type=str, default="Segmentation.obj")
+    parser.add_argument('-o','--output-dir', type=str, default=None)
     config = parser.parse_args()
-    file_name = config.input_obj
-    output_name = config.output
+    file_name = config.input_dir
+    output_name = config.output_dir
     locals()[config.func](file_name, output_name)

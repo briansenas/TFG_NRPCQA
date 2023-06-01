@@ -86,10 +86,15 @@ def main(config):
             datainfo_test = 'database/wpc_data_info/test_' + str(split+1) +'.csv'
             data_3d_dir = 'database/wpc_slowfast/'
         elif config.database == 'OURDATA': 
-            images_dir = '../rotation/ourimg/'
+            images_dir = '../rotation/ourimgs/'
             datainfo_train = 'database/our_data_info/train_' + str(split+1) +'.csv'
             datainfo_test = 'database/our_data_info/test_' + str(split+1) +'.csv'
-            data_3d_dir = '../extraction/features/'
+            data_3d_dir = '../extraction/our_data_features/'
+        elif config.database == 'LS_SJTU': 
+            images_dir = '../rotation/imgs/'
+            datainfo_train = 'database/ls_sjtu_data_info/train_' + str(split+1) +'.csv'
+            datainfo_test = 'database/ls_sjtu_data_info/test_' + str(split+1) +'.csv'
+            data_3d_dir = '../extraction/ls_sjtu_features/'
 
 
         trainset = VideoDataset_NR_image_with_fast_features(images_dir, data_3d_dir, datainfo_train, transformations_train, crop_size=config.crop_size,frame_index=config.frame_index,video_length_read = config.video_length_read)
