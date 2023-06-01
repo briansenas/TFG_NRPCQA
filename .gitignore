@@ -1,5 +1,12 @@
 NR3DQA/feature_extract_pc/rawnp/
 *.ply
+rotation/imgs
+rotation/frames 
+rotation/videos
+rotation/ourimgs
+rotation/ourframes
+rotation/ourvideos
+*.zip
 pcl/
 
 ## Add Cmake git ignore 

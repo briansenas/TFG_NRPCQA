@@ -30,7 +30,7 @@ def camera_rotation(path, img_path, frame_path, video_path, frame_index):
     fps = 15
     size = (1920, 1080)
 
-    video = cv2.VideoWriter(os.path.join(video_path, '030.mp4'), cv2.VideoWriter_fourcc(*'mp4v'), fps, size)
+    # video = cv2.VideoWriter(os.path.join(video_path, '030.mp4'), cv2.VideoWriter_fourcc(*'mp4v'), fps, size)
     # Generate rotated images
     tmp = 0
     # Define rotation angles
@@ -70,13 +70,13 @@ def camera_rotation(path, img_path, frame_path, video_path, frame_index):
         rot_mat = np.eye(3)
 
         # Save videos
-        video.write(cv2.cvtColor(np.asarray(img), cv2.COLOR_RGB2BGR))
+        # video.write(cv2.cvtColor(np.asarray(img), cv2.COLOR_RGB2BGR))
 
         # Save resized imgs as frames of the video with resolution of (,224)
         img = transform(img)
         img.save(os.path.join(frame_path, f"{tmp:03d}.png"))
 
-    video.release()
+    # video.release()
     vis.destroy_window() # fix: destroy the visualizer window
 
 def process_object(one_object_path, img_path, frame_path, video_path, frame_index):
@@ -87,19 +87,12 @@ def process_object(one_object_path, img_path, frame_path, video_path, frame_inde
 def projection(path, img_path, frame_path, video_path, frame_index):
     # find all the .ply objects
     objs = glob.glob(os.path.join(path, '**/*.ply'), recursive=True)
-    pool = multiprocessing.Pool()
+    pool = multiprocessing.Pool(6)
     pfunc = functools.partial(process_object,img_path=img_path,
                               frame_path=frame_path, video_path=video_path,
                               frame_index=frame_index)
     for result in tqdm(pool.imap(func=pfunc, iterable=objs), total=len(objs)):
         continue 
-
-    # for obj_path in objs:
-    #     pool.apply_async(process_object, args=(obj_path, img_path, frame_path, video_path, frame_index))
-    # pool.close()
-    # pool.join()
-
-
 
 def main(config):
     img_path = config.img_path
