@@ -8,6 +8,8 @@ from scipy.optimize import curve_fit
 from data_loader import VideoDataset_NR_image_with_fast_features
 import ResNet_mean_with_fast
 import pandas as pd
+import random
+from utils import fit_function
 
 torch.manual_seed(140421)
 random.seed(140421)
@@ -53,7 +55,7 @@ def main(config):
         test_PLCC = stats.pearsonr(y_output_logistic, y_test)[0]
         test_SROCC = stats.spearmanr(y_output, y_test)[0]
         test_RMSE = np.sqrt(((y_output_logistic-y_test) ** 2).mean())
-        test_KROCC = stats.stats.kendalltau(y_output, y_test)[0]
+        test_KROCC = stats.kendalltau(y_output, y_test)[0]
         print("Test results: SROCC={:.4f}, KROCC={:.4f}, PLCC={:.4f}, RMSE={:.4f}".format(test_SROCC, test_KROCC, test_PLCC, test_RMSE))
 
     data = pd.DataFrame({'vid_name':y_name,'predicted_mos':y_output_logistic})

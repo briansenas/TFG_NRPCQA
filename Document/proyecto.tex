@@ -1,13 +1,5 @@
-\documentclass[a4paper,11pt]{book}
+\documentclass[a4paper,11pt, colorinlistoftodos]{book}
 \input{config/config}
-
-% Temporarly
-% \usepackage{fancyhdr}
-% \pagestyle{fancyplain}
-% \fancyhead{}
-% \lfoot{\scriptsize\LaTeX}
-% \cfoot{\hyperlink{listoftodos}{ToDoList} || \hyperlink{tableofcontents}{TableOfContents}}
-% \rfoot{\small\thepage}
 
 \begin{document}
 \input{portada/portada}
@@ -15,12 +7,10 @@
 \hypertarget{listoftodos}{}
 \input{prefacios/prefacio}
 \frontmatter
-\hypertarget{tableofcontents}{}
-\tableofcontents
-%\listoffigures
-%\listoftables
-%
 \mainmatter
+\tableofcontents
+\listoffigures
+\listoftables
 \setlength{\parskip}{5pt}
 
 \input{capitulos/01_Introduccion}
@@ -43,7 +33,7 @@
 \nocite{*}
 \bibliography{bibliografia/bibliografia}\addcontentsline{toc}{chapter}{Bibliografía}
 \bibliographystyle{unsrturl}
-%
+%\printbibliography[heading=none]%
 %\appendix
 %\input{apendices/manual_usuario/manual_usuario}
 %%\input{apendices/paper/paper}

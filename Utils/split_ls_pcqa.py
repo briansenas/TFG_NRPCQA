@@ -22,6 +22,8 @@ def main(config: dict):
         ) 
     ) 
 
+    df = df.rename({'pseudoMOS': 'mos'}) 
+
     # Generate the array of unique names 
     gdf = df.select('basename').groupby('basename').n_unique().to_numpy().flatten()  
     # 104 / 4 = 26 -> generate a 4-fold train/test to choose the best model

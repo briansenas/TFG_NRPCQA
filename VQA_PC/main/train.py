@@ -15,6 +15,7 @@ from data_loader import VideoDataset_NR_image_with_fast_features
 import ResNet_mean_with_fast
 import random 
 import time
+from utils import fit_function
 
 torch.manual_seed(140421)
 random.seed(140421)

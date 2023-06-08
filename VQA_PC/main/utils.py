@@ -1,3 +1,22 @@
+# -*- coding: utf-8 -*-
+
+import argparse
+import os
+
+import numpy as np
+import torch
+import torch.nn as nn
+import torch.optim as optim
+from torchvision import transforms
+import scipy
+from scipy import stats
+from scipy.optimize import curve_fit
+from data_loader import VideoDataset_NR_image_with_fast_features
+import ResNet_mean_with_fast
+import random 
+import time
+
+
 def logistic_func(X, bayta1, bayta2, bayta3, bayta4):
     denominator = np.abs(bayta4) + 1e-5  # to avoid division by zero
     numerator = np.negative(X - bayta3)

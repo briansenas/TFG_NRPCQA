@@ -13,14 +13,14 @@ import utils.distortions as mypcd
 import utils.metrics as pcmm  
 
 DISTORTIONS = { 
-    'downsample_point_cloud' : [0.15, 0.30, 0.45, 0.60, 0.70, 0.80, 0.90], # 7 -> 13
+    'downsample_point_cloud' : [0.10, 0.20, 0.30, 0.40, 0.50, 0.60, 0.70], # 7 -> 13
     'local_offset': [1,2,3,4,5,6,7], # 14 -> 20 
     'local_rotation': [1,2,3,4,5,6,7], # 21 -> 27
-    'gaussian_geometric_shift': [0.001, 0.0025, 0.004, 0.0055, 0.007, 0.0085, 0.01], # 28 -> 34
+    'gaussian_geometric_shift': [0.0015, 0.002, 0.0025, 0.0030, 0.0035, 0.004, 0.005], # 28 -> 34
 }
 
 OCTREE = {
-    'octree_compression': [0.8, 1.0, 1.2, 1.4, 1.6, 1.8, 2.0], # 0 -> 6
+    'octree_compression': [0.08, 0.10, 0.12, 0.14, 0.16, 0.18, 0.20], # 0 -> 6
 }
 
 def write_pointcloud(filename,xyz, nxyz, rgb=None):
@@ -103,7 +103,6 @@ def process_object(
 
     #region Create all the distortions of the given file
     i = 0
-
     # We do the octree distortion separately
     for key in tqdm(list(OCTREE.keys()), leave=False):  
         func = getattr(mypcd, key)
@@ -112,29 +111,29 @@ def process_object(
             obj = func(obj_path, output, value)
             i += 1
 
-    # obj = None
-    # for key in tqdm(list(DISTORTIONS.keys()), leave=False):  
-    #     func = getattr(mypcd, key)
-    #     for value in tqdm(DISTORTIONS[key], leave=False) : 
-    #         obj = func(cloud, value)
-    #         output = os.path.join(out_path, outname + "_" + str(i) + ".ply") 
-    #         points = np.asarray(obj.points,dtype=np.float64) 
-    #         normals = np.asarray(obj.normals,dtype=np.float64) 
-    #         colors = np.asarray(obj.colors) * 255
-    #         colors = np.asarray(colors,dtype=np.uint8) 
-    #         write_pointcloud(output, points, normals, colors)
-    #         i += 1
+    obj = None
+    for key in tqdm(list(DISTORTIONS.keys()), leave=False):  
+        func = getattr(mypcd, key)
+        for value in tqdm(DISTORTIONS[key], leave=False) : 
+            obj = func(cloud, value)
+            output = os.path.join(out_path, outname + "_" + str(i) + ".ply") 
+            points = np.asarray(obj.points,dtype=np.float64) 
+            normals = np.asarray(obj.normals,dtype=np.float64) 
+            colors = np.asarray(obj.colors) * 255
+            colors = np.asarray(colors,dtype=np.uint8) 
+            write_pointcloud(output, points, normals, colors)
+            i += 1
 
         # if visualize: 
         #     o3d.visualization.draw_geometries([obj]) 
     #endregion 
 
     # Overwrite the orignal one with the gray color 
-    # points = np.asarray(cloud.points,dtype=np.float64) 
-    # normals = np.asarray(cloud.normals,dtype=np.float64) 
-    # colors = np.asarray(cloud.colors) * 255
-    # colors = np.asarray(colors,dtype=np.uint8) 
-    # write_pointcloud(obj_path, points, normals, colors) 
+    points = np.asarray(cloud.points,dtype=np.float64) 
+    normals = np.asarray(cloud.normals,dtype=np.float64) 
+    colors = np.asarray(cloud.colors) * 255
+    colors = np.asarray(colors,dtype=np.uint8) 
+    write_pointcloud(obj_path, points, normals, colors) 
 
 def main(configs: dict = None):
     path = os.path.join(config.input_dir, '*.ply')
@@ -149,8 +148,6 @@ def main(configs: dict = None):
         for res in tqdm(pool.imap_unordered(func, objs[:until]), 
                         total=len(objs[:until])):
             continue 
-    # for obj in objs: 
-    #     process_object(obj, config.output_dir, config.d, config.outliers) 
         
 if __name__ == '__main__':
 

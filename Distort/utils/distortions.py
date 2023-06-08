@@ -72,6 +72,8 @@ def gaussian_geometric_shift(
     pcd: o3d.geometry.PointCloud(),
     intensity: float = 0.1 
 ): 
+    np.random.seed(140421) 
+    random.seed(140421) 
     intensity = float(intensity) 
     assert intensity >= 0.0 and intensity <= 1.0
     # Compute the bounding box of the point cloud
@@ -182,7 +184,7 @@ def get_bbox_patch(
     # Get maximuum length on all axis 
     extent = bbox.get_extent() 
     # Size of the path to be selected 
-    rextent = extent * 0.3
+    rextent = extent * 0.2
     # Select a random point  
     xyz = np.asarray(pcd.points).copy() 
     xyz_ =  xyz[np.random.choice(xyz.shape[0])]
@@ -192,14 +194,19 @@ def get_bbox_patch(
     sel_points_indices = sel_bbox.get_point_indices_within_bounding_box(pcd.points)
     # Now those points should be offset 5% of the maximum side length of the bounding box 
     max_side_length = np.max(extent) 
-    to_offset = 0.04 * max_side_length
+    to_offset = 0.01 * max_side_length
 
     return sel_bbox, sel_points_indices, xyz, to_offset
 
 def local_offset(
     pcd: o3d.geometry.PointCloud,
     level: int = 1,
+    seed: bool = True,
 ): 
+    if seed: 
+        np.random.seed(140421) 
+        random.seed(140421) 
+
     level = int(level) 
     if level == 0: 
         return pcd
@@ -210,14 +217,18 @@ def local_offset(
 
     obj = copy_helper(pcd) 
     obj.points = o3d.utility.Vector3dVector(xyz) 
-    obj = local_offset(obj, level-1) 
+    obj = local_offset(obj, level-1, False) 
     return obj 
 
 def local_rotation(
     pcd: o3d.geometry.PointCloud,
     level: int = 1,
-    rotation: float = 25, 
+    rotation: float = 15, 
+    seed: bool = True,
 ): 
+    if seed: 
+        np.random.seed(140421) 
+        random.seed(140421) 
     level = int(level) 
     rotation = float(rotation) 
     if level == 0: 
@@ -243,7 +254,7 @@ def local_rotation(
     obj.points = o3d.utility.Vector3dVector(xyz) 
     # We now recursively, according to the distortion level, get a new path 
     # and rotate with increasing rotation angle 
-    obj = local_rotation(obj, level-1, rotation + 5) 
+    obj = local_rotation(obj, level-1, rotation, False) 
     return obj
 
 def octree_compression(

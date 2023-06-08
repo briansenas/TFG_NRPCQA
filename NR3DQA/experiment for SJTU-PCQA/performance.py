@@ -64,9 +64,7 @@ if __name__ == '__main__':
     cnt = 0
 
     valid_scalers = ["MinMaxScaler", "StandardScaler",
-                     "RobustScaler", "MaxAbsScaler", 
-                     "QuantileTransformer", "PowerTransformer"]
-
+                     "RobustScaler", "MaxAbsScaler"]
 
     # initialize lists to store the evaluation metrics for each fold\n",
     random_state = np.random.randint(4294967295) 

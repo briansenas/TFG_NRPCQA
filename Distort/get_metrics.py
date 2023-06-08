@@ -15,10 +15,10 @@ from tqdm import tqdm
 
 METRICS = { 
     'octree': [0, 6, "run_pcc/h. (p2plane)"],
-    # 'downsample': [7, 13, "run_pcc/mseF (p2point)"], 
-    # 'localoffset': [14, 20, "run_pcc/mseF (p2point)"],
-    # 'localrotation': [21, 27, "run_pcc/h. (p2point)"],
-    # 'gaussianshift': [28, 34, "run_pcc/h. (p2plane)"],
+    'downsample': [7, 13, "run_pcc/mseF (p2point)"], 
+    'localoffset': [14, 20, "run_pcc/mseF (p2point)"],
+    'localrotation': [21, 27, "run_pcc/mseF (p2point)"],
+    'gaussianshift': [28, 34, "run_pcc/h. (p2plane)"],
 }
 #endregion GLOBALS 
 
@@ -79,35 +79,6 @@ def get_correct_metric(config):
     df = df.drop(['order','reference']) 
     df = df.rename({'distortion': 'name', 'metric':'mos'})
     return df 
-    # ref_path = os.path.join(config.ref_dir, '*.ply')
-    # ref_objs = glob.glob(ref_path, recursive=True)
-    # # numpy array of metrics 
-    # pcname = []
-    # metrics = []
-    # # For each reference object 
-    # for objs in tqdm(ref_objs): 
-    #     ref_name = os.path.basename(objs).split('.')[0]
-    #     # For each distortion type 
-    #     for key in tqdm(list(METRICS.keys()), leave=False): 
-    #         # Get the lower bound, upper bound and function from the metrics 
-    #         values = METRICS[key]
-    #         # Get the function that estimates the quality error[last pos]
-    #         fvalues = values[2].split("/") 
-    #         fname = fvalues[0]
-    #         args = None 
-    #         if len(fvalues) > 1: 
-    #             args = fvalues[1]
-    #         func = getattr(pcmm, fname) 
-    #         # Iterate throught all the intensities 
-    #         for i in tqdm(range(values[0], values[1]+1), leave=False): 
-    #             dis_name = ref_name + f"_{i}.ply"
-    #             dis_obj = os.path.join(config.dis_dir, ref_name, dis_name) 
-    #             pcname.append(dis_name) 
-    #             metrics.append(func(dis_obj, objs, args)) 
-    #
-    # # Create a flattened matrix of metrics 
-    # df = pl.DataFrame(zip(pcname,metrics), schema={'name': pl.Utf8,'mos': pl.Float64}) 
-    # return df 
 
 def get_all_metrics(config):
     global METRICS
@@ -167,7 +138,7 @@ def main(config: dict = None):
     
     # Save the metrics in the distortion directory 
     if df is not None: 
-        arr_dir = os.path.join(config.dis_dir, "metrics.csv") 
+        arr_dir = os.path.join(config.dis_dir, config.out_name) 
         df.write_csv(arr_dir) 
 
 
@@ -180,6 +151,8 @@ if __name__ == '__main__':
 
     parser.add_argument('-o', '--dis-dir', type=str, 
                         default='/home/briansenas/Desktop/PCQA-Databases/OurData/Distortions/') 
+
+    parser.add_argument('-n', '--out-name', type=str, default='metrics.csv') 
 
     parser.add_argument('-a', '--all', action='store_true') 
     parser.add_argument('-d', action='store_true') 

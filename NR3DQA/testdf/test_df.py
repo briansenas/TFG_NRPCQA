@@ -37,23 +37,27 @@ if __name__ == '__main__':
 
     cnt = 0
     valid_scalers = ["MinMaxScaler", "StandardScaler",
-                     "RobustScaler", "MaxAbsScaler", 
-                     "QuantileTransformer", "PowerTransformer"]
+                     "RobustScaler", "MaxAbsScaler"]
 
     # initialize lists to store the evaluation metrics for each fold\n",
     random_state = np.random.randint(4294967295) 
     print(random_state)
-    svm = SVR(kernel="poly")
+    svm = SVR(kernel="rbf")
     neigh = KNeighborsRegressor(n_neighbors=4,weights="uniform")
     clf = DecisionTreeRegressor(random_state=random_state)
     ridge = Ridge()
     
-    names = ['DecisionTree', 'SVM', 'KnnRegressor', 'Ridge']
-    functions = [clf,svm,neigh,ridge]
+    names = ['DecisionTree', 'SVM', 'KnnRegressor']
+    functions = [clf,svm,neigh]
     schema =  {"function": pl.Utf8, 
                               "srocc": pl.Float64,
                               "scaler":pl.Utf8}
     df = pl.DataFrame(schema=schema) 
+
+    data_df = pl.read_csv(config.input_dir) 
+    if config.merge: 
+        data_df = data_df.join(pl.read_csv(config.more_feat), on='name', how='inner') 
+
     for scalername in valid_scalers: 
         # begin 9-folder cross data validation split
         for i in range(config.num_splits):
@@ -62,10 +66,6 @@ if __name__ == '__main__':
 
             train_df = pl.read_csv(os.path.join(config.splits_dir, f'train_{i+1}.csv')) 
             test_df = pl.read_csv(os.path.join(config.splits_dir, f'test_{i+1}.csv')) 
-
-            data_df = pl.read_csv(config.input_dir) 
-            if config.merge: 
-                data_df = data_df.join(pl.read_csv(config.more_feat), on='name', how='inner') 
             
             test_score = test_df.select(pl.col('mos')).to_numpy()
             test_score = test_score.reshape(len(test_score),) 
@@ -84,7 +84,7 @@ if __name__ == '__main__':
                 predict_score = func.predict(test_set)
 
                 # record the result
-                srocc = stats.spearmanr(predict_score, test_score)[0]
+                srocc = abs(stats.spearmanr(predict_score, test_score)[0])
 
                 df = pl.concat([df, 
                                 pl.DataFrame({
@@ -95,11 +95,6 @@ if __name__ == '__main__':
                                schema=schema)])
 
     thresh = 1
-    df = df.filter(
-        pl.sum(
-            pl.exclude(['function', 'scaler']).is_not_null() & pl.exclude(['function', 'scaler']).is_not_nan()
-        ) >= thresh
-    )
     groups = df.groupby(['function', 'scaler']).agg(pl.mean(['srocc'])).sort(pl.exclude(['function', 'scaler']))
     with pl.Config(tbl_rows=-1):
         print(groups)

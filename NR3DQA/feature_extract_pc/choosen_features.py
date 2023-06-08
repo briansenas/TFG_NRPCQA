@@ -11,7 +11,6 @@ import multiprocessing as mp
 from pyntcloud import PyntCloud
 from tqdm import tqdm 
 from scipy import stats
-from IsoScore import IsoScore
 from nss_functions import get_geometry_nss_param, estimate_basic_param
 import warnings 
 import functools
@@ -25,7 +24,6 @@ def get_choosen_features(
     cloud: str, 
 ) -> pl.DataFrame: 
     name = os.path.basename(cloud)
-    print(name)
     # .split('.')[0].replace('_','')
     nn_ = 10
 
@@ -48,14 +46,14 @@ def get_choosen_features(
     pca2 = ev1[:] / eigen_sum[:]
     verticality = 1.0 - abs(eigvec_height[:]) 
 
-    pca2 = [i for item in get_geometry_nss_param(pca2) for i in item]
-    omni = [i for item in get_geometry_nss_param(omnivariance) for i in item]
-    egen = [i for item in get_geometry_nss_param(eigenentropy) for i in item]
+    # pca2 = [i for item in get_geometry_nss_param(pca2) for i in item]
+    # omni = [i for item in get_geometry_nss_param(omnivariance) for i in item]
+    # egen = [i for item in get_geometry_nss_param(eigenentropy) for i in item]
     vert = [item for item in estimate_basic_param(verticality) ]
+    pca2 = [item for item in estimate_basic_param(pca2) ]
+    omni = [item for item in estimate_basic_param(omnivariance) ]
+    egen = [item for item in estimate_basic_param(eigenentropy) ]
 
-    # Compute the uniformity
-    xyz = cloud.points.to_numpy()
-    
     return [name, *pca2, *omni, *egen, *vert]
 
 
@@ -74,7 +72,7 @@ def main(config: dict) -> None:
     features = [f for f in feat] 
     features = np.array(features) 
     df = pl.DataFrame() 
-    params = ["mean","std","entropy","ggd1","ggd2","aggd1","aggd2","aggd3","aggd4","gamma1","gamma2"]
+    params = ["mean","std","entropy"]
     gdnames = ['pca2', 'omni', 'egen' ]
     names = [g + "_" + p for g in gdnames for p in params]
     names.insert(0, "name") 
