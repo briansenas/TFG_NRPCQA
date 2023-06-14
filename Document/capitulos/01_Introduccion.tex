@@ -1,18 +1,22 @@
 \chapter{Introducción}
+\section{Definición del Problema}   
+\changed[{Desplazar sección y eliminar texto introducción}]{Desplazamos la sección, eliminando texto de introducción}
 Con la demanda incremental de aplicaciones, tanto para el entretenimiento 
 como para el estudio biomédico, la información visual cada vez tiene un rol 
 más importante. Sin embargo, la calidad de la información puede sufrir drásticamente
 con las etapas de adquisición, procesado, compresión, transmisión y reproducción.
 Es por ello que poder evaluar la calidad de la información se ha vuelto un 
 tema cada vez más importante\cite{VisualMedicalQualityBook}.
-\section{Definición del Problema}   
-La evaluación de la calidad de la imagen (\emph{IQA}) es un problema fundamental 
-en el procesamiento de imágenes y de visión por computador. Se refiere a la 
-tarea de medir y cuantificar la calidad perceptual de una imagen, 
+
+La rama sobre la cuál nos centraremos es la evaluación de la calidad de la imagen,
+en inglés \emph{Image Quality assessment} (\emph{IQA}).
+Es un problema fundamental en el procesamiento de imágenes y de visión 
+por computador. Se refiere a la tarea de medir y cuantificar 
+la calidad perceptual de una imagen, 
 teniendo en cuenta factores como el contenido, la resolución, 
 el contraste, las distorsiones visuales y la percepción humana. 
 La mejora de las técnicas suele estar altamente conectado con el avance 
-de los estudio del sistema de visión humano (\emph{HVS})\cite{Wang2006ModernIQ}.
+de los estudio del sistema de visión humano (\emph{Human Vision System, HVS})\cite{Wang2006ModernIQ}.
  
 El problema de la evaluación de la calidad de la imagen se aborda mediante enfoques 
 subjetivos y objetivos. Los enfoques subjetivos implican realizar experimentos 
@@ -21,7 +25,7 @@ humanos. Estos observadores pueden calificar las imágenes en términos de su
 calidad visual o realizar comparaciones entre diferentes versiones de una misma imagen. 
 Con base a las respuestas recopiladas, se pueden establecer modelos y 
 métricas que reflejen la calidad percibida por los humanos, también conocida
-como \emph{MOS}\footnotemark[1].
+como \emph{mean opinion score, MOS}\footnotemark[1].
 
 Alternativamente, los enfoques objetivos buscan desarrollar algoritmos y métricas 
 automáticas que puedan estimar la calidad de la imagen sin intervención humana. 
@@ -35,18 +39,18 @@ recursos disponibles. Los enfoques subjetivos son considerados como la referenci
 para la evaluación de la calidad de la imagen, ya que capturan la apreciación 
 humana. Sin embargo, estos enfoques pueden ser costosos y requieren de un número 
 significativo de participantes. 
-Mientras que, los enfoques objetivos se pueden llegar a automatizar. Haciendo que 
+Mientras que los enfoques objetivos se pueden llegar a automatizar, haciendo que 
 sea muy prácticos para grandes cantidades de datos y diversas aplicaciones.
  
 No obstante, el objetivo es desarrollar algoritmos y métricas que puedan proporcionar una 
 estimación precisa y consistente de la calidad de la imagen, teniendo en cuenta
 tanto aspectos subjetivos como objetivos respecto a las distorsiones.
-Para así poder evaluar y comparar diferentes métodos de adquisición, compresión, 
+Y, de esta forma, poder evaluar y comparar diferentes métodos de adquisición, compresión, 
 restauración o manipulación de imágenes teniendo en cuenta que el receptor 
 final es el humano.
  
 Para abordar el problema de la IQA, se emplean diversas técnicas y enfoques. 
-Entre ellos se incluyen métodos basados en características de baja y alta calidad,
+Entre ellos se incluyen métodos basados en características,
 modelos de percepción visual, aprendizaje automático y técnicas de procesamiento de señales
  
 Uno de los enfoques comunes es utilizar características básicas de la imagen. 
@@ -60,7 +64,7 @@ visual humano percibe y evalúa la calidad de la imagen. Estos modelos se basan
 en el entendimiento de los mecanismos y procesos perceptuales del cerebro humano, 
 y utilizan características visuales y estadísticas para calcular la calidad percibida
 \cite{MinkowskiFailure, StructuralSimilarityIndex}.
-Estos modelos buscan emular la forma en que los humanos interpretan y responden 
+Buscan emular la forma en que los humanos interpretan y responden 
 a las imágenes en términos de su calidad visual\cite{IQAbySaliencyMaps, CascadedIQA}.
  
 Habitualmente, se suelen emplear algoritmos de aprendizaje automático para tratar
@@ -69,77 +73,34 @@ para intentar aproximar una función que a partir del conjunto de característic
 extraídas pueda determinar la calidad de la imagen en una escala específica, 
 generalmente en el rango de 0 a 10.
 
+\corrected[{Respuesta a Enrique, Párrafo de Aplicaciones IQA}]{
+Las aplicaciones cómunes de los algoritmos de estimación de calidad suele ser 
+la comparativa entre algoritmos de compresión, ya que permite elegir aquellos con 
+menor pérdida de información, la generación de mapas de calidad\footnotemark[2],
+permitiendo el estudio de métodos de reducción de ruido,
+la determinación de la calidad del servicio de transmisión o \emph{quality-of-service (QoS)},
+ya que permiten evaluar los errores de transmisión\cite{VMAF, VMAFReproducibility}. Se podría incluso 
+extender al pre-procesamiento de datos de entrenamiento o estimar la precisión 
+de un modelo de predicción basado en la calidad de los datos\cite{ApplicationsOfIQA}.
+}
+
+\corrected[{Respuesta a Enrique, Párrafo de propósito de TFG}]{
+El uso de algoritmos IQA se encuentra ampliamente difundido en el ámbito de las 
+imágenes 2D, especialmente en el contexto general, con algunos métodos  
+siendo incorporados en el ámbito médico. 
+Lamentablemente, la naturaleza de las imágenes médicas 2D y las distorsiones que 
+pueden presentar implican una disminución en la precisión de los modelos 
+cuando se aplican directamente sobre ellas\cite{VisualMedicalQualityBook}.
+A parte, el número de métodos decrece al desplazarnos a tres dimensiones 
+debido al aumento de complejidad, con ninguno, al momento de escritura, 
+aplicado a imágenes médicas 3D.
+Es por ello que se propone investigar el uso de métodos tridimensionales para 
+el ámbito biomédico, aplicado a las reconstrucciones y visualizaciones volumétricas 
+que se suelen utilizar en medicina. 
+}
+
 \footnotetext[1]{\emph{Mean Opinion Score} o Valor medio de opinión, consiste en 
 la media de la opinión de diversas personas para establecer un valor de referencia. }
-
-\subsection{Subproblemas y dificultades}
-Existen tres subproblemas presenten en el ámbito de \emph{IQA}. Los primeros, son problemas 
-dónde tenemos acceso a la imagen original, que suponemos exenta de desperfectos, 
-en la cúal se pueden aplicar métodos basados en diferencia de características 
-entre ambas, como puede ser al nivel del color de píxel posición a posición,
-y se denomina ``\emph{Full Reference}''(\emph{FR}). 
-La tarea, aparentemente sencilla, en realidad presenta una complejidad alta dada por 
-la necesidad de codificar la percepción humana a la hora de calificar la calidad 
-de una imagen\cite{WhyIsIQASoDifficult}. Ya que métricas que miden distancias no suelen ser suficientes, 
-ver imágenes~(\ref{fig:FailureMinkowskiMetric},\ref{fig:MSEHyperSphere}).
- 
-Los segundos son aquellos dónde tenemos algún tipo de información adicional respecto 
-a la imagen original en el momento de asesoramiento de la calidad de la imagen final,
-denominados ``\emph{Reduced Reference}''(\emph{RR}). La información extra puede incluir características estadísticas, metadatos, parámetros 
-de compresión o características extraídas de una región de interés específica.
- 
-Y por último, tenemos aquellos problemas donde desconocemos el origen y cualquier 
-información respecto a la imagen inicial, denominados problemas ``\emph{No reference}''(\emph{NR}).
-Estas métricas están exentas de cualquier información de referencia y se 
-centran en capturar características generales de calidad. 
-
-La complejidad del problema crece conforme nos desplazamos a las tres dimensiones. 
-El asesorar la calidad de los modelos \emph{3D} implica mayor nivel de dificultad 
-dado que nos enfrentamos a dos grandes retos: La complejidad computacional 
-de las operaciones y la escasez de bases de datos etiquetadas
-sobre objetos tridimensionales para entrenar y evaluar modelos. 
- 
-Para las nubes de puntos, que representan una colección de puntos en un espacio 
-tridimensional $(x,y,z)$ cada uno con un color asociado \emph{RGB}, se pueden emplear métricas y algoritmos basándose en criterios como la 
-densidad de puntos, la uniformidad, la precisión geométrica y la detección de artefactos.
-También se pueden considerar aspectos relacionados con la coherencia de los colores 
-o texturas asociadas a los puntos\cite{NR3DQA, StructureGuidedResampling, GPA-NET} 
- 
-Un enfoque común es la evaluación de calidad de una nube de puntos tridimensional 
-mediante proyecciones \emph{2D} desde diferentes perspectivas\cite{IT-PCQA, VQA-PC, MM-PCQA}. 
-De esta forma podemos tratar el problema como uno de \emph{IQA} reduciendo la 
-complejidad computacional, pudiendo implementar métodos y soluciones ya existentes.
-
-Teniendo en cuenta todas estas consideraciones, el presente TFG aborda la
-estimación de calidad de imágenes médicas en espacio tridimensional.
-
-\begin{figure}[htp]
-  \begin{center}
-    \includegraphics[width=0.5\textwidth]{imagenes/Chapter1/failure_minkowski_metric.png}
-  \end{center}
-  \caption{En este ejemplo, extraído de\cite{MinkowskiFailure},
-  vemos que sumar una constante positiva a una imagen  de referencia (a) produce la imagen (b) que contiene la misma distancia \emph{Minkowski}\footnotemark[1]
-  que (c), imagen fabricada por la misma constante pero permutando signo de forma aleatoria. Siendo que
-  la percepción final es que la imagen (c) es peor que la (b).
-\label{fig:FailureMinkowskiMetric}}
-\end{figure}
-\begin{figure}[htp]
-  \begin{center}
-    \includegraphics[width=0.5\textwidth]{imagenes/Chapter1/MSE_Hypersphere.png}
-  \end{center}
-  \caption{En este ejemplo, extraído de\cite{Wang2006ModernIQ} la misma imagen distorsionada de distintas maneras
-  resulta en el mismo valor \emph{MSE}\footnotemark[2]=181. Siendo evidente que 
-  algunas distorsiones producen efectos visuales más marcados que otras haciendo 
-  que no sea una buena estimación perceptual de la calidad.}
-  \label{fig:MSEHyperSphere}
-\end{figure}
-
-\footnotetext[1]{La distancia de \emph{Minkowski} es una métrica 
-vectorial que puede considerarse como una generalización tanto de 
-la distancia euclidia como de la distancia de Manhattan . }
-\footnotetext[2]{\emph{MSE}: \emph{Mean squared error} o error cuadrático medio 
-  es una métrica de distancia que se calcula como la media de la suma de las 
-  diferencias al cuadrado.}
 
 \section{Motivación}
  
@@ -148,11 +109,24 @@ de las técnicas no invasivas de imágenes y la gran cantidad de fabricantes
 de equipamentos, nació el estándar \emph{DICOM}~\cite{Parisot1995} en 1995 
 con objetivo de hacer que el intercambio de imágenes médicas se realice de forma 
 fácil, segura y con alta calidad. Permitiendo integración con diversos sistemas e 
-incluso almacenar información extra en forma de metadatos y anotaciones, así como segmentaciones.
+incluso almacenar información extra en forma de metadatos y anotaciones, así como segmentaciones
+\changed[{Enlazar frase motivación a continuación de segmentaciones}]{Enlazar frase: Añadido posterior a 'segmentaciones'} que permiten la reconstrucción 3D de diferentes regiones anatómicas.
+
+\corrected[{Respecto al comentario de Enrique: Enlazar con la reconstrucción de modelos y regiones anatómicas}]
+{
+Y, en medicina, se utilizan volúmenes tridimensionales, como tomografías computarizadas (TC) o 
+resonancias magnéticas (RM) en lugar de radiografías convencionales, porque 
+proporcionan una visión más completa y detallada de la anatomía y las estructuras 
+internas del cuerpo, ver (\ref{fig:SlicerVisualization}). 
+Esto brinda a los médicos una comprensión más completa de la anatomía,
+les ayuda a identificar con mayor precisión lesiones, enfermedades o anormalidades y a 
+la planificación quirúrgica y otros
+\cite{3DImagingInMedicine, 3DImagingInMedicine2, ADAS3D}.
+}
  
 \begin{figure}[htp]
   \begin{center}
-    \includegraphics[width=0.8\textwidth]{imagenes/Chapter1/SlicerVisualization}
+    \includegraphics[width=0.8\textwidth]{imagenes/chapter1/SlicerVisualization}
   \end{center}
   \caption{Ejemplo de visualización de un directorio \emph{DICOM}. Se pueden observar
   las proyecciones axial, coronal y sagital. Además de una renderización volumétrica
@@ -162,16 +136,10 @@ incluso almacenar información extra en forma de metadatos y anotaciones, así c
 
 A pesar de ello, las distorsiones, que son una ocurrencia común en las imágenes cotidianas, 
 están muy presentes en las imágenes médicas~\cite{MedicalImpactOfDistortions}.
-Prevalecen las distortiones de contraste, ruido y difuminado\footnotemark[3].
+Prevalecen las distortiones de contraste, ruido y difuminado\footnotemark[3], 
+que se detallarán en la sección \ref{sec:Distorsiones}.
 Estas a su vez, podrían afectar al volúmen 3D que se puede generar a partir 
-las imágenes médicas. Y en medicina, 
-se utilizan volúmenes tridimensionales, como tomografías computarizadas (TC) o 
-resonancias magnéticas (RM) en lugar de radiografías convencionales, porque 
-proporcionan una visión más completa y detallada de la anatomía y las estructuras 
-internas del cuerpo, ver (\ref{fig:SlicerVisualization}). 
-Esto brinda a los médicos una comprensión más completa de la anatomía y 
-les ayuda a identificar con mayor precisión lesiones, enfermedades o anormalidades
-\cite{3DImagingInMedicine, 3DImagingInMedicine2, ADAS3D}.
+las imágenes médicas. 
 
 \footnotetext[3]{
   Con ruido nos referimos a pequeñas fluctuaciones no deseadas en los colores de 
@@ -192,35 +160,29 @@ nuevas pruebas para conciliar las anteriores.
  
 Resolver este problema, o dar pasos hacia adelante, formulando una medida de calidad
 puede conllevar a la mejora de los dispositivos médicos, de los algoritmos de comprensión, almacenado 
-y transmisión de información. Tanto a nivel médico como cualquier 
-aplicación con datos tridimensionales. Disminuyendo costes y ahorrando tiempo 
-de consultas, mejorando la calidad de diagnóstico de pacientes. 
+y transmisión de información (tanto a nivel médico como a cualquier 
+aplicación con datos tridimensionales).
+\changed[{Revisar Frase final de apartado objetivos}]{Revisado de frase: Reescrito el párrafo}
+Resultando en reducción de costes (menos pruebas), de tiempo de consultas y 
+mejorando la calidad del diagnóstico médico. 
 
 \section{Objetivos}
 Para el desarrollo de este documento se plantean una serie de objetivos. 
-El objetivo principal consiste en encontrar un método adecuado para atacar al 
+El objetivo principal consiste en encontrar un método adecuado para abordar al 
 problema de la estimación de la calidad de imágenes médicas tridimensionales. 
 Este objetivo se puede descomponer en una serie de metas parciales: 
 \begin{enumerate}
   \item Realizar una revisión del estado del arte para la estimación de calidad 
-    de imágenes \emph{3D}. Comparativa entre métodos de aprendizaje automático 
-    y de aprendizaje profundo. Estudiar el método o arquitectura más adecuada 
-    para la resolución del problema y proponer posibles mejoras. 
-  \item Estudiar las distorsiones comúnes en el mundo médico. 
-    Dado que, actualmente, no existen conjuntos de datos disponibles para la 
-    estimación de la calidad de imágenes médicas 3D, debemos analizar ejemplos 
-    de conjuntos de datos genéricos disponibles y 
-    seleccionar aquellos que traten las mismas distorsiones. 
-  \item Preparar un conjunto de datos propio para validar. Preprocessar y 
-    elegir las nubes de puntos iniciales de mejor calidad. 
-    Estudiar la posibilidad de generar un \emph{pseudo-MOS} 
-    utilizando métricas \emph{FR} del estado del arte actual o 
-    realizar un experimento con un conjunto de individuos, 
-    como consta en~\cite{ITU-R.2012, ITU-r.2021},
-    para la obtención del \emph{MOS}. 
-    Analizando a su vez las implicaciones de cada camino.
-  \item Validar los resultados obtenidos, sacar conclusiones y propuestas 
-    de cara al futuro.
+    de imágenes \emph{3D}, así como de la calidad de imágenes médicas en particular.
+  \item Estudiar las distorsiones comúnes en el jmbito de la imagen. 
+    Analizar los patrones de distorsión que afectan la calidad de las imágenes 
+    biomédicas.
+  \item Analizar los enfoques más prometedores que permitan abordar el problema planteado. 
+  \item Generar un conjunto de datos sintético que permita validar 
+    los métodos analizados. Para ello, será necesario estudiar diferentes 
+    estretegias y métricas de evaluación objetivas\cite{ITU-R.2012, ITU-r.2021, DatasetGeneration}.
+  \item Realizar un estudio experimental que permita validar los enfoques 
+    propuestos y extraer conclusiones sobre su aplicabilidad al problema. 
 \end{enumerate}
 \section{Planificación del proyecto}
 Al planificar el proyecto, es fundamental tener en cuenta que la asignatura del 
@@ -295,7 +257,7 @@ médicas, caso que fue algo iterativo y manual.
 Análisis de Requisitos & 5 - 75 & \cellcolor[HTML]{9B9B9B} & \cellcolor[HTML]{9B9B9B} & \cellcolor[HTML]{9B9B9B} & \cellcolor[HTML]{9B9B9B} & &  &  &  &  &  &  &  &  &  &  &  &  &  &  &  &  &  &  \\ \cline{1-1}
 Diseño & 4 - 60 &  &  &  &  & \cellcolor[HTML]{9B9B9B} & \cellcolor[HTML]{9B9B9B} & \cellcolor[HTML]{9B9B9B} & \cellcolor[HTML]{9B9B9B} & &  &  &  &  &  &  &  &  &  &  &  &  &  &  \\ \cline{1-1}
 Implementación & 8 - 120 &  &  &  &  &  &  &  &  &  \cellcolor[HTML]{9B9B9B} & \cellcolor[HTML]{9B9B9B} & \cellcolor[HTML]{9B9B9B} & \cellcolor[HTML]{9B9B9B} & &  & \cellcolor[HTML]{9B9B9B}  & \cellcolor[HTML]{9B9B9B}  & & & \cellcolor[HTML]{9B9B9B} & \cellcolor[HTML]{9B9B9B} &  &  &  \\ \cline{1-1}
-Pruebas & 5 - 75 &  &  &  &  &  &  &  &  &  &  &  &  & \cellcolor[HTML]{9B9B9B}   & \cellcolor[HTML]{9B9B9B} & & & \cellcolor[HTML]{9B9B9B} & \cellcolor[HTML]{9B9B9B} &  &  & \cellcolor[HTML]{9B9B9B} & \cellcolor[HTML]{9B9B9B} & \\ \hline
+Pruebas & 6 - 90 &  &  &  &  &  &  &  &  &  &  &  &  & \cellcolor[HTML]{9B9B9B}   & \cellcolor[HTML]{9B9B9B} & & & \cellcolor[HTML]{9B9B9B} & \cellcolor[HTML]{9B9B9B} &  &  & \cellcolor[HTML]{9B9B9B} & \cellcolor[HTML]{9B9B9B} & \\ \hline
 \end{tabular}%
 }
 \caption{Planificación resultante del proyecto}

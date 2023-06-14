@@ -4,6 +4,7 @@
 \usepackage[spanish, es-tabla]{babel}
 \usepackage{eurosym}
 \usepackage{cite}
+\usepackage{subfig}
 
 \usepackage[loadshadowlibrary]{todonotes}
 \usepackage{float}
@@ -20,9 +21,14 @@
 
 \definecolor{ugr_yellow}{rgb}{1.0, 0.78, 0}
 
-\newcommand{\addref}[1]{\todo[shadow, color=orange!40]{Add reference: #1}}
-\newcommand{\towrite}[2][1=]{\todo[inline, shadow, color=red!40, #1]{#2}}
-\newcommand{\rewrite}[2][1=]{\todo[inline, shadow, color=yellow!40, #1]{#2}}
+\newcommand{\addref}[2][1=]{\todo[shadow, color=black!40, caption={Pendiente Referencia: #1}]{#2}}
+\newcommand{\towrite}[2][1=]{\todo[inline, shadow, color=gray!40, caption={A escribir: #1}]{#2}}
+\newcommand{\corrected}[2][1=]{\todo[inline, shadow, color=blue!40, caption={Propuesta: #1}]{#2}}
+\newcommand{\changed}[2][1=]{\todo[shadow, color=yellow!40, caption={Cambios: #1}]{#2}}
+
+\newcommand{\Enrique}[2][1=]{\todo[inline, shadow, color=red!40, caption={Enrique: #1}]{#2}}
+\newcommand{\Mesejo}[2][1=]{\todo[inline, shadow, color=orange!40, caption={Pablo: #1}]{#2}}
+\newcommand{\Brian}[2][1=]{\todo[inline, shadow, color=yellow!40, caption={Brian: #1}]{#2}}
 
 %\usepackage[style=list, number=none]{glossary} %
 %\usepackage{titlesec}

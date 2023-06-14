@@ -1,13 +1,22 @@
 \documentclass[a4paper,11pt, colorinlistoftodos]{book}
 \input{config/config}
 
+% Temporarly
+\usepackage{fancyhdr}
+\pagestyle{fancyplain}
+\fancyhead{}
+\lfoot{\scriptsize\LaTeX}
+\cfoot{\hyperlink{listoftodos}{ToDoList} || \hyperlink{tableofcontents}{TableOfContents}}
+\rfoot{\small\thepage}
+
 \begin{document}
 \input{portada/portada}
-\listoftodos[Cosas Pendientes que hacer:]
-\hypertarget{listoftodos}{}
-\input{prefacios/prefacio}
 \frontmatter
 \mainmatter
+
+\hypertarget{listoftodos}{}
+\listoftodos[Anotaciones y Cambios]
+
 \tableofcontents
 \listoffigures
 \listoftables
@@ -16,11 +25,11 @@
 \input{capitulos/01_Introduccion}
 %
 \input{capitulos/02_Fundamentos_Teoricos}
-%
+% %
 \input{capitulos/03_Estado_del_arte}
-%
+% %
 \input{capitulos/04_Materiales_y_Distorsiones}
-%
+% %
 \input{capitulos/05_Implementacion_y_Experimentos}
 %
 %\input{capitulos/06_Implementacion}
