@@ -5,6 +5,7 @@ proyecto, así como justificar su relevancia en la resolución del problema que
 se plantea.
 
 \subsection{Subproblemas de la IQA}
+\changed[{En respuesta a Enrique, se cambia esta sección a Fundamentos}]{Sección Intro. subproblemas a Fundamentos. IQA}
 Existen tres subproblemas presenten en el ámbito de \emph{IQA}. Los primeros, son problemas 
 dónde tenemos acceso a la imagen original, que suponemos exenta de desperfectos, 
 en la cual se pueden aplicar métodos basados en diferencia de características 
@@ -12,13 +13,23 @@ entre ambas, como puede ser al nivel del color de píxel posición a posición,
 y se denomina ``\emph{Full Reference}''(\emph{FR}). 
 La tarea, aparentemente sencilla, en realidad presenta una complejidad alta dada por 
 la necesidad de codificar la percepción humana a la hora de calificar la calidad 
-de una imagen\cite{WhyIsIQASoDifficult}. Ya que métricas que miden distancias no suelen ser suficientes, 
-ver imágenes~(\ref{fig:FailureMinkowskiMetric},\ref{fig:MSEHyperSphere}).
+de una imagen\cite{WhyIsIQASoDifficult}. Ya que métricas que miden distancias no suelen 
+ser suficientes al no haber buena correlación entre la calidad percebida y el 
+resultado de la métrica.
 
-\Enrique[{Hablar de las limitaciones de métricas de distancias} ]{ Pequeño párrafo sobre estas limitaciones }
+
+\corrected[{Hablar de las limitaciones de métricas de distancias}]{
+La mayoría de las veces no se menciona, pero al optar métodos de sensibilidad 
+al error (distancias) se imponen un conjunto de suposiciones cuestionables. 
+Primeramente se asume la misma importancia para todas las señales de la imagen, que
+la magnitud del error es lo único que determina la calidad, que el contenido de la imagen 
+no afecta al resultado final tras aplicar una distorsión y que si cambiamos el 
+orden de las señales la medida de distorsión no es afectada.
+Lamentablemente, ninguna de estas suposiciones se cumplen\cite{Wang2006ModernIQ}, ver imágenes~(\ref{fig:FailureMinkowskiMetric},\ref{fig:MSEHyperSphere}).
+}
  
-Los segundos son aquellos dónde tenemos algún tipo de información adicional respecto 
-a la imagen original en el momento de asesoramiento de la calidad de la imagen final,
+El siguiente subproblema es aquel donde tenemos algún tipo de información adicional respecto 
+a la imagen original en el momento de análisis de la calidad de la imagen final,
 denominados ``\emph{Reduced Reference}''(\emph{RR}). La información extra puede incluir características estadísticas, metadatos, parámetros 
 de compresión o características extraídas de una región de interés específica.
  
@@ -27,8 +38,28 @@ información respecto a la imagen inicial, denominados problemas ``\emph{No refe
 Estas métricas están exentas de cualquier información de referencia y se 
 centran en capturar características generales de calidad. 
 
-\Enrique[{Enfatizar las diferencias en dificultad FR NR}]
-{Parrafo sobre las dificultades FR - NR extendiendo la extraccion de caracteristicas de NR}
+\corrected[{Enfatizar las diferencias en dificultad}]{
+La evaluación de calidad de imagen sin referencia es, quizás, el problema 
+más difícil en el análisis de imágenes. De cierto modo, el modelo debe ser 
+capaz de evaluar la calidad cualquier imagen sin saber nada de la imagen ``real'' original. 
+Superficialmente parece ``misión imposible''. No obstante, sorprendemente esa 
+es una tarea muy sencilla para el ser humano\cite{Wang2006ModernIQ}. 
+
+
+Para resolverlo, debemos disponer de conocimientos de la naturaleza de las imágenes 
+de las que tratamos y los efectos de las distorsiones. Lo que se denomina 
+estadísticas naturales de escena (NSS, por sus siglas en inglés). Un ejemplo 
+sería JPEG, un algoritmo de compresión que se codifica por bloques 8x8. Los efectos
+negativos de la compresión se representan por el difuminado entre bloques y los artefactos que presentan.
+Entender estos efectos permite diseñar métricas específicas\cite{SpatialDomainForJPEG, FrecuencyDomainForJPEG}
+
+
+As veces resulta difícil describir las características de la imagen y los efectos 
+de la distorsión. Es por ello que los métodos de aprendizaje profundo son cada vez 
+más frecuente y dan mejores resultados. Permitimos que sea la máquina la que aprenda 
+las propiedades de la distorsión, su relación con el contenido y efecto sobre la 
+percepción visual\cite{Hallucinated-IQA, BIQA, DIPIQA}. 
+}
 
 La complejidad del problema crece conforme nos desplazamos a las tres dimensiones. 
 El analizar la calidad de los modelos \emph{3D} implica mayor nivel de dificultad 
@@ -52,7 +83,7 @@ estimación, sin referencia, de calidad de imágenes médicas en espacio tridime
 
 \begin{figure}[htp]
   \begin{center}
-    \includegraphics[width=0.5\textwidth]{imagenes/chapter1/failure_minkowski_metric.png}
+    \includegraphics[width=0.5\textwidth]{imagenes/chapter2/failure_minkowski_metric.png}
   \end{center}
   \caption{En este ejemplo, extraído de\cite{MinkowskiFailure},
   vemos que sumar una constante positiva a una imagen  de referencia (a) produce la imagen (b) que contiene la misma distancia \emph{Minkowski}\footnotemark[1]
@@ -62,7 +93,7 @@ estimación, sin referencia, de calidad de imágenes médicas en espacio tridime
 \end{figure}
 \begin{figure}[htp]
   \begin{center}
-    \includegraphics[width=0.5\textwidth]{imagenes/chapter1/MSE_Hypersphere.png}
+    \includegraphics[width=0.5\textwidth]{imagenes/chapter2/MSE_Hypersphere.png}
   \end{center}
   \caption{En este ejemplo, extraído de\cite{Wang2006ModernIQ}, la misma imagen distorsionada de distintas maneras
   resulta en el mismo valor \emph{MSE}\footnotemark[2]=181. Siendo evidente que 
@@ -112,18 +143,37 @@ distorsionadas) y una salida (valor de calidad). Además, existen conjuntos de
 datos públicos etiquetadas para distintos tipos de distorsiones. Esto significa que
 estamos entre un problema de aprendizaje supervisado.
 
-
 \begin{figure}[htp]
-  \begin{center}
-    \subfloat{\includegraphics[width=0.85\textwidth]{imagenes/chapter2/SVMExample.png}}\\ 
-    \subfloat{\includegraphics[width=0.85\textwidth]{imagenes/chapter2/ClusteringExample.png}}
-  \end{center}
+  \centering
+    \begin{subfigure}{.45\textwidth}
+  \centering
+  \includegraphics[width=0.8\linewidth]{imagenes/chapter2/BeforeSVMExample.png} 
+  \tikz[remember picture]\node[inner sep=0pt,outer sep=0pt] (a) {}; 
+    \end{subfigure}
+    \begin{subfigure}{.45\textwidth} 
+  \centering
+  \tikz[remember picture]\node[inner sep=0pt,outer sep=0pt] (b) {}; \includegraphics[width=0.8\linewidth]{imagenes/chapter2/AfterSVMExample.png}
+    \end{subfigure}
+  \tikz[remember picture,overlay]\draw[line width=1pt,-stealth,black] ([xshift=2mm,yshift=2.8cm]a.east) -- ([xshift=-2mm, yshift=2.8cm]b.west)node[midway,above,text=black,font=\LARGE\bfseries\sffamily] {};
+
+    \begin{subfigure}{.45\textwidth}
+  \centering
+  \includegraphics[width=0.8\linewidth]{imagenes/chapter2/BeforeClusteringExample.png} 
+  \tikz[remember picture]\node[inner sep=0pt,outer sep=0pt] (c) {}; 
+    \end{subfigure}
+    \begin{subfigure}{.45\textwidth} 
+  \centering
+  \tikz[remember picture]\node[inner sep=0pt,outer sep=0pt] (d) {}; \includegraphics[width=0.8\linewidth]{imagenes/chapter2/AfterClusteringExample.png}
+    \end{subfigure}
+  \tikz[remember picture,overlay]\draw[line width=1pt,-stealth,black] ([xshift=2mm,yshift=2.8cm]c.east) -- ([xshift=-2mm, yshift=2.8cm]d.west)node[midway,above,text=black,font=\LARGE\bfseries\sffamily] {};
+
   \caption{Ejemplo de aprendizaje supervisado y no supervisado. En el primer par, 
   vemos como dado un conjunto de clases etiquetadas aprendemos un hiper plano que 
   las separa. En el segundo, dado un conjunto de puntos aprendemos un conjunto de clases.
 }
   \label{fig:MLExamples}
 \end{figure}
+
 
 \section{Aprendizaje Profundo}
 El aprendizaje profundo o \emph{Deep Learning} (\emph{DL}) 

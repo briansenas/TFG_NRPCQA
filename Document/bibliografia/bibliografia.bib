@@ -351,3 +351,65 @@ number={},
 pages={1-2},
 doi={10.1109/BMSB.2017.7986143}
 }
+
+@inproceedings{SpatialDomainForJPEG,
+author={Zhou Wang and Sheikh, H.R. and Bovik, A.C.},
+  booktitle={Proceedings. International Conference on Image Processing}, 
+  title={No-reference perceptual quality assessment of JPEG compressed images}, 
+  year={2002},
+  volume={1},
+  number={},
+  pages={I-I},
+  doi={10.1109/ICIP.2002.1038064}
+}
+
+@inproceedings{FrecuencyDomainForJPEG,
+author={Zhou Wang and Bovik, A.C. and Evan, B.L.},
+  booktitle={Proceedings 2000 International Conference on Image Processing (Cat. No.00CH37101)}, 
+  title={Blind measurement of blocking artifacts in images}, 
+  year={2000},
+  volume={3},
+  number={},
+  pages={981-984 vol.3},
+  doi={10.1109/ICIP.2000.899622}
+}
+
+@article{BIQA,
+   abstract = {We propose a deep bilinear model for blind image quality assessment that works for both synthetically and authentically distorted images. Our model constitutes two streams of deep convolutional neural networks (CNNs), specializing in two distortion scenarios separately. For synthetic distortions, we first pre-train a CNN to classify the distortion type and the level of an input image, whose ground truth label is readily available at a large scale. For authentic distortions, we make use of a pre-train CNN (VGG-16) for the image classification task. The two feature sets are bilinearly pooled into one representation for a final quality prediction. We fine-tune the whole network on the target databases using a variant of stochastic gradient descent. The extensive experimental results show that the proposed model achieves state-of-the-art performance on both synthetic and authentic IQA databases. Furthermore, we verify the generalizability of our method on the large-scale Waterloo Exploration Database, and demonstrate its competitiveness using the group maximum differentiation competition methodology.},
+   author = {Weixia Zhang and Kede Ma and Jia Yan and Dexiang Deng and Zhou Wang},
+   doi = {10.1109/TCSVT.2018.2886771},
+   issn = {15582205},
+   issue = {1},
+   journal = {IEEE Transactions on Circuits and Systems for Video Technology},
+   keywords = {Blind image quality assessment,bilinear pooling,convolutional neural networks,gMAD competition,perceptual image processing},
+   month = {1},
+   pages = {36-47},
+   publisher = {Institute of Electrical and Electronics Engineers Inc.},
+   title = {Blind Image Quality Assessment Using a Deep Bilinear Convolutional Neural Network},
+   volume = {30},
+   year = {2020},
+}
+
+@report{Hallucinated-IQA,
+   abstract = {No-reference image quality assessment (NR-IQA) is a fundamental yet challenging task in low-level computer vision community. The difficulty is particularly pronounced for the limited information, for which the corresponding reference for comparison is typically absent. Although various feature extraction mechanisms have been leveraged from natural scene statistics to deep neural networks in previous methods, the performance bottleneck still exists. In this work, we propose a hallucination-guided quality regression network to address the issue. We firstly generate a hallucinated reference constrained on the distorted image, to compensate the absence of the true reference. Then, we pair the information of hallucinated reference with the distorted image, and forward them to the regressor to learn the perceptual discrepancy with the guidance of an implicit ranking relationship within the generator , and therefore produce the precise quality prediction. To demonstrate the effectiveness of our approach, comprehensive experiments are evaluated on four popular image quality assessment benchmarks. Our method significantly outperforms all the previous state-of-the-art methods by large margins. The code and model are publicly available on the project page https://kwanyeelin.github. io/projects/HIQA/HIQA.html.},
+   author = {Kwan-Yee Lin and Guanxiang Wang},
+   title = {Hallucinated-IQA: No-Reference Image Quality Assessment via Adversarial Learning},
+   url = {https://kwanyeelin.github.},
+}
+
+@article{DIPIQA,
+   abstract = {Objective assessment of image quality is fundamentally important in many image processing tasks. In this paper, we focus on learning blind image quality assessment (BIQA) models, which predict the quality of a digital image with no access to its original pristine-quality counterpart as reference. One of the biggest challenges in learning BIQA models is the conflict between the gigantic image space (which is in the dimension of the number of image pixels) and the extremely limited reliable ground truth data for training. Such data are typically collected via subjective testing, which is cumbersome, slow, and expensive. Here, we first show that a vast amount of reliable training data in the form of quality-discriminable image pairs (DIPs) can be obtained automatically at low cost by exploiting large-scale databases with diverse image content. We then learn an opinion-unaware BIQA (OU-BIQA, meaning that no subjective opinions are used for training) model using RankNet, a pairwise learning-to-rank (L2R) algorithm, from millions of DIPs, each associated with a perceptual uncertainty level, leading to a DIP inferred quality (dipIQ) index. Extensive experiments on four benchmark IQA databases demonstrate that dipIQ outperforms the state-of-the-art OU-BIQA models. The robustness of dipIQ is also significantly improved as confirmed by the group MAximum Differentiation competition method. Furthermore, we extend the proposed framework by learning models with ListNet (a listwise L2R algorithm) on quality-discriminable image lists (DIL). The resulting DIL inferred quality index achieves an additional performance gain.},
+   author = {Kede Ma and Wentao Liu and Tongliang Liu and Zhou Wang and Dacheng Tao},
+   doi = {10.1109/TIP.2017.2708503},
+   issn = {10577149},
+   issue = {8},
+   journal = {IEEE Transactions on Image Processing},
+   keywords = {Blind image quality assessment (BIQA),RankNet,dipIQ,gMAD,learning-to-rank (L2R),quality-discriminable image pair (DIP)},
+   month = {8},
+   pages = {3951-3964},
+   pmid = {28574353},
+   publisher = {Institute of Electrical and Electronics Engineers Inc.},
+   title = {DipIQ: Blind Image Quality Assessment by Learning-to-Rank Discriminable Image Pairs},
+   volume = {26},
+   year = {2017},
+}
