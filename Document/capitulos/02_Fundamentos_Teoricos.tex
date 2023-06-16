@@ -1,11 +1,10 @@
 \chapter{Fundamentos Teóricos}
-Esta sección tiene el objetivo de introducir y explicar brevemente los
-fundamentos teóricos en los que se basan los métodos empleados en este
-proyecto, así como justificar su relevancia en la resolución del problema que
-se plantea.
+% Esta sección tiene el objetivo de introducir y explicar brevemente los
+% fundamentos teóricos en los que se basan los métodos empleados en este
+% proyecto, así como justificar su relevancia en la resolución del problema que
+% se plantea.
 
 \subsection{Subproblemas de la IQA}
-\changed[{En respuesta a Enrique, se cambia esta sección a Fundamentos}]{Sección Intro. subproblemas a Fundamentos. IQA}
 Existen tres subproblemas presenten en el ámbito de \emph{IQA}. Los primeros, son problemas 
 dónde tenemos acceso a la imagen original, que suponemos exenta de desperfectos, 
 en la cual se pueden aplicar métodos basados en diferencia de características 
@@ -17,8 +16,6 @@ de una imagen\cite{WhyIsIQASoDifficult}. Ya que métricas que miden distancias n
 ser suficientes al no haber buena correlación entre la calidad percebida y el 
 resultado de la métrica.
 
-
-\corrected[{Hablar de las limitaciones de métricas de distancias}]{
 La mayoría de las veces no se menciona, pero al optar métodos de sensibilidad 
 al error (distancias) se imponen un conjunto de suposiciones cuestionables. 
 Primeramente se asume la misma importancia para todas las señales de la imagen, que
@@ -26,7 +23,6 @@ la magnitud del error es lo único que determina la calidad, que el contenido de
 no afecta al resultado final tras aplicar una distorsión y que si cambiamos el 
 orden de las señales la medida de distorsión no es afectada.
 Lamentablemente, ninguna de estas suposiciones se cumplen\cite{Wang2006ModernIQ}, ver imágenes~(\ref{fig:FailureMinkowskiMetric},\ref{fig:MSEHyperSphere}).
-}
  
 El siguiente subproblema es aquel donde tenemos algún tipo de información adicional respecto 
 a la imagen original en el momento de análisis de la calidad de la imagen final,
@@ -38,41 +34,47 @@ información respecto a la imagen inicial, denominados problemas ``\emph{No refe
 Estas métricas están exentas de cualquier información de referencia y se 
 centran en capturar características generales de calidad. 
 
-\corrected[{Enfatizar las diferencias en dificultad}]{
 La evaluación de calidad de imagen sin referencia es, quizás, el problema 
 más difícil en el análisis de imágenes. De cierto modo, el modelo debe ser 
-capaz de evaluar la calidad cualquier imagen sin saber nada de la imagen ``real'' original. 
-Superficialmente parece ``misión imposible''. No obstante, sorprendemente esa 
-es una tarea muy sencilla para el ser humano\cite{Wang2006ModernIQ}. 
+capaz de evaluar la calidad de cualquier imagen sin saber nada de la imagen ``real'', original. 
+Superficialmente parece ``misión imposible''. No obstante, esa 
+es una tarea sorprendentemente sencilla para el ser humano\cite{Wang2006ModernIQ}. 
 
-
-Para resolverlo, debemos disponer de conocimientos de la naturaleza de las imágenes 
+Para resolver problemas NR, debemos disponer de conocimientos de la naturaleza de las imágenes 
 de las que tratamos y los efectos de las distorsiones. Lo que se denomina 
 estadísticas naturales de escena (NSS, por sus siglas en inglés). Un ejemplo 
 sería JPEG, un algoritmo de compresión que se codifica por bloques 8x8. Los efectos
 negativos de la compresión se representan por el difuminado entre bloques y los artefactos que presentan.
 Entender estos efectos permite diseñar métricas específicas\cite{SpatialDomainForJPEG, FrecuencyDomainForJPEG}
 
-
 As veces resulta difícil describir las características de la imagen y los efectos 
 de la distorsión. Es por ello que los métodos de aprendizaje profundo son cada vez 
 más frecuente y dan mejores resultados. Permitimos que sea la máquina la que aprenda 
 las propiedades de la distorsión, su relación con el contenido y efecto sobre la 
 percepción visual\cite{Hallucinated-IQA, BIQA, DIPIQA}. 
-}
 
 La complejidad del problema crece conforme nos desplazamos a las tres dimensiones. 
 El analizar la calidad de los modelos \emph{3D} implica mayor nivel de dificultad 
 dado que nos enfrentamos a dos grandes retos: La complejidad computacional 
 de las operaciones y la escasez de bases de datos etiquetadas
 sobre objetos tridimensionales para entrenar y evaluar modelos. 
+
+\footnotetext[2]{La distancia de \emph{Minkowski} es una métrica 
+vectorial que puede considerarse como una generalización tanto de 
+la distancia euclidia como de la distancia de Manhattan . }
+\footnotetext[3]{\emph{Mean squared error} o error cuadrático medio 
+  es una métrica de distancia que se calcula como la media de la suma de las 
+  diferencias al cuadrado.}
  
 Para las nubes de puntos, que representan una colección de puntos en un espacio 
-tridimensional $(x,y,z)$ cada uno con un color asociado \emph{RGB}, se pueden emplear métricas y algoritmos basándose en criterios como la 
+tridimensional $(x,y,z)$ cada uno con un color asociado \emph{RGB}\footnote{
+  RGB son las siglas en inglés para rojo, verde y azul. Los colores se representan 
+  por tripletas de valores en escala 0-255 ó 0-1 que significan la cantidad que aporta 
+  cada color. 
+}, se pueden emplear métricas y algoritmos basándose en criterios como la 
 densidad de puntos, la uniformidad, la precisión geométrica y la detección de artefactos.
 También se pueden considerar aspectos relacionados con la coherencia de los colores 
-o texturas asociadas a los puntos\cite{NR3DQA, StructureGuidedResampling, GPA-NET} 
- 
+o texturas asociadas a los puntos\cite{NR3DQA, StructureGuidedResampling, GPA-NET}.
 Un enfoque común es la evaluación de calidad de una nube de puntos tridimensional 
 mediante proyecciones \emph{2D} desde diferentes perspectivas\cite{IT-PCQA, VQA-PC, MM-PCQA}. 
 De esta forma podemos tratar el problema como uno de \emph{IQA} 2D reduciendo la 
@@ -83,31 +85,24 @@ estimación, sin referencia, de calidad de imágenes médicas en espacio tridime
 
 \begin{figure}[htp]
   \begin{center}
-    \includegraphics[width=0.5\textwidth]{imagenes/chapter2/failure_minkowski_metric.png}
+    \includegraphics[width=0.6\textwidth]{imagenes/chapter2/failure_minkowski_metric.png}
   \end{center}
   \caption{En este ejemplo, extraído de\cite{MinkowskiFailure},
-  vemos que sumar una constante positiva a una imagen  de referencia (a) produce la imagen (b) que contiene la misma distancia \emph{Minkowski}\footnotemark[1]
+  vemos que sumar una constante positiva a una imagen  de referencia (a) produce la imagen (b) que contiene la misma distancia \emph{Minkowski}\footnotemark[2]
   que (c), imagen fabricada por la misma constante pero permutando signo de forma aleatoria. Siendo que
-  la percepción final es que la imagen (c) es peor que la (b).
+  la percepción final es que la imagen (c) es peor que la imagen (b).
 \label{fig:FailureMinkowskiMetric}}
 \end{figure}
 \begin{figure}[htp]
   \begin{center}
-    \includegraphics[width=0.5\textwidth]{imagenes/chapter2/MSE_Hypersphere.png}
+    \includegraphics[width=0.6\textwidth]{imagenes/chapter2/MSE_Hypersphere.png}
   \end{center}
   \caption{En este ejemplo, extraído de\cite{Wang2006ModernIQ}, la misma imagen distorsionada de distintas maneras
-  resulta en el mismo valor \emph{MSE}\footnotemark[2]=181. Siendo evidente que 
-  algunas distorsiones producen efectos visuales más marcados que otras haciendo 
-  que no sea una buena estimación perceptual de la calidad.}
+  resulta en el mismo valor \emph{MSE}\footnotemark[3]=181. Siendo evidente que 
+algunas distorsiones producen efectos visuales más marcados que otras.}
   \label{fig:MSEHyperSphere}
 \end{figure}
 
-\footnotetext[1]{La distancia de \emph{Minkowski} es una métrica 
-vectorial que puede considerarse como una generalización tanto de 
-la distancia euclidia como de la distancia de Manhattan . }
-\footnotetext[2]{\emph{MSE}: \emph{Mean squared error} o error cuadrático medio 
-  es una métrica de distancia que se calcula como la media de la suma de las 
-  diferencias al cuadrado.}
 
 \section{Aprendizaje Automático}
 El aprendizaje automático\cite{IAModernApproach} o \emph{MachineLearning} (\emph{ML}) 
@@ -131,52 +126,116 @@ de los datos a utilizar o el objetivo a alcanzar, podemos encontrar distintos ti
 algoritmos de aprendizaje. En este documento se recogerán dos grandes grupos: aprendizaje supervisado 
 y aprendizaje no supervisado. En el primero disponemos de un conjunto de datos 
 anotados, es decir, con las salidas deseadas para cada ejemplo y en el segundo 
-se espera que sea la máquina la que determine los patrones~(\ref{fig:MLExamples}). 
+se espera que sea la máquina la que determine los patrones~(\ref{fig:SupervisedExample}, \ref{fig:UnsupervisedExample}). 
 
 En general se suelen aplicar las técnicas de \emph{ML} sobre grandes conjuntos 
 de datos sobre los cuales deseamos detectar los patrones subyacientes\cite{
 DataMiningHandbook}.
 
 Puede observarse que dada estas descripciones, al problema presente podemos 
-aplicarle alguna técnica de \emph{ML}: Tenemos datos de entrada (nubes de puntos 
-distorsionadas) y una salida (valor de calidad). Además, existen conjuntos de 
+aplicarle alguna técnica de \emph{ML}: Tenemos datos de entrada (caracteríticas 
+extraídas de nubes de puntos distorisionadas) y una salida (valor de calidad). Además, existen conjuntos de 
 datos públicos etiquetadas para distintos tipos de distorsiones. Esto significa que
 estamos entre un problema de aprendizaje supervisado.
 
 \begin{figure}[htp]
   \centering
-    \begin{subfigure}{.45\textwidth}
+    \begin{subfigure}{.3\textwidth}
   \centering
   \includegraphics[width=0.8\linewidth]{imagenes/chapter2/BeforeSVMExample.png} 
   \tikz[remember picture]\node[inner sep=0pt,outer sep=0pt] (a) {}; 
     \end{subfigure}
-    \begin{subfigure}{.45\textwidth} 
+    \begin{subfigure}{.3\textwidth} 
   \centering
   \tikz[remember picture]\node[inner sep=0pt,outer sep=0pt] (b) {}; \includegraphics[width=0.8\linewidth]{imagenes/chapter2/AfterSVMExample.png}
     \end{subfigure}
-  \tikz[remember picture,overlay]\draw[line width=1pt,-stealth,black] ([xshift=2mm,yshift=2.8cm]a.east) -- ([xshift=-2mm, yshift=2.8cm]b.west)node[midway,above,text=black,font=\LARGE\bfseries\sffamily] {};
-
-    \begin{subfigure}{.45\textwidth}
+  \tikz[remember picture,overlay]\draw[line width=1pt,-stealth,black] ([xshift=2mm,yshift=2cm]a.east) -- ([xshift=-2mm, yshift=2cm]b.west)node[midway,above,text=black,font=\LARGE\bfseries\sffamily] {};
+  \caption{
+  Ejemplo de aprendizaje supervisado, vemos como a partir de un conjunto de clases etiquetadas aprendemos un hiper plano que 
+  las separa. 
+  }
+  \label{fig:SupervisedExample}
+\end{figure}
+\begin{figure}[htp]
+  \centering
+    \begin{subfigure}{.3\textwidth}
   \centering
   \includegraphics[width=0.8\linewidth]{imagenes/chapter2/BeforeClusteringExample.png} 
   \tikz[remember picture]\node[inner sep=0pt,outer sep=0pt] (c) {}; 
     \end{subfigure}
-    \begin{subfigure}{.45\textwidth} 
+    \begin{subfigure}{.3\textwidth} 
   \centering
   \tikz[remember picture]\node[inner sep=0pt,outer sep=0pt] (d) {}; \includegraphics[width=0.8\linewidth]{imagenes/chapter2/AfterClusteringExample.png}
     \end{subfigure}
-  \tikz[remember picture,overlay]\draw[line width=1pt,-stealth,black] ([xshift=2mm,yshift=2.8cm]c.east) -- ([xshift=-2mm, yshift=2.8cm]d.west)node[midway,above,text=black,font=\LARGE\bfseries\sffamily] {};
+  \tikz[remember picture,overlay]\draw[line width=1pt,-stealth,black] ([xshift=2mm,yshift=2cm]c.east) -- ([xshift=-2mm, yshift=2cm]d.west)node[midway,above,text=black,font=\LARGE\bfseries\sffamily] {};
 
-  \caption{Ejemplo de aprendizaje supervisado y no supervisado. En el primer par, 
-  vemos como dado un conjunto de clases etiquetadas aprendemos un hiper plano que 
-  las separa. En el segundo, dado un conjunto de puntos aprendemos un conjunto de clases.
+  \caption{
+  Ejemplo de aprendizaje no supervisado, dado un conjunto de puntos aprendemos un conjunto de clases 
+  a partir de los patrones.
 }
-  \label{fig:MLExamples}
+  \label{fig:UnsupervisedExample}
+\end{figure}
+
+\section{Aprendizaje Profundo}
+En el aprendizaje profundo o \emph{Deep Learning} (\emph{DL}), 
+a diferencia de los modelos anteriores donde tenemos un conjunto de variables 
+extraídas por un humano experto, las características sobre la cual inferimos 
+son obtenidas por el propio modelo automáticamente\cite{DeepLMITPress, DeepLearningNature, DeepLearningInNN}.
+En términos generales, la extracción automática de características suele 
+desempeñar mejores resultados en contra de las características manuales.
+
+La mayoría de los modelos de DL son basados en múltiples capas jerárquicas de 
+procesado de datos. Las más conocidas son las redes neuronales (ANN, por sus siglas 
+en inglés), modelo bioinspirado que simula el funcionamiento de las neuronas del cerebro
+humano (abstracción simplificada)\cite{ANNForPattern,ANNCambridge}. 
+
+A alto nivel, el funcionamiento de una red neuronal implica tres etapas principales: 
+entrada, procesamiento y salida. En la etapa de entrada, se proporciona a la red 
+neuronal un conjunto de datos o características que representan la información 
+que se desea analizar o procesar. Estos datos de entrada se propagan a través 
+de la red neuronal (\emph{feedforward}). En la etapa de procesamiento, las neuronas reciben las entradas 
+y realizan cálculos utilizando pesos y funciones de activación. Los pesos representan 
+la importancia relativa de las diferentes entradas en el cálculo, y las funciones 
+de activación determinan la salida de una neurona en función de su entrada. A medida que los datos se propagan a través de la red neuronal, las capas intermedias 
+procesan y combinan las entradas, extrayendo características relevantes y creando 
+representaciones internas cada vez más abstractas. Esto permite que la red neuronal aprenda y 
+descubra patrones en los datos. Finalmente, en la etapa de salida, la red neuronal 
+produce una respuesta o predicción basada en las características extraídas. 
+Esto puede ser la clasificación de una imagen, la predicción de un valor numérico o 
+cualquier otro resultado deseado. En esta última etapa se calcula el error de 
+predicción respecto a la salida deseada con la función de pérdida y se ajusta 
+los pesos respectivamente.
+
+El aprendizaje de una red neuronal se logra mediante un proceso llamado entrenamiento.
+Donde de forma iterativa repetimos el proceso descrito anteriormente varias veces 
+con distintos ejemplos. El conjunto de datos es muy relevante para el correcto 
+aprendizaje. Debe de ser representativo, extenso y limpio de anormalidades ya que 
+estaremos extrayendo características y relevancias a partir de ellos.
+
+En definitiva, una red neuronal es en esencia una serie de ajustes de parámetros para lograr el resultado deseado. 
+Estos incluyen ajuste de los pesos y sesgos iniciales, selección de las funciones de activación, 
+como las más utilizadas sigmoide o ReLU, de una función de pérdida y un optimizador, 
+encargado de determinar como ajustar los pesos según el error obtenido en cada fase del entrenamiento.
+No obstante, existe un fenómeno denominado sobreentrenamiento o \emph{overfitting}. 
+Ocurre cuando hay un sobreajuste de los parámetros
+hacia los datos de entrenamiento, disminuyendo la capacidad de generalización del modelo. 
+Informalmente, es como decir que el modelo ha memorizado los resultados y por ello 
+con datos nunca vistos posee errores substancialmente altos. Para lidiar con estos 
+problemas se deben eliger también formas de regularización del modelo, es decir, 
+restricción sobre el entrenamiento para evitar el sobre ajuste. 
+
+\begin{figure}[htp]
+  \centering
+  \includegraphics[width=\textwidth]{imagenes/chapter2/ANNVisualization.png}
+  \caption{Ejemplo gráfico de una red neuronal\cite{
+    NeuronImages, NeuronSimilarity, ShallowAndDeepNN
+    }. En (a) vemos una neurona con 
+  su representación artificial simplificada (b). En (c) vemos una conexión entre 
+  neuronas y en (d) la representación de diferentes profundidades de conexiones artificiales}
+  \label{fig:ANNVisualization}
 \end{figure}
 
 
-\section{Aprendizaje Profundo}
-El aprendizaje profundo o \emph{Deep Learning} (\emph{DL}) 
 \subsection{Redes Convolucionales} 
 \subsection{Aplicadas a Videos} 
 \section{Ensemble o Conjunto \emph{Deep Learning}}
