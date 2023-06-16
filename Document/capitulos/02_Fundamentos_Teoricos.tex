@@ -235,9 +235,112 @@ restricción sobre el entrenamiento para evitar el sobre ajuste.
   \label{fig:ANNVisualization}
 \end{figure}
 
-
 \subsection{Redes Convolucionales} 
+Las redes convolucionales o \emph{convolutional neural network} (CNN)\cite{ConvolutionalZipCode, ConvolutionInRadiology}
+son un tipo de arquitectura de redes neuronales diseñadas 
+específicamente para el procesamiento de datos estructurados en forma de matrices, como imágenes.
+Se ha descubierto que son aplicables para el procesado de texto, sonidos y, recientemente,
+a superficies tridimensionales.
+Utilizan capas convolucionales que aplican filtros a regiones locales de la entrada 
+para extraer características relevantes. En la figura (\ref{fig:RadiographyConvolutionExample})
+podemos ver un ejemplo de esquema jerárquico de extracción de características para el 
+diagnóstico médico a partir de una radiografía. Con ese ejemplo se puede observar 
+las diferencias con respecto a las ANN, posee dos capas adicionales: capas convolucionales 
+y capas de \emph{pooling}.
+
+\begin{figure}[htp]
+  \centering
+  \includegraphics[width=\textwidth]{imagenes/chapter2/RadiographyConvolutionExample.png}
+  \caption{Ejemplo extraída de \cite{RadiographyConvolutionExample} del proceso de convolución sobre una radiografía pulmonar 
+  para la detección de enfermedades.}
+  \label{fig:RadiographyConvolutionExample}
+\end{figure}
+
+\subsection{Capas convolucionales}
+Para simplificar la explicación, la realizaremos sobre imágenes 2D. 
+Una capa convolucional es encargada de realizar la operación de convolución sobre 
+los datos de entrada. 
+La convolución se refiere a una operación matemática que combina dos funciones para crear una tercera función.
+En este caso, se aplica una operación de convolución 
+entre una matriz de entrada (como una imagen) y un filtro (\emph{kernel}).
+La operación de convolución implica deslizar el filtro sobre la matriz de entrada, 
+multiplicando los elementos coincidentes y sumándolos para obtener un único valor 
+en la matriz de salida, conocida como mapa de características. 
+Este proceso se repite en diferentes ubicaciones de la matriz de 
+entrada para generar el mapa de características completo. En la figura 
+(\ref{fig:ConvolutionalRepresentation}) vemos una operación sobre la ubicación 
+inicial de la imagen, esquina superior izquierda. 
+La elección del siguiente trozo 
+o \emph{patch} de la imagen suele venir determinado por el paso o \emph{stride}.
+Habitualmente se utiliza un \emph{stride} de 1. Es decir, elegimos la matriz 
+adyaciente con distance horizontal igual a 1 hasta llegar al final de esa fila 
+y luego nos deplazamos 1 hacia abajo. 
+Por medio de este proceso, la red es capaz de
+capturar dependencias temporales y espaciales en los datos con la aplicación
+de los filtros relevantes.
+
+Podemos observar en (\ref{fig:ConvolutionalRepresentation} que aplicar directamente 
+el operador de convolución a una imagen resulta en una reducción del tamaño del mapa 
+de activación debido a la naturaleza del operador. 
+Sin embargo, esto no siempre es deseable. 
+Para abordar este problema, se puede agregar relleno o \emph{padding} a la imagen 
+de entrada utilizando información existente en la misma. 
+Esto garantiza que el mapa de activación tenga la misma dimensionalidad que 
+la imagen original. Además, es posible reducir aún más la salida ajustando 
+los saltos o \emph{strides} del filtro de convolución mientras se recorre la imagen.
+
+\begin{figure}[htp]
+  \begin{center}
+    \includegraphics[width=0.95\textwidth]{imagenes/chapter2/ConvolutionalRepresentation.png}
+  \end{center}
+  \caption{Representación visual de la operación de convolución sobre una imagen, extraída de\cite{ConvolutionalRepresentation}.
+  }
+  \label{fig:ConvolutionalRepresentation}
+\end{figure}
+
+\subsection{Capa de pooling} 
+El propósito principal de las capas de \emph{pooling} es reducir la cantidad de parámetros 
+y la complejidad computacional de la red, al tiempo que conservan las características 
+más relevantes. Además, el \emph{pooling} puede ayudar a hacer que la representación sea 
+invariante a pequeñas variaciones en la posición o el tamaño de los objetos en la 
+imagen, lo que mejora la capacidad de generalización del modelo.
+
+En la figura (\ref{fig:PoolingExample}) vemos un operador de \emph{pooling} común,
+el operador de valor máximo. También es habitual el uso del operador de valor medio y
+valor mínimo.
+El pooling, al igual que la convolución, posee un filtro o ventana que recorre
+los datos dado un salto o stride al moverse por los mismos,
+
+Las capas convolucionales y de pooling trabajan en conjunto para procesar y extraer 
+características. 
+Dependiendo de la complejidad del problema, se puede ajustar el número de estas.
+
+\begin{figure}[htp]
+  \begin{center}
+    \includegraphics[width=0.65\textwidth]{imagenes/chapter2/MaxpoolSample.png}
+  \end{center}
+
+  \caption{
+    Ejemplo de operación de \emph{max-pooling} con \emph{stride} a 2.
+  }
+  \label{fig:PoolingExample}
+\end{figure}
+
+\subsection{Capas totalmente conectadas}
+Las capas totalmente conectadas o \emph{fully connected}, también llamadas 
+capas densas o \emph{dense}, son aquellas en las que todas sus neuronas 
+están conectadas con todas las neuronas de la capa anterior y de la
+siguiente. Si bien existen modelos totalmente convolucionales, resulta común
+que las CNN's incluyan capas totalmente conectadas al final de la arquitectura.
+Estas capas forman una ANN clásica.
+La salida de la última capa densa, siendo la salida de la red entera, es donde
+se evaluará la función de pérdida elegida, y al igual que en una red neuronal
+clásica.
+
+
 \subsection{Aplicadas a Videos} 
+
 \section{Ensemble o Conjunto \emph{Deep Learning}}
+
 \section{Imágenes médicas, Métricas y Distorsiones}
 \label{sec:Distorsiones}
