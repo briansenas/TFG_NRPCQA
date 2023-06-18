@@ -32,7 +32,7 @@ de compresión o características extraídas de una región de interés específ
 Y por último, tenemos aquellos problemas donde desconocemos el origen y cualquier 
 información respecto a la imagen inicial, denominados problemas ``\emph{No reference}''(\emph{NR}).
 Estas métricas están exentas de cualquier información de referencia y se 
-centran en capturar características generales de calidad. 
+centran en capturar características generales de calidad.
 
 La evaluación de calidad de imagen sin referencia es, quizás, el problema 
 más difícil en el análisis de imágenes. De cierto modo, el modelo debe ser 
@@ -44,7 +44,7 @@ Para resolver problemas NR, debemos disponer de conocimientos de la naturaleza d
 de las que tratamos y los efectos de las distorsiones. Lo que se denomina 
 estadísticas naturales de escena (NSS, por sus siglas en inglés). Un ejemplo 
 sería JPEG, un algoritmo de compresión que se codifica por bloques 8x8. Los efectos
-negativos de la compresión se representan por el difuminado entre bloques y los artefactos que presentan.
+negativos de la compresión se representan por el difuminado entre bloques y los artefactos que generan.
 Entender estos efectos permite diseñar métricas específicas\cite{SpatialDomainForJPEG, FrecuencyDomainForJPEG}
 
 As veces resulta difícil describir las características de la imagen y los efectos 
@@ -219,10 +219,10 @@ encargado de determinar como ajustar los pesos según el error obtenido en cada 
 No obstante, existe un fenómeno denominado sobreentrenamiento o \emph{overfitting}. 
 Ocurre cuando hay un sobreajuste de los parámetros
 hacia los datos de entrenamiento, disminuyendo la capacidad de generalización del modelo. 
-Informalmente, es como decir que el modelo ha memorizado los resultados y por ello 
+Informalmente, es como decir que el modelo ha memorizado los resultados y, por ello, 
 con datos nunca vistos posee errores substancialmente altos. Para lidiar con estos 
 problemas se deben eliger también formas de regularización del modelo, es decir, 
-restricción sobre el entrenamiento para evitar el sobre ajuste. 
+restricciones sobre el entrenamiento para evitar el sobre ajuste. 
 
 \begin{figure}[htp]
   \centering
@@ -231,7 +231,7 @@ restricción sobre el entrenamiento para evitar el sobre ajuste.
     NeuronImages, NeuronSimilarity, ShallowAndDeepNN
     }. En (a) vemos una neurona con 
   su representación artificial simplificada (b). En (c) vemos una conexión entre 
-  neuronas y en (d) la representación de diferentes profundidades de conexiones artificiales}
+  neuronas y en (d) la representación de diferentes profundidades de conexiones artificiales.}
   \label{fig:ANNVisualization}
 \end{figure}
 
@@ -273,13 +273,13 @@ inicial de la imagen, esquina superior izquierda.
 La elección del siguiente trozo 
 o \emph{patch} de la imagen suele venir determinado por el paso o \emph{stride}.
 Habitualmente se utiliza un \emph{stride} de 1. Es decir, elegimos la matriz 
-adyaciente con distance horizontal igual a 1 hasta llegar al final de esa fila 
+adyaciente con distancia horizontal igual a 1 hasta llegar al final de esa fila 
 y luego nos deplazamos 1 hacia abajo. 
 Por medio de este proceso, la red es capaz de
 capturar dependencias temporales y espaciales en los datos con la aplicación
-de los filtros relevantes.
+de los filtros correspondientes.
 
-Podemos observar en (\ref{fig:ConvolutionalRepresentation} que aplicar directamente 
+Podemos observar en (\ref{fig:ConvolutionalRepresentation}) que aplicar directamente 
 el operador de convolución a una imagen resulta en una reducción del tamaño del mapa 
 de activación debido a la naturaleza del operador. 
 Sin embargo, esto no siempre es deseable. 
@@ -335,12 +335,211 @@ que las CNN's incluyan capas totalmente conectadas al final de la arquitectura.
 Estas capas forman una ANN clásica.
 La salida de la última capa densa, siendo la salida de la red entera, es donde
 se evaluará la función de pérdida elegida, y al igual que en una red neuronal
-clásica.
-
+clásica se utilizará este valor para ajustar los pesos.
 
 \subsection{Aplicadas a Videos} 
+Las redes convolucionales se pueden llegar a aplicar incluso a videos. 
+Para ello, se puede utilizar una variante de las redes convolucionales llamada 
+redes convolucionales 3D(3D CNNs) o redes convolucionales espaciotemporales. 
+Estas redes están diseñadas específicamente para capturar tanto las características 
+espaciales como las temporales presentes en los videos.
+
+La principal diferencia entre una red convolucional tradicional y una 3D CNN es 
+la adición de una dimensión temporal en las operaciones de convolución. 
+En lugar de considerar solo imágenes individuales, se toman secuencias de imágenes 
+(\emph{frames}) para capturar la información temporal.
+
+En este TFG se explora el uso de una 3D CNN capaz de analizar videos que pertenece 
+a la familia que se conoce como \emph{SlowFast networks}\cite{SlowFastNetworks}. Están basadas en dos caminos 
+de entrada de datos. Un conjunto de \emph{frames} espaciados en el tiempo, 
+\emph{slow path}, para obtener información espacial y otro con todos ellos, \emph{fast path}, 
+para obtener información de movimiento, ver (\ref{fig:SlowFastPathways}). 
+
+\begin{figure}[htp]
+  \begin{center}
+    \includegraphics[width=0.5\textwidth]{imagenes/chapter2/SlowFastPathways.png}
+  \end{center}
+  \caption{Ejemplo extraído de\cite{SlowFastNetworks} para ilustrar la distinción 
+  entre la extracción espacial del camino ``\emph{slow path}'' y de movimiento con el ``\emph{fast path}''.}
+  \label{fig:SlowFastPathways}
+\end{figure}
+
+\subsection{Aplicadas a nubes de puntos}
+
+De forma similar al caso de lo videos, actualmente existen modelos de 3D CNN's 
+capaces de procesar nubes de puntos al añadir una dimensión más que representa 
+la profundidad de los puntos.  Sin embargo, la complejidad de diseño y tiempo de cómputo para 
+estos modelos 3D crece enormemente. Ya que habitualmente las nubes de puntos 
+están formadas por puntos dispersos en el espacio, en lo que denominamos datos 
+sin estructura ni orden propio, y debemos mapear una operación 
+de convolución que está basada en operaciones sobre datos ordenados y estructurados. 
+
+Aunque cada vez hay más métodos que se aplican directamente sobre la nube de puntos 
+desde la publicación de \emph{PointNet}\cite{PointNet}, habitualmente se 
+intenta estructurar la información de las nubes de puntos mediante lo que 
+denominamos vóxeles\cite{VoxelizationExample}. 
+La voxelización es el proceso de transformar una nube de puntos u otra representación 
+tridimensional en una estructura discreta conocida como volumen voxelizado. 
+Esto implica dividir el espacio tridimensional en una cuadrícula de voxels y asignar 
+valores a cada voxel según la información contenida en los datos originales. 
+La voxelización proporciona una representación estructurada y discreta que permite 
+el uso de técnicas específicas para volúmenes y facilita el procesamiento y análisis 
+de datos 3D.
+
+\begin{figure}[htp]
+  \centering
+  \includegraphics[width=0.8\textwidth]{imagenes/chapter2/VoxelizationExample.png}
+  \caption{Ejemplo extraído de\cite{VoxelizationExample} que demuestra el resultado 
+  de tranformar una nube de puntos sin estructura en una cuadrícula voxelizada.}
+  \label{fig:VoxelizationExample}
+\end{figure}
 
 \section{Ensemble o Conjunto \emph{Deep Learning}}
+Un \emph{ensemble}, en el contexto del aprendizaje automático, es una técnica que 
+combina múltiples modelos de aprendizaje para mejorar la precisión y el rendimiento 
+general de las predicciones. En lugar de depender de un único modelo, 
+se crean múltiples modelos y se combinan sus predicciones para obtener un resultado 
+final más robusto y preciso\cite{IAModernApproach, DataMiningHandbook, MedicalEnsembleExample }.
 
-\section{Imágenes médicas, Métricas y Distorsiones}
+La idea fundamental detrás de los \emph{ensembles} es que los diferentes modelos pueden 
+tener fortalezas y debilidades diferentes, y al combinar sus predicciones, se 
+puede obtener una mejor generalización y un mayor rendimiento en una variedad de 
+situaciones. Para construir un \emph{ensemble} se suele utilizar un conjunto 
+de técnicas que se describirán a continuación. 
+
+El \emph{bagging} consiste en generar múltiples conjuntos de datos de entrenamiento 
+mediante muestreo con reemplazo, entrenando un modelo en cada conjunto y 
+promediando o ponderando sus predicciones. 
+En el \emph{boosting}, los modelos se construyen secuencialmente, corrigiendo los errores 
+del modelo anterior, y se combinan para formar un modelo más fuerte. 
+La aumentación de datos consiste en ampliar el conjunto de entrenamiento para
+mejorar la capacidad de generalización del modelo y reducir el sobreajuste por 
+medio de transformaciones sobre los datos como la rotación y ampliación, 
+se podría usar como paso en el proceso de \emph{bagging}.
+Los \emph{random forests} combinan \emph{bagging} y árboles de decisión, 
+generando múltiples árboles utilizando diferentes subconjuntos de datos y características. 
+Las predicciones de los árboles individuales se combinan para obtener la predicción final.
+Por último, el \emph{stacking} entrena múltiples modelos base y utiliza un meta-modelo 
+para combinar sus predicciones. 
+Cada estrategia tiene sus beneficios y consecuencias.
+
+El presente TFG evalua el uso de un meta-modelo para la estimación de calidad de 
+las imágenes médicas 3D sin referencia.
+
+\begin{figure}[htp]
+  \centering
+  \includegraphics[width=\textwidth]{imagenes/chapter2/EnsembleExample.png}
+  \caption{Representación de métodos de \emph{ensemble} extraído de\cite{MedicalEnsembleExample}}
+  \label{fig:EnsembleExample}
+\end{figure}
+
+\section{Imágenes médicas y distorsiones}
 \label{sec:Distorsiones}
+Las tomografías computarizadas (CT) son un tipo de técnica de imagen médica 
+que utiliza rayos X para obtener imágenes detalladas del interior del cuerpo. 
+Durante una tomografía computarizada, el paciente se coloca en una mesa que se 
+mueve a través de un anillo en forma de donut llamado \emph{gantry}. Dentro del \emph{gantry},
+se encuentra un tubo de rayos X que gira alrededor del paciente, emitiendo haces 
+de rayos X en forma de abanico.
+Los detectores ubicados en el lado opuesto del \emph{gantry} registran la cantidad de 
+rayos X que atraviesan el cuerpo del paciente. Estos datos se recopilan en 
+múltiples ángulos y se utilizan para reconstruir imágenes transversales del cuerpo. 
+
+\begin{figure}[htp]
+  \begin{subfigure}{2\textwidth}
+  \hspace{1cm}\includegraphics[width=0.5\textwidth]{imagenes/chapter2/CTDir.png}
+  \end{subfigure}
+  \begin{subfigure}{2\textwidth}
+  \includegraphics[width=0.5\textwidth]{imagenes/chapter2/CT2Volume.png}
+  \end{subfigure}
+  \caption{Ejemplo de tomografía computarizada y modelo 3D\cite{CT2Volume}}
+  \label{fig:CT2Volume}
+\end{figure}
+
+El número de imágenes en una tomografía computarizada se selecciona en función 
+de varios factores, como el área del cuerpo que se está examinando, el propósito 
+clínico de la exploración y las preferencias del radiólogo o médico que interpreta 
+las imágenes. Ajustar el número de imágenes puede influir en el tiempo de adquisición, 
+la cantidad de radiación utilizada y la cantidad de información detallada que se 
+obtiene de la exploración. Afecta directamente a la calidad del modelo 3D generado 
+al final ya que el número de cortes es la tercera dimensión que relaciona las imágenes 
+(profundidad).
+
+
+Sobre todo nos centraremos en las distorsiones geométricas que ocurren en la 
+generación volumétrica de la imagen. La generación del volumen consiste en 
+disponer de un conjunto segmentado\footnote{
+La segmentación se refiere al proceso de dividir una imagen o conjunto de datos en regiones o componentes más pequeños. 
+Ejemplo, en una foto del bosque, segmentamos los árboles para distinguirlos del suelo.
+} en todas las capas de las imágenes. A continuación usando el conjunto segmentado 
+unificamos las coordenadas de los puntos por medio de intersecciones entre rayos 
+proyectados sobre las imágenes (\emph{ray casting}), ver (\ref{fig:CT2Volume}).
+
+\begin{figure}[htp]
+  \centering 
+  \includegraphics[width=\textwidth]{imagenes/chapter2/DicomDistortionsExample.png}
+  \caption{Ejemplo de artefactos sobre imágenes Dicom\cite{DicomDistortionsExample}: 
+  (a) un artefacto de anilo, (b) un difuminado provocado por movimiento, 
+  (c) artefactos producidos por interpolación helicoidal, (d) artefactos de iluminación y dispersión del haz.  }
+  \label{fig:DicomDistortionsExample}
+\end{figure}
+
+Dentro de las causas de las distorsiones geométricas sobre los volúmenes 
+3D están el difuminado por movimiento, errores de contraste (dificultad al segmentar),
+artefactos luminosos y problemas de interpolación o ruido al generar la proyección (\ref{fig:DicomDistortionsExample}). 
+
+Para simularlo, partiremos de ejemplos de imágenes médicas consideradas exentas de 
+distorsiones, con su segmentación correspondiente realizada por profesionales.
+A continuación, generaremos la representación volumétrica como una nube de puntos 
+y sobre ella simularemos las distorsiones. 
+
+Dos de ellas serán para simular los resultados de varios algoritmos de compression, 
+como puede ser \emph{octree compression}\cite{OctreeCompression} y la reducción de número de puntos 
+por medio de mostreo uniforme (\emph{uniform downsampling}), que suele ser el paso 
+previo a cualquier transmisión de información. 
+Un \emph{octree} es una representación más eficiente que los vóxeles, se trata 
+de la descomposición de forma recursiva de la escena en 8 partes hasta 
+la profundidad máxima, donde cada nodo representa un cubo tridimensional 
+llamado octante. En la compresión se analiza los octantes y se elimina los que aportan 
+menos información. 
+En el segundo, realizamos la reducción de la cantidad de puntos manteniendo 
+una distribución uniforme en el espacio tridimensional.
+
+Las demás representarán efectos que podrían ocurrir por desplazamiento de los puntos, 
+como el movimiento del paciente y aquellos provocados por ruido en la transmissión de datos.
+
+\begin{figure}[htp]
+  \begin{subfigure}[b]{.5\textwidth}
+    \centering
+    \includegraphics[width=\textwidth]{imagenes/chapter2/clavicula/clavicula_0.png}
+  \end{subfigure}
+  \hfill
+  \begin{subfigure}[b]{.5\textwidth}
+    \centering
+    \includegraphics[width=\textwidth]{imagenes/chapter2/clavicula/clavicula_1.png}
+  \end{subfigure}
+  \begin{subfigure}[b]{.5\textwidth}
+    \centering
+    \includegraphics[width=\textwidth]{imagenes/chapter2/clavicula/clavicula_2.png}
+  \end{subfigure}
+  \hfill
+  \begin{subfigure}[b]{.5\textwidth}
+    \centering
+    \includegraphics[width=\textwidth]{imagenes/chapter2/clavicula/clavicula_3.png}
+  \end{subfigure}
+  \begin{subfigure}[b]{.5\textwidth}
+    \centering
+    \includegraphics[width=\textwidth]{imagenes/chapter2/clavicula/clavicula_4.png}
+  \end{subfigure}
+  \begin{subfigure}[b]{.5\textwidth}
+    \centering
+    \includegraphics[width=\textwidth]{imagenes/chapter2/clavicula/clavicula_5.png}
+  \end{subfigure}
+  \caption{Ejemplo de distorsiones generadas. Leyendo de izquierda a derecha tenemos:
+    la imagen original, compressión \emph{octree}, reducción de puntos por \emph{uniform downsampling},
+    movimiento local, rotación local y ruido gaussiano.
+  }
+  \label{fig:DistorsionesGeneradas}
+\end{figure}
+
+
