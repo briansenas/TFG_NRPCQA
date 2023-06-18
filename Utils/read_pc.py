@@ -4,6 +4,7 @@ import argparse
 import open3d as o3d
 import struct 
 import glob 
+from PIL import Image
 
 def estimate_point_spacing(point_cloud):
     point_cloud = np.asarray(point_cloud.points)
@@ -165,6 +166,44 @@ def convert_obj_to_ply(file_name, output_file=None):
         output_file = file_name.split('.')[0] + ".ply"
     om.write_mesh(output_file, mesh)
     return output_file 
+
+def generate_examples_png(input_dir, output_dir): 
+    example_1 = os.path.join(input_dir, 'Clavicula100014_6.ply') 
+    example_2 = os.path.join(input_dir, 'Clavicula100014_13.ply') 
+    example_3 = os.path.join(input_dir, 'Clavicula100014_18.ply') 
+    example_4 = os.path.join(input_dir, 'Clavicula100014_24.ply') 
+    example_5 = os.path.join(input_dir, 'Clavicula100014_30.ply') 
+
+    reference = os.path.join(input_dir, '../../STDRemoved', 'Clavicula100014.ply')  
+
+    examples = [
+        reference, 
+        example_1, 
+        example_2, 
+        example_3, 
+        example_4, 
+        example_5, 
+    ]
+
+    vis = o3d.visualization.Visualizer() # fix: move outside of the loop
+    vis.create_window(visible=False)
+    rot_mat = np.dot(np.eye(3), o3d.geometry.get_rotation_matrix_from_axis_angle([0, np.radians(180), 0]))
+    for i, example in enumerate(examples):
+        pcd = o3d.io.read_point_cloud(example)
+        pcd.estimate_normals()
+        # Rotate pointcloud
+        pcd.rotate(rot_mat)
+        # Convert pointcloud to image
+        vis.clear_geometries()
+        vis.add_geometry(pcd) # fix: use the loaded point cloud
+        ctr = vis.get_view_control()
+        ctr.set_zoom(0.4)
+        vis.update_renderer()
+        vis.poll_events()
+        img = vis.capture_screen_float_buffer(True)
+        img = Image.fromarray((np.asarray(img) * 255).astype(np.uint8))
+        img.save(os.path.join(output_dir, f"clavicula_{i}.png"))
+
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser()
