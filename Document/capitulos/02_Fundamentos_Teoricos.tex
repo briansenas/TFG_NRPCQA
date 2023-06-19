@@ -13,7 +13,7 @@ y se denomina ``\emph{Full Reference}''(\emph{FR}).
 La tarea, aparentemente sencilla, en realidad presenta una complejidad alta dada por 
 la necesidad de codificar la percepción humana a la hora de calificar la calidad 
 de una imagen\cite{WhyIsIQASoDifficult}. Ya que métricas que miden distancias no suelen 
-ser suficientes al no haber buena correlación entre la calidad percebida y el 
+ser suficientes al no haber buena correlación entre la calidad percibida y el 
 resultado de la métrica.
 
 La mayoría de las veces no se menciona, pero al optar métodos de sensibilidad 
@@ -61,7 +61,7 @@ sobre objetos tridimensionales para entrenar y evaluar modelos.
 
 \footnotetext[2]{La distancia de \emph{Minkowski} es una métrica 
 vectorial que puede considerarse como una generalización tanto de 
-la distancia euclidia como de la distancia de Manhattan . }
+la distancia euclídea como de la distancia de Manhattan . }
 \footnotetext[3]{\emph{Mean squared error} o error cuadrático medio 
   es una métrica de distancia que se calcula como la media de la suma de las 
   diferencias al cuadrado.}
@@ -105,7 +105,7 @@ algunas distorsiones producen efectos visuales más marcados que otras.}
 
 
 \section{Aprendizaje Automático}
-El aprendizaje automático\cite{IAModernApproach} o \emph{MachineLearning} (\emph{ML}) 
+El aprendizaje automático\cite{IAModernApproach} o \emph{Machine Learning} (\emph{ML}) 
 es una de las ramas que compone lo que definimos como 
 la inteligencia artificial (\emph{IA}). Esta última se puede definir, 
 según\cite{WhatIsAI}, como 
@@ -129,14 +129,14 @@ anotados, es decir, con las salidas deseadas para cada ejemplo y en el segundo
 se espera que sea la máquina la que determine los patrones~(\ref{fig:SupervisedExample}, \ref{fig:UnsupervisedExample}). 
 
 En general se suelen aplicar las técnicas de \emph{ML} sobre grandes conjuntos 
-de datos sobre los cuales deseamos detectar los patrones subyacientes\cite{
+de datos sobre los cuales deseamos detectar los patrones subyacentes\cite{
 DataMiningHandbook}.
 
-Puede observarse que dada estas descripciones, al problema presente podemos 
-aplicarle alguna técnica de \emph{ML}: Tenemos datos de entrada (caracteríticas 
-extraídas de nubes de puntos distorisionadas) y una salida (valor de calidad). Además, existen conjuntos de 
-datos públicos etiquetadas para distintos tipos de distorsiones. Esto significa que
-estamos entre un problema de aprendizaje supervisado.
+Puede observarse que dadas estas descripciones, el problema presente puede ser 
+abordados mediante técnicas de \emph{ML}: Tenemos datos de entrada (características 
+extraídas de nubes de puntos distorsionadas) y una salida (valor de calidad). Además, existen conjuntos de 
+datos públicos etiquetadas para distintos tipos de distorsiones. Así,
+estamos ante un problema de aprendizaje supervisado.
 
 \begin{figure}[htp]
   \centering
@@ -221,7 +221,7 @@ Ocurre cuando hay un sobreajuste de los parámetros
 hacia los datos de entrenamiento, disminuyendo la capacidad de generalización del modelo. 
 Informalmente, es como decir que el modelo ha memorizado los resultados y, por ello, 
 con datos nunca vistos posee errores substancialmente altos. Para lidiar con estos 
-problemas se deben eliger también formas de regularización del modelo, es decir, 
+problemas se deben elegir también formas de regularización del modelo, es decir, 
 restricciones sobre el entrenamiento para evitar el sobre ajuste. 
 
 \begin{figure}[htp]
@@ -273,8 +273,8 @@ inicial de la imagen, esquina superior izquierda.
 La elección del siguiente trozo 
 o \emph{patch} de la imagen suele venir determinado por el paso o \emph{stride}.
 Habitualmente se utiliza un \emph{stride} de 1. Es decir, elegimos la matriz 
-adyaciente con distancia horizontal igual a 1 hasta llegar al final de esa fila 
-y luego nos deplazamos 1 hacia abajo. 
+adyacente con distancia horizontal igual a 1 hasta llegar al final de esa fila 
+y luego nos desplazamos 1 hacia abajo. 
 Por medio de este proceso, la red es capaz de
 capturar dependencias temporales y espaciales en los datos con la aplicación
 de los filtros correspondientes.
@@ -340,7 +340,7 @@ clásica se utilizará este valor para ajustar los pesos.
 \subsection{Aplicadas a Videos} 
 Las redes convolucionales se pueden llegar a aplicar incluso a videos. 
 Para ello, se puede utilizar una variante de las redes convolucionales llamada 
-redes convolucionales 3D(3D CNNs) o redes convolucionales espaciotemporales. 
+redes convolucionales 3D (3D CNNs) o redes convolucionales espaciotemporales. 
 Estas redes están diseñadas específicamente para capturar tanto las características 
 espaciales como las temporales presentes en los videos.
 
@@ -479,7 +479,7 @@ proyectados sobre las imágenes (\emph{ray casting}), ver (\ref{fig:CT2Volume}).
   \centering 
   \includegraphics[width=\textwidth]{imagenes/chapter2/DicomDistortionsExample.png}
   \caption{Ejemplo de artefactos sobre imágenes Dicom\cite{DicomDistortionsExample}: 
-  (a) un artefacto de anilo, (b) un difuminado provocado por movimiento, 
+  (a) un artefacto de anillo, (b) un difuminado provocado por movimiento, 
   (c) artefactos producidos por interpolación helicoidal, (d) artefactos de iluminación y dispersión del haz.  }
   \label{fig:DicomDistortionsExample}
 \end{figure}
@@ -493,9 +493,9 @@ distorsiones, con su segmentación correspondiente realizada por profesionales.
 A continuación, generaremos la representación volumétrica como una nube de puntos 
 y sobre ella simularemos las distorsiones. 
 
-Dos de ellas serán para simular los resultados de varios algoritmos de compression, 
+Dos de ellas serán para simular los resultados de varios algoritmos de compresión, 
 como puede ser \emph{octree compression}\cite{OctreeCompression} y la reducción de número de puntos 
-por medio de mostreo uniforme (\emph{uniform downsampling}), que suele ser el paso 
+por medio de muestreo uniforme (\emph{uniform downsampling}), que suele ser el paso 
 previo a cualquier transmisión de información. 
 Un \emph{octree} es una representación más eficiente que los vóxeles, se trata 
 de la descomposición de forma recursiva de la escena en 8 partes hasta 
@@ -506,7 +506,7 @@ En el segundo, realizamos la reducción de la cantidad de puntos manteniendo
 una distribución uniforme en el espacio tridimensional.
 
 Las demás representarán efectos que podrían ocurrir por desplazamiento de los puntos, 
-como el movimiento del paciente y aquellos provocados por ruido en la transmissión de datos.
+como el movimiento del paciente y aquellos provocados por ruido en la transmisión de datos.
 
 \begin{figure}[htp]
   \begin{subfigure}[b]{.5\textwidth}
@@ -536,10 +536,9 @@ como el movimiento del paciente y aquellos provocados por ruido en la transmissi
     \includegraphics[width=\textwidth]{imagenes/chapter2/clavicula/clavicula_5.png}
   \end{subfigure}
   \caption{Ejemplo de distorsiones generadas. Leyendo de izquierda a derecha tenemos:
-    la imagen original, compressión \emph{octree}, reducción de puntos por \emph{uniform downsampling},
+    la imagen original, compresión \emph{octree}, reducción de puntos por \emph{uniform downsampling},
     movimiento local, rotación local y ruido gaussiano.
   }
   \label{fig:DistorsionesGeneradas}
 \end{figure}
-
 
