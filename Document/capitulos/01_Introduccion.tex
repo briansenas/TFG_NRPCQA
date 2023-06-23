@@ -4,11 +4,11 @@ Con la demanda incremental de aplicaciones, tanto para el entretenimiento
 como para el estudio biomédico, la información visual cada vez tiene un rol 
 más importante. Sin embargo, la calidad de la información puede sufrir drásticamente
 con las etapas de adquisición, procesado, compresión, transmisión y reproducción.
-Es por ello que poder evaluar la calidad de la información se ha vuelto un 
+Es por ello que poder evaluar dicha calidad se ha vuelto un 
 tema cada vez más importante\cite{VisualMedicalQualityBook}.
 
-La rama sobre la cuál nos centraremos es la evaluación de la calidad de la imagen,
-en inglés \emph{Image Quality assessment} (\emph{IQA}).
+En concreto, este TFG se centra en el estudio de la evaluación de la calidad de la imagen,
+en inglés \emph{Image Quality assessment} (\emph{IQA})\cite{MinkowskiFailure}.
 Es un problema fundamental en el procesamiento de imágenes y de visión 
 por computador. Se refiere a la tarea de medir y cuantificar 
 la calidad perceptual de una imagen, 
@@ -25,7 +25,7 @@ calidad visual o realizar comparaciones entre diferentes versiones de una misma 
 Con base a las respuestas recopiladas, se pueden establecer modelos y 
 métricas que reflejen la calidad percibida por los humanos, también conocida
 como \emph{mean opinion score, MOS}\footnote{
-\emph{Mean Opinion Score} o Valor medio de opinión, consiste en 
+\emph{Mean Opinion Score} o valor medio de opinión, consiste en 
 la media de la opinión de diversas personas para establecer un valor de referencia. 
 }.
 
@@ -42,21 +42,23 @@ para la evaluación de la calidad de la imagen, ya que capturan la apreciación
 humana. Sin embargo, estos enfoques pueden ser costosos y requieren de un número 
 significativo de participantes. 
 Mientras que los enfoques objetivos se pueden llegar a automatizar, haciendo que 
-sea muy prácticos para grandes cantidades de datos y diversas aplicaciones.
+sean muy prácticos para grandes cantidades de datos y diversas aplicaciones.
  
-No obstante, el objetivo es desarrollar algoritmos y métricas que puedan proporcionar una 
+No obstante, el objetivo del campo es desarrollar algoritmos y métricas que puedan proporcionar una 
 estimación precisa y consistente de la calidad de la imagen, teniendo en cuenta
 tanto aspectos subjetivos como objetivos respecto a las distorsiones.
 Y, de esta forma, poder evaluar y comparar diferentes métodos de adquisición, compresión, 
 restauración o manipulación de imágenes teniendo en cuenta que el receptor 
 final es el humano.
  
-Para abordar el problema de la IQA, se emplean diversas técnicas y enfoques. 
+Para abordar el problema de la IQA, se emplean diversas técnicas y enfoques
+\cite{MinkowskiFailure, Wang2006ModernIQ, VisualMedicalQualityBook}.
 Entre ellos se incluyen métodos basados en características,
-modelos de percepción visual, aprendizaje automático y técnicas de procesamiento de señales.
+modelos de percepción visual, aprendizaje automático y técnicas de procesamiento de señales
+\cite{StructuralSimilarityIndex, LinearCombinationIQA, SignalIQADSS}.
 Uno de los enfoques comunes es utilizar características básicas de la imagen. 
 Las características elementales de la imagen son por ejemplo el contraste, 
-la nitidez, la exposición y la uniformidad del color~\cite{Wang2006ModernIQ} . 
+la nitidez, la exposición y la uniformidad del color\cite{MinkowskiFailure,Wang2006ModernIQ}. 
 Estas características pueden ser cuantificadas mediante algoritmos de procesamiento de 
 imágenes y proporcionar una estimación inicial de la calidad. 
  
@@ -65,66 +67,65 @@ visual humano percibe y evalúa la calidad de la imagen. Estos modelos se basan
 en el entendimiento de los mecanismos y procesos perceptuales del cerebro humano, 
 y utilizan características visuales y estadísticas para calcular la calidad percibida
 \cite{MinkowskiFailure, StructuralSimilarityIndex}.
-Buscan emular la forma en que los humanos interpretan y responden 
+Buscan emular la forma en que los humanos responden 
 a las imágenes en términos de su calidad visual\cite{IQAbySaliencyMaps, CascadedIQA}.
  
-Habitualmente, se suelen emplear algoritmos de aprendizaje automático para tratar
-de resolver el problema. Se utilizan técnicas supervisadas o no supervisadas 
-para intentar aproximar una función que a partir del conjunto de características 
-extraídas pueda determinar la calidad de la imagen en una escala específica, 
-generalmente en el rango de 0 a 10.
+Finalmente, se suelen emplear algoritmos de aprendizaje automático para tratar
+de resolver el problema. Se intenta aproximar una función que a partir del conjunto 
+de características extraídas pueda determinar la calidad de la imagen en una escala 
+específica, generalmente en el rango de 0 a 10.
 
 Las aplicaciones comunes de los algoritmos de estimación de calidad suele ser 
 la comparativa entre algoritmos de compresión, ya que permite elegir aquellos con 
 menor pérdida de información, la generación de mapas de calidad\footnote{
   Calidad perceptual en diferentes regiones de la imagen. Resaltan áreas que 
   pueden tener degradación visual o distorsiones.
-}
+},
 permitiendo el estudio de métodos de reducción de ruido,
-la determinación de la calidad del servicio de transmisión o \emph{quality-of-service (QoS)},
+y la determinación de la calidad del servicio de transmisión o \emph{quality-of-service (QoS)},
 ya que permiten evaluar los errores de transmisión\cite{VMAF, VMAFReproducibility}. Se podría incluso 
 extender al pre-procesamiento de datos de entrenamiento o estimar la precisión 
 de un modelo de predicción basado en la calidad de los datos\cite{ApplicationsOfIQA}.
 
-El uso de algoritmos IQA se encuentra ampliamente difundido en el ámbito general de las imágenes 2D. Sin embargo, en este trabajo nos enfocaremos en el ámbito de las aplicaciones médicas y analizaremos los mecanismos existentes a la hora de evaluar la calidad de las imágenes. 
-Lamentablemente, la naturaleza de estas imágenes y las distorsiones que 
-pueden presentar, implican una disminución en la precisión de los modelos 
-cuando se aplican directamente sobre ellas\cite{VisualMedicalQualityBook}.
-A parte, el número de métodos propuestos decrece al desplazarnos a tres dimensiones 
-debido al aumento de complejidad, con ninguno, al momento de escritura, 
-aplicado a imágenes médicas 3D.
-Es por ello que se propone investigar específicamente el uso de métodos tridimensionales para 
-el ámbito biomédico, aplicado a las reconstrucciones y visualizaciones volumétricas 
+El uso de algoritmos IQA se encuentra ampliamente difundido en el ámbito general de las imágenes 2D. 
+Sin embargo, el número de métodos propuestos decrece al desplazarnos a tres dimensiones
+debido al aumento de complejidad.
+Además, en el ámbito médico, la naturaleza de estas imágenes y las distorsiones que pueden 
+presentar, ver Figura \ref{fig:DicomDistortionsExample}, implican una disminución en 
+la precisión de los modelos cuando se aplican directamente sobre ellas\cite{VisualMedicalQualityBook}.
+Por lo tanto, el número de métodos médicos existentes se reduce, con ninguno, al 
+momento de escritura, aplicado a imágenes médicas 3D. 
+
+Es por ello que se propone investigar específicamente el uso de métodos tridimensionales
+para el ámbito biomédico, aplicado a las reconstrucciones y visualizaciones volumétricas 
 que se suelen emplear en medicina.
-
-
 
 \section{Motivación}
  
-En el caso del ámbito biomédico, dado los rápidos avances en las últimas década
-de las técnicas no invasivas de imágenes y la gran cantidad de fabricantes 
+En el caso del ámbito biomédico, dados los rápidos avances en las últimas décadas
+de las técnicas no invasivas y la gran cantidad de fabricantes 
 de equipamientos, nació el estándar \emph{DICOM}~\cite{Parisot1995} en 1995 
-con objetivo de hacer que el intercambio de imágenes médicas se realice de forma 
-fácil, segura y con alta calidad. Permitiendo integración con diversos sistemas e 
-incluso almacenar información extra en forma de metadatos y anotaciones, así como segmentaciones que permiten la reconstrucción 3D de diferentes regiones anatómicas.
+con el objeto de hacer que el intercambio de imágenes médicas se realizase de forma 
+fácil, segura y con alta calidad. Permitiendo la integración con diversos sistemas, 
+almacenar información extra en forma de metadatos y anotaciones, así como segmentaciones que permitan la reconstrucción 3D de diferentes regiones anatómicas.
 
 
 Cada vez más frecuentemente se emplean volúmenes tridimensionales, como tomografías computarizadas (TC) o 
-resonancias magnéticas (RM) en lugar de radiografías convencionales, porque 
+resonancias magnéticas en lugar de radiografías convencionales, porque 
 proporcionan una visión más completa y detallada de la anatomía y las estructuras 
-internas del cuerpo, ver (\ref{fig:SlicerVisualization}). 
+internas del cuerpo, ver Figura \ref{fig:SlicerVisualization}. 
 Esto brinda a los médicos una comprensión más completa de la anatomía,
-les ayuda a identificar con mayor precisión lesiones, enfermedades o anormalidades y a 
-la planificación quirúrgica y otros
-\cite{3DImagingInMedicine, 3DImagingInMedicine2, ADAS3D}.
+les ayuda a identificar con mayor precisión lesiones, enfermedades o anormalidades,
+así como también facilita la planificación quirúrgica, entre otros\cite{3DImagingInMedicine, 3DImagingInMedicine2, ADAS3D}.
  
 \begin{figure}[htp]
   \begin{center}
     \includegraphics[width=0.8\textwidth]{imagenes/chapter1/SlicerVisualization}
   \end{center}
-  \caption{Ejemplo de visualización de un directorio \emph{DICOM}. Se pueden observar
-  las proyecciones axial, coronal y sagital. Además de una renderización volumétrica
-  de los huesos. Para ello se ha utilizado \emph{Slicer3D}~\cite{Slicer3D}}
+  \caption[Ejemplo de visualización de un directorio DICOM.]{Ejemplo de visualización de un directorio \emph{DICOM}. Se pueden observar
+  las proyecciones axial, arriba izquierda, coronal, abajo izquierda, 
+  y sagital, abajo derecha. Además de una renderización volumétrica
+  de los huesos, arriba derecha. Para ello se ha utilizado \emph{Slicer3D}~\cite{Slicer3D}}
   \label{fig:SlicerVisualization}
 \end{figure}
 
@@ -135,11 +136,11 @@ Prevalecen las distorsiones de contraste, ruido y difuminado\footnote{
   los píxeles debido a interferencias de todo tipo. Difuminado se refiere a la 
   pérdida de detalles en los bordes, como una pérdida de enfoque.
 }, 
-que se detallarán en la sección \ref{sec:Distorsiones}.
+que se detallarán en la Sección \ref{sec:Distorsiones}.
 Estas a su vez, podrían afectar al volumen 3D que se puede generar a partir 
 las imágenes médicas. 
  
-En~\cite{XrayRejectionFactor} se estudió las razones por las que se suelen 
+En~\cite{XrayRejectionFactor} se estudiaron las razones por las que se suelen 
 rechazar las radiografías, la relación con la calidad de la imagen y el valor
 del diagnóstico final. Reveló que la mayoría de los rechazos se producen por 
 errores de posicionamiento, valores inadecuados de exposición, artefactos 
@@ -158,26 +159,26 @@ Resultando en reducción de costes (menos pruebas), de tiempo de consultas y
 mejorando la calidad del diagnóstico médico. 
 
 \section{Objetivos}
-Para el desarrollo de este documento se plantean una serie de objetivos. 
-El objetivo principal consiste en desarrollar un método adecuado para abordar al 
+El objetivo principal de este Trabajo de Fin de Grado (TFG) 
+consiste en desarrollar un método adecuado para abordar al 
 problema de la estimación de la calidad de imágenes médicas tridimensionales. 
 Este objetivo se puede descomponer en una serie de metas parciales: 
 \begin{enumerate}
   \item Realizar una revisión del estado del arte para la estimación de calidad 
     de imágenes \emph{3D}, así como de la calidad de imágenes médicas en particular.
-  \item Estudiar las distorsiones comunes en el ámbito de la imagen. 
-    Analizar los patrones de distorsión que afectan la calidad de las imágenes 
+  \item Estudiar las distorsiones más comunes en el ámbito de las imágenes
+    , en general, y analizar los patrones de distorsión que afectan la calidad de las imágenes 
     biomédicas.
-  \item Analizar los enfoques más prometedores que permitan abordar el problema planteado. 
+  \item Analizar los enfoques de inteligencia artificial más prometedores que permitan abordar el problema planteado. 
   \item Generar un conjunto de datos sintético que permita validar 
     los métodos analizados. Para ello, será necesario estudiar diferentes 
-    estrategias y métricas de evaluación objetivas\cite{ITU-R.2012, ITU-r.2021, DatasetGeneration}.
+    estrategias y métricas de evaluación objetivas\cite{ITU-R.2012, ITU-R.2021, DatasetGeneration}.
   \item Realizar un estudio experimental que permita validar los enfoques 
     propuestos y extraer conclusiones sobre su aplicabilidad al problema. 
 \end{enumerate}
 \section{Planificación del proyecto}
-Al planificar el proyecto, es fundamental tener en cuenta que la asignatura del 
-Trabajo Fin de Grado (TFG) tiene una carga de 12 créditos ECTS, donde cada 
+Al planificar el proyecto, es fundamental tener en cuenta el TFG 
+tiene una carga de 12 créditos ECTS, donde cada 
 crédito representa aproximadamente 25 horas de trabajo. 
 En total, se estima que se necesitarán alrededor de 300 horas para llevar a cabo 
 el proyecto. Considerando que el segundo cuatrimestre tiene aproximadamente 20 semanas, 
@@ -225,7 +226,7 @@ Implementación & 6 - 90 &  &  &  &  &  &  &  &  & & & \cellcolor[HTML]{9B9B9B} 
 Pruebas & 6 - 90 &  &  &  &  &  &  &  &  &  &  &  &  &  &  & & \cellcolor[HTML]{9B9B9B} & \cellcolor[HTML]{9B9B9B} & \cellcolor[HTML]{9B9B9B} & \cellcolor[HTML]{9B9B9B} & &  &  &  \\ \hline
 \end{tabular}%
 }
-\caption{Planificación temporal inicial del proyecto}
+\caption{Planificación temporal inicial del proyecto.}
 \label{tab:PlanificacionTemporal}
 \end{table}
 
@@ -251,7 +252,7 @@ Implementación & 8 - 120 &  &  &  &  &  &  &  &  &  \cellcolor[HTML]{9B9B9B} & 
 Pruebas & 6 - 90 &  &  &  &  &  &  &  &  &  &  &  &  & \cellcolor[HTML]{9B9B9B}   & \cellcolor[HTML]{9B9B9B} & & & \cellcolor[HTML]{9B9B9B} & \cellcolor[HTML]{9B9B9B} &  &  & \cellcolor[HTML]{9B9B9B} & \cellcolor[HTML]{9B9B9B} & \\ \hline
 \end{tabular}%
 }
-\caption{Planificación resultante del proyecto}
+\caption{Planificación resultante del proyecto.}
 \label{tab:PlanificacionFinal}
 \end{table}
 
@@ -275,7 +276,7 @@ se puede ver en la siguiente tabla (\ref{tab:TotalGastos})
 \multicolumn{1}{|l|}{\cellcolor[HTML]{FFCB2F}{Duración}} & \multicolumn{1}{l|}{154 días, 110 laborables} \\ \hline
 \textbf{} & 
 \end{tabular}
-\caption{Total de horas y días trabajados}
+\caption{Total de horas y días trabajados.}
 \label{tab:TotalTrabajado}
 \end{table}
 \begin{table}[htp] 
@@ -293,7 +294,7 @@ se puede ver en la siguiente tabla (\ref{tab:TotalGastos})
 \multicolumn{1}{|r|}{\cellcolor[HTML]{FFCB2F}{Total}} & \multicolumn{1}{l|}{ 11 425.3 \officialeuro} \\ \hline
 \textbf{} & 
 \end{tabular}
-\caption{Estimación final de coste del proyecto}
+\caption{Estimación final de coste del proyecto.}
 \label{tab:TotalGastos}
 \end{table}
 

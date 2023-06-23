@@ -1,10 +1,5 @@
 \chapter{Fundamentos Teóricos}
-% Esta sección tiene el objetivo de introducir y explicar brevemente los
-% fundamentos teóricos en los que se basan los métodos empleados en este
-% proyecto, así como justificar su relevancia en la resolución del problema que
-% se plantea.
-
-\subsection{Subproblemas de la IQA}
+\section{Image Quality Assessment IQA}
 Existen tres subproblemas presenten en el ámbito de \emph{IQA}. Los primeros, son problemas 
 dónde tenemos acceso a la imagen original, que suponemos exenta de desperfectos, 
 en la cual se pueden aplicar métodos basados en diferencia de características 
@@ -12,7 +7,7 @@ entre ambas, como puede ser al nivel del color de píxel posición a posición,
 y se denomina ``\emph{Full Reference}''(\emph{FR}). 
 La tarea, aparentemente sencilla, en realidad presenta una complejidad alta dada por 
 la necesidad de codificar la percepción humana a la hora de calificar la calidad 
-de una imagen\cite{WhyIsIQASoDifficult}. Ya que métricas que miden distancias no suelen 
+de una imagen\cite{WhyIsIQASoDifficult}, ya que métricas que miden distancias no suelen 
 ser suficientes al no haber buena correlación entre la calidad percibida y el 
 resultado de la métrica.
 
@@ -22,7 +17,7 @@ Primeramente se asume la misma importancia para todas las señales de la imagen,
 la magnitud del error es lo único que determina la calidad, que el contenido de la imagen 
 no afecta al resultado final tras aplicar una distorsión y que si cambiamos el 
 orden de las señales la medida de distorsión no es afectada.
-Lamentablemente, ninguna de estas suposiciones se cumplen\cite{Wang2006ModernIQ}, ver imágenes~(\ref{fig:FailureMinkowskiMetric},\ref{fig:MSEHyperSphere}).
+Lamentablemente, ninguna de estas suposiciones se cumplen\cite{Wang2006ModernIQ}, ver Figuras \ref{fig:FailureMinkowskiMetric} y \ref{fig:MSEHyperSphere}.
  
 El siguiente subproblema es aquel donde tenemos algún tipo de información adicional respecto 
 a la imagen original en el momento de análisis de la calidad de la imagen final,
@@ -87,9 +82,9 @@ estimación, sin referencia, de calidad de imágenes médicas en espacio tridime
   \begin{center}
     \includegraphics[width=0.6\textwidth]{imagenes/chapter2/failure_minkowski_metric.png}
   \end{center}
-  \caption{En este ejemplo, extraído de\cite{MinkowskiFailure},
+  \caption[Visualización del problema de la métrica \emph{Minkowski}.]{En este ejemplo, extraído de\cite{MinkowskiFailure},
   vemos que sumar una constante positiva a una imagen  de referencia (a) produce la imagen (b) que contiene la misma distancia \emph{Minkowski}\footnotemark[2]
-  que (c), imagen fabricada por la misma constante pero permutando signo de forma aleatoria. Siendo que
+  que (c), imagen fabricada por la misma constante pero permutando signo de forma aleatoria, resultando que
   la percepción final es que la imagen (c) es peor que la imagen (b).
 \label{fig:FailureMinkowskiMetric}}
 \end{figure}
@@ -97,8 +92,7 @@ estimación, sin referencia, de calidad de imágenes médicas en espacio tridime
   \begin{center}
     \includegraphics[width=0.6\textwidth]{imagenes/chapter2/MSE_Hypersphere.png}
   \end{center}
-  \caption{En este ejemplo, extraído de\cite{Wang2006ModernIQ}, la misma imagen distorsionada de distintas maneras
-  resulta en el mismo valor \emph{MSE}\footnotemark[3]=181. Siendo evidente que 
+  \caption[Visualización del hiperplano MSE de imágenes distorsionadas.]{En este ejemplo, extraído de\cite{Wang2006ModernIQ}, la misma imagen distorsionada de distintas maneras resulta en el mismo valor MSE\footnotemark[3]=181. Siendo evidente que 
 algunas distorsiones producen efectos visuales más marcados que otras.}
   \label{fig:MSEHyperSphere}
 \end{figure}
@@ -107,12 +101,7 @@ algunas distorsiones producen efectos visuales más marcados que otras.}
 \section{Aprendizaje Automático}
 El aprendizaje automático\cite{IAModernApproach} o \emph{Machine Learning} (\emph{ML}) 
 es una de las ramas que compone lo que definimos como 
-la inteligencia artificial (\emph{IA}). Esta última se puede definir, 
-según\cite{WhatIsAI}, como 
-``La ciencia e ingeniería 
-de crear máquinas inteligentes, especialmente programas de computadora inteligentes. 
-Está relacionada con la tarea similar de utilizar computadoras para comprender 
-la inteligencia humana...''
+la inteligencia artificial (\emph{IA}). 
 
 En este caso hablamos de dar soluciones a problemas complejos sin 
 solución analítica (o que resulta muy costoso hallarla), es decir, necesitamos que la computadora sea la que identifique
@@ -126,7 +115,7 @@ de los datos a utilizar o el objetivo a alcanzar, podemos encontrar distintos ti
 algoritmos de aprendizaje. En este documento se recogerán dos grandes grupos: aprendizaje supervisado 
 y aprendizaje no supervisado. En el primero disponemos de un conjunto de datos 
 anotados, es decir, con las salidas deseadas para cada ejemplo y en el segundo 
-se espera que sea la máquina la que determine los patrones~(\ref{fig:SupervisedExample}, \ref{fig:UnsupervisedExample}). 
+se espera que sea la máquina la que determine los patrones, ver Figuras \ref{fig:SupervisedExample} y \ref{fig:UnsupervisedExample}. 
 
 En general se suelen aplicar las técnicas de \emph{ML} sobre grandes conjuntos 
 de datos sobre los cuales deseamos detectar los patrones subyacentes\cite{
@@ -150,8 +139,8 @@ estamos ante un problema de aprendizaje supervisado.
   \tikz[remember picture]\node[inner sep=0pt,outer sep=0pt] (b) {}; \includegraphics[width=0.8\linewidth]{imagenes/chapter2/AfterSVMExample.png}
     \end{subfigure}
   \tikz[remember picture,overlay]\draw[line width=1pt,-stealth,black] ([xshift=2mm,yshift=2cm]a.east) -- ([xshift=-2mm, yshift=2cm]b.west)node[midway,above,text=black,font=\LARGE\bfseries\sffamily] {};
-  \caption{
-  Ejemplo de aprendizaje supervisado, vemos como a partir de un conjunto de clases etiquetadas aprendemos un hiper plano que 
+  \caption[Ejemplo de aprendizaje supervisado.]{
+  Ejemplo de aprendizaje supervisado. Vemos como a partir de un conjunto de clases etiquetadas aprendemos un hiper plano que 
   las separa. 
   }
   \label{fig:SupervisedExample}
@@ -169,8 +158,8 @@ estamos ante un problema de aprendizaje supervisado.
     \end{subfigure}
   \tikz[remember picture,overlay]\draw[line width=1pt,-stealth,black] ([xshift=2mm,yshift=2cm]c.east) -- ([xshift=-2mm, yshift=2cm]d.west)node[midway,above,text=black,font=\LARGE\bfseries\sffamily] {};
 
-  \caption{
-  Ejemplo de aprendizaje no supervisado, dado un conjunto de puntos aprendemos un conjunto de clases 
+  \caption[Ejemplo de aprendizaje no supervisado.]{
+  Ejemplo de aprendizaje no supervisado. Dado un conjunto de puntos aprendemos un conjunto de clases 
   a partir de los patrones.
 }
   \label{fig:UnsupervisedExample}
@@ -227,10 +216,9 @@ restricciones sobre el entrenamiento para evitar el sobre ajuste.
 \begin{figure}[htp]
   \centering
   \includegraphics[width=\textwidth]{imagenes/chapter2/ANNVisualization.png}
-  \caption{Ejemplo gráfico de una red neuronal\cite{
-    NeuronImages, NeuronSimilarity, ShallowAndDeepNN
-    }. En (a) vemos una neurona con 
-  su representación artificial simplificada (b). En (c) vemos una conexión entre 
+  \caption[Ejemplo gráfico de una red neuronal\cite{NeuronImages, NeuronSimilarity,ShallowAndDeepNN}.]
+  {Ejemplo gráfico de una red neuronal\cite{NeuronImages, NeuronSimilarity,ShallowAndDeepNN}. 
+      En (a) vemos una neurona con su representación artificial simplificada (b). En (c) vemos una conexión entre 
   neuronas y en (d) la representación de diferentes profundidades de conexiones artificiales.}
   \label{fig:ANNVisualization}
 \end{figure}
@@ -242,7 +230,7 @@ específicamente para el procesamiento de datos estructurados en forma de matric
 Se ha descubierto que son aplicables para el procesado de texto, sonidos y, recientemente,
 a superficies tridimensionales.
 Utilizan capas convolucionales que aplican filtros a regiones locales de la entrada 
-para extraer características relevantes. En la figura (\ref{fig:RadiographyConvolutionExample})
+para extraer características relevantes. En la Figura \ref{fig:RadiographyConvolutionExample}
 podemos ver un ejemplo de esquema jerárquico de extracción de características para el 
 diagnóstico médico a partir de una radiografía. Con ese ejemplo se puede observar 
 las diferencias con respecto a las ANN, posee dos capas adicionales: capas convolucionales 
@@ -251,7 +239,7 @@ y capas de \emph{pooling}.
 \begin{figure}[htp]
   \centering
   \includegraphics[width=\textwidth]{imagenes/chapter2/RadiographyConvolutionExample.png}
-  \caption{Ejemplo extraída de \cite{RadiographyConvolutionExample} del proceso de convolución sobre una radiografía pulmonar 
+  \caption[Ejemplo de red convolucional para imágenes médicas]{Ejemplo extraída de \cite{RadiographyConvolutionExample} del proceso de convolución sobre una radiografía pulmonar 
   para la detección de enfermedades.}
   \label{fig:RadiographyConvolutionExample}
 \end{figure}
@@ -267,8 +255,8 @@ La operación de convolución implica deslizar el filtro sobre la matriz de entr
 multiplicando los elementos coincidentes y sumándolos para obtener un único valor 
 en la matriz de salida, conocida como mapa de características. 
 Este proceso se repite en diferentes ubicaciones de la matriz de 
-entrada para generar el mapa de características completo. En la figura 
-(\ref{fig:ConvolutionalRepresentation}) vemos una operación sobre la ubicación 
+entrada para generar el mapa de características completo. En la Figura 
+\ref{fig:ConvolutionalRepresentation} vemos una operación sobre la ubicación 
 inicial de la imagen, esquina superior izquierda. 
 La elección del siguiente trozo 
 o \emph{patch} de la imagen suele venir determinado por el paso o \emph{stride}.
@@ -279,7 +267,7 @@ Por medio de este proceso, la red es capaz de
 capturar dependencias temporales y espaciales en los datos con la aplicación
 de los filtros correspondientes.
 
-Podemos observar en (\ref{fig:ConvolutionalRepresentation}) que aplicar directamente 
+Podemos observar en la Figura \ref{fig:ConvolutionalRepresentation} que aplicar directamente 
 el operador de convolución a una imagen resulta en una reducción del tamaño del mapa 
 de activación debido a la naturaleza del operador. 
 Sin embargo, esto no siempre es deseable. 
@@ -293,7 +281,7 @@ los saltos o \emph{strides} del filtro de convolución mientras se recorre la im
   \begin{center}
     \includegraphics[width=0.95\textwidth]{imagenes/chapter2/ConvolutionalRepresentation.png}
   \end{center}
-  \caption{Representación visual de la operación de convolución sobre una imagen, extraída de\cite{ConvolutionalRepresentation}.
+  \caption[Representación visual de la operación de convolución]{Representación visual de la operación de convolución sobre una imagen, extraída de\cite{ConvolutionalRepresentation}.
   }
   \label{fig:ConvolutionalRepresentation}
 \end{figure}
@@ -305,7 +293,7 @@ más relevantes. Además, el \emph{pooling} puede ayudar a hacer que la represen
 invariante a pequeñas variaciones en la posición o el tamaño de los objetos en la 
 imagen, lo que mejora la capacidad de generalización del modelo.
 
-En la figura (\ref{fig:PoolingExample}) vemos un operador de \emph{pooling} común,
+En la Figura \ref{fig:PoolingExample} vemos un operador de \emph{pooling} común,
 el operador de valor máximo. También es habitual el uso del operador de valor medio y
 valor mínimo.
 El pooling, al igual que la convolución, posee un filtro o ventana que recorre
@@ -353,13 +341,13 @@ En este TFG se explora el uso de una 3D CNN capaz de analizar videos que pertene
 a la familia que se conoce como \emph{SlowFast networks}\cite{SlowFastNetworks}. Están basadas en dos caminos 
 de entrada de datos. Un conjunto de \emph{frames} espaciados en el tiempo, 
 \emph{slow path}, para obtener información espacial y otro con todos ellos, \emph{fast path}, 
-para obtener información de movimiento, ver (\ref{fig:SlowFastPathways}). 
+para obtener información de movimiento (Figura \ref{fig:SlowFastPathways}). 
 
 \begin{figure}[htp]
   \begin{center}
     \includegraphics[width=0.5\textwidth]{imagenes/chapter2/SlowFastPathways.png}
   \end{center}
-  \caption{Ejemplo extraído de\cite{SlowFastNetworks} para ilustrar la distinción 
+  \caption[Red convolucional espaciotemporal \emph{SlowFast}.]{Ejemplo extraído de\cite{SlowFastNetworks} para ilustrar la distinción 
   entre la extracción espacial del camino ``\emph{slow path}'' y de movimiento con el ``\emph{fast path}''.}
   \label{fig:SlowFastPathways}
 \end{figure}
@@ -389,7 +377,7 @@ de datos 3D.
 \begin{figure}[htp]
   \centering
   \includegraphics[width=0.8\textwidth]{imagenes/chapter2/VoxelizationExample.png}
-  \caption{Ejemplo extraído de\cite{VoxelizationExample} que demuestra el resultado 
+  \caption[Ejemplo extraído de\cite{VoxelizationExample} sobre voxelización.]{Ejemplo extraído de\cite{VoxelizationExample} que demuestra el resultado 
   de tranformar una nube de puntos sin estructura en una cuadrícula voxelizada.}
   \label{fig:VoxelizationExample}
 \end{figure}
@@ -429,7 +417,7 @@ las imágenes médicas 3D sin referencia.
 \begin{figure}[htp]
   \centering
   \includegraphics[width=\textwidth]{imagenes/chapter2/EnsembleExample.png}
-  \caption{Representación de métodos de \emph{ensemble} extraído de\cite{MedicalEnsembleExample}}
+  \caption{Representación de métodos de \emph{ensemble} extraído de\cite{MedicalEnsembleExample}.}
   \label{fig:EnsembleExample}
 \end{figure}
 
@@ -452,7 +440,7 @@ múltiples ángulos y se utilizan para reconstruir imágenes transversales del c
   \begin{subfigure}{2\textwidth}
   \includegraphics[width=0.5\textwidth]{imagenes/chapter2/CT2Volume.png}
   \end{subfigure}
-  \caption{Ejemplo de tomografía computarizada y modelo 3D\cite{CT2Volume}}
+  \caption{Ejemplo de tomografía computarizada y modelo 3D\cite{CT2Volume}.}
   \label{fig:CT2Volume}
 \end{figure}
 
@@ -473,12 +461,12 @@ La segmentación se refiere al proceso de dividir una imagen o conjunto de datos
 Ejemplo, en una foto del bosque, segmentamos los árboles para distinguirlos del suelo.
 } en todas las capas de las imágenes. A continuación usando el conjunto segmentado 
 unificamos las coordenadas de los puntos por medio de intersecciones entre rayos 
-proyectados sobre las imágenes (\emph{ray casting}), ver (\ref{fig:CT2Volume}).
+proyectados sobre las imágenes (\emph{ray casting}), ver Figura \ref{fig:CT2Volume}.
 
 \begin{figure}[htp]
   \centering 
   \includegraphics[width=\textwidth]{imagenes/chapter2/DicomDistortionsExample.png}
-  \caption{Ejemplo de artefactos sobre imágenes Dicom\cite{DicomDistortionsExample}: 
+  \caption[Ejemplo de artefactos sobre imágenes DICOM.]{Ejemplo de artefactos sobre imágenes DICOM\cite{DicomDistortionsExample}: 
   (a) un artefacto de anillo, (b) un difuminado provocado por movimiento, 
   (c) artefactos producidos por interpolación helicoidal, (d) artefactos de iluminación y dispersión del haz.  }
   \label{fig:DicomDistortionsExample}
@@ -486,7 +474,7 @@ proyectados sobre las imágenes (\emph{ray casting}), ver (\ref{fig:CT2Volume}).
 
 Dentro de las causas de las distorsiones geométricas sobre los volúmenes 
 3D están el difuminado por movimiento, errores de contraste (dificultad al segmentar),
-artefactos luminosos y problemas de interpolación o ruido al generar la proyección (\ref{fig:DicomDistortionsExample}). 
+artefactos luminosos y problemas de interpolación o ruido al generar la proyección, ver Figura \ref{fig:DicomDistortionsExample}. 
 
 Para simularlo, partiremos de ejemplos de imágenes médicas consideradas exentas de 
 distorsiones, con su segmentación correspondiente realizada por profesionales.
@@ -535,7 +523,7 @@ como el movimiento del paciente y aquellos provocados por ruido en la transmisi�
     \centering
     \includegraphics[width=\textwidth]{imagenes/chapter2/clavicula/clavicula_5.png}
   \end{subfigure}
-  \caption{Ejemplo de distorsiones generadas. Leyendo de izquierda a derecha tenemos:
+  \caption[Ejemplo de distorsiones generadas sobre clavículas.]{Ejemplo de distorsiones generadas sobre clavículas. Leyendo de izquierda a derecha tenemos:
     la imagen original, compresión \emph{octree}, reducción de puntos por \emph{uniform downsampling},
     movimiento local, rotación local y ruido gaussiano.
   }

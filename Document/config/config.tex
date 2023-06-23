@@ -3,7 +3,7 @@
 \usepackage[utf8]{inputenc}
 \usepackage[spanish, es-tabla]{babel}
 \usepackage{eurosym}
-\usepackage{cite}
+%\usepackage{cite}
 
 \usepackage[loadshadowlibrary]{todonotes}
 \usepackage{float, subcaption}
@@ -12,11 +12,18 @@
 \usepackage{multirow}
 
 \usepackage{amsmath}
-%\usepackage[backend=biber, citestyle=numeric-comp, bibstyle=ieee, sorting=none]{biblatex}
 \usepackage{dirtytalk}
 \usepackage{xcolor}
 \usepackage{tikz}
 
+\usepackage{csquotes}
+\usepackage[backend=biber, citestyle=numeric-comp, bibstyle=ieee, sorting=none]{biblatex}
+% Configurando BibLaTeX
+\DefineBibliographyStrings{spanish}{%
+  url = {URL},
+  andothers={et ~al\adddot}
+}
+\addbibresource{bibliografia/bibliografia.bib}
 
 \setlength{\parindent}{0pt}
 
@@ -59,8 +66,9 @@
 % ********************************************************************
 % Re-usable information
 % ********************************************************************
-\newcommand{\myTitle}{Estimación de la calidad de imágenes médicas 3D}
-\newcommand{\mySubTitle}{Aprendizaje automático y Aprendizaje profundo}
+\newcommand{\myTitle}{Estimación de la calidad de imágenes médicas 3D por
+medio de aprendizaje automático}
+\newcommand{\mySubTitle}{}
 \newcommand{\myDegree}{Grado en Ingenería Informática}
 \newcommand{\myName}{Brian Sena Simons}
 \newcommand{\myProf}{Pablo Mesejo Santiago}
