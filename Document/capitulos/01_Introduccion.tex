@@ -55,7 +55,7 @@ Para abordar el problema de la IQA, se emplean diversas técnicas y enfoques
 \cite{MinkowskiFailure, Wang2006ModernIQ, VisualMedicalQualityBook}.
 Entre ellos se incluyen métodos basados en características,
 modelos de percepción visual, aprendizaje automático y técnicas de procesamiento de señales
-\cite{StructuralSimilarityIndex, LinearCombinationIQA, SignalIQADSS}.
+\cite{SSIM, MMF, DSS}.
 Uno de los enfoques comunes es utilizar características básicas de la imagen. 
 Las características elementales de la imagen son por ejemplo el contraste, 
 la nitidez, la exposición y la uniformidad del color\cite{MinkowskiFailure,Wang2006ModernIQ}. 
@@ -66,9 +66,9 @@ Por otro lado, los modelos de percepción visual intentan simular cómo el siste
 visual humano percibe y evalúa la calidad de la imagen. Estos modelos se basan 
 en el entendimiento de los mecanismos y procesos perceptuales del cerebro humano, 
 y utilizan características visuales y estadísticas para calcular la calidad percibida
-\cite{MinkowskiFailure, StructuralSimilarityIndex}.
+\cite{MinkowskiFailure, SSIM}.
 Buscan emular la forma en que los humanos responden 
-a las imágenes en términos de su calidad visual\cite{IQAbySaliencyMaps, CascadedIQA}.
+a las imágenes en términos de su calidad visual\cite{VSI, CascadedIQA}.
  
 Finalmente, se suelen emplear algoritmos de aprendizaje automático para tratar
 de resolver el problema. Se intenta aproximar una función que a partir del conjunto 
@@ -172,7 +172,7 @@ Este objetivo se puede descomponer en una serie de metas parciales:
   \item Analizar los enfoques de inteligencia artificial más prometedores que permitan abordar el problema planteado. 
   \item Generar un conjunto de datos sintético que permita validar 
     los métodos analizados. Para ello, será necesario estudiar diferentes 
-    estrategias y métricas de evaluación objetivas\cite{ITU-R.2012, ITU-R.2021, DatasetGeneration}.
+    estrategias y métricas de evaluación objetivas\cite{ResSCNN}.
   \item Realizar un estudio experimental que permita validar los enfoques 
     propuestos y extraer conclusiones sobre su aplicabilidad al problema. 
 \end{enumerate}

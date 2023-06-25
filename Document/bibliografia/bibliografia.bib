@@ -21,15 +21,14 @@ journal = {The Essential Guide to Image Processing},
   year={2006}
 }
 
-@article{LinearCombinationIQA,
-  title    = "{Full-Reference} Image Quality Assessment Based on an Optimal
-              Linear Combination of Quality Measures Selected by Simulated
-              Annealing",
-  author   = "Varga, Domonkos",
-  journal  = "J Imaging",
-  volume   =  8,
-  number   =  8,
-  year     =  2022,
+@article{MMF,
+  author={Liu, Tsung-Jung and Lin, Weisi and Kuo, C.-C. Jay},
+  journal={IEEE Transactions on Image Processing}, 
+  title={Image Quality Assessment Using Multi-Method Fusion}, 
+  year={2013},
+  volume={22},
+  number={5},
+  pages={1793-1807},
 }
 
 @Article{Parisot1995,
@@ -42,7 +41,7 @@ number={3},
 pages={171-177},
 }
 
-@inproceedings{SignalIQADSS,
+@inproceedings{DSS,
   author={Balanov, Amnon and Schwartz, Arik and Moshe, Yair and Peleg, Nimrod},
   booktitle={2015 IEEE International Conference on Image Processing (ICIP)}, 
   title={Image quality assessment based on DCT subband similarity}, 
@@ -102,7 +101,7 @@ pages = {},
 title = {Subjective quality analyses of stereoscopic images in 3DTV system},
 }
 
-@article{DatasetGeneration,
+@article{ResSCNN,
  author = {Yipeng Liu and Qi Yang and Yiling Xu and Le Yang},
  title = {Point Cloud Quality Assessment: Dataset Construction and Learning-based No-Reference Metric},
  near = {2020},
@@ -116,13 +115,14 @@ title = {Subjective quality analyses of stereoscopic images in 3DTV system},
     publisher = {Palgrave Macmillan},
 }
 
-@inproceedings{IQAbySaliencyMaps,
-author = {Ardizzone, Edoardo and Bruno, Alessandro},
-year = {2012},
-pages = {479-483},
-title = {Image Quality Assessment by saliency maps},
-volume = {1},
-journal = {VISAPP 2012 - Proceedings of the International Conference on Computer Vision Theory and Applications}
+@article{VSI,
+  author={Zhang, Lin and Shen, Ying and Li, Hongyu},
+  journal={IEEE Transactions on Image Processing}, 
+  title={VSI: A Visual Saliency-Induced Index for Perceptual Image Quality Assessment}, 
+  year={2014},
+  volume={23},
+  number={10},
+  pages={4270-4281},
 }
 
 @misc{StructureGuidedResampling,
@@ -131,7 +131,7 @@ journal = {VISAPP 2012 - Proceedings of the International Conference on Computer
       year={2022},
 }
 
-@article{StructuralSimilarityIndex,
+@article{SSIM,
 title = {Structural similarity index ({SSIM}) revisited: A data-driven approach},
 journal = {Expert Systems with Applications},
 volume = {189},
@@ -286,24 +286,14 @@ number={},
 pages={1-2},
 }
 
-@inproceedings{SpatialDomainForJPEG,
-author={Zhou Wang and Sheikh, H.R. and Bovik, A.C.},
-  booktitle={Proceedings. International Conference on Image Processing}, 
-  title={No-reference perceptual quality assessment of JPEG compressed images}, 
-  year={2002},
-  volume={1},
-  number={},
-  pages={I-I},
-}
-
-@inproceedings{FrecuencyDomainForJPEG,
-author={Zhou Wang and Bovik, A.C. and Evan, B.L.},
-  booktitle={Proceedings 2000 International Conference on Image Processing (Cat. No.00CH37101)}, 
-  title={Blind measurement of blocking artifacts in images}, 
-  year={2000},
-  volume={3},
-  number={},
-  pages={981-984 vol.3},
+@article{JPEGBasedOnLuminance,
+  author={Zhan, Yibing and Zhang, Rong},
+journal={IEEE Signal Processing Letters}, 
+title={No-Reference JPEG Image Quality Assessment Based on Blockiness and Luminance Change}, 
+year={2017},
+volume={24},
+number={6},
+pages={760-764},
 }
 
 @article{BIQA,
@@ -501,4 +491,321 @@ year = {2006},
 pages = {111-120},
 title = {Octree-based Point-Cloud Compression.},
 journal = {Eurographics Symposium on Point-Based Graphics},
+}
+
+@article{SurveyOf2D3DMetrics,
+  author={Niu, Yuzhen and Zhong, Yini and Guo, Wenzhong and Shi, Yiqing and Chen, Peikun},
+  journal={IEEE Access}, 
+  title={2D and 3D Image Quality Assessment: A Survey of Metrics and Challenges}, 
+  year={2019},
+  volume={7},
+  pages={782-801},
+}
+
+% STATE OF THE ART CITATIONS 
+@article{VSNR,
+  author={Chandler, Damon M. and Hemami, Sheila S.},
+  journal={IEEE Transactions on Image Processing}, 
+  title={VSNR: A Wavelet-Based Visual Signal-to-Noise Ratio for Natural Images}, 
+  year={2007},
+  volume={16},
+  number={9},
+  pages={2284-2298},
+}
+
+@article{PSNR-HVS,
+author = {Egiazarian, Karen and Astola, J. and Lukin, Vladimir and Battisti, Federica and Carli, Marco},
+year = {2006},
+month = {01},
+pages = {},
+title = {A NEW FULL-REFERENCE QUALITY METRICS BASED ON HVS}
+}
+
+@article{UQI,
+  author={Zhou Wang and Bovik, A.C.},
+  journal={IEEE Signal Processing Letters}, 
+  title={A universal image quality index}, 
+  year={2002},
+  volume={9},
+  number={3},
+  pages={81-84},
+}
+
+@inproceedings{MS-SSIM,
+  author={Wang, Z. and Simoncelli, E.P. and Bovik, A.C.},
+  booktitle={The Thrity-Seventh Asilomar Conference on Signals, Systems \& Computers, 2003}, 
+  title={Multiscale structural similarity for image quality assessment}, 
+  year={2003},
+  volume={2},
+  pages={1398-1402 Vol.2},
+}
+
+
+@article{MLIQM,
+title = {Machine learning to design full-reference image quality assessment algorithm},
+journal = {Signal Processing: Image Communication},
+volume = {27},
+number = {3},
+pages = {209-219},
+year = {2012},
+author = {Christophe Charrier and Olivier Lézoray and Gilles Lebrun},
+}
+
+@article{DIQaM,
+  author={Bosse, Sebastian and Maniry, Dominique and Müller, Klaus-Robert and Wiegand, Thomas and Samek, Wojciech},
+  journal={IEEE Transactions on Image Processing}, 
+  title={Deep Neural Networks for No-Reference and Full-Reference Image Quality Assessment}, 
+  year={2018},
+  volume={27},
+  number={1},
+  pages={206-219},
+}
+
+@inproceedings{IQA-CNN,
+  author={Kang, Le and Ye, Peng and Li, Yi and Doermann, David},
+  booktitle={2014 IEEE Conference on Computer Vision and Pattern Recognition}, 
+  title={Convolutional Neural Networks for No-Reference Image Quality Assessment}, 
+  year={2014},
+  pages={1733-1740},
+}
+
+@article{LGP,
+author = {Zhou, Wujie and Yu, Lu and Qiu, Weiwei and Zhou, Yang and Wu, Mingwei},
+year = {2017},
+title = {Local Gradient Patterns (LGP): An Effective Local-Statistical-Feature Extraction Scheme for No-Reference Image Quality Assessment},
+volume = {397},
+journal = {Information Sciences},
+}
+
+
+
+@article{GradientBasedBlurAssessment,
+title = {Gradient-based no-reference image blur assessment using extreme learning machine},
+journal = {Neurocomputing},
+volume = {174},
+pages = {310-321},
+year = {2016},
+issn = {0925-2312},
+author = {Shuigen Wang and Chenwei Deng and Baojun Zhao and Guang-Bin Huang and Baoxian Wang},
+}
+
+@article{DeblockedImages,
+  author={Yim, Changhoon and Bovik, Alan Conrad},
+  journal={IEEE Transactions on Image Processing}, 
+  title={Quality Assessment of Deblocked Images}, 
+  year={2011},
+  volume={20},
+  number={1},
+  pages={88-98},
+}
+
+@article{ContrastDistorted,
+  author={Fang, Yuming and Ma, Kede and Wang, Zhou and Lin, Weisi and Fang, Zhijun and Zhai, Guangtao},
+  journal={IEEE Signal Processing Letters}, 
+  title={No-Reference Quality Assessment of Contrast-Distorted Images Based on Natural Scene Statistics}, 
+  year={2015},
+  volume={22},
+  number={7},
+  pages={838-842},
+}
+
+@article{BRISQUE,
+  title    = "No-reference image quality assessment in the spatial domain",
+  author   = "Mittal, Anish and Moorthy, Anush Krishna and Bovik, Alan Conrad",
+  journal  = "IEEE Trans Image Process",
+  volume   =  21,
+  number   =  12,
+  pages    = "4695--4708",
+  year     =  2012,
+}
+
+@article{MultiModalMRIFusionMethod,
+title = {Two-stage multi-modal MR images fusion method based on Parametric Logarithmic Image Processing (PLIP) Model},
+journal = {Pattern Recognition Letters},
+volume = {136},
+pages = {25-30},
+year = {2020},
+author = {Vikrant Bhateja and Mansi Nigam and Anuj Singh Bhadauria and Anu Arya},
+}
+
+@misc{SemiSupervisedMRIFetalBrain,
+    title={Semi-Supervised Learning for Fetal Brain MRI Quality Assessment with ROI consistency}, 
+    author={Junshen Xu and Sayeri Lala and Borjan Gagoski and Esra Abaci Turk and P. Ellen Grant and Polina Golland and Elfar Adalsteinsson},
+    year={2020},
+}
+
+@article{IQAForPediatricMRIWithNoisySegmentation,
+  author={Liu, Siyuan and Thung, Kim-Han and Lin, Weili and Shen, Dinggang and Yap, Pew-Thian},
+  journal={IEEE Transactions on Medical Imaging}, 
+  title={Hierarchical Nonlocal Residual Networks for Image Quality Assessment of Pediatric Diffusion MRI With Limited and Noisy Annotations}, 
+  year={2020},
+  volume={39},
+  number={11},
+  pages={3691-3702},
+}
+
+@article{MIGAN,
+	year = 2018,
+	publisher = {Springer Science and Business Media {LLC} },
+	volume = {42},
+	number = {11},
+	author = {Talha Iqbal and Hazrat Ali},
+	title = {Generative Adversarial Network for Medical Images ({MI}-{GAN})},
+	journal = {Journal of Medical Systems}
+}
+
+@misc{Hys-net,
+      title={Blind Image Quality Assessment for MRI with A Deep Three-dimensional content-adaptive Hyper-Network}, 
+      author={Kehan Qi and Haoran Li and Chuyu Rong and Yu Gong and Cheng Li and Hairong Zheng and Shanshan Wang},
+      year={2021},
+}
+
+@article{MedicalBRISQUE,
+author = {Chow, Li Sze and Rajagopal, Heshalini},
+year = {2017},
+title = {Modified-BRISQUE as no reference image quality assessment for structural MR images},
+volume = {43},
+journal = {Magnetic Resonance Imaging},
+}
+
+@inproceedings{PointToPoint,
+  title={Evaluation criteria for PCC (Point Cloud Compression)},
+  author={Mekuria, Rufael and Li, Zhenyu and Tulvan, Christian and Chou, Philip},
+  booktitle={ISO/IEC MPEG Doc. N16332},
+  address={Geneva, Switzerland},
+  month={June},
+  year={2016}
+}
+
+@inproceedings{PointToPlane,
+  title={Geometric distortion metrics for point cloud compression},
+  author={Tian, Dapeng and Ochimizu, Hiroshi and Feng, Chen and Cohen, Richard and Vetro, Anthony},
+  booktitle={IEEE International Conference on Image Processing (ICIP)},
+  address={Beijing, China},
+  month={September},
+  year={2017}
+}
+
+@inproceedings{PlaneToPlane,
+  title={Point Cloud Quality Assessment Metric based on Angular Similarity},
+  author={Alexiou, Eirini and Ebrahimi, Touradj},
+  booktitle={IEEE International Conference on Multimedia \& Expo Workshops},
+  address={San Diego, CA, USA},
+  month={July},
+  year={2018}
+}
+  
+@article{PlaneToSurface,
+  title={Metro: measuring errors on simplified surfaces},
+  author={Cignoni, Paolo and Rochinni, Claudio and Scopigno, Roberto},
+  journal={Computer Graphics Forum},
+  volume={17},
+  number={2},
+  pages={167--174},
+  month={January},
+  year={1998}
+}
+
+@inproceedings{PCQM,
+  title={PCQM: A Full-Reference Quality Metric for Colored 3D Point Clouds},
+  author={Meynet, Guillaume and Nehmé, Yohan and Digne, Julie and Lavoué, Guillaume},
+  booktitle={IEEE International Conference on Quality of Multimedia Experience (QoMEX)},
+  address={Athlone, Ireland},
+  year={2020}
+}
+
+@inproceedings{PointSSIM,
+  title={Towards a Point Cloud Structural Similarity Metric},
+  author={Alexiou, Eleni and Ebrahimi, Touradj},
+  booktitle={IEEE International Conference on Multimedia \& Expo Workshops (ICMEW)},
+  address={London, UK},
+  month={July},
+  year={2020}
+}
+
+@article{GraphSIM,
+  author={Yang, Qi and Ma, Zhan and Xu, Yiling and Li, Zhu and Sun, Jun},
+  journal={IEEE Transactions on Pattern Analysis and Machine Intelligence}, 
+  title={Inferring Point Cloud Quality via Graph Similarity}, 
+  year={2022},
+  volume={44},
+  number={6},
+  pages={3015-3029},
+}
+
+@inproceedings{ImpactOf2DProyections,
+  title={Exploiting user interactivity in quality assessment of point cloud imaging},
+  author={Alexiou, Eleni and Ebrahimi, Touradj},
+  booktitle={IEEE International Conference on Quality of Multimedia Experience (QoMEX)},
+  address={Berlin, Germany},
+  month={June},
+  year={2019}
+}
+
+@misc{MPED,
+    title={MPED: Quantifying Point Cloud Distortion based on Multiscale Potential Energy Discrepancy}, 
+    author={Qi Yang and Yujie Zhang and Siheng Chen and Yiling Xu and Jun Sun and Zhan Ma},
+    year={2022},
+}
+
+@article{bitstreamPCQ,
+  author={Liu, Qi and Su, Honglei and Chen, Tianxin and Yuan, Hui and Hamzaoui, Raouf},
+  journal={IEEE Transactions on Multimedia}, 
+  title={No-reference Bitstream-layer Model for Perceptual Quality Assessment of V-PCC Encoded Point Clouds}, 
+  year={2022},
+  pages={1-1}
+}
+
+@inproceedings{NR-CNN-3D-PC,
+  author={Chetouani, Aladine and Quach, Maurice and Valenzise, Giuseppe and Dufaux, Frédéric},
+  booktitle={2021 IEEE International Conference on Multimedia \& Expo Workshops (ICMEW)}, 
+  title={Deep Learning-Based Quality Assessment Of 3d Point Clouds Without Reference}, 
+  year={2021},
+  pages={1-6}
+}
+
+@article{PQA-Net,
+  author={Liu, Qi and Yuan, Hui and Su, Honglei and Liu, Hao and Wang, Yu and Yang, Huan and Hou, Junhui},
+  journal={IEEE Transactions on Circuits and Systems for Video Technology}, 
+  title={PQA-Net: Deep No Reference Point Cloud Quality Assessment via Multi-View Projection}, 
+  year={2021},
+  volume={31},
+  number={12},
+  pages={4645-4660}
+}
+
+@misc{SGR,
+      title={Blind Quality Assessment of 3D Dense Point Clouds with Structure Guided Resampling}, 
+      author={Wei Zhou and Qi Yang and Qiuping Jiang and Guangtao Zhai and Weisi Lin},
+      year={2022},
+}
+
+@misc{MM-PCQA,
+      title={MM-PCQA: Multi-Modal Learning for No-reference Point Cloud Quality Assessment}, 
+      author={Zicheng Zhang and Wei Sun and Xiongkuo Min and Quan Zhou and Jun He and Qiyuan Wang and Guangtao Zhai},
+      year={2023},
+}
+
+
+@article{WPC1,
+author={Liu, Qi and Su, Honglei and Duanmu, Zhengfang and Liu, Wentao and Wang, Zhou},
+journal={IEEE Transactions on Visualization and Computer Graphics},
+title={Perceptual Quality Assessment of Colored 3D Point Clouds},
+year={2022},
+pages={1-1},
+}
+
+@inproceedings{WPC2,
+title={Perceptual quality assessment of 3D point clouds},
+author={Su, Honglei and Duanmu, Zhengfang and Liu, Wentao and Liu, Qi and Wang, Zhou},
+booktitle={2019 IEEE International Conference on Image Processing (ICIP)},
+pages={3182--3186},
+year={2019},
+}
+
+@article{SJTU,
+  author = {Yang, Qian and Chen, Haichuan and Ma, Zhihua and Xu, Yue and Tang, Rui and Sun, Jian},
+  title = {Predicting the Perceptual Quality of Point Cloud: A 3D-to-2D Projection-Based Exploration},
+  journal = {IEEE Transactions on Multimedia},
+  year = {2020},
 }

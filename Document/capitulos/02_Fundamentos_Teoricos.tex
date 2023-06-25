@@ -1,5 +1,6 @@
 \chapter{Fundamentos Teóricos}
 \section{Image Quality Assessment IQA}
+\label{sec:IQA}
 Existen tres subproblemas presenten en el ámbito de \emph{IQA}. Los primeros, son problemas 
 dónde tenemos acceso a la imagen original, que suponemos exenta de desperfectos, 
 en la cual se pueden aplicar métodos basados en diferencia de características 
@@ -40,7 +41,7 @@ de las que tratamos y los efectos de las distorsiones. Lo que se denomina
 estadísticas naturales de escena (NSS, por sus siglas en inglés). Un ejemplo 
 sería JPEG, un algoritmo de compresión que se codifica por bloques 8x8. Los efectos
 negativos de la compresión se representan por el difuminado entre bloques y los artefactos que generan.
-Entender estos efectos permite diseñar métricas específicas\cite{SpatialDomainForJPEG, FrecuencyDomainForJPEG}
+Entender estos efectos permite diseñar métricas específicas\cite{SpatialDomainForJPEG}
 
 As veces resulta difícil describir las características de la imagen y los efectos 
 de la distorsión. Es por ello que los métodos de aprendizaje profundo son cada vez 
@@ -387,7 +388,7 @@ Un \emph{ensemble}, en el contexto del aprendizaje automático, es una técnica 
 combina múltiples modelos de aprendizaje para mejorar la precisión y el rendimiento 
 general de las predicciones. En lugar de depender de un único modelo, 
 se crean múltiples modelos y se combinan sus predicciones para obtener un resultado 
-final más robusto y preciso\cite{IAModernApproach, DataMiningHandbook, MedicalEnsembleExample }.
+final más robusto y preciso\cite{IAModernApproach, DataMiningHandbook, MedicalEnsembleExample}.
 
 La idea fundamental detrás de los \emph{ensembles} es que los diferentes modelos pueden 
 tener fortalezas y debilidades diferentes, y al combinar sus predicciones, se 
