@@ -16,13 +16,17 @@
 \usepackage{xcolor}
 \usepackage{tikz}
 
+\newcommand{\code}{\lstinline}
+\usepackage{dirtree}
+
 \usepackage{csquotes}
 \usepackage[backend=biber, citestyle=numeric-comp, bibstyle=ieee, sorting=none]{biblatex}
 % Configurando BibLaTeX
-\DefineBibliographyStrings{spanish}{%
+\DefineBibliographyStrings{spanish}{
   url = {URL},
   andothers={et ~al\adddot}
 }
+
 \addbibresource{bibliografia/bibliografia.bib}
 
 \setlength{\parindent}{0pt}
@@ -147,7 +151,7 @@ pdfproducer = {pdflatex}
      %
      stringstyle=\ttfamily,
      showstringspaces = false,
-     basicstyle=\scriptsize\ttfamily,
+     basicstyle=\normalsize\ttfamily,
      commentstyle=\color{gray45},
      keywordstyle=\bfseries,
      %

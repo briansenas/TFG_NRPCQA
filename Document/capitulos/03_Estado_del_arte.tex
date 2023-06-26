@@ -40,7 +40,7 @@ el estado de métodos en imágenes médicas 2D. Y por último, nos centraremos
 en el estado actual de métodos sin referencia para nubes de puntos, el campo 
 sobre el cual trabajaremos.
 
-\subsection{Estado del arte de FR-IQA}
+\section{Estado del arte de FR-IQA}
 Como ha sido mencionado anteriormente, los métodos convencionales de cuantificación del error en la evaluación de la fidelidad 
 de imágenes, como el error cuadrático medio, la relación señal-ruido (SNR, por sus siglas en inglés) y el pico de señal-ruido (PSNR, por su siglas en inglés), 
 no consideran el contenido de una imagen ni las características del sistema visual 
@@ -57,7 +57,7 @@ y desarrollaron un índice universal de calidad de imagen (UQI)\cite{UQI} y una 
 Desde entonces, se han propuesto diversas variantes basadas en SSIM, como MS-SSIM\cite{MS-SSIM}.
 Surgieron también métodos que, basados en las respuestas del HVS, introducen la 
 saliencia visual\footnote{
-  Cualidad estética de la forma de un objeto o una configuración que destaca uno o más de sus rasgos por sobre los demás y que, en consecuencia, llama la atención.
+  Cualidad estética de la forma de un objeto o una configuración que destaca.
 }en la evaluación de la calidad de imagen (VSI)\cite{VSI}, 
 ya que se ha observado que la saliencia de la imagen desempeña un papel importante.
 
@@ -92,12 +92,13 @@ basada en datos sin depender de características predefinidas o conocimiento pre
                    & WaDIQaM-FR\cite{DIQaM} & \textbf{0.970} & \textbf{0.980} & - & - & - & - & - & - & - & \textbf{0.940} & \textbf{0.946} & -\\
                   \hline 
   \end{tabular}
-  \caption[Tablas estado del arte FR-IQA]{Tabla extraída de \cite{SurveyOf2D3DMetrics}, donde vemos, conforme avanza los conocimientos
-  sobre el HVS, sobre redes neuronales y redes convolucionales, el progreso de mejoras en las métricas FR.}
+  \caption[Tablas estado del arte FR-IQA]{Tabla extraída de \cite{SurveyOf2D3DMetrics}, 
+    donde vemos el progreso de las métricas FR conforme avanza los conocimientos
+  del HVS y de ML.}
     \label{tab:SOTAFRIQA}
 \end{table}
 
-\subsection{Estado del arte de NR-IQA}
+\section{Estado del arte de NR-IQA}
 Al principio, surgieron métricas para la estimación de la calidad de las imaǵenes 
 que hubiesen sufrido algún tipo de distorsión específico, 
 como imágenes borrosas\cite{GradientBasedBlurAssessment}, 
@@ -139,12 +140,12 @@ DIQaM-NR\cite{DIQaM}, que mejora frente redes menos profundas.
                           & Hallucinated-IQA \cite{Hallucinated-IQA} & \textbf{0.982} & \textbf{0.982} & - \\
                           \hline
   \end{tabular}
-  \caption[Tablas estado del arte NR-IQA]{Tabla extraída de \cite{SurveyOf2D3DMetrics}, donde vemos, 
-  que al alejarnos de métricas extraídas en base del conocimiento humano y de NSS, tirando al mundo de ML, mejoramos los resultados de las métricas NR.}
+  \caption[Tablas estado del arte NR-IQA]{Tabla extraída de \cite{SurveyOf2D3DMetrics}, donde vemos el progreso de las métricas NR 
+  conforme nos alejamos de características basadas en el conocimiento humano y de NSS utilizando ML.}
   \label{tab:SOTANRIQA}
 \end{table}
 
-\subsection{Estado del arte de IQA en imágenes médicas}
+\section{Estado del arte de IQA en imágenes médicas}
 
 En el caso de la evaluación de calidad FR y RR, se requiere disponer 
 de una imagen de referencia sin distorsión o una parte de una imagen con la cual 
@@ -186,12 +187,12 @@ propusieron un enfoque más reciente que adapta el evaluador de calidad de image
 Hay que tener en cuenta que la explicabilidad es un aspecto crucial 
 para evaluar la confiabilidad de los sistemas de diagnóstico automático, 
 especialmente en aplicaciones de aprendizaje profundo tipo caja negra. 
-Dado que un clasificador profundo nos proporciona solo la etiqueta predicha 
+Dado que un clasificador profundo nos proporciona solo el valor inferido 
 para un escaneo médico dado, es imperativo descubrir las señales que pueden 
 ayudar a asegurar que la decisión se haya tomado en función de conjuntos de 
 características relacionables.
 
-\subsection{Estado del arte de FR-PCQA}
+\section{Estado del arte de FR-PCQA}
 Las métricas más populares para la estimación objetiva de la calidad de modelos 
 3D basada en puntos son \emph{point-to-point} (Po2Po)\cite{PointToPoint} y
 \emph{point-to-plane} (Po2Pl)\cite{PointToPlane}. 
@@ -242,9 +243,9 @@ distintas perspectivas en el rendimiento de las métricas de calidad\cite{Impact
 
 Conocer algunas de estas métricas del estado del arte de los métodos con referencia nos 
 servirá a la hora de generar el conjunto de datos sintéticos para la evaluación 
-del modelo sobre imágenes médicas 3D, ver Sección \ref{sec:Distorsiones}. 
+del modelo sobre imágenes médicas 3D, ver Sección \ref{sec:DatosSinteticos}. 
 
-\subsection{Estado del arte de NR-PCQA}
+\section{Estado del arte de NR-PCQA}
 Los métodos de evaluación de fidelidad de imágenes 3D NR tienen más perspectivas 
 de aplicación práctica que los métodos FR, ya que no utilizan ninguna información 
 adicional del objeto de referencia.
@@ -269,7 +270,7 @@ utilizando una estrategia de proyección multi-vista para extraer un vector de
 características de 384 dimensiones, que alimenta a dos módulos de aprendizaje 
 que calculan conjuntamente la calidad de la nube de puntos degradada. 
 En IT-PCQA\cite{IT-PCQA} deciden utilizar métodos IQA aplicadas a las multi-proyecciones.
-Extiendo los trabajos anteriores, tenemos VQA-PC\cite{VQA-PC} que trata las 
+Extendiendo los trabajos anteriores, tenemos VQA-PC\cite{VQA-PC} que trata las 
 multi-proyecciones como video, pudiendo así utilizar información espacial, 
 imágenes en posiciones específicas, y información de consistencia temporal 
 de la nube de puntos rotando. 
@@ -284,9 +285,11 @@ de nubes de puntos sintético, en el momento de escritura, con su estimación de
 Otro método que trabaja directamente sobre la nube de puntos es SGR\cite{SGR}, 
 que extraen regiones locales de la nube de puntos y analizan la calidad de los parches.
 Recientemente, ha salido el modelo MM-PCQA\cite{MM-PCQA} que utilizan tanto información 
-directa de la nube de puntos como información de las proyecciones. 
+directa de la nube de puntos como información de las proyecciones. Incluso, hay 
+métodos que han optado por utilizar un \emph{ensemble}\cite{EnsemblePCQA} de 
+modelos pre-entrenado en 2D y obtuvieron muy buenos resultados. 
 
-\begin{table}[htp]
+\begin{table}[H]
     \centering
     \small
     \begin{tabular}{|c|c|c|c|c|}
@@ -319,3 +322,9 @@ directa de la nube de puntos como información de las proyecciones.
     \caption[Estado del arte de modelos NR-PCQA]{Resumen del estado del arte de modelos NR-PCQA en dos datasets muy conocidos: SJTU\cite{SJTU} y WPC\cite{WPC1,WPC2}.}
 \end{table}
 
+\Brian[{Sobre estimación de calidad en imágenes médicas 3D}]{Aunque en la Figura
+\ref{fig:ScopusMLinMedicalAndPC} parece haber documentos para imágenes médicas 
+3D, solamente encontré uno respecto a la calidad de segmentaciones. Los demás, 
+imagino que son apenas documentos que contienen la palabra calidad o estimación. 
+Así que no sé exactamente si dedicar una sección a decir que no he encontrado 
+nada o qué decir aquí.}

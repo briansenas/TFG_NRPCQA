@@ -1,4 +1,76 @@
 \chapter{Implementación y Experimentos} 
+\label{sec:Implementacion}
 \section{Detalles Técnicos de Implementación} 
+Este proyecto ha sido realizado mayoritariamente con el lenguaje de programación Python, 
+debido a que casi todos los modelos analizados estaban descritos en el mismo.
+No obstante, para la distorsión por compresión \emph{octree}\cite{OctreeCompression}, 
+se hizo uso de la librería PCL\cite{PCL} en el lenguaje C++.
+
+Para el desarrollo y ejecución de los modelos fue necesario el uso de librería 
+la librería de DL Pytorch junto con las librerías CUDA de para poder ejecutar 
+los modelos en las tarjetas gráficas de NVIDIA. Para los cálculos numéricos y 
+el manejo de datos se utilizaron Numpy y Polars, librería similar a Pandas 
+pero basada en Rust, más eficiente y fácilmente paralelizable. Además, para el
+cálculo de las métricas se utilizó la librería scikit-learn.
+Para la visualización y fácil manipulación de las nubes de puntos se hizo uso 
+de la librería de Open3D\cite{Open3D} y Pyntcloud.
+Se ha gestionado el uso de estas librerías y todas sus dependencias tanto en entornos virtuales 
+de python como en entornos creados por cuadernos jupyter de Colab.
+
+Para el control de versiones del proyecto se utilizó de forma conjunta Git, GitHub
+y la gestión de versiones de Google Drive. El repositorio de este proyecto se 
+puede acceder por la siguiente dirección: \url{https://github.com/CodeBoy-source/TFG_NRPCQA}.
+Este mismo, se encuentra dividido en un conjunto de carpetas: 
+\begin{itemize}
+  \item \textbf{Distort}, donde se encuentra todo lo necesario para la generación 
+    de las distorsiones médicas dado un directorio de archivos \code{.ply}. 
+    A su vez, posee lo necesario para la generación de las etiquetas sintécticas 
+    de calidad, ver Sección \ref{sec:DatosSinteticos}.
+  \item \textbf{Document}, donde se encuentra la documentación del proyecto, 
+    incluyendo a este documento. 
+  \item \textbf{NR3DQA}, implementación y experimentos del método propuesto 
+    por Zhang et al\cite{NR3DQA}.
+  \item \textbf{Utils}, conjunto de scripts de python para la realización de distintas 
+    tareas. Como por ejemplo la lectura de un directorio DICOM, la visualización 
+    de una o un conjunto de nubes de puntos y división del conjunto de datos LS-SJTU-PCQA\cite{ResSCNN}.
+  \item \textbf{VQA\_PC}, implementación de la variante VQA-PC\cite{VQA-PC} para 
+    la estimación de calidad de nubes de puntos y las modificaciones pertinentes 
+    sobre los métodos de fusión de características mencionados en \cite{EnsemblePCQA}. 
+  \item \textbf{imgs}, algunas imágenes relevantes sobre el proyecto. 
+\end{itemize}
+\subsection{Obtención de los modelos 3D}
+Los datos se encuentran en una carpeta del servicio UGRDrive, que provee almacenamiento 
+en la nube para investigadores. Los modelos mencionados en la Sección \ref{sec:OurData} 
+se encuentran dentro de una carpeta numerada por cada individuo con los ficheros 
+necesarios para el desarrollo del proyecto. Se incluyen incluso algunos directorios 
+DICOM enteros por si fuera necesario generar más datos a partir de la segmentación 
+manual. 
+
+Se desarrolló un fichero \code{gen_distortions.py} que automáticamente genera 
+un conjunto de distorsiones dado un directorio de entrada con archivos \code{.ply} y los 
+guarda en un directorio de salida especificado por argumento. Para ello se hace 
+uso de las distorsiones realizadas con Open3D\cite{Open3D} 
+con el archivo del directorio \code{utils/distortions.py} y un ejecutable hecho 
+con C++ y Makefile para la distorsión \emph{octree}. A continuación, 
+podemos generar las etiquetas sintéticas con \code{get_metrics.py}, que dado un 
+directorio de entrada con las nubes de referencia y uno con las distorsiones, 
+genera un \code{.csv} con las etiquetas sintéticas generadas con las métricas 
+del estado del arte de los métodos FR-PCQA. Para ello se hace uso de un 
+software desarrollado con PCL\cite{PCL} y el archivo del directorio \code{utils/metrics.py}. 
+
+\subsubsection{Preprocesado de datos}
+El único preprocesado que sufren los datos iniciales es el centrado de la nube 
+de puntos sobre los ejes, paso previo a la rotación. Y la reducción de puntos 
+anormales por medio de un análisis de consistencia estadística del vecindario,
+eliminado así puntos aislados y ruido. 
+
+El proceso es muy sencillo, dado el vecindario de un punto definido por sus 
+K vecinos más cercanos, calculamos la desviación típica y la media de sus atributos 
+geométricos y eliminamos aquellos que sobrepasen un umbral determinado. 
+En nuestro caso utilizamos K = 32 y el umbral a 5 desviaciones típicas. Para 
+ello se puede utilizar \code{Utils/std_remove.py}.
+
 \section{Distorsiones}
+
+\label{sec:DatosSinteticos}
 \section{Experimentos} 

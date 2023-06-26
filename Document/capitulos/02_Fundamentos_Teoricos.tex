@@ -99,7 +99,8 @@ algunas distorsiones producen efectos visuales más marcados que otras.}
 \end{figure}
 
 
-\section{Aprendizaje Automático}
+\section{Aprendizaje Automático y Profundo}
+\subsection{Aprendizaje Automático}
 El aprendizaje automático\cite{IAModernApproach} o \emph{Machine Learning} (\emph{ML}) 
 es una de las ramas que compone lo que definimos como 
 la inteligencia artificial (\emph{IA}). 
@@ -166,7 +167,7 @@ estamos ante un problema de aprendizaje supervisado.
   \label{fig:UnsupervisedExample}
 \end{figure}
 
-\section{Aprendizaje Profundo}
+\subsection{Aprendizaje Profundo}
 En el aprendizaje profundo o \emph{Deep Learning} (\emph{DL}), 
 a diferencia de los modelos anteriores donde tenemos un conjunto de variables 
 extraídas por un humano experto, las características sobre la cual inferimos 
@@ -224,7 +225,7 @@ restricciones sobre el entrenamiento para evitar el sobre ajuste.
   \label{fig:ANNVisualization}
 \end{figure}
 
-\subsection{Redes Convolucionales} 
+\subsubsection{Redes Convolucionales} 
 Las redes convolucionales o \emph{convolutional neural network} (CNN)\cite{ConvolutionalZipCode, ConvolutionInRadiology}
 son un tipo de arquitectura de redes neuronales diseñadas 
 específicamente para el procesamiento de datos estructurados en forma de matrices, como imágenes.
@@ -245,7 +246,7 @@ y capas de \emph{pooling}.
   \label{fig:RadiographyConvolutionExample}
 \end{figure}
 
-\subsection{Capas convolucionales}
+\subsubsection{Capas convolucionales}
 Para simplificar la explicación, la realizaremos sobre imágenes 2D. 
 Una capa convolucional es encargada de realizar la operación de convolución sobre 
 los datos de entrada. 
@@ -287,7 +288,7 @@ los saltos o \emph{strides} del filtro de convolución mientras se recorre la im
   \label{fig:ConvolutionalRepresentation}
 \end{figure}
 
-\subsection{Capa de pooling} 
+\subsubsection{Capa de pooling} 
 El propósito principal de las capas de \emph{pooling} es reducir la cantidad de parámetros 
 y la complejidad computacional de la red, al tiempo que conservan las características 
 más relevantes. Además, el \emph{pooling} puede ayudar a hacer que la representación sea 
@@ -315,7 +316,7 @@ Dependiendo de la complejidad del problema, se puede ajustar el número de estas
   \label{fig:PoolingExample}
 \end{figure}
 
-\subsection{Capas totalmente conectadas}
+\subsubsection{Capas totalmente conectadas}
 Las capas totalmente conectadas o \emph{fully connected}, también llamadas 
 capas densas o \emph{dense}, son aquellas en las que todas sus neuronas 
 están conectadas con todas las neuronas de la capa anterior y de la
@@ -326,7 +327,8 @@ La salida de la última capa densa, siendo la salida de la red entera, es donde
 se evaluará la función de pérdida elegida, y al igual que en una red neuronal
 clásica se utilizará este valor para ajustar los pesos.
 
-\subsection{Aplicadas a Videos} 
+\subsubsection{Aplicadas a Videos} 
+\label{sec:VideoCNN}
 Las redes convolucionales se pueden llegar a aplicar incluso a videos. 
 Para ello, se puede utilizar una variante de las redes convolucionales llamada 
 redes convolucionales 3D (3D CNNs) o redes convolucionales espaciotemporales. 
@@ -353,7 +355,7 @@ para obtener información de movimiento (Figura \ref{fig:SlowFastPathways}).
   \label{fig:SlowFastPathways}
 \end{figure}
 
-\subsection{Aplicadas a nubes de puntos}
+\subsubsection{Aplicadas a nubes de puntos}
 
 De forma similar al caso de lo videos, actualmente existen modelos de 3D CNN's 
 capaces de procesar nubes de puntos al añadir una dimensión más que representa 
@@ -383,7 +385,7 @@ de datos 3D.
   \label{fig:VoxelizationExample}
 \end{figure}
 
-\section{Ensemble o Conjunto \emph{Deep Learning}}
+\subsection{Ensemble o Conjunto \emph{Deep Learning}}
 Un \emph{ensemble}, en el contexto del aprendizaje automático, es una técnica que 
 combina múltiples modelos de aprendizaje para mejorar la precisión y el rendimiento 
 general de las predicciones. En lugar de depender de un único modelo, 
@@ -484,7 +486,7 @@ y sobre ella simularemos las distorsiones.
 
 Dos de ellas serán para simular los resultados de varios algoritmos de compresión, 
 como puede ser \emph{octree compression}\cite{OctreeCompression} y la reducción de número de puntos 
-por medio de muestreo uniforme (\emph{uniform downsampling}), que suele ser el paso 
+por medio de submuestreo uniforme (\emph{uniform downsampling}), que suele ser el paso 
 previo a cualquier transmisión de información. 
 Un \emph{octree} es una representación más eficiente que los vóxeles, se trata 
 de la descomposición de forma recursiva de la escena en 8 partes hasta 
