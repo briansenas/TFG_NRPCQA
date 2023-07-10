@@ -298,10 +298,10 @@ imagen, lo que mejora la capacidad de generalización del modelo.
 En la Figura \ref{fig:PoolingExample} vemos un operador de \emph{pooling} común,
 el operador de valor máximo. También es habitual el uso del operador de valor medio y
 valor mínimo.
-El pooling, al igual que la convolución, posee un filtro o ventana que recorre
-los datos dado un salto o stride al moverse por los mismos,
+El \emph{pooling}, al igual que la convolución, posee un filtro o ventana que recorre
+los datos dado un salto o \emph{stride} al moverse por los mismos,
 
-Las capas convolucionales y de pooling trabajan en conjunto para procesar y extraer 
+Las capas convolucionales y de \emph{pooling} trabajan en conjunto para procesar y extraer 
 características. 
 Dependiendo de la complejidad del problema, se puede ajustar el número de estas.
 
@@ -333,14 +333,14 @@ Las redes convolucionales se pueden llegar a aplicar incluso a videos.
 Para ello, se puede utilizar una variante de las redes convolucionales llamada 
 redes convolucionales 3D (3D CNNs) o redes convolucionales espaciotemporales. 
 Estas redes están diseñadas específicamente para capturar tanto las características 
-espaciales como las temporales presentes en los videos.
+espaciales como las temporales presentes en los vídeos.
 
 La principal diferencia entre una red convolucional tradicional y una 3D CNN es 
 la adición de una dimensión temporal en las operaciones de convolución. 
 En lugar de considerar solo imágenes individuales, se toman secuencias de imágenes 
 (\emph{frames}) para capturar la información temporal.
 
-En este TFG se explora el uso de una 3D CNN capaz de analizar videos que pertenece 
+En este TFG se explora el uso de una 3D CNN capaz de analizar vídeos que pertenece 
 a la familia que se conoce como \emph{SlowFast networks}\cite{SlowFastNetworks}. Están basadas en dos caminos 
 de entrada de datos. Un conjunto de \emph{frames} espaciados en el tiempo, 
 \emph{slow path}, para obtener información espacial y otro con todos ellos, \emph{fast path}, 
@@ -357,7 +357,7 @@ para obtener información de movimiento (Figura \ref{fig:SlowFastPathways}).
 
 \subsubsection{Aplicadas a nubes de puntos}
 
-De forma similar al caso de lo videos, actualmente existen modelos de 3D CNN's 
+De forma similar al caso de lo vídeos, actualmente existen modelos de 3D CNN's 
 capaces de procesar nubes de puntos al añadir una dimensión más que representa 
 la profundidad de los puntos.  Sin embargo, la complejidad de diseño y tiempo de cómputo para 
 estos modelos 3D crece enormemente. Ya que habitualmente las nubes de puntos 
@@ -381,7 +381,7 @@ de datos 3D.
   \centering
   \includegraphics[width=0.8\textwidth]{imagenes/chapter2/VoxelizationExample.png}
   \caption[Ejemplo extraído de\cite{VoxelizationExample} sobre voxelización.]{Ejemplo extraído de\cite{VoxelizationExample} que demuestra el resultado 
-  de tranformar una nube de puntos sin estructura en una cuadrícula voxelizada.}
+  de transformar una nube de puntos sin estructura en una cuadrícula voxelizada.}
   \label{fig:VoxelizationExample}
 \end{figure}
 
@@ -486,15 +486,14 @@ y sobre ella simularemos las distorsiones.
 
 Dos de ellas serán para simular los resultados de varios algoritmos de compresión, 
 como puede ser \emph{octree compression}\cite{OctreeCompression} y la reducción de número de puntos 
-por medio de submuestreo uniforme (\emph{uniform downsampling}), que suele ser el paso 
-previo a cualquier transmisión de información. 
+por medio de submuestreo aleatorio (en inglés \emph{random downsampling}). 
 Un \emph{octree} es una representación más eficiente que los vóxeles, se trata 
 de la descomposición de forma recursiva de la escena en 8 partes hasta 
 la profundidad máxima, donde cada nodo representa un cubo tridimensional 
 llamado octante. En la compresión se analiza los octantes y se elimina los que aportan 
 menos información. 
-En el segundo, realizamos la reducción de la cantidad de puntos manteniendo 
-una distribución uniforme en el espacio tridimensional.
+En el segundo, establecemos un porcentaje de puntos que eliminar y los eliminamos 
+de forma aleatoria hasta alcanzar ese porcentaje de reducción.
 
 Las demás representarán efectos que podrían ocurrir por desplazamiento de los puntos, 
 como el movimiento del paciente y aquellos provocados por ruido en la transmisión de datos.
@@ -527,7 +526,7 @@ como el movimiento del paciente y aquellos provocados por ruido en la transmisi�
     \includegraphics[width=\textwidth]{imagenes/chapter2/clavicula/clavicula_5.png}
   \end{subfigure}
   \caption[Ejemplo de distorsiones generadas sobre clavículas.]{Ejemplo de distorsiones generadas sobre clavículas. Leyendo de izquierda a derecha tenemos:
-    la imagen original, compresión \emph{octree}, reducción de puntos por \emph{uniform downsampling},
+    la imagen original, compresión \emph{octree}, reducción de puntos por \emph{random downsampling},
     movimiento local, rotación local y ruido gaussiano.
   }
   \label{fig:DistorsionesGeneradas}

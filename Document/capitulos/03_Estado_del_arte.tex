@@ -1,6 +1,6 @@
 \chapter{Estado del Arte}
 \label{sec:EstadoDelArte}
-La estimación de calidad de imaǵenes y objetos 3D, al ser un componente sumamente 
+La estimación de calidad de imágenes y objetos 3D, al ser un componente sumamente 
 ligado al avance tecnológico y necesidades de manejo de información digital, ha 
 tomado mayor interés en el comienzo del siglo actual.
 Puede observarse en la Figura \ref{fig:ScopusMLinMedicalAndPC} que existe 
@@ -24,7 +24,7 @@ se interpreta como indicador de lo novedoso y pionero de este proyecto.
   \begin{subfigure}{0.5\textwidth}
     \includegraphics[width=\textwidth]{imagenes/chapter3/ScopusQualityAssessment.png}
   \end{subfigure}
-  \caption[Crecimiento de interés en el campo según \emph{Scopus}]{Crecimiento de interes en el campo según \emph{Scopus}\footnotemark[1].
+  \caption[Crecimiento de interés en el campo según \emph{Scopus}]{Crecimiento de interés en el campo según \emph{Scopus}\footnotemark[1].
   A la izquierda podemos ver un incremento de publicaciones desde 
   1970 sobre la IA aplicada a nubes de punto, en naranja, 
   y aplicada de forma general a imágenes médicas, en azul. A la derecha 
@@ -76,9 +76,11 @@ basada en datos sin depender de características predefinidas o conocimiento pre
   \hspace{-1.8cm}
   \begin{tabular}{|c|c|c|c|c|c|c|c|c|c|c|c|c|c|}
     \hline
-    \multirow{2}{*}{Type} & \multirow{2}{*}{Metric} & \multicolumn{3}{c|}{LIVE}& \multicolumn{3}{c|}{CSIQ} & \multicolumn{3}{c|}{TID2008} & \multicolumn{3}{c|}{TID2013} \\
-    \cline{3-14}
-                          & & SRCC & PLCC & RMSE & SRCC & PLCC & RMSE & SRCC & PLCC & RMSE & SRCC & PLCC & RMSE \\
+    \rowcolor[HTML]{FFC702}
+    & &  \multicolumn{3}{c|}{LIVE}& \multicolumn{3}{c|}{\textbf{CSIQ}} & \multicolumn{3}{c|}{\textbf{TID2008}} & \multicolumn{3}{c|}{\textbf{TID2013}} \\ 
+    \cline{3-14}\noalign{\vskip.1pt}
+    \rowcolor[HTML]{FFC702}
+    \multirow{-2}{*}{\textbf{Type}} & \multirow{-2}{*}{\textbf{Metric}} & SRCC & PLCC & RMSE & SRCC & PLCC & RMSE & SRCC & PLCC & RMSE & SRCC & PLCC & RMSE \\
     \hline
     \multirow{10}{*}{FR}
                    & VSNR\cite{VSNR} & 0.927 & 0.923 & 10.506 & 0.811 & 0.800 & 0.158 & 0.705 & 0.682 & 0.982 & 0.681 & 0.740 & 0.839 \\
@@ -94,13 +96,13 @@ basada en datos sin depender de características predefinidas o conocimiento pre
   \end{tabular}
   \caption[Tablas estado del arte FR-IQA]{Tabla extraída de \cite{SurveyOf2D3DMetrics}, 
     donde vemos el progreso de las métricas FR conforme avanza los conocimientos
-  del HVS y de ML.}
+  del HVS, ML y DL.}
     \label{tab:SOTAFRIQA}
 \end{table}
 
 \section{Estado del arte de NR-IQA}
-Al principio, surgieron métricas para la estimación de la calidad de las imaǵenes 
-que hubiesen sufrido algún tipo de distorsión específico, 
+Al principio, surgieron métricas para la estimación de la calidad de las imágenes 
+que hubiesen sufrido algún tipo de distorsión específica, 
 como imágenes borrosas\cite{GradientBasedBlurAssessment}, 
 imágenes comprimidas en JPEG\cite{JPEGBasedOnLuminance}, 
 imágenes con artefactos de bloque\cite{DeblockedImages} y imágenes con cambios de contraste\cite{ContrastDistorted}.
@@ -110,7 +112,7 @@ basadas en estadísticas de escenas naturales (NSS, por sus siglas en inglés).
 Un ejemplo conocido es el evaluador sin referencia BRISQUE\cite{BRISQUE}, que extrae 
 características NSS de un modelo estadístico de coeficientes de luminancia 
 normalizados localmente en el dominio espacial y demuestra que estas características 
-se correlacionan bien con las evaluaciones humanas.
+se correlación bien con las evaluaciones humanas.
 También se han presentado métricas basadas en aprendizaje automático, 
 como el índice basado en patrones locales de gradiente LGP\cite{LGP} que extrae 
 características estadísticas locales de la magnitud y fase del gradiente de la imagen y utiliza una 
@@ -128,9 +130,11 @@ DIQaM-NR\cite{DIQaM}, que mejora frente redes menos profundas.
     \centering
     \begin{tabular}{|c|c|c|c|c|}
     \hline 
-    \multirow{2}{*}{Type} & \multirow{2}{*}{Metric} & \multicolumn{3}{c|}{LIVE}\\
-    \cline{3-5}
-                          & & SRCC & PLCC & RMSE \\
+    \rowcolor[HTML]{FFC702}
+    & & \multicolumn{3}{c|}{\textbf{LIVE}}\\
+   \cline{3-5}\noalign{\vskip.1pt}
+    \rowcolor[HTML]{FFC702}
+      \multirow{-2}{*}{\textbf{Type}} & \multirow{-2}{*}{\textbf{Metric}} & SRCC & PLCC & RMSE \\
     \hline
     \multirow{5}{*}{NR} & 
                            BRISQUE \cite{BRISQUE} & 0.940 & 0.942 & - \\
@@ -141,7 +145,7 @@ DIQaM-NR\cite{DIQaM}, que mejora frente redes menos profundas.
                           \hline
   \end{tabular}
   \caption[Tablas estado del arte NR-IQA]{Tabla extraída de \cite{SurveyOf2D3DMetrics}, donde vemos el progreso de las métricas NR 
-  conforme nos alejamos de características basadas en el conocimiento humano y de NSS utilizando ML.}
+  conforme nos alejamos de características basadas en el conocimiento humano y de NSS utilizando ML y DL.}
   \label{tab:SOTANRIQA}
 \end{table}
 
@@ -157,8 +161,8 @@ Como fue mencionado, la salida de estos algoritmos pueden ser utilizados
 para filtrar imágenes de baja calidad en un gran conjunto de imágenes médicas o 
 para ayudar a mejorar su calidad, siendo esta crucial para el diagnóstico\cite{DicomDistortionsExample}.
 Predominantemente, el conocimiento del ámbito de la imagen es crítico para estimar 
-su calidad. Es por ello que la mayoría de los métodos son para un tipo específico 
-de examen médico.
+su calidad. Es por ello que la mayoría de los métodos actuales son para un tipo específico 
+de examen médico o distorsión.
 
 Por ejemplo, basándose en el sistema visual humano (HVS), 
 Bhateja et al.\cite{MultiModalMRIFusionMethod} utilizaron métricas de fusión
@@ -176,21 +180,21 @@ el problema de crear anotaciones ruidosas en la tarea de segmentación de imáge
 Esta técnica de evaluación de calidad de tres etapas utiliza un modelo residual 
 jerárquico y proporciona una evaluación a nivel de corte, volumen y sujeto. 
 
-Otro método de clasificación utiliza una red generativa adversaria no emparejada 
+Otro método de estimación utiliza una red generativa adversaria no emparejada 
 y un clasificador entrenado débilmente supervisado para evaluar imágenes MRI\cite{MIGAN}.
 Para abordar el problema de desperdiciar información espacial 3D potencialmente importante, 
-se creó el enfoque HyS-net\cite{Hys-net}, basado en una hiperred y es capaz de 
-autoadaptación\cite{Hys-net}. Así como fue expuesto anteriormente, no es posible 
+se creó el enfoque HyS-net\cite{Hys-net}, basado en una hiper-red y es capaz de 
+auto adaptación\cite{Hys-net}. Así como fue expuesto anteriormente, no es posible 
 simplemente implementar métodos IQA, es por ello que Chow y Rajagopal \cite{MedicalBRISQUE} 
 propusieron un enfoque más reciente que adapta el evaluador de calidad de imagen más famoso BRISQUE\cite{BRISQUE}.
 
 Hay que tener en cuenta que la explicabilidad es un aspecto crucial 
-para evaluar la confiabilidad de los sistemas de diagnóstico automático, 
+para evaluar la fiabilidad de los sistemas de diagnóstico automático, 
 especialmente en aplicaciones de aprendizaje profundo tipo caja negra. 
 Dado que un clasificador profundo nos proporciona solo el valor inferido 
 para un escaneo médico dado, es imperativo descubrir las señales que pueden 
 ayudar a asegurar que la decisión se haya tomado en función de conjuntos de 
-características relacionables.
+características relacionales.
 
 \section{Estado del arte de FR-PCQA}
 Las métricas más populares para la estimación objetiva de la calidad de modelos 
@@ -205,7 +209,7 @@ Para solventar este problema se formuló el segundo método por Tian et al.
 que modela la superficie en cada punto como un plano. 
 Ese plano es perpendicular a la normal en cada punto, que se calcula en base a la información de su vencindario. 
 Se propuso también otra métrica como \emph{Plane-to-Plane} (Pl2Pl)\cite{PlaneToPlane}, 
-que mide la similitud entre superficies associadas a las nubes de puntos. Dentro 
+que mide la similitud entre superficies asociadas a las nubes de puntos. Dentro 
 de este mismo ámbito surge también \emph{Point-to-Surface}\cite{PlaneToSurface}, 
 que mide la distancia de cada punto de la versión distorsionado respecto a su 
 superficie correspondiente en la nube de referencia. Luego para poder tener en
@@ -221,7 +225,7 @@ Un ejemplo sería PointSSIM\cite{PointSSIM}, una métrica que busca la similitud
 las estadísticas locales de curvatura de los puntos, junto a la información 
 extraída de los colores, como adaptación del método SSIM\cite{SSIM}.
 Experimentando con combinaciones de 3 medidas geométricas y 5 comparaciones de color 
-para encontrar el mejor vector características resultó en la metrica PCQM\cite{PCQM}.
+para encontrar el mejor vector características resultó en la métrica PCQM\cite{PCQM}.
 % Similar, utilizando el análisis de componentes principales (PCA) en un vecindario 
 % de puntos para extraer los valores y vectores singulares por cada punto permitió 
 % obtener buenos descriptores de información geométrica\cite{PointPCA}.
@@ -230,13 +234,13 @@ para encontrar el mejor vector características resultó en la metrica PCQM\cite
 % Consistía en generar un histograma y correlograma de la componente lumínica. 
 % Un correlograma nos permite caracterizar la relación entre pares de variables 
 % numéricas en un conjunto de datos. 
-Otros, velaron por estudio la energia potencial en las nubes de puntos y 
+Otros, velaron por estudio la energía potencial en las nubes de puntos y 
 las diferencias que emergen en presencia de distorsiones (MPED)\cite{MPED}.
 Por otro lado, utilizando transformaciones de datos, se construyeron grafos que representan 
 las nubes de puntos, tanto la de referencia como la distorsionada, 
 para producir métricas de similitud como GraphSIM\cite{GraphSIM}.
 De igual forma se adaptaron ideas de otros ámbitos, por ejemplo, utilizando 
-proyecciones que transladan el mundo tridimensional a un espacio 2D para utilizar 
+proyecciones que trasladan el mundo tridimensional a un espacio 2D para utilizar 
 los métodos más conocidos de estimación de calidad en imágenes.
 Se realizó incluso un estudio sobre el impacto del número de proyecciones 2D de 
 distintas perspectivas en el rendimiento de las métricas de calidad\cite{ImpactOf2DProyections, IT-PCQA}.
@@ -257,11 +261,11 @@ Al igual que en las primeras aproximaciones de los métodos NR-IQA, existen
 algoritmos de estimación específicos, como el propuesto por Liu et al\cite{bitstreamPCQ},
 método centrado en predecir la calidad de nubes de puntos 
 codificadas mediante V-PCC, algoritmo de compresión, utilizando un modelo NR 
-a nivel de bitstream. A continuación, los métodos siguen el camino explorado 
+a nivel de \emph{bitstream}. A continuación, los métodos siguen el camino explorado 
 por los métodos FR-PCQA extrayendo características de las nubes de puntos para 
 entrenar modelos.  Chetouni et al.\cite{NR-CNN-3D-PC} utilizó distancias geométricas, curvaturas medios 
 y niveles de color, en escala gris. Zhang et al.\cite{NR3DQA} siguiendo la misma 
-línea extrayó características de los vectores y valores singulares de cada punto,
+línea extrajo características de los vectores y valores singulares de cada punto,
 además de utilizar características lumínicas.
 
 El siguiente paso, al igual que en FR, se empezó a investigar la posibilidad 
@@ -271,7 +275,7 @@ características de 384 dimensiones, que alimenta a dos módulos de aprendizaje
 que calculan conjuntamente la calidad de la nube de puntos degradada. 
 En IT-PCQA\cite{IT-PCQA} deciden utilizar métodos IQA aplicadas a las multi-proyecciones.
 Extendiendo los trabajos anteriores, tenemos VQA-PC\cite{VQA-PC} que trata las 
-multi-proyecciones como video, pudiendo así utilizar información espacial, 
+multi-proyecciones como vídeo, pudiendo así utilizar información espacial, 
 imágenes en posiciones específicas, y información de consistencia temporal 
 de la nube de puntos rotando. 
 
@@ -294,9 +298,8 @@ modelos pre-entrenado en 2D y obtuvieron muy buenos resultados.
     \small
     \begin{tabular}{|c|c|c|c|c|}
         \hline
-        \multirow{2}{*}{\textbf{MODELO}} & \multicolumn{2}{c|}{\textbf{STJU-PCQA}} & \multicolumn{2}{c|}{\textbf{WPC}} \\
-        \cline{2-5}
-                        & PLCC & SRCC & PLCC & SRCC\\
+        \rowcolor[HTML]{FFC702}& \multicolumn{2}{c|}{\textbf{STJU-PCQA}} & \multicolumn{2}{c|}{\textbf{WPC}} \\ \cline{2-5}\noalign{\vskip.2pt}
+        \multirow{-2}{*}{\cellcolor[HTML]{FFC702}\textbf{MODELO}}  &\cellcolor[HTML]{FFC702} PLCC & \cellcolor[HTML]{FFC702}SRCC & \cellcolor[HTML]{FFC702}PLCC & \cellcolor[HTML]{FFC702}SRCC\\
         \hline
         MM-PCQA\cite{MM-PCQA} & 0.92 & 0.91 & 0.83 & 0.83\\
         \hline
@@ -312,19 +315,20 @@ modelos pre-entrenado en 2D y obtuvieron muy buenos resultados.
         \hline
         IT-PCQA \cite{IT-PCQA}& 0.58 & 0.63 & 0.55  & 0.54\\
         \hline
-        bistreamPCQ\cite{bitstreamPCQ} & ? & ? & ? & ?\\
-        \hline
-        PQA-Net\cite{PQA-Net} & ? & ? & ? & ?\\
-        \hline 
-        Chetouni et al.\cite{NR-CNN-3D-PC}& ? & ? & ? & ? \\
-        \hline
+        % bitstreamPCQ\cite{bitstreamPCQ} & ? & ? & ? & ?\\
+        % \hline
+        % PQA-Net\cite{PQA-Net} & ? & ? & ? & ?\\
+        % \hline 
+        % Chetouni et al.\cite{NR-CNN-3D-PC}& ? & ? & ? & ? \\
+        % \hline
     \end{tabular}
     \caption[Estado del arte de modelos NR-PCQA]{Resumen del estado del arte de modelos NR-PCQA en dos datasets muy conocidos: SJTU\cite{SJTU} y WPC\cite{WPC1,WPC2}.}
 \end{table}
 
 \Brian[{Sobre estimación de calidad en imágenes médicas 3D}]{Aunque en la Figura
-\ref{fig:ScopusMLinMedicalAndPC} parece haber documentos para imágenes médicas 
-3D, solamente encontré uno respecto a la calidad de segmentaciones. Los demás, 
-imagino que son apenas documentos que contienen la palabra calidad o estimación. 
+\ref{fig:ScopusMLinMedicalAndPC} parece haber documentos para la estimación de 
+calidad de imágenes médicas 3D, solamente encontré uno respecto a la calidad 
+de segmentaciones. Los demás, imagino que son apenas documentos que contienen la palabra calidad o estimación. 
 Así que no sé exactamente si dedicar una sección a decir que no he encontrado 
 nada o qué decir aquí.}
+

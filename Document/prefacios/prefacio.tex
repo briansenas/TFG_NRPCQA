@@ -8,48 +8,96 @@
 
 
 %\cleardoublepage
-%\thispagestyle{empty}
+\thispagestyle{empty}
 
-\pagestyle{fancyplain}
 \begin{center}
-{\large\bfseries \myTitle: \mySubTitle }\\
+{\large\bfseries \myTitle}\\
 \end{center}
 \begin{center}
 \myName\\
 \end{center}
 
 %\vspace{0.7cm}
-\noindent{\textbf{Palabras clave}: palabra\_clave1, palabra\_clave2, palabra\_clave3, ......}\\
+\noindent{\textbf{Palabras clave}: 
+aprendizaje automático, aprendizaje profundo, visión por computador, 
+estimación de calidad, nubes de punto, imágenes médicas. }\\
 
-\vspace{0.7cm}
 \noindent{\textbf{Resumen}}\\
+En el campo biomédico, la visualización y análisis de estructuras 3D, 
+habitualmente nubes de puntos, desempeña un papel fundamental para el diagnóstico y investigación. 
+Sin embargo, la calidad de estas representaciones pueden variar debido a diversos factores, como la adquisición, procesamiento y reconstrucción. 
+Para mejorar cada uno de estos pasos es necesario una manera de cuantificar las distorsiones que puedan surgir. 
+Ese problema se conoce como la estimación de calidad de nubes de puntos, 
+un campo de especial y reciente importancia. No obstante, 
+es un campo todavía sin explorar en el ámbito biomédico.
+Para estimar la calidad de representaciones 2D o 3D, generalmente se extraen características de la imagen original y la distorsionada para su posterior 
+comparación. Estas características provienen del análisis de estructuras, colores y 
+del conocimiento del sistema visual humano. No obstante, 
+muchas veces no disponemos de la información de referencia, como es el caso en 
+la medicina, sino solo la versión distorsionada.
+\\
 
-Poner aquí el resumen.
+Este TFG trata del desarrollo de un sistema capaz de estimar la calidad de 
+una representación 3D biomédica sin referencia. La propuesta presenta la posibilidad de 
+adaptación de modelos de estimación de calidad de nubes de puntos genéricas 
+al ámbito médico haciendo uso de un meta-modelo de aprendizaje profundo para 
+procesar proyecciones 2D multi-vista y un video del objeto 3D rotando. 
+De esta forma extraemos características tanto estáticas como dinámicas.
+Para los experimentos se utilizaron diversos conjuntos de datos públicos 
+de nubes de puntos genéricas, debido a que no existen en el caso biomédico, 
+para la validación entre modelos y se propone un conjunto de datos médicos 
+sintéticos generados a partir de datos privados. Aún siendo un conjunto de datos 
+muy reducido, se logró una correlación entre los valores predecidos y la 
+estimación real de calidad del 75\% mostrando el gran potencial que posee esta línea de investigación.
+
 \cleardoublepage
 
 
-% @TODO: Uncomment
-%\thispagestyle{empty}
+\thispagestyle{empty}
 
 
 \begin{center}
-{\large\bfseries \myTitle: \mySubTitle}\\
+{\large\bfseries \myTitleENG}\\
 \end{center}
 \begin{center}
 \myName \\
 \end{center}
 
 %\vspace{0.7cm}
-\noindent{\textbf{Keywords}: Keyword1, Keyword2, Keyword3, ....}\\
+\noindent{\textbf{Keywords}: machine learning, deep learning, computer vision, quality assessment, point cloud, medical images.}\\
 
-\vspace{0.7cm}
+%\vspace{0.7cm}
 \noindent{\textbf{Abstract}}\\
 
-Write here the abstract in English.
+In the biomedical field, the visualization and analysis of 3D structures, 
+typically point clouds, play a fundamental role in diagnosis and research. 
+However, the quality of these representations can vary due to various factors, 
+such as acquisition, processing, and reconstruction. 
+To improve each of these steps, a way to quantify the distortions that may 
+arise is necessary. This problem is known as point cloud quality estimation, 
+a field of special and recent importance. However, it is still an unexplored 
+field in the biomedical domain.
+To estimate the quality of 2D or 3D representations, features are generally 
+extracted from both the original and distorted images for subsequent comparison. 
+These features come from the analysis of structures, colors, and knowledge of 
+the human visual system. However, in many cases, we do not have the reference 
+information, as is the case in medicine, but only the distorted version.
+\\
+
+This Bachelor's thesis deals with the development of a system capable of estimating 
+the quality of a biomedical 3D representation without a reference. The proposal 
+presents the possibility of adapting generic point cloud quality estimation models 
+to the medical field by using a meta-model of deep learning to process multi-view 
+2D projections and a video of the rotating 3D object. In this way, 
+we extract both static and dynamic characteristics.
+For the experiments, various public datasets of generic point clouds were used, 
+as they do not exist in the biomedical case, for model validation. 
+Additionally, a set of synthetic medical data generated from private data is proposed. 
+Despite being a very limited dataset, a correlation of 75\% was achieved between 
+the predicted values and the actual quality estimation, demonstrating the great potential of this line of research.
 
 \chapter*{}
-% @TODO: Uncomment
-%\thispagestyle{empty}
+\thispagestyle{empty}
 
 \noindent\rule[-1ex]{\textwidth}{2pt}\\[4.5ex]
 
@@ -109,4 +157,15 @@ Y para que conste, expiden y firman el presente informe en Granada a X de mes de
        \vspace{1cm}
 
 
-Poner aquí agradecimientos...
+Primeramente, me gustaría agradecer a mis tutores, Enrique Bermejo y Pablo Mesejo,
+por darme la oportunidad de desarrollar este proyecto con ellos. 
+Agradezco la paciencia infinita y comprensión a la hora de resolver mis dudas. 
+Segundo, agradezco a la propia Universidad de Granada por haberme dado la oportunidad 
+de continuar mis estudios universitarios en tan distinguida casa de estudios. 
+\\
+
+Quiero agradecer también a mis padres, Joana Sena y Robert Netland, por la oportunidad 
+de realizar mis estudios en España con todo sus apoyos. A mis compañeros de piso,
+en especial al recien graduado en Física Yllari Kay, que han estado ahí desde 
+primero de carrera y me han ayudado en cada paso. En general, a todos mis amigos, 
+incluido los de Brasil, por el cariño hacia mis obligadas ausencias. 

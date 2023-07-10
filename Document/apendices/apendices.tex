@@ -29,3 +29,18 @@ OR LIMIT-TO (SUBJAREA , ``ENGI''))
  TITLE-ABS-KEY ((deep AND learning) OR (machine AND learning) OR (artificial AND intelligence) OR (computer AND vision) OR (soft AND computing) AND ((biomedical OR medical OR medicine)) AND ((point AND cloud) OR (3d OR tridimensional)) AND ((quality AND assessment) OR (quality AND estimation) OR (mos))) AND (LIMIT-TO (SUBJAREA , ``COMP'') OR LIMIT-TO (SUBJAREA , ``MEDI'') OR LIMIT-TO (SUBJAREA , ``ENGI''))
 }
 \end{enumerate}
+
+\subsubsection*{Fórmulas Adicionales}
+\label{ape:Formulas}
+La función logística-4 se puede definir como la Ecuación \eqref{eq:LG4}:
+\begin{equation}
+Q = \frac{\beta_1 - \beta_2}{1 + e^{-\frac{Q_s-\beta_3}{|\beta_4|}}} + \beta_2 
+\label{eq:LG4}
+\end{equation}
+Mientras que la función cúbica se define como la Ecuación \eqref{eq:CB4}:
+\begin{equation}
+Q = aQ_s^3 + bQ_s^2 + cQ_s + d
+\label{eq:CB4}
+\end{equation}
+Donde $\beta_i$, $a$, $b$, $c$ y $d$ son parámetros a aprender, $Q$ es el valor 
+normalizado y $Q_s$ es el valor predecido.

@@ -1,11 +1,12 @@
 \chapter{Materiales y Métodos}
 \section{Materiales}
 \subsection{Datos públicos} 
+\label{sec:DatosPublicos}
 Para este TFG se ha utilizado diversos conjuntos de datos públicos para la 
 evaluación y elección de los modelos anteriormente descritos. De entre ellos 
 están SJTU\cite{SJTU}, WPC\cite{WPC1,WPC2} y LS-SJTU-PCQA\cite{ResSCNN}.
 
-El primer de ellos, parate de 10 nubes de puntos de referencia, ver Figura \ref{fig:SJTU}, 
+El primer de ellos, parte de 10 nubes de puntos de referencia, ver Figura \ref{fig:SJTU}, 
 a las cuales se aplican 7 tipos de distorsiones. Estas son: compresión, ruido 
 al color, ruido geométrico, ruido gaussiano y combinación entre ellas, ver Tabla \ref{tab:SJTU}. Todas se aplican en una escala creciente
 de intensidad del 1 al 6. Luego, se obtiene un MOS de 10 individuos para las 420 
@@ -23,7 +24,8 @@ nubes de puntos.
   \scriptsize
   \begin{tabular}{|c|c|}
     \hline
-    Número & Tipo de Distorsión \\ 
+    \rowcolor[HTML]{FFC702}
+    \textbf{Número} & \textbf{Tipo de Distorsión} \\ 
     \hline 
     0 & OT: Compresión octree\cite{OctreeCompression} \\ 
     \hline 
@@ -48,8 +50,8 @@ El segundo, WPC\cite{WPC1, WPC2}, también posee distorsiones como submuestreo u
 ruido gaussiano (aplicados de manera distinta), pero a su vez posee nuevos tipos 
 de distorsiones. Estos son basados en distintos tipos de compresión: V-PCC, G-PCC y \emph{trisoup}.
 Además, posee distintos modelos de nubes de puntos, ver Figura \ref{fig:WPC}, que 
-pueden influir en el rendimiento del modelo si no es lo suficientemente amplio 
-y representativo de lo que puede encontrarse. 
+pueden influir en el rendimiento del modelo si el conjunto no es
+suficientemente amplio y representativo de lo que puede encontrarse una vez entrenado. 
 
 \begin{figure}[htp]
   \begin{center}
@@ -60,20 +62,19 @@ y representativo de lo que puede encontrarse.
 \end{figure}
 
 Los dos anteriores han sido utilizados sobre todo para la evaluación y elección 
-del modelo de inferencia a utilizar. Son los conjuntos de datos más conocidos 
+del modelo de regresión a utilizar. Son los conjuntos de datos más conocidos 
 y que habitualmente están presentes en las publicaciones. Además, se realizaron 
-pruebas de ejecuciones de los métodos de código abierto para verificar los 
-resultados. Todos estaban dentro de un margen de error aceptable.
-
-Sin embargo, el último es el que finalmente se utiliza para entrenar un modelo para estimar 
-la calidad de las imágenes médicas. Esto es porque es el mayor conjunto de datos, 
+pruebas de ejecuciones de algunos métodos de código abierto para verificar los 
+resultados. Sin embargo, el último es el que finalmente se utiliza para entrenar un modelo para estimar 
+la calidad de las imágenes médicas. Esto es porque LS-SJTU-PCQA\cite{ResSCNN} 
+es el mayor conjunto de datos, 
 en el momento de escritura, y posee tipos de distorsiones que pueden simular 
 lo que sería ciertos errores y ruidos presentes en imágenes médicas. Por ejemplo, 
 el ruido gaussiano (simular errores de transmisión y almacenado de datos), 
 rotación y movimiento local (simular el movimiento del paciente) y compresión 
 octree y por submuestreo uniforme (algoritmos de compresión comúnmente usados).
-Aparte, es el con mayor amplitud de modelos base, con distintos tipos y categorias 
-de objetos, ver Figura \ref{fig:LS-SJTU-PCQA}.
+Aparte, es el con mayor amplitud de modelos base, con distintos tipos y categorías 
+de objetos. Ver Figura \ref{fig:LS-SJTU-PCQA}.
 
 \begin{figure}
   \begin{center}
@@ -88,8 +89,8 @@ de objetos, ver Figura \ref{fig:LS-SJTU-PCQA}.
 Para este TFG se tiene disponible una colección 26 directorios DICOM, de distintas
 partes del cuerpo, de 2 distintos individuos. 
 De los cuales han sido segmentados las clavículas, el seno frontal y el seno Maxilar. 
-A parte, disponemoss de volúmenes del cráneo de otros 3 individous, una pubis izquierda y
-una pubis derecha, ver Figura \ref{fig:OurDataExample}. Es decir, en total dispones de 11 nubes de puntos de alta 
+A parte, disponemos de volúmenes del cráneo de otros 3 individuos, una pubis izquierda y
+una pubis derecha, ver Figura \ref{fig:OurDataExample}. Es decir, en total disponemos de 11 nubes de puntos de alta 
 calidad, que representan distintos volúmenes de exámenes médicos.
 
 \begin{figure}[htp]
@@ -124,52 +125,126 @@ algoritmo de generación de las nubes de puntos a partir de segmentaciones DICOM
 
 \section{Métodos}
 Como se pudo observar en la Sección \ref{sec:EstadoDelArte}, actualmente hay una 
-tendencia, justificada, a los métodos de aprendizaje profundo. Además, se tuvo 
+tendencia, justificada, a los métodos de ML. Por otro lado, se tuvo 
 que descartar todos los métodos que tuvieran en cuenta información de textura, 
 cosa que no existe en los volúmenes médicos habituales. Además, necesitamos 
 información perceptual de la imagen en su totalidad y no de regiones locales 
 específicas. Es por ello, que optamos por evaluar el método VQA\cite{VQA-PC}.
 
-\Brian[{Debería añadir un apartado sobre el método de NSS que probamos?}]{Como hice la 
-  prueba de ejecución del método Zhang et al\cite{NR3DQA}, me pregunto si debería 
-dedicar un apartado de métodos a ello para justificar aún más el método ML VQA-PC. 
-Para ello imagino que quedaría pendiente una prueba de ejecución sobre LS-SJTU-PCQA, 
-pero a priori, gracias al código abierto pude replicar el paper con los datos de SJTU. 
-Luego probé utilizar algunas métricas más de los valores singulares que se suelen utilizar 
-en segmentación y obtuve algunos resultados mejores en SJTU. En seguida probé 
-con las imágenes médicas, pero obtuve 0.24.
-}
+\subsection{Zhang et al\cite{NR3DQA}}
+\label{sec:NR3DQA}
+Antes de probar directamente con modelos de DL, se experimentó con un método de 
+ML basado en la extracción de características de escena y entrenamiento de un 
+modelo vectores soporte para la regresión. Para ello necesitamos definir 
+que tipo de características queremos extraer. 
+
+Zhang et al\cite{NR3DQA} proponen utilizar características geométricas y de 
+color. Para la primera, extraen la curvatura\eqref{eq:Curvatura}, 
+anisotropia\eqref{eq:Anisotropia}, linealidad\eqref{eq:Linealidad}, 
+planaridad\eqref{eq:Planaridad} y esfericidad\eqref{eq:Esfericidad} de los puntos. 
+Estas características se pueden extraer del vecindario 
+de un punto por medio de la matriz de covarianza y los valores singulares. 
+Las fórmulas que las definen son: 
+\begin{equation}
+  Cur(p_i) = \frac{\lambda_3}{\lambda_1 + \lambda_2 + \lambda_3}
+  \label{eq:Curvatura}
+\end{equation}
+\begin{equation}
+  Ani(p_i) = \frac{\lambda_1 - \lambda_3}{\lambda_1}
+  \label{eq:Anisotropia}
+\end{equation}
+\begin{equation}
+  Lin(p_i) = \frac{\lambda_1 - \lambda_2}{\lambda_1}
+  \label{eq:Linealidad}
+\end{equation}
+\begin{equation}
+  Pla(p_i) = \frac{\lambda_2 - \lambda_3}{\lambda_1}
+  \label{eq:Planaridad}
+\end{equation}
+\begin{equation}
+  Sph(p_i) = \frac{\lambda_3}{\lambda_1}
+  \label{eq:Esfericidad}
+\end{equation}
+Donde $\lambda_1$, $\lambda_2$ y $\lambda_3$ se refieren a los correspondientes 
+valores singulares. Para la extracción de las características de color, primeramente 
+convierten el espacio de color RGB en el espacio LAB mediante los siguientes 
+pasos de transformación: 
+\begin{equation}
+  \begin{bmatrix} 
+    X \\ Y \\ Z 
+  \end{bmatrix}  = 
+  \begin{bmatrix}
+    2.7688 & 1.7517 & 1.1301 \\ 
+    1.0000 & 4.5906 & 0.0601 \\ 
+    0 & 0.0565 & 5.5942 
+  \end{bmatrix} = 
+  \begin{bmatrix}
+    R \\ G \\ B 
+  \end{bmatrix} 
+  \label{eq:ScaleXYZ}
+\end{equation}
+\begin{equation}
+\begin{cases}
+  L &= 116f\left(\frac{Y}{Y_n}\right) - 16 \\ 
+  A &= 500\left( f\left(\frac{X}{X_n}\right) - f\left(\frac{Y}{Y_n}\right) \right) \\ 
+  B &= 200\left( f\left(\frac{Y}{Y_n}\right) - f\left(\frac{Z}{Z_n}\right)\right) 
+\end{cases}
+  \label{eq:LABTransform}
+\end{equation}
+Donde R, G y B son los correspondientes canales RGB de color. La función que 
+determina la transformación final viene descrita por \eqref{eq:LABfun}: 
+\begin{equation}
+  f(t) = \begin{cases} \sqrt[3]{t} & \textrm{sí}\; t > \sigma^3 \\ 
+    \frac{t}{3\sigma^2} + \frac{4}{29},& \textrm{en cualquier otro caso.}
+         \end{cases}  
+  \label{eq:LABfun}
+\end{equation}
+Donde $\sigma = \frac{6}{29}$.
+Para cada tipo de características se normaliza como \eqref{eq:MeanNorm}.
+\begin{equation} 
+  \hat F = \frac{F-mean(F)}{std(F) + C}
+  \label{eq:MeanNorm}
+\end{equation}
+Donde F es la característica extraída y C una pequeña constante para la 
+estabilidad numérica. Además, argumentan la alta correlación entre la 
+entropía con la distorsión por quantización. Es por ello, que también 
+estiman la entropía de las características. 
+Por último, vieron que la distribución de los puntos se veía afectada con 
+las distorsiones, y es por ello que a las características geométricas 
+las cuantifica y asimila a la distribución guassiana y gamma. 
+
+
 \subsection{VQA-PC}
-Zhang et al\cite{VQA-PC} propusó un modelo de estimación de calidad de nubes 
+Zhang et al\cite{VQA-PC} propusieron un modelo de estimación de calidad de nubes 
 de puntos utilizando proyecciones 2D de diferentes perspectivas. 
 Observaron que los métodos que trabajan directamente sobre la nube de puntos tienen
 una elevada dificultad computacional, sin suponer una mejora excesiva, y que 
 deben todavía que madurar en el campo dado la alta complejidad de las nubes de puntos.
-Por ello proponen utilizar proyección multi-vista. No obstante, argumentó que 
+Por ello proponen utilizar proyección multi-vista. No obstante, argumentaron que 
 los métodos anteriores de proyección se basan en la hipótesis de que los humanos 
-percebimos la calidad de modelos 3D desde una perspectiva estática, cosa que no 
+percibimos la calidad de modelos 3D desde una perspectiva estática, cosa que no 
 es cierta en la práctica dado que los objetos 3D permiten operaciones geométricas 
 de rotación y escalado.
 Y por ello, proponen unificar la percepción estática con la dinámica tratando 
-a las proyecciones como videos.
+a las proyecciones como vídeos.
 
 De esta forma, se puede extraer características espaciales y temporales, como 
 discutido en la Sección \ref{sec:VideoCNN}, utilizando redes convolucionales 
-adaptadas a videos, de la familia \emph{SlowFast}\cite{SlowFastNetworks}.
+adaptadas a vídeos, de la familia \emph{SlowFast}\cite{SlowFastNetworks}.
 Siguiendo la motivación de que las deformaciones geométricas no deseadas se presentan 
-de forma abruta según la perspectiva, ver Figura \ref{fig:ViewPoint}, y que 
-incluso se pueden observar incoherencias entre perspectivas adyacientes, 
+de forma abrupta según la perspectiva, ver Figura \ref{fig:ViewPoint}, y que 
+incluso se pueden observar incoherencias entre perspectivas adyacentes, 
 utilizaron 4 ejes de rotación: vertical, horizontal, diagonal derecha 
 y diagonal izquierda. Para cada eje se genera un total de 30 \emph{frames}, 
 en total habrá 120, ver Figura \ref{fig:VQARotation}. El ángulo de rotación es de 12 grados para todos los casos. 
-Terminando la rotación en un eje en la misma posición inicial. 
-A continuación se extraen características temporales del video, que es posible 
-generar a partir de cada \emph{frame} de los distintos ejes de rotación encadenado
-secuencialmente de forma ordenada, y por último se elige 1 \emph{frames} de cada 
+Terminando la rotación de un eje en la misma posición inicial. 
+A continuación se extraen características temporales del vídeo, que es posible 
+generar a partir de cada \emph{frame} de los distintos ejes de rotación encadenados
+secuencialmente de forma ordenada, y se elige 1 \emph{frame} de cada 
 eje de rotación para representar la información espacial. Por último, 
-tenemos que aprender una función de iteracción entre los dos vectores característicos 
-extraídos. Para ello se concatenan los vectores y se aprende una función por 
-medio de una capa totalmente conectada utilizando el error MSE.
+tenemos que aprender una función de interacción entre los dos vectores característicos 
+extraídos. Proponen concatenar los vectores y aprender una función por 
+medio de una capa totalmente conectada utilizando el MSE.
 
 \begin{figure}
   \begin{center}
@@ -191,12 +266,12 @@ en la imagen de abajo se ve cierta deformación de la cabeza.}
   {Ejemplo de las rotaciones que utiliza el modelo VQA-PC\cite{VQA-PC}.
   Se observa que el final de cualquier eje de rotación es la posición inicial, 
 permitiendo así unir de suavemente una secuencia de imágenes encadenada de los ejes 
-que genere un video de rotación utilizado luego para la estimación.}
+que genere un vídeo de rotación utilizado luego para la estimación.}
   \label{fig:VQARotation}
 \end{figure}
 
-Para realizar la secuencia de video, necesitamos realizar correctamente 
-el conjunto de rotaciones descritos por las siguientes: 
+Para realizar la secuencia de vídeo, necesitamos realizar correctamente 
+el conjunto de rotaciones descritos por las siguientes ecuaciones: 
 \begin{equation}
   \theta_A = 
 \begin{cases}
@@ -255,16 +330,14 @@ Para extraer las características espaciales empleamos un modelo pre-entrenado,
 en concreto se investigó variaciones de esqueletos ResNet\cite{ResNet}. Una 
 familia de redes residuales, que en su momento resolvieron el problema 
 del estancamiento en el entrenamiento de redes neuronales profundas debido 
-a la degradación del error. El único modelo al que optimizaremos sus pesos es 
+a la degradación del gradiente. El único modelo al que optimizaremos sus pesos es 
 ResNet, el modelo de extracción temporal solo es un paso previo.
 
 \begin{figure}[htp]
   \begin{center}
-    \includegraphics[width=0.70\textwidth]{imagenes/chapter4/PipelineCompleto}
+    \includegraphics[width=0.65\textwidth]{imagenes/chapter4/PipelineCompleto}
   \end{center}
   \caption{Ejemplo detallado de las etapas del método de VQA-PC}
   \label{fig:VQAPipeline}
 \end{figure}
-
-
 
