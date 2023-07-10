@@ -10,10 +10,13 @@ import open3d as o3d
 def demo_crop_geometry(obj_path):
     pcd = o3d.io.read_point_cloud(obj_path)
     # o3d.visualization.draw_geometries_with_editing([pcd])
-
     vis = o3d.visualization.VisualizerWithEditing()
     vis.create_window()
     print(dir(vis)) 
+    if not pcd.colors or len(pcd.colors) <= 0: 
+        colors = np.zeros(shape=np.asarray(pcd.points).shape)+ [.5,.5,.5]
+        pcd.colors = o3d.utility.Vector3dVector(colors) 
+    pcd.estimate_normals()
     vis.add_geometry(pcd)
     vis.run()  # user picks points
     vis.destroy_window()

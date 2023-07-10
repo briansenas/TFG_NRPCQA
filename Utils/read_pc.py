@@ -110,6 +110,19 @@ def convert_mesh(
 
     o3d.io.write_point_cloud(output_name, cloud)
 
+def add_bounding_boxes(cloud, geometries):
+    axis = cloud.get_axis_aligned_bounding_box()
+    axis.color = np.asarray([0,0,0])
+    extent = axis.get_extent() 
+    bbox = axis.get_box_points()
+    bbox = o3d.utility.Vector3dVector(bbox) 
+    pbox = o3d.geometry.PointCloud()
+    pbox.points = bbox
+    pbox.colors = o3d.utility.Vector3dVector(np.asarray([[1,0,0]] * len(bbox)) )
+    geometries += [axis]
+    geometries += [pbox] 
+    return geometries
+
 def read_pc(file_name, *args): 
         
     cloud = o3d.io.read_point_cloud(file_name) 
@@ -118,14 +131,15 @@ def read_pc(file_name, *args):
     cloud, ind = cloud.remove_statistical_outlier(nb_neighbors=32, std_ratio=5.0) 
     axis = cloud.get_axis_aligned_bounding_box()
     axis.color = np.asarray([0,0,0])
-    o3d.visualization.draw_geometries([cloud, axis]) 
+    geometries = [cloud, axis]
+    geometries = add_bounding_boxes(cloud, geometries)
+    o3d.visualization.draw_geometries(geometries) 
 
 def read_all_pc(file_name, *args): 
 
     ref_path = os.path.join(config.input_dir, '**/*.ply')
     ref_objs = glob.glob(ref_path, recursive=True)
     ref_objs = sorted(ref_objs) 
-
     for obj in ref_objs: 
         cloud = read_point_cloud(obj) 
         axis = cloud.get_axis_aligned_bounding_box()
@@ -136,7 +150,10 @@ def read_all_pc(file_name, *args):
         pbox = o3d.geometry.PointCloud()
         pbox.points = bbox
         pbox.colors = o3d.utility.Vector3dVector(np.asarray([[1,0,0]] * len(bbox)) )
-        o3d.visualization.draw_geometries([cloud, axis, pbox]) 
+        geometries = [cloud] 
+        # geometries += [axis]
+        # geometries += [pbox] 
+        o3d.visualization.draw_geometries(geometries) 
 
 
 def read_point_cloud(
@@ -197,7 +214,7 @@ def generate_examples_png(input_dir, output_dir):
         vis.clear_geometries()
         vis.add_geometry(pcd) # fix: use the loaded point cloud
         ctr = vis.get_view_control()
-        ctr.set_zoom(0.4)
+        ctr.set_zoom(0.27)
         vis.update_renderer()
         vis.poll_events()
         img = vis.capture_screen_float_buffer(True)
