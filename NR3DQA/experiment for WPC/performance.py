@@ -14,14 +14,12 @@ from scipy.optimize import curve_fit
 from sklearn.neighbors import KNeighborsRegressor
 from scipy import stats
 
-np.random.seed(140421)
-
 name_list = ['bag','banana','biscuits','cake','cauliflower','flowerpot','glasses_case','honeydew_melon','house','litchi','mushroom','pen_container','pineapple','ping-pong_bat','puer_tea','pumpkin','ship','statue','stone','tool_box']
 
 
 # get data according to the train test name lists, return scaled train and test set
 def get_data(train_name_list,test_name_list, scaler, config):
-    feature_data = pd.read_csv(config.input_dir,index_col = 0,keep_default_na=False)
+    feature_data = pd.read_csv("features.csv",index_col = 0,keep_default_na=False)
     if config.merge: 
         more_feat = pd.read_csv(config.more_feat,index_col = 0,keep_default_na=False)
         feature_data = feature_data.join(more_feat, on='name', how='inner')
@@ -56,10 +54,17 @@ def get_data(train_name_list,test_name_list, scaler, config):
     train_set = scaler.fit_transform(train_set)
     test_set = scaler.transform(test_set)
     return train_set,np.array(train_score)/100,test_set,np.array(test_score)/100
+    
+
 
 
 
 if __name__ == '__main__':
+    cnt = 0
+
+    valid_scalers = ["MinMaxScaler", "StandardScaler",
+                     "RobustScaler", "MaxAbsScaler", 
+                     "QuantileTransformer", "PowerTransformer"]
 
     parser = argparse.ArgumentParser()
     parser.add_argument('--input-dir', type=str, 
@@ -70,12 +75,6 @@ if __name__ == '__main__':
                         )
     parser.add_argument('--merge', action='store_true')
     config = parser.parse_args()
-
-    cnt = 0
-
-    valid_scalers = ["MinMaxScaler", "StandardScaler",
-                     "RobustScaler", "MaxAbsScaler", 
-                     "QuantileTransformer", "PowerTransformer"]
 
     # initialize lists to store the evaluation metrics for each fold\n",
     random_state = np.random.randint(4294967295) 
@@ -94,13 +93,14 @@ if __name__ == '__main__':
                               "scaler":pl.Utf8}
     df = pl.DataFrame(schema=schema) 
     for scalername in valid_scalers: 
-        # begin 9-folder cross data validation split
-        for i in range(9):
+        # begin 5-folder cross data validation split
+        for i in range(5):
             scaler = getattr(sklearn.preprocessing, scalername)()
             cnt =cnt+1
             train_name_list = name_list.copy()
-            test_name_list = [train_name_list.pop(i)]
-            train_set,train_score,test_set,test_score = get_data(train_name_list,test_name_list, scaler)
+            # get test set and remove the test content from the training set
+            test_name_list = [train_name_list.pop(4*i + 3),train_name_list.pop(4*i + 2),train_name_list.pop(4*i + 1),train_name_list.pop(4*i)]
+            train_set,train_score,test_set,test_score = get_data(train_name_list,test_name_list, scaler, config)
 
             for i ,func in enumerate(functions): 
 

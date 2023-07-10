@@ -59,32 +59,39 @@ def get_choosen_features(
 
 def main(config: dict) -> None: 
     path = os.path.join(config.input_dir, '**/*.ply')
-    objs = glob.glob(path, recursive=True)
+    objs = sorted(glob.glob(path, recursive=True))
+    my_names = pl.read_csv('./features/WPC.csv')
+    my_names = my_names.sort('name')
+    my_names.write_csv('./features/WPC.csv') 
+    my_names = my_names.select('name')['name'].to_list()
+    other_names = [n.split('/')[-1] for n in objs] 
+    names = set(other_names) - set(my_names) 
+    remaining = []
+    for x in objs: 
+        if x.split('/')[-1] in names: 
+            remaining += [x] 
+    objs = remaining
     until = None
     if __debug__: 
         until = 1
     feat = []
-    with mp.get_context('forkserver').Pool() as pool:  
-        for res in tqdm(pool.imap_unordered(get_choosen_features, objs[:until:]), 
-                        total=len(objs[:until])):
-            feat.append(res) 
+    with open(config.output_dir, mode="a") as f:
+        params = ["mean","std","entropy"]
+        gdnames = ['pca2', 'omni', 'egen' ] 
+        names = [g + "_" + p for g in gdnames for p in params]
+        names.insert(0, "name") 
+        names += ['vert_mean', 'vert_std', 'vert_entropy'] 
+        # f.write(','.join(names))
+        f.write('\n')
+        with mp.get_context('spawn').Pool(4) as pool:  
+            for res in tqdm(pool.imap_unordered(get_choosen_features, objs[:until]), 
+                            total=len(objs[:until])):
+                f.write(','.join([str(x) for x in res]))
+                f.write('\n')
 
-    features = [f for f in feat] 
-    features = np.array(features) 
-    df = pl.DataFrame() 
-    params = ["mean","std","entropy"]
-    gdnames = ['pca2', 'omni', 'egen' ]
-    names = [g + "_" + p for g in gdnames for p in params]
-    names.insert(0, "name") 
-    names += ['vert_mean', 'vert_std', 'vert_entropy'] 
-    dictdf = {}
-    for i, name in enumerate(names): 
-        dictdf.update({name: features[:, i]}) 
-    df = pl.DataFrame(dictdf) 
     if __debug__: 
         with pl.Config(tbl_rows=50):
-            print(df)
-    df.write_csv(config.output_dir)
+            print(pl.read_csv(config.output_dir))
 
 
 if __name__ == '__main__': 
