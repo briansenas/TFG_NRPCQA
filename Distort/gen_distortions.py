@@ -20,7 +20,7 @@ DISTORTIONS = {
 }
 
 OCTREE = {
-    'octree_compression': [0.08, 0.10, 0.12, 0.14, 0.16, 0.18, 0.20], # 0 -> 6
+    'octree_compression': [0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 1.0], # 0 -> 6
 }
 
 def write_pointcloud(filename,xyz, nxyz, rgb=None):
@@ -110,30 +110,30 @@ def process_object(
             output = os.path.join(out_path, outname + "_" + str(i) + ".ply") 
             obj = func(obj_path, output, value)
             i += 1
-
-    obj = None
-    for key in tqdm(list(DISTORTIONS.keys()), leave=False):  
-        func = getattr(mypcd, key)
-        for value in tqdm(DISTORTIONS[key], leave=False) : 
-            obj = func(cloud, value)
-            output = os.path.join(out_path, outname + "_" + str(i) + ".ply") 
-            points = np.asarray(obj.points,dtype=np.float64) 
-            normals = np.asarray(obj.normals,dtype=np.float64) 
-            colors = np.asarray(obj.colors) * 255
-            colors = np.asarray(colors,dtype=np.uint8) 
-            write_pointcloud(output, points, normals, colors)
-            i += 1
-
-        # if visualize: 
-        #     o3d.visualization.draw_geometries([obj]) 
-    #endregion 
-
-    # Overwrite the orignal one with the gray color 
-    points = np.asarray(cloud.points,dtype=np.float64) 
-    normals = np.asarray(cloud.normals,dtype=np.float64) 
-    colors = np.asarray(cloud.colors) * 255
-    colors = np.asarray(colors,dtype=np.uint8) 
-    write_pointcloud(obj_path, points, normals, colors) 
+    #
+    # obj = None
+    # for key in tqdm(list(DISTORTIONS.keys()), leave=False):  
+    #     func = getattr(mypcd, key)
+    #     for value in tqdm(DISTORTIONS[key], leave=False) : 
+    #         obj = func(cloud, value)
+    #         output = os.path.join(out_path, outname + "_" + str(i) + ".ply") 
+    #         points = np.asarray(obj.points,dtype=np.float64) 
+    #         normals = np.asarray(obj.normals,dtype=np.float64) 
+    #         colors = np.asarray(obj.colors) * 255
+    #         colors = np.asarray(colors,dtype=np.uint8) 
+    #         write_pointcloud(output, points, normals, colors)
+    #         i += 1
+    #
+    #     # if visualize: 
+    #     #     o3d.visualization.draw_geometries([obj]) 
+    # #endregion 
+    #
+    # # Overwrite the orignal one with the gray color 
+    # points = np.asarray(cloud.points,dtype=np.float64) 
+    # normals = np.asarray(cloud.normals,dtype=np.float64) 
+    # colors = np.asarray(cloud.colors) * 255
+    # colors = np.asarray(colors,dtype=np.uint8) 
+    # write_pointcloud(obj_path, points, normals, colors) 
 
 def main(configs: dict = None):
     path = os.path.join(config.input_dir, '*.ply')
