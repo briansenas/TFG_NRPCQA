@@ -10,7 +10,7 @@ def minmax(column):
     df = column.with_columns(pl.lit(min_).alias('min_'))
     df = df.with_columns(pl.lit(max_).alias('max_'))
     df = df.with_columns(pl.col('mos').sub(min_).truediv(max_ - min_).alias('normalized')) 
-    df = df.with_columns(pl.col('normalized').mul(5).sub(5).abs().alias('scaled'))
+    df = df.with_columns(pl.col('normalized').apply(lambda x: 1 - x).mul(10).alias('scaled'))
     df = df.with_columns(
         pl.col('normalized').lt(pl.col('normalized').shift(-1)).alias('Less_than_next')
     )
@@ -55,16 +55,16 @@ def normalize(config: dict):
         print(df_metrics)
 
     df_to_save = df_metrics.select(['name', 'scaled']).rename({'scaled': 'mos'})
-    df_to_save.write_csv(os.path.join(config.output_dir, 'scaled.csv')) 
+    df_to_save.write_csv(os.path.join(config.output_dir, 'our_data_scaled.csv')) 
 
     df_to_save = df_metrics.select(['name', 'normalized']).rename({'normalized': 'mos'})
-    df_to_save.write_csv(os.path.join(config.output_dir, 'normalized.csv')) 
+    df_to_save.write_csv(os.path.join(config.output_dir, 'our_data_normalized.csv')) 
 
 if __name__ == "__main__":
     
     parser = argparse.ArgumentParser()
     parser.add_argument('--metric', type=str, 
-                        default='/home/briansenas/Desktop/PCQA-Databases/OurData/Distortions/metrics.csv') 
+                        default='/home/briansenas/Desktop/PCQA-Databases/OurData/Distortions/our_data.csv') 
     parser.add_argument('--output-dir', type=str, 
                         default='/home/briansenas/Desktop/PCQA-Databases/OurData/Distortions/')
     config = parser.parse_args()

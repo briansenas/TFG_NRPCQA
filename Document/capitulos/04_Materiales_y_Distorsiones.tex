@@ -2,15 +2,16 @@
 \section{Materiales}
 \subsection{Datos públicos} 
 \label{sec:DatosPublicos}
-Para este TFG se ha utilizado diversos conjuntos de datos públicos para la 
+Para este TFG se han utilizado diversos conjuntos de datos públicos para la 
 evaluación y elección de los modelos anteriormente descritos. De entre ellos 
-están SJTU\cite{SJTU}, WPC\cite{WPC1,WPC2} y LS-SJTU-PCQA\cite{ResSCNN}.
+están SJTU\cite{SJTU}, WPC\cite{WPC1,WPC2} y LS-SJTU-PCQA\cite{ResSCNN} que tratan 
+de conjuntos de nubes de puntos generalistas, de personas, animales y objetos cotidianos.
 
-El primer de ellos, parte de 10 nubes de puntos de referencia, ver Figura \ref{fig:SJTU}, 
+El primero de ellos parte de 10 nubes de puntos de referencia, ver Figura \ref{fig:SJTU}, 
 a las cuales se aplican 7 tipos de distorsiones. Estas son: compresión, ruido 
 al color, ruido geométrico, ruido gaussiano y combinación entre ellas, ver Tabla \ref{tab:SJTU}. Todas se aplican en una escala creciente
 de intensidad del 1 al 6. Luego, se obtiene un MOS de 10 individuos para las 420 
-nubes de puntos. 
+nubes de puntos que sirve como medida de calidad de las mismas y para evaluar las predicciones del modelo.
 
 \begin{figure}[htp]
   \centering 
@@ -46,10 +47,10 @@ nubes de puntos.
   \label{tab:SJTU}
 \end{table}
 
-El segundo, WPC\cite{WPC1, WPC2}, también posee distorsiones como submuestreo uniforme y 
+El segundo dataset, WPC\cite{WPC1, WPC2}, también posee distorsiones como submuestreo uniforme y 
 ruido gaussiano (aplicados de manera distinta), pero a su vez posee nuevos tipos 
 de distorsiones. Estos son basados en distintos tipos de compresión: V-PCC, G-PCC y \emph{trisoup}.
-Además, posee distintos modelos de nubes de puntos, ver Figura \ref{fig:WPC}, que 
+Además, posee distintos tipos de nubes de puntos, ver Figura \ref{fig:WPC}, que 
 pueden influir en el rendimiento del modelo si el conjunto no es
 suficientemente amplio y representativo de lo que puede encontrarse una vez entrenado. 
 
@@ -63,11 +64,11 @@ suficientemente amplio y representativo de lo que puede encontrarse una vez entr
 
 Los dos anteriores han sido utilizados sobre todo para la evaluación y elección 
 del modelo de regresión a utilizar. Son los conjuntos de datos más conocidos 
-y que habitualmente están presentes en las publicaciones. Además, se realizaron 
+y que habitualmente están presentes en las publicaciones más recientes. Además, se realizaron 
 pruebas de ejecuciones de algunos métodos de código abierto para verificar los 
-resultados. Sin embargo, el último es el que finalmente se utiliza para entrenar un modelo para estimar 
+resultados. Sin embargo, es el último es el que finalmente se utiliza para entrenar un modelo para estimar 
 la calidad de las imágenes médicas. Esto es porque LS-SJTU-PCQA\cite{ResSCNN} 
-es el mayor conjunto de datos, 
+es el mayor conjunto de datos 
 en el momento de escritura, y posee tipos de distorsiones que pueden simular 
 lo que sería ciertos errores y ruidos presentes en imágenes médicas. Por ejemplo, 
 el ruido gaussiano (simular errores de transmisión y almacenado de datos), 
@@ -86,9 +87,9 @@ de objetos. Ver Figura \ref{fig:LS-SJTU-PCQA}.
 
 \subsection{Conjunto de datos médicos}
 \label{sec:OurData}
-Para este TFG se tiene disponible una colección 26 directorios DICOM, de distintas
-partes del cuerpo, de 2 distintos individuos. 
-De los cuales han sido segmentados las clavículas, el seno frontal y el seno Maxilar. 
+Para este TFG se tiene disponible una colección tomografías computerizadas, de distintas
+partes del cuerpo, de 2 individuos distintos. 
+De los cuales han sido segmentados las clavículas, el seno frontal y los senos maxilares. 
 A parte, disponemos de volúmenes del cráneo de otros 3 individuos, una pubis izquierda y
 una pubis derecha, ver Figura \ref{fig:OurDataExample}. Es decir, en total disponemos de 11 nubes de puntos de alta 
 calidad, que representan distintos volúmenes de exámenes médicos.
@@ -121,7 +122,7 @@ A estos datos no se hicieron ningún tipo de pre-procesado, apenas se centraron
 las nubes de puntos a los ejes (operación necesaria para hacer la rotación para 
 las distintas perspectivas, más detalles en la sección \ref{sec:Implementacion})
 y se eliminaron aquellos puntos aislado de todos, frutos de errores en el 
-algoritmo de generación de las nubes de puntos a partir de segmentaciones DICOM.
+algoritmo de reconstrucción 3D de las nubes de puntos a partir de segmentaciones DICOM.
 
 \section{Métodos}
 Como se pudo observar en la Sección \ref{sec:EstadoDelArte}, actualmente hay una 
@@ -129,7 +130,11 @@ tendencia, justificada, a los métodos de ML. Por otro lado, se tuvo
 que descartar todos los métodos que tuvieran en cuenta información de textura, 
 cosa que no existe en los volúmenes médicos habituales. Además, necesitamos 
 información perceptual de la imagen en su totalidad y no de regiones locales 
-específicas. Es por ello, que optamos por evaluar el método VQA\cite{VQA-PC}.
+específicas. Ambas características son dificultades añadidas a la hora 
+de resolver el problema. La primera restringe el problema 
+a la estimación de calidad de las estructuras en la imagen, eliminando la 
+percepción de calidad por contraste y saturación. La segunda incrementa 
+la complejidad computacional al tener que utilizar toda la información.
 
 \subsection{Zhang et al\cite{NR3DQA}}
 \label{sec:NR3DQA}
@@ -200,18 +205,27 @@ determina la transformación final viene descrita por \eqref{eq:LABfun}:
   \label{eq:LABfun}
 \end{equation}
 Donde $\sigma = \frac{6}{29}$.
-Para cada tipo de características se normaliza como \eqref{eq:MeanNorm}.
+Sin embargo, en el caso de las imágenes médicas estas características deben 
+ser descartadas, dado que el color existente al visualizar las nubes de puntos 
+médicas no son más que un valor sintético añadido previamente que permite 
+una visualización más agradable de las mismas. 
+Además, estiman la entropía de cada una de las características 
+ya que argumentan que existe una alta correlación entre la 
+entropía y la distorsión por cuantización. 
+Por último, a las características geométricas se les calcula 
+la distancia a las distribuciones gaussiana y gamma tras observarse 
+que la distribución de estas se veía afectada por la intensidad 
+de las distorsiones. 
+
+Para cada tipo de característica, se utiliza el valor medio y la desviación típica 
+obtenida para cada punto de la nube de punto. A continuación, sobre estas medidas, 
+para el conjunto de datos de entrenamiento se normaliza como \eqref{eq:MeanNorm}.
+Donde F es la característica extraída y C una pequeña constante para la 
+estabilidad numérica. 
 \begin{equation} 
   \hat F = \frac{F-mean(F)}{std(F) + C}
   \label{eq:MeanNorm}
 \end{equation}
-Donde F es la característica extraída y C una pequeña constante para la 
-estabilidad numérica. Además, argumentan la alta correlación entre la 
-entropía con la distorsión por quantización. Es por ello, que también 
-estiman la entropía de las características. 
-Por último, vieron que la distribución de los puntos se veía afectada con 
-las distorsiones, y es por ello que a las características geométricas 
-las cuantifica y asimila a la distribución guassiana y gamma. 
 
 
 \subsection{VQA-PC}
@@ -233,7 +247,7 @@ discutido en la Sección \ref{sec:VideoCNN}, utilizando redes convolucionales
 adaptadas a vídeos, de la familia \emph{SlowFast}\cite{SlowFastNetworks}.
 Siguiendo la motivación de que las deformaciones geométricas no deseadas se presentan 
 de forma abrupta según la perspectiva, ver Figura \ref{fig:ViewPoint}, y que 
-incluso se pueden observar incoherencias entre perspectivas adyacentes, 
+incluso se pueden observar incoherencias entre perspectivas adyacentes
 utilizaron 4 ejes de rotación: vertical, horizontal, diagonal derecha 
 y diagonal izquierda. Para cada eje se genera un total de 30 \emph{frames}, 
 en total habrá 120, ver Figura \ref{fig:VQARotation}. El ángulo de rotación es de 12 grados para todos los casos. 
@@ -265,7 +279,7 @@ en la imagen de abajo se ve cierta deformación de la cabeza.}
   \caption[Ejemplo de las rotaciones que utiliza el modelo VQA-PC\cite{VQA-PC}.]
   {Ejemplo de las rotaciones que utiliza el modelo VQA-PC\cite{VQA-PC}.
   Se observa que el final de cualquier eje de rotación es la posición inicial, 
-permitiendo así unir de suavemente una secuencia de imágenes encadenada de los ejes 
+permitiendo así unir suavemente una secuencia de imágenes encadenada de los ejes 
 que genere un vídeo de rotación utilizado luego para la estimación.}
   \label{fig:VQARotation}
 \end{figure}
@@ -327,7 +341,7 @@ nube de punto, y $\sigma_n$ representa la coordenada del punto $n$-ésimo punto.
 Utilizando ese centro, aplicamos las ecuaciones \eqref{eq:RotationA} a \eqref{eq:RotationD}.
 
 Para extraer las características espaciales empleamos un modelo pre-entrenado, 
-en concreto se investigó variaciones de esqueletos ResNet\cite{ResNet}. Una 
+en concreto se investigaron variaciones de arquitecturas ResNet\cite{ResNet}. Una 
 familia de redes residuales, que en su momento resolvieron el problema 
 del estancamiento en el entrenamiento de redes neuronales profundas debido 
 a la degradación del gradiente. El único modelo al que optimizaremos sus pesos es 

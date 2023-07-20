@@ -36,7 +36,6 @@ Este mismo, se encuentra dividido en un conjunto de carpetas:
   \item \textbf{VQA\_PC}, implementación de la variante VQA-PC\cite{VQA-PC} para 
     la estimación de calidad de nubes de puntos y las modificaciones pertinentes 
     sobre los métodos de fusión de características mencionados en \cite{EnsemblePCQA}. 
-  \item \textbf{imgs}, algunas imágenes relevantes sobre el proyecto. 
 \end{itemize}
 \subsection{Obtención de los modelos 3D}
 Los datos se encuentran en una carpeta del servicio UGRDrive, que provee almacenamiento 
@@ -74,7 +73,7 @@ ello se puede utilizar \code{Utils/std_remove.py}.
 \label{sec:DatosSinteticos}
 \subsubsection{Ruido Gaussiano} 
 Para la generación del ruido gaussiano, que en este caso simula posibles 
-errores de transmissión y generación, se hizo uso de la función que se denomina
+errores de transmisión y generación, se hizo uso de la función que se denomina
 \code{gaussian_geometric_shift}. 
 Esa función toma como entrada 
 una nube de punto y un nivel de intensidad. La salida es una nube de puntos que, 
@@ -90,10 +89,10 @@ distorsión, en concreto en \code{point_cloud_compression.cpp}. Se facilita
 un \code{CMakeLists.txt} para la generación del ejecutable con el comando 
 \code{cmake}. Recibe de entrada la ruta a la nube de puntos de referencia, 
 la resolución de compresión \emph{octree} y el directorio de salida. 
-La resolución se refiere al tamaño de los voxels más pequeños en el nivel más 
-bajo del octree. Cuanto más pequeña sea la resolución, mayor será la precisión 
+La resolución se refiere al tamaño de los vóxeles más pequeños en el nivel más 
+bajo del \emph{octree}. Cuanto más pequeña sea la resolución, mayor será la precisión 
 en la representación de los detalles espaciales. 
-La profundidad del octree depende tanto de la resolución como de la dimensión 
+La profundidad del \emph{octree} depende tanto de la resolución como de la dimensión 
 espacial de la nube de puntos, ya que determina cuántos niveles de subdivisión 
 serán necesarios para cubrir toda el área de la nube de puntos con la resolución 
 especificada. Parar más detalles repasar \ref{sec:Distorsiones}. 
@@ -119,9 +118,8 @@ donde la selección se rota 15 grados sobre el eje X.
 \label{sec:Metricas}
 Las métricas más utilizadas en la resolución del problema de estimación de calidad 
 de imágenes suelen ser: el coeficiente de correlación de rangos de Spearman (SROCC, 
-por sus siglas en inglés), el coeficiente de correlación lineal de Pearson (PLCC, por sus 
-siglas en inglés), coeficiente de correlación de orden de rango de Kendall (KROCC, por sus siglas en inglés)
-y error cuadrático medio (RMSE, por sus siglas en inglés)\cite{VisualMedicalQualityBook}.
+por sus siglas en inglés), el coeficiente de correlación lineal de Pearson (PLCC), coeficiente de correlación de orden de rango de Kendall (KROCC)
+y error cuadrático medio (RMSE)\cite{VisualMedicalQualityBook}.
 
 Las tres primeras al ser coeficientes de correlación toman valores en el intervalo 
 [-1, 1]. Siendo el valor -1 una correlación negativa entre los datos, es decir,
@@ -150,7 +148,7 @@ como en la ecuación \eqref{eq:LG5}.
   Q = \beta_1 \left(\frac{1}{2} - \frac{1}{1+e^{\beta_2 (Q_s-\beta_3}} \right) + \beta_4 Q_s + \beta_5
   \label{eq:LG5}
 \end{equation}
-Donde $Q$ es el valor final normalizado, $Q_s$ es el valor predecido y $\beta_i$ se 
+Donde $Q$ es el valor final normalizado, $Q_s$ es el valor predicho y $\beta_i$ se 
 refiere a los parámetros a aprender.
 La elección se debe al análisis comparativo entre esta, logística-4, con 4 parámetros, y la función de regresión cúbica-4
 desarrollado en \cite{ResSCNN}. Los resultados se pueden ver en la Tabla \ref{tab:CompareNonLineal}, 
@@ -165,6 +163,7 @@ y las fórmulas adicionales en el Apéndice \ref{ape:Formulas}.
     & \textbf{Logística-4} & \textbf{Logística-5} & \textbf{Cúbica-4} \\
     \hline 
     SROCC & 0.8572 & \textbf{0.9026} & 0.8957\\
+    \hline
     PLCC & 0.8626 & \textbf{0.9107} & 0.9044 \\
     \hline 
   \end{tabular}
@@ -230,16 +229,16 @@ rendimiento es medido con el coeficiente de correlación de rangos de Spearman.
 
 \begin{table}[htp]
     \scriptsize
-    \hspace{-3cm}
-    \begin{tabular}{|c|c|c|c|c|c|c|c|c|c|}
+    \hspace{-.7cm}
+    \begin{tabular}{|c|c|c|c|c|c|c|c|}
     \hline
         \rowcolor[HTML]{FFC702} 
-        \textbf{Distortion} & \textbf{M-p2po} & \textbf{M-p2pl} & \textbf{H-p2po} & \textbf{H-p2pl} & \textbf{PSNRyuv} & \textbf{H-PSNRyuv} & \textbf{PCQM} & \textbf{GraphSIM} & \textbf{MPED} \\ \hline
-        DownSample & \textbf{0.881} & 0.626 & 0.841 & 0.811 & 0.014 & -0.016 & 0.524 & 0.842 & 0.857 \\ \hline
-        GaussianShifting & 0.741 & 0.718 & 0.829 & \textbf{0.834} & 0.755 & 0.235 & 0.816 & 0.742 & 0.598 \\ \hline
-        LocalOffset & \textbf{0.937} & 0.934 & 0.770 & 0.770 & 0.667 & 0.019 & 0.851 & 0.906 & 0.897 \\ \hline
-        LocalRotation & 0.819 & 0.712 & \textbf{0.831} & 0.734 & 0.327 & 0.004 & 0.657 & 0.723 & 0.742 \\ \hline
-        Octree & 0.779 & 0.788 & \textbf{0.819} & 0.752 & 0.523 & 0.108 & 0.676 & 0.757 & 0.710 \\ \hline
+        \textbf{Distortion} & \textbf{M-p2po} & \textbf{M-p2pl} & \textbf{H-p2po} & \textbf{H-p2pl} & \textbf{PCQM} & \textbf{GraphSIM} & \textbf{MPED} \\ \hline
+        DownSample & \textbf{0.881} & 0.626 & 0.841 & 0.811 & 0.524 & 0.842 & 0.857 \\ \hline
+        GaussianShifting & 0.741 & 0.718 & 0.829 & \textbf{0.834} & 0.816 & 0.742 & 0.598 \\ \hline
+        LocalOffset & \textbf{0.937} & 0.934 & 0.770 & 0.770 & 0.851 & 0.906 & 0.897 \\ \hline
+        LocalRotation & 0.819 & 0.712 & \textbf{0.831} & 0.734 & 0.657 & 0.723 & 0.742 \\ \hline
+        Octree & 0.779 & 0.788 & \textbf{0.819} & 0.752 & 0.676 & 0.757 & 0.710 \\ \hline
     \end{tabular}
     \caption[Tabla de métricas para generación de etiquetas de \cite{ResSCNN}.]{
     Tabla de métricas para generación de etiquetas de \cite{ResSCNN}.
@@ -252,7 +251,7 @@ rendimiento es medido con el coeficiente de correlación de rangos de Spearman.
 \end{table}
 
 En \cite{ResSCNN} validaron sus muestras generadas con las métricas SOTA FR 
-por medio de un análisis subjetivo con el estándar y 
+por medio de un análisis subjetivo con el estándar ITU-R, en
 un entorno controlado, definido anteriormente, y obtuvieron una correlación del 
 90\% entre las muestras 
 etiquetadas subjetivamente y las que fueron etiquetadas objetivamente, ver Tabla \ref{tab:PseudoCorr}.
@@ -313,7 +312,7 @@ Para la validación del modelo y la estimación de su rendmiento para las distin
 mejoras propuestas se ha utilizado la técnica de \emph{cross-validation} ó 
 validación cruzada, también conocida por \emph{K-fold}. 
 Esta técnica se distingue por realizar la división del conjunto de datos 
-en K partes (pliegues). A continuación el modelo se entrena y evalua K veces, utilizando 
+en K partes (pliegues). A continuación el modelo se entrena y evalúa K veces, utilizando 
 cada una de los pliegues como conjunto de prueba y el resto de los pliegues como 
 conjunto de entrenamiento en cada iteración, ver Figura \ref{fig:K-fold}. 
 Al finalizar las K iteraciones, se promedia los resultados de evaluación 
@@ -332,7 +331,7 @@ se utilizó el conjunto SJTU\cite{SJTU} con las condiciones indicadas por
  \begin{center}
    \includegraphics[width=\textwidth]{imagenes/chapter5/cross-validation}
  \end{center}
- \caption{Ejemplo de uso de K-fold para la búsqueda de hiperparámetros.}
+ \caption{Ejemplo de uso de K-fold para la búsqueda de hiper parámetros.}
  \label{fig:K-fold}
 \end{figure}
 
@@ -354,6 +353,7 @@ K es igual al número de nubes de puntos
       \hline
       \rowcolor[HTML]{FFC702}
       \textbf{Dataset} & \textbf{PLCC} & \textbf{SROCC} & \textbf{KROCC} \\ 
+      \hline
       SJTU & 0.810325 & 0.777403 & 0.608302 \\ 
       \hline 
       WPC & 0.637953 & 0.634853 & 0.463578 \\
@@ -373,19 +373,21 @@ la predicción y el valor real es muy cercano a 0.
 
 \begin{table}[htp]
   \begin{center}
-    \begin{tabular}[c]{|c|c|c|c|}
+    \hspace{-.5cm}
+    \begin{tabular}[c]{|c|c|c|c|c|}
       \hline
       \rowcolor[HTML]{FFC702}
       \multicolumn{1}{|c|}{\textbf{Etiqueta Sintética}} & 
       \multicolumn{1}{|c|}{\textbf{Modelo}} & 
       \multicolumn{1}{|c|}{\textbf{Escalado}} & 
+      \multicolumn{1}{|c|}{\textbf{PLCC}} &
       \multicolumn{1}{|c|}{\textbf{SROCC}} \\
       \hline
-      Valor de la métrica & SVM & RobustScaler &  0.1776 \\
+      Valor de la métrica & SVM & RobustScaler & 0.2017 & 0.1776 \\
       \hline
-      Valor normalizado & KNNRegressor & RobustScaler & 0.1882  \\
+      Valor normalizado & KNNRegressor & RobustScaler & 0.2671 & 0.1882  \\
       \hline
-      Valor en escala 0-5 & DecisionTree & StandardScaler & 0.196713 \\
+      Valor en escala 0-5 & DecisionTree & StandardScaler & 0.309176 & 0.196713 \\
       \hline
     \end{tabular}
   \end{center}
@@ -397,14 +399,14 @@ la predicción y el valor real es muy cercano a 0.
 \end{table}
 
 Incluso utilizando el conjunto SJTU\cite{SJTU} para ayudar al entrenamiento 
-del SVM, no obtenemos mejoras significativas, sino que obtenemos un 0.205.
+del SVM, no obtenemos mejoras significativas, sino que obtenemos un 0.225 de SROCC.
 Algo similar ocurre cuando intentamos utilizar más características geométricas
-como se indica en la publicación\cite{3DNSSMetrics}. Se argumenta que, el proceso de segmentación, 
+como se indica en la publicación\cite{3DNSSMetrics}. Se argumenta que, en el proceso de segmentación, 
 detección y clasificación de estructuras en nubes de puntos, 
 las mejores métricas suelen ser: 
 omnivarianza, entropía de valores singulares, la verticalidad del vecindario y 
 otras. Los resultados de utilizar estas métricas adicionales, que 
-se pueden observar en la Tabla \ref{tab:ImprovNR3DQA}, no son sustanciales.
+se pueden observar en la Tabla \ref{tab:ImprovNR3DQA}, no son significativos.
 
 \begin{table}[htp]
   \begin{center}
@@ -416,6 +418,8 @@ se pueden observar en la Tabla \ref{tab:ImprovNR3DQA}, no son sustanciales.
       SJTU & 0.853709 & 0.820057 & 0.649406 \\ 
       \hline 
       WPC & 0.642356 & 0.62917 & 0.455562 \\
+      \hline 
+      Nuestro & 0.344601 &  0.170793 & -- \\
       \hline
     \end{tabular}
   \end{center}
@@ -429,17 +433,15 @@ se pueden observar en la Tabla \ref{tab:ImprovNR3DQA}, no son sustanciales.
 
 En el estado del arte vimos que hay cierta inclinación al uso de modelos 
 DL para intentar superar los resultados actuales y obtener una métrica más 
-genérica. Posiblemente venga a juego la dificultad del análisis de las estadísticas 
-de escena, tanto en imágenes como en nubes de puntos, a la hora de elegir que métricas 
-deben extraer para generar un vector de características adecuado para un modelo ML. 
-Los resultados obtenidos con el modelo ML del estado del arte de características NSS 3D
-indica que, dado el marco temporal para el desarrollo de este proyecto, 
-es conveniente hacer uso de modelos más complejos 
-y permitir que la extracción de caraterísticas sea automática. 
-A continuación se discutirán los resultados haciendo uso del modelo DL elegido
-en la Sección \ref{sec:TrainML}. 
+genérica. Se observa la dificultad del análisis de NSS a la hora de elegir que métricas 
+deben extraerse para generar un buen vector características para un modelo ML 
+que intenta resolver este problema. Dado el marco temporal y visto los 
+resultados preliminares de la Sección \ref{sec:PreResults}, se determina 
+conveniente hacer uso de modelos más complejos y permitir que la extracción 
+de características sea automática. 
 
 \subsection{Experimentos Preliminares DL}
+\label{sec:PreResults}
 Previo a tratar con los datos médicos, se han realizado pruebas de ejecución 
 para verificar el funcionamiento del modelo, validar los resultados, familiarizarse c
 on el código e identificar zonas de posibles mejoras.
@@ -449,7 +451,7 @@ Para validar el correcto funcionamiento del código y los resultados obtenidos
 en \cite{VQA-PC}, seguimos el experimento en las mismas condiciones descrita 
 por ellos en el conjunto de datos SJTU\cite{SJTU}. Como ese posee 10 modelos, 
 ver Sección \ref{sec:DatosPublicos}, se realiza un 9-fold. Se ha utilizado 
-los mismos hiperparámetros, estructura de red convolucional y transformaciones 
+los mismos hiper parámetros, estructura de red convolucional y transformaciones 
 de aumentación de datos, ver Tablas 
 \ref{tab:ResNet50} y \ref{tab:HiperSJTU}. 
 
@@ -474,7 +476,7 @@ de aumentación de datos, ver Tablas
       \hline 
     \end{tabular}
   \end{center}
-  \caption[Hiperparámetros de prueba preliminar.]{Hiperparámetros de prueba preliminar, establecidos por \cite{VQA-PC}.}
+  \caption[Hiper parámetros de prueba preliminar.]{Hiper parámetros de prueba preliminar, establecidos por \cite{VQA-PC}.}
   \label{tab:HiperSJTU}
 \end{table}
 
@@ -565,8 +567,8 @@ Por ello, de aquí en adelante utilizaremos la métrica SROCC.
   \end{center}
   \caption[Resultados de experimento preliminar.]{Resultados de experimento preliminar. 
     Cabe observar que los valores se acercan a los resultados obtenidos en la publicación original, 
-    utilizando el criterio del promedio del mejor resultado de cada pliegue de validación. El error 
-    enseñado es el error MSe que intenta minimizar el modelo, sin utilizar la regresión logística.
+    utilizando el criterio del promedio del mejor resultado de cada pliegue de validación. 
+    El error enseñado es el error MSE del modelo, sin utilizar la regresión logística.
 }
   \label{tab:PreTestResults}
 \end{table}
@@ -583,8 +585,8 @@ Por ello, de aquí en adelante utilizaremos la métrica SROCC.
   \caption[Curvas de aprendizaje del test preliminar.]{Curvas de aprendizaje del test preliminar. Es el comportamiento medio en cada fold.
   Como vemos el error de validación tiende a bajar, aunque con cierta variabilidad 
   entre épocas en contra del error de entrenamiento que es más estable. A la derecha 
-  podemos ver el comportamiento de la métrica SROCC en valor absoluto, ya 
-  que resolver el problema inverso sería equivalente.}
+  podemos ver el comportamiento de la métrica SROCC en valor absoluto 
+  (resolver el problema inverso sería equivalente).}
   \label{fig:PreTestCurves}
 \end{figure}
 
@@ -599,45 +601,148 @@ más habitual, genera vectores de mayor dimensionalidad, hecho que puede influir
 sustancialmente al tiempo de entrenamiento e inferencia. Además, no permite una interacción directa entre los vectores. 
 Es por ello que se experimenta con los demás métodos.  
 
-La fusión por multiplicación puede provocar pérdida de información (valores cercanos a 0). 
+La fusión por multiplicación (F1) puede provocar pérdida de información (valores cercanos a 0). 
 No obstante, permiten una interacción directa de los vectores y genera un vector salida 
 de menor dimensionalidad. Otro inconveniente es que tenemos normalizar, si no son 
-ya iguales, a la misma dimensión los vectores. De forma similar, la fusión por convolución 
+ya iguales, a la misma dimensión los vectores. De forma similar, la fusión por convolución (F2)
 permite realizar una proyección lineal de ambos vectores a uno de menor dimensionalidad. 
-Por último, la fusión por \emph{Bi-linear pooling} permite realizar la multiplicación de 
+Por último, la fusión por \emph{bi-linear pooling} (F3) permite realizar la multiplicación de 
 los vectores en el dominio de fourier, de tal forma que todos los elementos afectan al 
 resultado final de forma multiplicativa sin un alto coste computacional, y luego proyecta 
 el vector resultante a una menor dimensión utilizando algún algoritmo de proyección, 
-como \emph{Count Sketch}. También, a fin de evitar la búsqueda exhaustiva de 
-ratios de aprendizaje de forma semi-manual, se hará uso del método de Leslie S. 
-\cite{LeslieS}, comúnmente aceptado para la rápida convergencia de modelos 
-haciendo uso de una curva de ratios de aprendizaje según el número de iteraciones 
-y épocas. Todos los demás hiperparámetros se mantienen, ver Tabla \ref{tab:HiperSJTU}.
+como \emph{Count Sketch}. Se han utilizado los mismos hiperparámetros que definido 
+en la Tabla \ref{tab:HiperSJTU}.
 
-Para realizar la comparativa de estas mejoras, se utilizará el conjunto de datos 
-LS-SJTU-PCQA\cite{ResSCNN}, ya que es el mayor de todos ellos y con los tipos 
-de distorsiones adecuados para las imágenes médicas. Se entrenará por 30 épocas, 
-con el uso de \emph{early-stopping}, método utilizado para frenar el entrenamiento 
+Por último, se observa que el modelo realiza un recorte aleatorio de las imágenes de entrada, 
+originalmente a escala 1920x1080, durante el entrenamiento 
+para ajustarlas a una escala de 224x224, lo cual reduce el tiempo de cómputo y 
+evita el sobre-entrenamiento. Durante la ejecución del test, se recorta el centro de la imagen. 
+Este proceso de rescalado, conocido como aumentación de datos, incrementa la cantidad de ejemplos 
+y previene el sobreajuste. Sin embargo, debido a que las nubes de puntos ocupan principalmente 
+la zona central de la imagen y poca proporción, se propone un rescalado uniforme a una escala de 
+398x224 para obtener recortes válidos y relevantes.
+
+Para realizar la comparativa de estas mejoras, se utiliza el conjunto de datos 
+médicos definidos anteriormente. Se hace la comparativa con las métricas sin 
+normalizar y normalizadas a la escala 0-5, la misma con la que se entrenó VQA-PC\cite{VQA-PC} en SJTU\cite{SJTU}. 
+Se entrena por 30 épocas, con el uso de \emph{early-stopping}, método utilizado para frenar el entrenamiento 
 si el error de validación crece para evitar sobre-entrenamiento, con una paciencia 
 de 6 épocas (en este contexto, paciencia alude a la espera de los resultados de 
 las N siguientes épocas, en la que el error de validación crece, antes de terminar 
-la ejecución por sobre-entrenamiento). Los resultados promedios se pueden 
-observar en la siguiente Tabla \ref{tab:CompareVQA}
-
+la ejecución por sobre-entrenamiento). 
 
 \begin{table}[htp]
-  \begin{center}
-    \begin{tabular}[c]{|c|c|c|}
-      \hline
-      \multicolumn{1}{c|}{\textbf{}} & 
-      \multicolumn{1}{c}{\textbf{}} \\
-      \hline
-      a & b \\
-      c & d \\
-      
-      \hline
-    \end{tabular}
-  \end{center}
-  \caption[]{}
-  \label{tab:}
+  \scriptsize
+  \centering
+\begin{tabular}{|c|cccc|}
+\hline
+\rowcolor[HTML]{FFC702}
+                       & \multicolumn{4}{c|}{\textbf{Valor medio SROCC}}                                                                                                    \\ \hline
+\rowcolor[HTML]{FFC702}
+\textbf{Modelo}        & \multicolumn{1}{c|}{\textbf{Estándar}} & \multicolumn{1}{c|}{\textbf{Normalizado}} & \multicolumn{1}{c|}{\textbf{Rescalado}} & \textbf{Ambos}  \\ \hline
+\textbf{VQA-PC (SJTU)} & \multicolumn{1}{c|}{0.7094}            & \multicolumn{1}{c|}{\textbf{0.6235}}      & \multicolumn{1}{c|}{\textbf{0.8425}}    & 0.7126          \\ \hline
+\textbf{VQA-PC F1}     & \multicolumn{1}{c|}{\textbf{0.7305}}   & \multicolumn{1}{c|}{0.6140}               & \multicolumn{1}{c|}{0.8164}             & 0.7291          \\ \hline
+\textbf{VQA-PC F2}     & \multicolumn{1}{c|}{0.6816}            & \multicolumn{1}{c|}{0.5770}               & \multicolumn{1}{c|}{0.8057}             & \textbf{0.7324} \\ \hline
+\textbf{VQA-PC F3}     & \multicolumn{1}{c|}{0.7080}            & \multicolumn{1}{c|}{0.5671}      & \multicolumn{1}{c|}{0.7482}             & 0.7006          \\ \hline
+\end{tabular}
+\caption[Valor medio sobre imágenes médicas.]{Tabla de resultados iniciales sobre imágenes médicas. 
+Partimos del modelo pre-entrenado de la publicación original \cite{VQA-PC} sobre SJTU\cite{SJTU}. Hacemos 
+11-fold sobre nuestro conjunto de datos teniendo en cuenta las métricas originales, las métricas
+normalizadas a escala 0-5 y las imaǵenes rescaladas. También se investiga rescalar y normalizar (última columna).
+Se compara estos resultados con los demás métodos de fusión de características propuesto.
+Vemos que el modelo con información previa, al utilizar el rescalado, obtiene los mejores resultados.
+No obstante, F1 y F2 sin información previa consiguen acercarse a un margen de 4\% de ese valor. 
+Por otro lado, la fusión F3 no logra mejorar de forma significativas los resultados. 
+}
+\end{table}
+
+Los resultados son prometedores. El modelo con información adicional sobre otros 
+tipos de distorsiones, conocimiento del conjunto SJTU, es el que obtiene el mejor 
+resultado tras rescalar las imágenes, seguido por el modelo entrenado desde 0 
+con la fusión por multiplicación (F1). No obstante, se ha observado cierta 
+variabilidad en los resultados de cada pliegue, como se observa en la Tabla \ref{tab:STDevMed}.
+Esto puede ser debido a diversos factores, desde la dificultad del modelo de 
+aprender las características relevantes en tan pocas épocas, por la falta 
+de ejemplos en este pequeño conjunto de imágenes médicas, por la variabilidad 
+entre nubes de puntos (pocos ejemplos similares y muchas partes del cuerpo) 
+o por dificultades en la generación de etiquetas sintéticas de calidad. 
+Además, observándose detenidamente los valores obtenidos en cada pliegue, 
+se observa una alta variabilidad para un ejemplo en concreto, el último pliegue, 
+con SROCC a más de 3 desviaciones típicas para los casos F1-F3.  Es por ello, 
+que se puede observar la mediana de cada modelo en la Tabla \ref{tab:PercentileMed}.
+
+Para validar el rápido aprendizaje de los métodos F1-F3 y la posible mejora 
+sobre el método de concatenación, se experimenta utilizar el modelo VQA-PC sin 
+modificaciones desde 0 sobre las imágenes rescaladas, ver Tabla \ref{tab:VQAF0}.
+Se determina que las mejoras F1-F3 no son significativas sin información adicional. 
+Dado la importancia de la información adicional sobre las distorsiones a la 
+hora de estimar la calidad de las imágenes de nuestro pequeño conjunto médico, 
+se propone pre-entrenar sobre el conjunto LS-SJTU-PCQA\cite{ResSCNN}.
+En este caso, se utilizará las imaǵenes rescaladas y las métricas sin normalizar, 
+dado que se ha observado anteriormente que es la mejor combinación.
+
+\begin{table}[htp]
+  \scriptsize
+  \centering
+\begin{tabular}{|c|cccc|}
+\hline
+\rowcolor[HTML]{FFC702}
+                       & \multicolumn{4}{c|}{\textbf{Desviación típica SROCC}}                                                                                                \\ \hline
+\rowcolor[HTML]{FFC702}
+\textbf{Modelo}        & \multicolumn{1}{c|}{\textbf{Estándar}} & \multicolumn{1}{c|}{\textbf{Normalizado}} & \multicolumn{1}{c|}{\textbf{Rescalado}} & \textbf{Ambos}  \\ \hline
+\textbf{VQA-PC (SJTU)} & \multicolumn{1}{c|}{0.1448}            & \multicolumn{1}{c|}{0.2357}               & \multicolumn{1}{c|}{\textbf{0.0668}}    & 0.1335          \\ \hline
+\textbf{VQA-PC F1}     & \multicolumn{1}{c|}{\textbf{0.1222}}   & \multicolumn{1}{c|}{0.1402}               & \multicolumn{1}{c|}{0.1752}             & 0.2250          \\ \hline
+\textbf{VQA-PC F2}     & \multicolumn{1}{c|}{0.1462}            & \multicolumn{1}{c|}{0.1905}               & \multicolumn{1}{c|}{0.1741}             & \textbf{0.1187} \\ \hline
+\textbf{VQA-PC F3}     & \multicolumn{1}{c|}{0.1507}            & \multicolumn{1}{c|}{\textbf{0.1304}}      & \multicolumn{1}{c|}{0.1326}             & 0.1462          \\ \hline
+\end{tabular}
+\caption[Desviación típica de los resultados médicos]{Desviación típica de los 
+resultados obtenidos. Se observa que la mejora del rescalado de las imágenes 
+de entrada mejora la estabilidad del modelo inicial. El método de fusión F3 
+es el más estable en todos los casos. }
+\label{tab:STDevMed}
+\end{table}
+
+\begin{table}[htp]
+  \scriptsize
+  \centering
+\begin{tabular}{|c|cccc|}
+\hline
+\rowcolor[HTML]{FFC702}
+                       & \multicolumn{4}{c|}{\textbf{Mediana SROCC}}                                                                                                          \\ \hline
+\rowcolor[HTML]{FFC702}
+\textbf{Modelo}        & \multicolumn{1}{c|}{\textbf{Estándar}} & \multicolumn{1}{c|}{\textbf{Normalizado}} & \multicolumn{1}{c|}{\textbf{Rescalado}} & \textbf{Ambos}  \\ \hline
+\textbf{VQA-PC (SJTU)} & \multicolumn{1}{c|}{\textbf{0.7400}}   & \multicolumn{1}{c|}{\textbf{0.7510}}      & \multicolumn{1}{c|}{0.8417}             & 0.7434          \\ \hline
+\textbf{VQA-PC F1}     & \multicolumn{1}{c|}{0.7022}            & \multicolumn{1}{c|}{0.6331}               & \multicolumn{1}{c|}{\textbf{0.8636}}    & \textbf{0.7849} \\ \hline
+\textbf{VQA-PC F2}     & \multicolumn{1}{c|}{0.6350}            & \multicolumn{1}{c|}{0.5955}               & \multicolumn{1}{c|}{0.8538}             & 0.7165          \\ \hline
+\textbf{VQA-PC F3}     & \multicolumn{1}{c|}{0.7118}            & \multicolumn{1}{c|}{0.5179}               & \multicolumn{1}{c|}{0.7518}             & 0.7334          \\ \hline
+\end{tabular}
+\caption[Mediana de los valores sobre imágenes médicas.]{
+  Mediana de los valores obtenidos. Se observa una mejora significativa para 
+  los métodos F1 y F2. También es evidente la estabilidad del modelo pre-entrenado
+  sobre SJTU\cite{SJTU}. 
+}
+\label{tab:PercentileMed}
+\end{table}
+
+
+\begin{table}[htp] 
+  \scriptsize
+  \centering
+  \begin{tabular}{|c|c|c|c|}
+\hline
+\rowcolor[HTML]{FFC702}
+                       & \multicolumn{3}{c|}{\textbf{SROCC}}                                                                                                          \\ \hline
+\rowcolor[HTML]{FFC702}
+\textbf{Modelo}        & \multicolumn{1}{c|}{\textbf{Media}} & \multicolumn{1}{c|}{\textbf{Desviación}} & \multicolumn{1}{c|}{\textbf{Mediana}} \\ \hline
+\textbf{VQA-PC F0} & \multicolumn{1}{c|}{\textbf{0.8261}}   & \multicolumn{1}{c|}{0.1589}      & \multicolumn{1}{c|}{\textbf{0.8657}}      \\ \hline
+  \end{tabular}
+  \caption[Resultados del método original sin pre-entrenar sobre imágenes rescaladas.]{
+    Resultados del método original sin pre-entrenar sobre imágenes rescaladas. 
+    Se obtiene resultados, en media, algo peor que el modelo 
+  pre-entrenado, remarcando la importancia de información adicional y etapas 
+  de entrenamiento más largas a la hora de lidiar con algunas nubes de puntos, y 
+  en mediana se obtiene el mejor resultado. De esta forma, para un conjunto 
+  de datos pequeños se descarta el uso de las mejoras F1-F3.
+}
+\label{tab:VQAF0}
 \end{table}

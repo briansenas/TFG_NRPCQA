@@ -11,7 +11,7 @@ de calidad de imágenes 2D, desde los métodos basado en extracción de caracter
 de escenas NSS y modelos de ML, hasta la extracción automática con DL. 
 De aquí, se pudo observar que hay una tendencia, justificada, a los métodos de DL 
 debido a su capacidad de generalización, hecho observado en los resultados obtenidos en diversas 
-pruebas realizadas. También se dió a conocer las diferencias en complejidad entre la 
+pruebas realizadas. También se dio a conocer las diferencias en complejidad entre la 
 estimación de calidad con referencia, donde se posee la imagen original a comparar con 
 la versión distorsionada, frente a los métodos sin referencia, donde la versión 
 original no está disponible para la comparación.
@@ -36,7 +36,7 @@ de planaridad, esfericidad, anisotropía, curvatura, linealidad y consistencia d
 colores de las nubes de puntos, que luego se utilizan para estimar una regresión por 
 SVM. En comparativa, de los modelos ML se utilizó un modelo capaz de extraer 
 información estática y dinámica de nubes de puntos haciendo uso de múltiples 
-proyecciones 2D y de un video del objeto 3D rotando. De esta forma, podemos 
+proyecciones 2D y de un vídeo del objeto 3D rotando. De esta forma, podemos 
 simular el HVS. Para ambos modelos se proponen ajustes y pequeñas mejoras basadas 
 en recientes publicaciones y se comparan los resultados. 
 Al igual que la tendencia del estado del arte, sale exitoso el modelo DL. 
@@ -44,7 +44,7 @@ Al igual que la tendencia del estado del arte, sale exitoso el modelo DL.
 Para la validación sobre un conjunto de datos médicos se necesitó el desarrollo 
 de un conjunto de datos sintético debido a la no existencia de un conjunto de 
 datos públicos para este análisis. Para ello se estudiaron y se fabricaron las distorsiones más 
-comúnes del ámbito biomédico con respecto a las representaciones 3D. Para las etiquetas, 
+comunes del ámbito biomédico con respecto a las representaciones 3D. Para las etiquetas, 
 se hizo uso de las métricas SOTA del problema con referencia, que es el subproblema 
 más avanzado y que en diversas publicaciones se demuestra la alta correlación 
 de esas métricas y el HVS, pudiendo así justificarse el uso de esas 
@@ -71,15 +71,18 @@ para normalizar las etiquetas sintéticas como lo hacen en la publicación origi
 permitiendo de un conjunto pequeño extraído manualmente obtener uno varias 
 veces más grande. También, para mejorar el método propuesto se podría permitir 
 que los pesos del modelo utilizado para la extracción de características 
-del video fueran alteradas. Además, se podría buscar simular las distorsiones 
+del vídeo fueran alteradas. Además, se podría buscar simular las distorsiones 
 sobre el conjunto de imágenes 2D generadas tras el examen en vez de hacerlo 
 sobre la representación 3D final. 
 
 Por otro lado, se pueden explorar otros métodos que procesen modelos 3D directamente, 
-o que hagan uso de proyecciones y de la nube de puntos simúltaneamente como en MM-PCQA\cite{MM-PCQA}.
+o que hagan uso de proyecciones y de la nube de puntos simultáneamente como en MM-PCQA\cite{MM-PCQA}.
 Actualmente, ha crecido el número de publicaciones de adaptaciones de PointNet\cite{PointNet} y 
 PointNet++\cite{PointNet++} para resolver distintos problemas de nubes de puntos, 
-por lo que quizás se podría adaptar para la resolución de este problema y evitar así 
+por lo que quizás se podría adaptar para la resolución de este problema, como 
+el método de \cite{ResSCNN}\footnote{Este método no se empleo porque no se 
+logró realizar la ejecución del modelo en los entornos disponibles 
+del desarrollo del proyecto.} y evitar así 
 la inevitable pérdida de información al proyectar en 2D.
 
 

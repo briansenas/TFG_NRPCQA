@@ -17,6 +17,29 @@ from scipy import stats
 
 np.random.seed(140421)
 
+import scipy
+from scipy import stats
+from scipy.optimize import curve_fit
+
+def logistic_func(X, bayta1, bayta2, bayta3, bayta4):
+    denominator = np.abs(bayta4) + 1e-5  # to avoid division by zero
+    numerator = np.negative(X - bayta3)
+    exponent = np.clip(np.divide(numerator, denominator), -500, 500)  # to avoid overflow and underflow
+    logisticPart = 1 + np.exp(exponent)
+    yhat = bayta2 + np.divide(bayta1 - bayta2, logisticPart)
+    return yhat
+
+
+def fit_function(y_label, y_output):
+    max_val = np.max(y_label)
+    min_val = np.min(y_label)
+    mean_val = np.mean(y_output)
+    range_val = np.max(y_output) - np.min(y_output)
+    beta = [max_val, min_val, mean_val, range_val]
+    popt, _ = curve_fit(logistic_func, y_output, y_label, p0=beta, maxfev=1000000)
+    y_output_logistic = logistic_func(y_output, *popt)
+    return y_output_logistic
+
 
 if __name__ == '__main__':
 
@@ -126,11 +149,11 @@ if __name__ == '__main__':
                 func.fit(train_set, train_score) 
                 predict_score = func.predict(test_set)
 
+                y_output_logistic = fit_function(test_score, predict_score)
                 # record the result
                 srocc = abs(stats.spearmanr(predict_score, test_score)[0])
-                plcc = stats.pearsonr(predict_score, test_score)[0]
-                krocc = stats.kendalltau(predict_score, test_score)[0]
-
+                plcc = abs(stats.pearsonr(y_output_logistic, test_score)[0])
+                krocc = abs(stats.kendalltau(predict_score, test_score)[0])
 
                 df = pl.concat([df, 
                                 pl.DataFrame({
