@@ -226,6 +226,9 @@ la percepción de calidad del observador final.
 Para ello, se hace un desglose de rendimiento de cada métrica para cada tipo 
 de distorsión, como se observa en la Tabla \ref{tab:MetricsPerDistortion}. El 
 rendimiento es medido con el coeficiente de correlación de rangos de Spearman.
+Las métricas comparadas son p2p0\cite{PointToPoint} y p2pl\cite{PointToPlane}, 
+con distancia manhattan (M) y hausdorff (H), PCQM\cite{PCQM}, GraphSIM\cite{GraphSIM} y 
+MPED\cite{MPED}.
 
 \begin{table}[htp]
     \scriptsize
@@ -241,11 +244,7 @@ rendimiento es medido con el coeficiente de correlación de rangos de Spearman.
         Octree & 0.779 & 0.788 & \textbf{0.819} & 0.752 & 0.676 & 0.757 & 0.710 \\ \hline
     \end{tabular}
     \caption[Tabla de métricas para generación de etiquetas de \cite{ResSCNN}.]{
-    Tabla de métricas para generación de etiquetas de \cite{ResSCNN}.
-    Para la definición de las métricas, se puede mirar la Sección \ref{sec:EstadoDelArte}.
-    ``M-p2po'' sería equivalente a la métrica Po2Po\cite{PointToPoint}, 
-    ``M-p2pl'' es Po2Pl\cite{PointToPlane}. 
-    Donde la ``M'' ó ``H'' aluden a la función de distancia utilizada, en este caso MSE ó Hausdorff.
+      Tabla de métricas para generación de etiquetas de \cite{ResSCNN}.
   }
     \label{tab:MetricsPerDistortion}
 \end{table}
@@ -680,6 +679,8 @@ hora de estimar la calidad de las imágenes de nuestro pequeño conjunto médico
 se propone pre-entrenar sobre el conjunto LS-SJTU-PCQA\cite{ResSCNN}.
 En este caso, se utilizará las imaǵenes rescaladas y las métricas sin normalizar, 
 dado que se ha observado anteriormente que es la mejor combinación.
+Se observa una mejora significativa en el método F3, y se logra 
+pasar la barrera del 90\% en la mediana del método F0, ver Tabla \ref{tab:LS-SJTU-FN}.
 
 \begin{table}[htp]
   \scriptsize
@@ -745,4 +746,26 @@ es el más estable en todos los casos. }
   de datos pequeños se descarta el uso de las mejoras F1-F3.
 }
 \label{tab:VQAF0}
+\end{table}
+\begin{table}[htp]
+  \scriptsize
+  \centering
+\begin{tabular}{|c|c|c|c|}
+  \hline
+\rowcolor[HTML]{FFC702}
+                       & \multicolumn{3}{c|}{\textbf{SROCC}} \\ \hline
+\rowcolor[HTML]{FFC702}
+\textbf{Modelo}    & \textbf{Media} & \textbf{Desviación} & \textbf{Mediana}   \\ \hline
+\textbf{VQA-PC F0} & 0.7980           & 0.2332              & \textbf{0.9258}    \\ \hline
+\textbf{VQA-PC F1} & 0.7378           & 0.2265              & 0.8322             \\ \hline
+\textbf{VQA-PC F2} & 0.8354           & \textbf{0.1040}     & 0.8370             \\ \hline
+\textbf{VQA-PC F3} & \textbf{0.8605}  & 0.1104              & 0.8824             \\ \hline
+\end{tabular}
+\caption[Resultados en imágenes médicas rescaladas entrenando en LS-SJTU-PCQA.]{
+  Resultados en imágenes médicas rescaladas entrenando en LS-SJTU-PCQA. 
+  Gracias a la información adicional hemos logrado medianas mucho mejores, llegando a 
+  obtener una correlación del 92\% con el modelo F0. Sin embargo, en algunos pliegues 
+  la información adicional ha empeorado la capacidad del modelo de aprender, con 
+  excepción del modelo F3 que en este caso ha logrado obtener la mejor media, un 86\%.
+}\label{tab:LS-SJTU-FN}
 \end{table}

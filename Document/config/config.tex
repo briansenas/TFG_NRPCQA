@@ -23,6 +23,9 @@
 
 \usepackage{csquotes}
 \usepackage[backend=biber, citestyle=numeric-comp, bibstyle=ieee, sorting=none]{biblatex}
+
+\DeclareBibliographyCategory{cited}
+\AtEveryCitekey{\addtocategory{cited}{\thefield{entrykey}}}
 % Configurando BibLaTeX
 \DefineBibliographyStrings{spanish}{
   url = {URL},
