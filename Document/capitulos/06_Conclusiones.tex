@@ -6,17 +6,10 @@ la obtención de una métrica de estimación de calidad capaz de evaluar volúme
 3D, en concreto nubes de puntos, del ámbito biomédico sin referencia para poder asistir 
 en la mejora de los algoritmos de reconstrucción y visualización 3D. 
 
-En primer lugar, se realizó un estudio de la literatura relativa a la estimación 
-de calidad de imágenes 2D, desde los métodos basado en extracción de características 
-de escenas NSS y modelos de ML, hasta la extracción automática con DL. 
-A continuación, se estudió el uso de estos y otros métodos sobre imágenes médicas 2D, 
-donde se presenta la complejidad del problema. Posteriormente, se analizó el estado 
-del arte de métodos dedicados a representaciones tridimensionales, para tratar con 
-las reconstrucciones 3D médicas que cada vez se usan más en la medicina. 
-Se observa un salto en complejidad teórica y computacional al tratarse de problemas 
-en tres dimensiones y sin el objeto de referencia. 
-También se observa una tendencia a métodos DL.
-Por último, se concluye que no existe hasta el momento 
+En primer lugar, se realizó un estudio de la literatura relativa a la estimación de calidad 
+de imágenes 2D, desde los métodos basado en extracción de características de escenas NSS y modelos de ML, hasta la extracción automática con DL. 
+A continuación, se estudió el uso de estos y otros métodos sobre imágenes médicas 2D, donde se presenta la complejidad del problema. Posteriormente se analizó el estado del arte de métodos dedicados a representaciones tridimensionales, para tratar con las reconstrucciones 3D médicas que cada vez se usan más en la medicina. Se observa un salto en complejidad teórica y computacional al tratarse de problemas en tres dimensiones y sin el objeto de referencia. También se observa una tendencia justificada a métodos DL. 
+ Por último, se concluye que no existe hasta el momento 
 otra investigación que haya tomado el enfoque novedoso de estimar la calidad de 
 representaciones biomédicas 3D directamente. 
 
@@ -25,9 +18,9 @@ Se realizó un análisis de los métodos SOTA de estimación de calidad de objet
 extraídas manualmente utilizando conocimiento humano sobre el HVS, como fenómenos 
 de planaridad, esfericidad, anisotropía, curvatura, linealidad y consistencia de 
 colores de las nubes de puntos, que luego se utilizan para estimar una regresión por 
-SVM. En comparativa, de los modelos ML se utilizó un modelo capaz de extraer 
+SVM. En comparativa, de los modelos DL se utilizó un modelo capaz de extraer 
 información estática y dinámica de nubes de puntos haciendo uso de múltiples 
-proyecciones 2D y de un vídeo del objeto 3D rotando. De esta forma, podemos 
+proyecciones 2D y de un vídeo del objeto 3D rotando. De esta forma, podemos  
 simular el HVS. Para ambos modelos se proponen ajustes y pequeñas mejoras basadas 
 en recientes publicaciones y se comparan los resultados. 
 Al igual que la tendencia del estado del arte, sale exitoso el modelo DL. 
@@ -61,7 +54,7 @@ diversas nubes de puntos, se logra una media de 86\% con F3 y una mediana de 92\
 Por lo tanto, se concluye que se han completado satisfactoriamente los objetivos 
 planteados, determinando la posibilidad de resolución del problema adaptado 
 al ámbito biomédico y abriendo puertas a futuras investigaciones. Todo el código
-se encuentra disponible en el repositorio de GitHub \url{https://github.com/CodeBoy-source/TFG_NRPCQA},
+se encuentra disponible en el siguiente repositorio de GitHub \url{https://github.com/CodeBoy-source/TFG_NRPCQA},
 a excepción de las imágenes médicas ya que son datos confidenciales.
 
 Siendo un proyecto en una nueva línea de investigación, existen varias ampliaciones 
@@ -81,9 +74,8 @@ o que hagan uso de proyecciones y de la nube de puntos simultáneamente como en 
 Actualmente, ha crecido el número de publicaciones de adaptaciones de PointNet\cite{PointNet} y 
 PointNet++\cite{PointNet++} para resolver distintos problemas de nubes de puntos, 
 por lo que quizás se podría adaptar para la resolución de este problema, como 
-el método de \cite{ResSCNN}\footnote{Este método no se empleo porque no se 
+el método de ResSCNN\cite{ResSCNN}\footnote{Este método no se empleó porque no se 
 logró realizar la ejecución del modelo en los entornos disponibles 
 del desarrollo del proyecto.} y evitar así 
-la inevitable pérdida de información al proyectar en 2D.
-
+la pérdida de información al proyectar en 2D.
 

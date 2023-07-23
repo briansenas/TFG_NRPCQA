@@ -37,7 +37,7 @@ Este mismo, se encuentra dividido en un conjunto de carpetas:
     la estimación de calidad de nubes de puntos y las modificaciones pertinentes 
     sobre los métodos de fusión de características mencionados en \cite{EnsemblePCQA}. 
 \end{itemize}
-\subsection{Obtención de los modelos 3D}
+\subsection{Generación de un conjunto de datos de imágenes médicas.}
 Los datos se encuentran en una carpeta del servicio UGRDrive, que provee almacenamiento 
 en la nube para investigadores. Los modelos mencionados en la Sección \ref{sec:OurData} 
 se encuentran dentro de una carpeta numerada por cada individuo con los ficheros 
@@ -58,7 +58,7 @@ del estado del arte de los métodos FR-PCQA. Para ello se hace uso de un
 software desarrollado con PCL\cite{PCL} y el archivo del directorio \code{utils/metrics.py}. 
 
 \subsubsection{Preprocesado de datos}
-El único preprocesado que sufren los datos iniciales médicos es el centrado de la nube 
+El único preprocesado que sufren los datos iniciales es el centrado de la nube 
 de puntos sobre los ejes, paso previo a la rotación. Y la reducción de puntos 
 anormales por medio de un análisis de consistencia estadística del vecindario,
 eliminado así puntos aislados y ruido. 
@@ -279,7 +279,7 @@ de los métodos de evaluación subjetivos.
   \label{tab:PseudoCorr}
 \end{table}
 
-\subsection{Entrenamiento de los modelos ML y DL} 
+\subsection{Detalles técnicos de la experimentación} 
 \label{sec:TrainML}
 La estimación de calidad del modelo DL se puede realizar invocando al script \code{train.py} de la carpeta \code{VQA_PC},
 el cual recibe múltiples parámetros de entrada: se define el modelo a utilizar, 
@@ -321,10 +321,12 @@ donde se divide el conjunto de datos en el conjunto de entrenamiento y
 el conjunto de test.  
 
 En el caso de nuestro dataset de imágenes médicas, al ser pocos ejemplos 
-se ha realizado un pliegue por modelo 3D. En el caso de LS-SJTU-PCQA\cite{ResSCNN},
-se optó por utilizar cuatro pliegues aleatorios. Para las pruebas preliminares
-se utilizó el conjunto SJTU\cite{SJTU} con las condiciones indicadas por 
-\cite{ResSCNN}, es decir, con nueve pliegues, uno por modelo. 
+se ha realizado un pliegue por modelo 3D, así que por cada pliegue hay un total de 
+350 ejemplos de entrenamiento y 35 ejemplos en test. 
+En el caso de LS-SJTU-PCQA\cite{ResSCNN}, con 3640 ejemplos en total para 
+nuestras distorsiones, se optó por utilizar 80\% para entrenamiento y 20\% para test. 
+Para las pruebas preliminares se utilizó el conjunto SJTU\cite{SJTU} con las condiciones indicadas por 
+\cite{ResSCNN}, es decir, con nueve pliegues, uno por modelo para un total de 336 para entrenamiento y 42 para test. 
 
 \begin{figure}[htp]
  \begin{center}
@@ -334,7 +336,7 @@ se utilizó el conjunto SJTU\cite{SJTU} con las condiciones indicadas por
  \label{fig:K-fold}
 \end{figure}
 
-\subsection{Método con SVM}
+\subsection{Experimentos Preliminares ML: Modelo NR3D-QA}
 Para replicar el método de Zhang et al\cite{NR3DQA} podemos utilizar los 
 scripts en \code{NR3DQA/}. Para ello disponemos de unos cuántos scripts para la extracción de las características y visualización de las distribuciones 
 como indica la publicación. 
@@ -366,7 +368,7 @@ K es igual al número de nubes de puntos
 
 No obstante, utilizando las mismas funciones para el caso de los imágenes médicas 
 y experimentando con múltiples modelos de regresión, 
-vemos, en la Tabla \ref{tab:MedicalNR3DQA}, que el método no es capaz del todo 
+vemos, en la Tabla \ref{tab:MedicalNR3DQA}, que el método no es capaz
 de determinar con precisión la calidad de imágenes, ya que la correlación entre 
 la predicción y el valor real es muy cercano a 0. 
 
@@ -439,7 +441,7 @@ resultados preliminares de la Sección \ref{sec:PreResults}, se determina
 conveniente hacer uso de modelos más complejos y permitir que la extracción 
 de características sea automática. 
 
-\subsection{Experimentos Preliminares DL}
+\subsection{Experimentos Preliminares DL: Modelo VQA-PC}
 \label{sec:PreResults}
 Previo a tratar con los datos médicos, se han realizado pruebas de ejecución 
 para verificar el funcionamiento del modelo, validar los resultados, familiarizarse c
@@ -449,7 +451,7 @@ on el código e identificar zonas de posibles mejoras.
 Para validar el correcto funcionamiento del código y los resultados obtenidos 
 en \cite{VQA-PC}, seguimos el experimento en las mismas condiciones descrita 
 por ellos en el conjunto de datos SJTU\cite{SJTU}. Como ese posee 10 modelos, 
-ver Sección \ref{sec:DatosPublicos}, se realiza un 9-fold. Se ha utilizado 
+ver Sección \ref{sec:DatosPublicos}, se realiza un 9-fold. Se han utilizado 
 los mismos hiper parámetros, estructura de red convolucional y transformaciones 
 de aumentación de datos, ver Tablas 
 \ref{tab:ResNet50} y \ref{tab:HiperSJTU}. 
@@ -524,7 +526,9 @@ en vez de recortar una zona aleatoria de la imagen se recorta la parte central.
 
 Tras pasada las 9 iteraciones, el resultado promedio es similar al estimado 
 por el artículo original y, como se puede observar en la Figura \ref{fig:PreTestCurves},
-el modelo parece estar aprendiendo, ver Table \ref{tab:PreTestResults}. 
+el modelo parece estar aprendiendo, ver Tabla \ref{tab:PreTestResults}. 
+Como vemos el error de validación tiende a bajar, aunque con cierta variabilidad 
+entre épocas en contra del error de entrenamiento que es más estable. . 
 
 Se debe tener en cuenta que, aunque el error cuadrático medio pueda parecer 
 sustancialmente grande, nuestro criterio de elección sería la correlación 
@@ -533,6 +537,9 @@ en la misma escala que las etiquetas. Apenas necesitamos ser capaces de comparar
 de forma ordenada las imágenes de menor a mayor calidad. En otras palabras, 
 si la función a determinar es $f(x) = x$, tener $f(x) = 100x$ sería equivalente.
 Por ello, de aquí en adelante utilizaremos la métrica SROCC.
+Cabe observar que los valores se acercan a los resultados obtenidos en la publicación original, 
+utilizando el criterio del promedio del mejor resultado de cada pliegue de validación. 
+El error enseñado es el error MSE del modelo, sin utilizar la regresión logística.
 
 \begin{table}[htp]
   \scriptsize
@@ -564,11 +571,7 @@ Por ello, de aquí en adelante utilizaremos la métrica SROCC.
       \hline
     \end{tabular}
   \end{center}
-  \caption[Resultados de experimento preliminar.]{Resultados de experimento preliminar. 
-    Cabe observar que los valores se acercan a los resultados obtenidos en la publicación original, 
-    utilizando el criterio del promedio del mejor resultado de cada pliegue de validación. 
-    El error enseñado es el error MSE del modelo, sin utilizar la regresión logística.
-}
+  \caption[Resultados de experimento preliminar.]{Resultados de experimento preliminar.}
   \label{tab:PreTestResults}
 \end{table}
 
@@ -581,9 +584,8 @@ Por ello, de aquí en adelante utilizaremos la métrica SROCC.
   \centering
     \includegraphics[width=\textwidth]{imagenes/chapter5/PreTestSROCC.png}
   \end{subfigure}
-  \caption[Curvas de aprendizaje del test preliminar.]{Curvas de aprendizaje del test preliminar. Es el comportamiento medio en cada fold.
-  Como vemos el error de validación tiende a bajar, aunque con cierta variabilidad 
-  entre épocas en contra del error de entrenamiento que es más estable. A la derecha 
+  \caption[Curvas de aprendizaje del test preliminar.]{Curvas de aprendizaje del test preliminar. 
+  Cada curva describe el comportamiento medio en cada pliegue. A la derecha 
   podemos ver el comportamiento de la métrica SROCC en valor absoluto 
   (resolver el problema inverso sería equivalente).}
   \label{fig:PreTestCurves}
@@ -591,7 +593,9 @@ Por ello, de aquí en adelante utilizaremos la métrica SROCC.
 
 
 \subsection{Propuestas de mejoras}
-La publicación \cite{EnsemblePCQA} propone distintos métodos para la fusión de vectores características de modelos \emph{ensemble}.
+En nuestro modelo, un parte importante de la inferencia viene de la capacidad del mismo de unificar las características 
+estáticas con las dinámicas. En la publicación \cite{EnsemblePCQA} se proponen distintos métodos para la fusión
+de vectores características de modelos \emph{ensemble}.
 En ella, se realiza una comparativa entre cuatro métodos: la concatenación, multiplicación, convolución 1x1 y 
 fusión en el dominio de fourier. 
 Argumenta que cada uno de los métodos de fusión permite la interacción de los vectores 
@@ -616,9 +620,9 @@ Por último, se observa que el modelo realiza un recorte aleatorio de las imáge
 originalmente a escala 1920x1080, durante el entrenamiento 
 para ajustarlas a una escala de 224x224, lo cual reduce el tiempo de cómputo y 
 evita el sobre-entrenamiento. Durante la ejecución del test, se recorta el centro de la imagen. 
-Este proceso de rescalado, conocido como aumentación de datos, incrementa la cantidad de ejemplos 
+Este proceso de reescalado, conocido como aumentación de datos, incrementa la cantidad de ejemplos 
 y previene el sobreajuste. Sin embargo, debido a que las nubes de puntos ocupan principalmente 
-la zona central de la imagen y poca proporción, se propone un rescalado uniforme a una escala de 
+la zona central de la imagen y poca proporción, se propone un reescalado uniforme a una escala de 
 398x224 para obtener recortes válidos y relevantes.
 
 Para realizar la comparativa de estas mejoras, se utiliza el conjunto de datos 
@@ -630,6 +634,13 @@ de 6 épocas (en este contexto, paciencia alude a la espera de los resultados de
 las N siguientes épocas, en la que el error de validación crece, antes de terminar 
 la ejecución por sobre-entrenamiento). 
 
+En la Tabla \ref{tab:SroccMedRes} hacemos 11-fold sobre nuestro conjunto de datos teniendo en cuenta las métricas originales, las métricas
+normalizadas a escala 0-5 y las imágenes reescaladas. También se investiga rescalar y normalizar (última columna).
+Se compara estos resultados con los demás métodos de fusión de características propuesto.
+Vemos que el modelo con información previa, al utilizar el reescalado, obtiene los mejores resultados.
+No obstante, F1 y F2 sin información previa consiguen acercarse a un margen de 4\% de ese valor. 
+Por otro lado, la fusión F3 no logra mejorar de forma significativas los resultados. 
+
 \begin{table}[htp]
   \scriptsize
   \centering
@@ -638,21 +649,15 @@ la ejecución por sobre-entrenamiento).
 \rowcolor[HTML]{FFC702}
                        & \multicolumn{4}{c|}{\textbf{Valor medio SROCC}}                                                                                                    \\ \hline
 \rowcolor[HTML]{FFC702}
-\textbf{Modelo}        & \multicolumn{1}{c|}{\textbf{Estándar}} & \multicolumn{1}{c|}{\textbf{Normalizado}} & \multicolumn{1}{c|}{\textbf{Rescalado}} & \textbf{Ambos}  \\ \hline
+\textbf{Modelo}        & \multicolumn{1}{c|}{\textbf{Estándar}} & \multicolumn{1}{c|}{\textbf{Normalizado}} & \multicolumn{1}{c|}{\textbf{Reescalado}} & \textbf{Ambos}  \\ \hline
 \textbf{VQA-PC (SJTU)} & \multicolumn{1}{c|}{0.7094}            & \multicolumn{1}{c|}{\textbf{0.6235}}      & \multicolumn{1}{c|}{\textbf{0.8425}}    & 0.7126          \\ \hline
 \textbf{VQA-PC F1}     & \multicolumn{1}{c|}{\textbf{0.7305}}   & \multicolumn{1}{c|}{0.6140}               & \multicolumn{1}{c|}{0.8164}             & 0.7291          \\ \hline
 \textbf{VQA-PC F2}     & \multicolumn{1}{c|}{0.6816}            & \multicolumn{1}{c|}{0.5770}               & \multicolumn{1}{c|}{0.8057}             & \textbf{0.7324} \\ \hline
 \textbf{VQA-PC F3}     & \multicolumn{1}{c|}{0.7080}            & \multicolumn{1}{c|}{0.5671}      & \multicolumn{1}{c|}{0.7482}             & 0.7006          \\ \hline
 \end{tabular}
 \caption[Valor medio sobre imágenes médicas.]{Tabla de resultados iniciales sobre imágenes médicas. 
-Partimos del modelo pre-entrenado de la publicación original \cite{VQA-PC} sobre SJTU\cite{SJTU}. Hacemos 
-11-fold sobre nuestro conjunto de datos teniendo en cuenta las métricas originales, las métricas
-normalizadas a escala 0-5 y las imaǵenes rescaladas. También se investiga rescalar y normalizar (última columna).
-Se compara estos resultados con los demás métodos de fusión de características propuesto.
-Vemos que el modelo con información previa, al utilizar el rescalado, obtiene los mejores resultados.
-No obstante, F1 y F2 sin información previa consiguen acercarse a un margen de 4\% de ese valor. 
-Por otro lado, la fusión F3 no logra mejorar de forma significativas los resultados. 
-}
+Partimos del modelo pre-entrenado de la publicación original \cite{VQA-PC} sobre SJTU\cite{SJTU}. 
+}\label{tab:SroccMedRes}
 \end{table}
 
 Los resultados son prometedores. El modelo con información adicional sobre otros 
@@ -672,15 +677,23 @@ que se puede observar la mediana de cada modelo en la Tabla \ref{tab:PercentileM
 
 Para validar el rápido aprendizaje de los métodos F1-F3 y la posible mejora 
 sobre el método de concatenación, se experimenta utilizar el modelo VQA-PC sin 
-modificaciones desde 0 sobre las imágenes rescaladas, ver Tabla \ref{tab:VQAF0}.
-Se determina que las mejoras F1-F3 no son significativas sin información adicional. 
+modificaciones desde 0 sobre las imágenes reescaladas, ver Tabla \ref{tab:VQAF0}.
+Se obtiene en media resultados algo peor que el modelo 
+pre-entrenado, remarcando la importancia de información adicional y etapas 
+de entrenamiento más largas a la hora de lidiar con algunas nubes de puntos, y 
+la mediana es la mejor de los 4 modelos sin pre-entrenar en distorsiones. 
+Se determina que, para un conjunto de datos pequeños, las mejoras F1-F3 no son significativas sin información adicional. 
 Dado la importancia de la información adicional sobre las distorsiones a la 
 hora de estimar la calidad de las imágenes de nuestro pequeño conjunto médico, 
 se propone pre-entrenar sobre el conjunto LS-SJTU-PCQA\cite{ResSCNN}.
-En este caso, se utilizará las imaǵenes rescaladas y las métricas sin normalizar, 
+En este caso, se utilizará las imaǵenes reescaladas y las métricas sin normalizar, 
 dado que se ha observado anteriormente que es la mejor combinación.
 Se observa una mejora significativa en el método F3, y se logra 
 pasar la barrera del 90\% en la mediana del método F0, ver Tabla \ref{tab:LS-SJTU-FN}.
+Gracias a la información adicional hemos logrado medianas mucho mejores, llegando a 
+obtener una correlación del 92\% con el modelo F0. Sin embargo, en algunos pliegues 
+la información adicional ha empeorado la capacidad del modelo de aprender, con 
+excepción del modelo F3 que en este caso ha logrado obtener la mejor media, un 86\%.
 
 \begin{table}[htp]
   \scriptsize
@@ -690,16 +703,16 @@ pasar la barrera del 90\% en la mediana del método F0, ver Tabla \ref{tab:LS-SJ
 \rowcolor[HTML]{FFC702}
                        & \multicolumn{4}{c|}{\textbf{Desviación típica SROCC}}                                                                                                \\ \hline
 \rowcolor[HTML]{FFC702}
-\textbf{Modelo}        & \multicolumn{1}{c|}{\textbf{Estándar}} & \multicolumn{1}{c|}{\textbf{Normalizado}} & \multicolumn{1}{c|}{\textbf{Rescalado}} & \textbf{Ambos}  \\ \hline
+\textbf{Modelo}        & \multicolumn{1}{c|}{\textbf{Estándar}} & \multicolumn{1}{c|}{\textbf{Normalizado}} & \multicolumn{1}{c|}{\textbf{Reescalado}} & \textbf{Ambos}  \\ \hline
 \textbf{VQA-PC (SJTU)} & \multicolumn{1}{c|}{0.1448}            & \multicolumn{1}{c|}{0.2357}               & \multicolumn{1}{c|}{\textbf{0.0668}}    & 0.1335          \\ \hline
 \textbf{VQA-PC F1}     & \multicolumn{1}{c|}{\textbf{0.1222}}   & \multicolumn{1}{c|}{0.1402}               & \multicolumn{1}{c|}{0.1752}             & 0.2250          \\ \hline
 \textbf{VQA-PC F2}     & \multicolumn{1}{c|}{0.1462}            & \multicolumn{1}{c|}{0.1905}               & \multicolumn{1}{c|}{0.1741}             & \textbf{0.1187} \\ \hline
 \textbf{VQA-PC F3}     & \multicolumn{1}{c|}{0.1507}            & \multicolumn{1}{c|}{\textbf{0.1304}}      & \multicolumn{1}{c|}{0.1326}             & 0.1462          \\ \hline
 \end{tabular}
 \caption[Desviación típica de los resultados médicos]{Desviación típica de los 
-resultados obtenidos. Se observa que la mejora del rescalado de las imágenes 
-de entrada mejora la estabilidad del modelo inicial. El método de fusión F3 
-es el más estable en todos los casos. }
+resultados obtenidos. 
+Se observa que la mejora del reescalado de las imágenes de entrada mejora la estabilidad del modelo inicial.
+El método de fusión F3 es el más estable en todos los casos. }
 \label{tab:STDevMed}
 \end{table}
 
@@ -711,7 +724,7 @@ es el más estable en todos los casos. }
 \rowcolor[HTML]{FFC702}
                        & \multicolumn{4}{c|}{\textbf{Mediana SROCC}}                                                                                                          \\ \hline
 \rowcolor[HTML]{FFC702}
-\textbf{Modelo}        & \multicolumn{1}{c|}{\textbf{Estándar}} & \multicolumn{1}{c|}{\textbf{Normalizado}} & \multicolumn{1}{c|}{\textbf{Rescalado}} & \textbf{Ambos}  \\ \hline
+\textbf{Modelo}        & \multicolumn{1}{c|}{\textbf{Estándar}} & \multicolumn{1}{c|}{\textbf{Normalizado}} & \multicolumn{1}{c|}{\textbf{Reescalado}} & \textbf{Ambos}  \\ \hline
 \textbf{VQA-PC (SJTU)} & \multicolumn{1}{c|}{\textbf{0.7400}}   & \multicolumn{1}{c|}{\textbf{0.7510}}      & \multicolumn{1}{c|}{0.8417}             & 0.7434          \\ \hline
 \textbf{VQA-PC F1}     & \multicolumn{1}{c|}{0.7022}            & \multicolumn{1}{c|}{0.6331}               & \multicolumn{1}{c|}{\textbf{0.8636}}    & \textbf{0.7849} \\ \hline
 \textbf{VQA-PC F2}     & \multicolumn{1}{c|}{0.6350}            & \multicolumn{1}{c|}{0.5955}               & \multicolumn{1}{c|}{0.8538}             & 0.7165          \\ \hline
@@ -737,18 +750,13 @@ es el más estable en todos los casos. }
 \textbf{Modelo}        & \multicolumn{1}{c|}{\textbf{Media}} & \multicolumn{1}{c|}{\textbf{Desviación}} & \multicolumn{1}{c|}{\textbf{Mediana}} \\ \hline
 \textbf{VQA-PC F0} & \multicolumn{1}{c|}{\textbf{0.8261}}   & \multicolumn{1}{c|}{0.1589}      & \multicolumn{1}{c|}{\textbf{0.8657}}      \\ \hline
   \end{tabular}
-  \caption[Resultados del método original sin pre-entrenar sobre imágenes rescaladas.]{
-    Resultados del método original sin pre-entrenar sobre imágenes rescaladas. 
-    Se obtiene resultados, en media, algo peor que el modelo 
-  pre-entrenado, remarcando la importancia de información adicional y etapas 
-  de entrenamiento más largas a la hora de lidiar con algunas nubes de puntos, y 
-  en mediana se obtiene el mejor resultado. De esta forma, para un conjunto 
-  de datos pequeños se descarta el uso de las mejoras F1-F3.
+  \caption[Resultados del método original sin pre-entrenar sobre imágenes reescaladas.]{
+    Resultados del método original sin pre-entrenar sobre imágenes reescaladas. 
 }
 \label{tab:VQAF0}
 \end{table}
-\begin{table}[htp]
-  \scriptsize
+\begin{table}[H]
+  \scriptsize 
   \centering
 \begin{tabular}{|c|c|c|c|}
   \hline
@@ -761,11 +769,7 @@ es el más estable en todos los casos. }
 \textbf{VQA-PC F2} & 0.8354           & \textbf{0.1040}     & 0.8370             \\ \hline
 \textbf{VQA-PC F3} & \textbf{0.8605}  & 0.1104              & 0.8824             \\ \hline
 \end{tabular}
-\caption[Resultados en imágenes médicas rescaladas entrenando en LS-SJTU-PCQA.]{
-  Resultados en imágenes médicas rescaladas entrenando en LS-SJTU-PCQA. 
-  Gracias a la información adicional hemos logrado medianas mucho mejores, llegando a 
-  obtener una correlación del 92\% con el modelo F0. Sin embargo, en algunos pliegues 
-  la información adicional ha empeorado la capacidad del modelo de aprender, con 
-  excepción del modelo F3 que en este caso ha logrado obtener la mejor media, un 86\%.
+\caption[Resultados en imágenes médicas reescaladas entrenando en LS-SJTU-PCQA.]{
+  Resultados en imágenes médicas reescaladas entrenando en LS-SJTU-PCQA. 
 }\label{tab:LS-SJTU-FN}
 \end{table}

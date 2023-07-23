@@ -81,7 +81,7 @@ DIQaM-NR\cite{DIQaM}, que mejora frente redes menos profundas.
 En las Tablas \ref{tab:SOTAFRIQA} y \ref{tab:SOTANRIQA} se recogen los 
 métodos mencionados, donde las métricas SROCC y PLCC, que se explican 
 en la Sección \ref{sec:Metricas}, son mejores cuánto más cercas al 1 y 
-el RMSE es mejor cuánto más pequeño sea.  Usaremos los conjuntos 
+el RMSE es mejor cuánto más pequeño sea.  Se comparan sobre los conjuntos de datos públicos
 LIVE\cite{LIVE, LIVE1, SSIM}, CSIQ\cite{CSIQ} y \cite{TID2008}. El primero y el segundo poseen información de distorsiones por compresión JPEG, por difuminado gaussiano y ruido blanco. El último, posee más distorsiones, llegando hasta 17.
 
 \begin{table}[htp]
@@ -107,7 +107,7 @@ LIVE\cite{LIVE, LIVE1, SSIM}, CSIQ\cite{CSIQ} y \cite{TID2008}. El primero y el 
                    & WaDIQaM-FR\cite{DIQaM} & \textbf{0.970} & \textbf{0.980} & - & - & - & - & - & - & - \\
                   \hline 
   \end{tabular}
-  \caption[Tablas estado del arte FR-IQA]{Tabla extraída de \cite{SurveyOf2D3DMetrics}, 
+  \caption[Tablas estado del arte FR-IQA.]{Tabla extraída de \cite{SurveyOf2D3DMetrics}, 
     donde vemos el progreso de las métricas FR conforme avanza los conocimientos
   del HVS, ML y DL.}
     \label{tab:SOTAFRIQA}
@@ -132,7 +132,7 @@ LIVE\cite{LIVE, LIVE1, SSIM}, CSIQ\cite{CSIQ} y \cite{TID2008}. El primero y el 
                           & Hallucinated-IQA \cite{Hallucinated-IQA} & \textbf{0.982} & \textbf{0.982} & - \\
                           \hline
   \end{tabular}
-  \caption[Tablas estado del arte NR-IQA]{Tabla extraída de \cite{SurveyOf2D3DMetrics}, 
+  \caption[Tablas estado del arte NR-IQA.]{Tabla extraída de \cite{SurveyOf2D3DMetrics}, 
     donde vemos el progreso de las métricas NR al utilizar métodos cada vez más complejos.}
   \label{tab:SOTANRIQA}
 \end{table}
@@ -267,8 +267,7 @@ simplemente implementar métodos IQA, es por ello que Chow y Rajagopal \cite{Med
 propusieron un enfoque más reciente que adapta el evaluador de calidad de imagen más famoso BRISQUE\cite{BRISQUE}.
 
 Sin embargo, no se ha encontrado nada específico en la literatura para las 
-reconstrucciones 3D generadas a partir de las imágenes médicas, por lo que es 
-un campo sin explorar. 
+reconstrucciones 3D generadas a partir de las imágenes médicas, por lo que es un campo sin explorar. 
 No obstante, cada vez más frecuentemente se emplean 
-volúmenes tridimensionales en la medicina y por ello es necesario explorar ese 
+volúmenes tridimensionales en la medicina y, consecuentemente, es necesario explorar ese 
 campo a pesar de la complejidad existente.

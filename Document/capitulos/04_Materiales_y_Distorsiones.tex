@@ -87,17 +87,18 @@ de objetos. Ver Figura \ref{fig:LS-SJTU-PCQA}.
 
 \subsection{Conjunto de datos médicos}
 \label{sec:OurData}
-Para este TFG se tiene disponible una colección tomografías computerizadas, de distintas
-partes del cuerpo, de 2 individuos distintos. 
+Para este TFG se tiene disponible una conjunto de tomografías computerizadas, de distintas
+partes del cuerpo, de 2 individuos distintos del conjunto de datos privados NMID\cite{NMID}. 
 De los cuales han sido segmentados las clavículas, el seno frontal y los senos maxilares. 
-A parte, disponemos de volúmenes del cráneo de otros 3 individuos, una pubis izquierda y
+A parte, disponemos de modelos generados mediante escáner láser 3D, en concreto con el dispositivo ArtecSpider, que permite generar reconstrucciones 3D de objetos reales. Estos modelos 3D fueron adquiridos en el Departamento de Medicina Legal, Toxicología y Antropología Física de la Universidad de Granada y constan del cráneo de otros 3 individuos, una pubis izquierda y
 una pubis derecha, ver Figura \ref{fig:OurDataExample}. Es decir, en total disponemos de 11 nubes de puntos de alta 
 calidad, que representan distintos volúmenes de exámenes médicos.
 A estos datos no se hicieron ningún tipo de pre-procesado, apenas se centraron 
 las nubes de puntos a los ejes (operación necesaria para hacer la rotación para 
 las distintas perspectivas, más detalles en la sección \ref{sec:Implementacion})
 y se eliminaron aquellos puntos aislado de todos, frutos de errores en el 
-algoritmo de reconstrucción 3D de las nubes de puntos a partir de segmentaciones DICOM.
+algoritmo de reconstrucción 3D de las nubes de puntos a partir de segmentaciones DICOM. 
+Con las 5 distorsiones aplicadas a 7 niveles de intensidad sobre los 11 modelos obtenemos 385 ejemplos en total. 
 
 \begin{figure}[htp]
   \centering
@@ -118,7 +119,7 @@ algoritmo de reconstrucción 3D de las nubes de puntos a partir de segmentacione
   \centering 
   \includegraphics[width=\textwidth]{imagenes/chapter4/PubisDch.png}
   \end{subfigure}
-  \caption[Ejemplo de nuestras imágenes médicas]{Ejemplo de nuestras imágenes médicas.
+  \caption[Ejemplo de nuestras imágenes médicas.]{Ejemplo de nuestras imágenes médicas.
   Arriba a la izquierda tenemos un cráneo y a su derecha un seno frontal. 
   Abajo a la izquierda tenemos un maxilar y a su derecha el pubis derecho.}
   \label{fig:OurDataExample}
@@ -137,7 +138,7 @@ a la estimación de calidad de las estructuras en la imagen, eliminando la
 percepción de calidad por contraste y saturación. La segunda incrementa 
 la complejidad computacional.
 
-\subsection{Zhang et al\cite{NR3DQA}}
+\subsection{Modelo NR 3D-QA}
 \label{sec:NR3DQA}
 Antes de probar directamente con modelos de DL, se experimentó con un método de 
 ML basado en la extracción de características de escena y entrenamiento de un 
@@ -146,7 +147,7 @@ que tipo de características queremos extraer.
 
 Zhang et al\cite{NR3DQA} proponen utilizar características geométricas y de 
 color. Para la primera, extraen la curvatura\eqref{eq:Curvatura}, 
-anisotropia\eqref{eq:Anisotropia}, linealidad\eqref{eq:Linealidad}, 
+anisotropía\eqref{eq:Anisotropia}, linealidad\eqref{eq:Linealidad}, 
 planaridad\eqref{eq:Planaridad} y esfericidad\eqref{eq:Esfericidad} de los puntos. 
 Estas características se pueden extraer del vecindario 
 de un punto por medio de la matriz de covarianza y los valores singulares. 
@@ -352,7 +353,7 @@ ResNet, el modelo de extracción temporal solo es un paso previo.
   \begin{center}
     \includegraphics[width=0.60\textwidth]{imagenes/chapter4/PipelineCompleto}
   \end{center}
-  \caption{Ejemplo detallado de las etapas del método de VQA-PC}
+  \caption{Ejemplo detallado de las etapas del método de VQA-PC\cite{VQA-PC}.}
   \label{fig:VQAPipeline}
 \end{figure}
 
