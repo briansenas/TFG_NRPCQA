@@ -8,7 +8,7 @@ entre ambas, como puede ser al nivel del color de píxel posición a posición,
 y se denomina ``\emph{Full Reference}''(\emph{FR}). 
 La tarea, aparentemente sencilla, en realidad presenta una complejidad alta dada por 
 la necesidad de codificar la percepción humana a la hora de calificar la calidad 
-de una imagen\cite{WhyIsIQASoDifficult}, ya que métricas que miden distancias no suelen 
+de una imagen~\cite{WhyIsIQASoDifficult}, ya que métricas que miden distancias no suelen 
 ser suficientes al no haber buena correlación entre la calidad percibida y el 
 resultado de la métrica.
 
@@ -18,12 +18,13 @@ Primeramente se asume la misma importancia para todas las señales de la imagen,
 la magnitud del error es lo único que determina la calidad, que el contenido de la imagen 
 no afecta al resultado final tras aplicar una distorsión y que si cambiamos el 
 orden de las señales la medida de distorsión no es afectada.
-Lamentablemente, ninguna de estas suposiciones se cumplen\cite{Wang2006ModernIQ}, ver Figuras \ref{fig:FailureMinkowskiMetric} y \ref{fig:MSEHyperSphere}.
+Lamentablemente, ninguna de estas suposiciones se cumplen~\cite{Wang2006ModernIQ}, ver Figuras \ref{fig:FailureMinkowskiMetric} y \ref{fig:MSEHyperSphere}.
  
-El siguiente subproblema es aquel donde tenemos algún tipo de información adicional respecto 
-a la imagen original en el momento de análisis de la calidad de la imagen final,
-denominados ``\emph{Reduced Reference}''(\emph{RR}). La información extra puede incluir características estadísticas, metadatos, parámetros 
-de compresión o características extraídas de una región de interés específica.
+El siguiente subproblema es aquel donde tenemos algún tipo de información adicional, incompleta, respecto 
+a la imagen original el momento de análisis de la calidad de la imagen final,
+denominados ``\emph{Reduced Reference}''(\emph{RR}). La información extra puede 
+incluir metadatos, parámetros 
+de compresión, características estadísticas o extraídas de una región de interés específica.
  
 Y por último, tenemos aquellos problemas donde desconocemos el origen y cualquier 
 información respecto a la imagen inicial, denominados problemas ``\emph{No reference}''(\emph{NR}).
@@ -34,20 +35,20 @@ La evaluación de calidad de imagen sin referencia es, quizás, el problema
 más difícil en el análisis de imágenes. De cierto modo, el modelo debe ser 
 capaz de evaluar la calidad de cualquier imagen sin saber nada de la imagen ``real'', original. 
 Superficialmente parece ``misión imposible''. No obstante, esa 
-es una tarea sorprendentemente sencilla para el ser humano\cite{Wang2006ModernIQ}. 
+es una tarea sorprendentemente sencilla para el ser humano~\cite{Wang2006ModernIQ}. 
 
 Para resolver problemas NR, debemos disponer de conocimientos de la naturaleza de las imágenes 
 de las que tratamos y los efectos de las distorsiones. Lo que se denomina 
 estadísticas naturales de escena (NSS, por sus siglas en inglés). Un ejemplo 
 sería JPEG, un algoritmo de compresión que se codifica por bloques 8x8. Los efectos
 negativos de la compresión se representan por el difuminado entre bloques y los artefactos que generan.
-Entender estos efectos permite diseñar métricas específicas\cite{SpatialDomainForJPEG}
+Entender estos efectos permite diseñar métricas específicas~\cite{SpatialDomainForJPEG}
 
 As veces resulta difícil describir las características de la imagen y los efectos 
 de la distorsión. Es por ello que los métodos de aprendizaje profundo son cada vez 
 más frecuente y dan mejores resultados. Permitimos que sea la máquina la que aprenda 
 las propiedades de la distorsión, su relación con el contenido y efecto sobre la 
-percepción visual\cite{Hallucinated-IQA, BIQA, DIPIQA}. 
+percepción visual~\cite{Hallucinated-IQA, BIQA, DIPIQA}. 
 
 La complejidad del problema crece conforme nos desplazamos a las tres dimensiones. 
 El analizar la calidad de los modelos \emph{3D} implica mayor nivel de dificultad 
@@ -70,9 +71,9 @@ tridimensional $(x,y,z)$ cada uno con un color asociado \emph{RGB}\footnote{
 }, se pueden emplear métricas y algoritmos basándose en criterios como la 
 densidad de puntos, la uniformidad, la precisión geométrica y la detección de artefactos.
 También se pueden considerar aspectos relacionados con la coherencia de los colores 
-o texturas asociadas a los puntos\cite{NR3DQA, StructureGuidedResampling, GPA-NET}.
+o texturas asociadas a los puntos~\cite{NR3DQA, StructureGuidedResampling, GPA-NET}.
 Un enfoque común es la evaluación de calidad de una nube de puntos tridimensional 
-mediante proyecciones \emph{2D} desde diferentes perspectivas\cite{IT-PCQA, VQA-PC, MM-PCQA}. 
+mediante proyecciones \emph{2D} desde diferentes perspectivas~\cite{IT-PCQA, VQA-PC, MM-PCQA}. 
 De esta forma podemos tratar el problema como uno de \emph{IQA} 2D reduciendo la 
 complejidad computacional, pudiendo implementar métodos y soluciones ya existentes.
 
@@ -83,7 +84,7 @@ estimación, sin referencia, de calidad de imágenes médicas en espacio tridime
   \begin{center}
     \includegraphics[width=0.6\textwidth]{imagenes/chapter2/failure_minkowski_metric.png}
   \end{center}
-  \caption[Visualización del problema de la métrica \emph{Minkowski}.]{En este ejemplo, extraído de\cite{MinkowskiFailure},
+  \caption[Visualización del problema de la métrica \emph{Minkowski}.]{En este ejemplo, extraído de~\cite{MinkowskiFailure},
   vemos que sumar una constante positiva a una imagen  de referencia (a) produce la imagen (b) que contiene la misma distancia \emph{Minkowski}\footnotemark[2]
   que (c), imagen fabricada por la misma constante pero permutando signo de forma aleatoria, resultando que
   la percepción final es que la imagen (c) es peor que la imagen (b).
@@ -93,7 +94,7 @@ estimación, sin referencia, de calidad de imágenes médicas en espacio tridime
   \begin{center}
     \includegraphics[width=0.6\textwidth]{imagenes/chapter2/MSE_Hypersphere.png}
   \end{center}
-  \caption[Visualización del hiperplano MSE de imágenes distorsionadas.]{En este ejemplo, extraído de\cite{Wang2006ModernIQ}, la misma imagen distorsionada de distintas maneras resulta en el mismo valor MSE\footnotemark[3]=181. Siendo evidente que 
+  \caption[Visualización del hiperplano MSE de imágenes distorsionadas.]{En este ejemplo, extraído de~\cite{Wang2006ModernIQ}, la misma imagen distorsionada de distintas maneras resulta en el mismo valor MSE\footnotemark[3]=181. Siendo evidente que 
 algunas distorsiones producen efectos visuales más marcados que otras.}
   \label{fig:MSEHyperSphere}
 \end{figure}
@@ -101,17 +102,17 @@ algunas distorsiones producen efectos visuales más marcados que otras.}
 
 \section{Aprendizaje Automático y Profundo}
 \subsection{Aprendizaje Automático}
-El aprendizaje automático\cite{IAModernApproach} o \emph{Machine Learning} (\emph{ML}) 
+El aprendizaje automático~\cite{IAModernApproach} o \emph{Machine Learning} (\emph{ML}) 
 es una de las ramas que compone lo que definimos como 
 la inteligencia artificial (\emph{IA}). Permite a las computadoras aprender a partir de datos sin programación explícita. 
-A través de algoritmos y modelos, las máquinas pueden reconocer patrones, hacer predicciones y tomar decisiones basadas en información proporcionada.
+A través de algoritmos y modelos, pueden reconocer patrones, hacer predicciones y tomar decisiones basadas en información proporcionada.
 
 En este caso hablamos de dar soluciones a problemas complejos sin 
 solución analítica (o que resulta muy costoso hallarla), es decir, necesitamos que la computadora sea la que identifique
-los patrones en los datos y realice predicciones sobre ellos\cite{LearningFromData}.
+los patrones en los datos y realice predicciones sobre ellos~\cite{LearningFromData}.
 Se puede definir más formalmente que un programa aprende de la experiencia E con
 respecto a alguna clase de tareas T y una métrica de rendimiento P si su
-rendimiento en las tareas T, medido con P, mejora con la experiencia E\cite{TomMitchell}.
+rendimiento en las tareas T, medido con P, mejora con la experiencia E~\cite{TomMitchell}.
 
 Dependiendo de factores como las necesidades del problema, la naturaleza
 de los datos a utilizar o el objetivo a alcanzar, podemos encontrar distintos tipos de
@@ -119,9 +120,8 @@ algoritmos de aprendizaje. En este documento se recogerán dos grandes grupos: a
 y aprendizaje no supervisado. En el primero disponemos de un conjunto de datos 
 anotados, es decir, con las salidas deseadas para cada ejemplo y en el segundo 
 se espera que sea la máquina la que determine los patrones, ver Figuras \ref{fig:SupervisedExample} y \ref{fig:UnsupervisedExample}. 
-
 En general se suelen aplicar las técnicas de \emph{ML} sobre grandes conjuntos 
-de datos sobre los cuales deseamos detectar los patrones subyacentes\cite{
+de datos sobre los cuales deseamos detectar los patrones subyacentes~\cite{
 DataMiningHandbook}.
 
 Puede observarse que dadas estas descripciones, el problema presente puede ser 
@@ -172,14 +172,14 @@ estamos ante un problema de aprendizaje supervisado.
 En el aprendizaje profundo o \emph{Deep Learning} (\emph{DL}), 
 a diferencia de los modelos anteriores donde tenemos un conjunto de variables 
 extraídas por un humano experto, las características sobre la cual inferimos 
-son obtenidas por el propio modelo automáticamente\cite{DeepLMITPress, DeepLearningNature, DeepLearningInNN}.
+son obtenidas por el propio modelo automáticamente~\cite{DeepLMITPress, DeepLearningNature, DeepLearningInNN}.
 En términos generales, la extracción automática de características suele 
 desempeñar mejores resultados en contra de las características manuales.
 
 La mayoría de los modelos de DL son basados en múltiples capas jerárquicas de 
 procesado de datos. Las más conocidas son las redes neuronales (ANN, por sus siglas 
 en inglés), modelo bioinspirado que simula el funcionamiento de las neuronas del cerebro
-humano (abstracción simplificada)\cite{ANNForPattern,ANNCambridge}. 
+humano (abstracción simplificada)~\cite{ANNForPattern,ANNCambridge}. 
 
 A alto nivel, el funcionamiento de una red neuronal implica tres etapas principales: 
 entrada, procesamiento y salida. En la etapa de entrada, se proporciona a la red 
@@ -219,15 +219,15 @@ restricciones sobre el entrenamiento para evitar el sobre ajuste.
 \begin{figure}[htp]
   \centering
   \includegraphics[width=\textwidth]{imagenes/chapter2/ANNVisualization.png}
-  \caption[Ejemplo gráfico de una red neuronal\cite{NeuronImages, NeuronSimilarity,ShallowAndDeepNN}.]
-  {Ejemplo gráfico de una red neuronal\cite{NeuronImages, NeuronSimilarity,ShallowAndDeepNN}. 
+  \caption[Ejemplo gráfico de una red neuronal.]
+  {Ejemplo gráfico de una red neuronal~\cite{NeuronImages, NeuronSimilarity,ShallowAndDeepNN}. 
       En (a) vemos una neurona con su representación artificial simplificada (b). En (c) vemos una conexión entre 
   neuronas y en (d) la representación de diferentes profundidades de conexiones artificiales.}
   \label{fig:ANNVisualization}
 \end{figure}
 
 \subsubsection{Redes Convolucionales} 
-Las redes convolucionales o \emph{convolutional neural network} (CNN)\cite{ConvolutionalZipCode, ConvolutionInRadiology}
+Las redes convolucionales o \emph{convolutional neural network} (CNN)~\cite{ConvolutionalZipCode, ConvolutionInRadiology}
 son un tipo de arquitectura de redes neuronales diseñadas 
 específicamente para el procesamiento de datos estructurados en forma de matrices, como imágenes.
 Se ha descubierto que son aplicables para el procesado de texto, sonidos y, recientemente,
@@ -242,7 +242,7 @@ y capas de \emph{pooling}.
 \begin{figure}[htp]
   \centering
   \includegraphics[width=\textwidth]{imagenes/chapter2/RadiographyConvolutionExample.png}
-  \caption[Ejemplo de red convolucional para imágenes médicas]{Ejemplo extraída de \cite{RadiographyConvolutionExample} del proceso de convolución sobre una radiografía pulmonar 
+  \caption[Ejemplo de red convolucional para imágenes médicas]{Ejemplo extraída de~\cite{RadiographyConvolutionExample} del proceso de convolución sobre una radiografía pulmonar 
   para la detección de enfermedades.}
   \label{fig:RadiographyConvolutionExample}
 \end{figure}
@@ -284,7 +284,7 @@ los saltos o \emph{strides} del filtro de convolución mientras se recorre la im
   \begin{center}
     \includegraphics[width=0.95\textwidth]{imagenes/chapter2/ConvolutionalRepresentation.png}
   \end{center}
-  \caption[Representación visual de la operación de convolución]{Representación visual de la operación de convolución sobre una imagen, extraída de\cite{ConvolutionalRepresentation}.
+  \caption[Representación visual de la operación de convolución]{Representación visual de la operación de convolución sobre una imagen, extraída de~\cite{ConvolutionalRepresentation}.
   }
   \label{fig:ConvolutionalRepresentation}
 \end{figure}
@@ -342,7 +342,7 @@ En lugar de considerar solo imágenes individuales, se toman secuencias de imág
 (\emph{frames}) para capturar la información temporal.
 
 En este TFG se explora el uso de una 3D CNN capaz de analizar vídeos que pertenece 
-a la familia que se conoce como \emph{SlowFast networks}\cite{SlowFastNetworks}. Están basadas en dos caminos 
+a la familia que se conoce como \emph{SlowFast networks}~\cite{SlowFastNetworks}. Están basadas en dos caminos 
 de entrada de datos. Un conjunto de \emph{frames} espaciados en el tiempo, 
 \emph{slow path}, para obtener información espacial y otro con todos ellos, \emph{fast path}, 
 para obtener información de movimiento (Figura \ref{fig:SlowFastPathways}). 
@@ -351,7 +351,7 @@ para obtener información de movimiento (Figura \ref{fig:SlowFastPathways}).
   \begin{center}
     \includegraphics[width=0.5\textwidth]{imagenes/chapter2/SlowFastPathways.png}
   \end{center}
-  \caption[Red convolucional espaciotemporal \emph{SlowFast}.]{Ejemplo extraído de\cite{SlowFastNetworks} para ilustrar la distinción 
+  \caption[Red convolucional espaciotemporal \emph{SlowFast}.]{Ejemplo extraído de~\cite{SlowFastNetworks} para ilustrar la distinción 
   entre la extracción espacial del camino ``\emph{slow path}'' y de movimiento con el ``\emph{fast path}''.}
   \label{fig:SlowFastPathways}
 \end{figure}
@@ -367,21 +367,21 @@ sin estructura ni orden propio, y debemos mapear una operación
 de convolución que está basada en operaciones sobre datos ordenados y estructurados. 
 
 Aunque cada vez hay más métodos que se aplican directamente sobre la nube de puntos 
-desde la publicación de \emph{PointNet}\cite{PointNet}, habitualmente se 
+desde la publicación de \emph{PointNet}~\cite{PointNet}, habitualmente se 
 intenta estructurar la información de las nubes de puntos mediante lo que 
-denominamos vóxeles\cite{VoxelizationExample}. 
+denominamos vóxeles~\cite{VoxelizationExample}. 
 La voxelización es el proceso de transformar una nube de puntos u otra representación 
 tridimensional en una estructura discreta conocida como volumen voxelizado. 
-Esto implica dividir el espacio tridimensional en una cuadrícula de voxels y asignar 
-valores a cada voxel según la información contenida en los datos originales. 
+Esto implica dividir el espacio tridimensional en una cuadrícula de vóxeles y asignar 
+valores a cada vóxel según la información contenida en los datos originales. 
 La voxelización proporciona una representación estructurada y discreta que permite 
 el uso de técnicas específicas para volúmenes y facilita el procesamiento y análisis 
 de datos 3D.
 
 \begin{figure}[htp]
   \centering
-  \includegraphics[width=0.8\textwidth]{imagenes/chapter2/VoxelizationExample.png}
-  \caption[Ejemplo extraído de\cite{VoxelizationExample} sobre voxelización.]{Ejemplo extraído de\cite{VoxelizationExample} que demuestra el resultado 
+  \includegraphics[width=0.80\textwidth]{imagenes/chapter2/VoxelizationExample.png}
+  \caption[Ejemplo gráfico sobre voxelización.]{Ejemplo extraído de~\cite{VoxelizationExample} que demuestra el resultado 
   de transformar una nube de puntos sin estructura en una cuadrícula voxelizada.}
   \label{fig:VoxelizationExample}
 \end{figure}
@@ -391,7 +391,7 @@ Un \emph{ensemble}, en el contexto del aprendizaje automático, es una técnica 
 combina múltiples modelos de aprendizaje para mejorar la precisión y el rendimiento 
 general de las predicciones. En lugar de depender de un único modelo, 
 se crean múltiples modelos y se combinan sus predicciones para obtener un resultado 
-final más robusto y preciso\cite{IAModernApproach, DataMiningHandbook, MedicalEnsembleExample}.
+final más robusto y preciso~\cite{IAModernApproach, DataMiningHandbook, MedicalEnsembleExample}.
 
 La idea fundamental detrás de los \emph{ensembles} es que los diferentes modelos pueden 
 tener fortalezas y debilidades diferentes, y al combinar sus predicciones, se 
@@ -415,13 +415,13 @@ Por último, el \emph{stacking} entrena múltiples modelos base y utiliza un met
 para combinar sus predicciones. 
 Cada estrategia tiene sus beneficios y consecuencias.
 
-El presente TFG evalua el uso de un meta-modelo para la estimación de calidad de 
+El presente TFG evalúa el uso de un meta-modelo para la estimación de calidad de 
 las imágenes médicas 3D sin referencia.
 
 \begin{figure}[htp]
   \centering
   \includegraphics[width=\textwidth]{imagenes/chapter2/EnsembleExample.png}
-  \caption{Representación de métodos de \emph{ensemble} extraído de\cite{MedicalEnsembleExample}.}
+  \caption[Representación de métodos de \emph{ensemble}.]{Representación de métodos de \emph{ensemble} extraído de~\cite{MedicalEnsembleExample}.}
   \label{fig:EnsembleExample}
 \end{figure}
 
@@ -444,7 +444,7 @@ múltiples ángulos y se utilizan para reconstruir imágenes transversales del c
   \begin{subfigure}{2\textwidth}
   \includegraphics[width=0.5\textwidth]{imagenes/chapter2/CT2Volume.png}
   \end{subfigure}
-  \caption{Ejemplo de tomografía computarizada y modelo 3D\cite{CT2Volume}.}
+  \caption[Ejemplo de tomografía computarizada y modelo 3D.]{Ejemplo de tomografía computarizada y modelo 3D~\cite{CT2Volume}.}
   \label{fig:CT2Volume}
 \end{figure}
 
@@ -470,7 +470,7 @@ proyectados sobre las imágenes (\emph{ray casting}), ver Figura \ref{fig:CT2Vol
 \begin{figure}[htp]
   \centering 
   \includegraphics[width=\textwidth]{imagenes/chapter2/DicomDistortionsExample.png}
-  \caption[Ejemplo de artefactos sobre imágenes DICOM.]{Ejemplo de artefactos sobre imágenes DICOM\cite{DicomDistortionsExample}: 
+  \caption[Ejemplo de artefactos sobre imágenes DICOM.]{Ejemplo de artefactos sobre imágenes DICOM~\cite{DicomDistortionsExample}: 
   (a) un artefacto de anillo, (b) un difuminado provocado por movimiento, 
   (c) artefactos producidos por interpolación helicoidal, (d) artefactos de iluminación y dispersión del haz.  }
   \label{fig:DicomDistortionsExample}
@@ -486,7 +486,7 @@ A continuación, generaremos la representación volumétrica como una nube de pu
 y sobre ella simularemos las distorsiones. 
 
 Dos de ellas serán para simular los resultados de varios algoritmos de compresión, 
-como puede ser \emph{octree compression}\cite{OctreeCompression} y la reducción de número de puntos 
+como puede ser \emph{octree compression}~\cite{OctreeCompression} y la reducción de número de puntos 
 por medio de submuestreo aleatorio (en inglés \emph{random downsampling}). 
 Un \emph{octree} es una representación más eficiente que los vóxeles, se trata 
 de la descomposición de forma recursiva de la escena en 8 partes hasta 
@@ -532,4 +532,3 @@ como el movimiento del paciente y aquellos provocados por ruido en la transmisi�
   }
   \label{fig:DistorsionesGeneradas}
 \end{figure}
-

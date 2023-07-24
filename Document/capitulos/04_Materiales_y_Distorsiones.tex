@@ -4,8 +4,8 @@
 \label{sec:DatosPublicos}
 Para este TFG se han utilizado diversos conjuntos de datos públicos para la 
 evaluación y elección de los modelos anteriormente descritos. De entre ellos 
-están SJTU\cite{SJTU}, WPC\cite{WPC1,WPC2} y LS-SJTU-PCQA\cite{ResSCNN} que tratan 
-de conjuntos de nubes de puntos generalistas, de personas, animales y objetos cotidianos.
+están SJTU~\cite{SJTU}, WPC~\cite{WPC1,WPC2} y LS-SJTU-PCQA~\cite{ResSCNN} que tratan 
+de conjuntos de nubes de puntos generalistas, de personas, animales y objetos.
 
 El primero de ellos parte de 10 nubes de puntos de referencia, ver Figura \ref{fig:SJTU}, 
 a las cuales se aplican 7 tipos de distorsiones. Estas son: compresión, ruido 
@@ -16,7 +16,7 @@ nubes de puntos que sirve como medida de calidad de las mismas y para evaluar la
 \begin{figure}[htp]
   \centering 
     \includegraphics[width=0.75\textwidth]{imagenes/chapter4/SJTU}
-    \caption{Ejemplo de conjuntos de datos SJTU\cite{SJTU}.}
+    \caption{Ejemplo de conjuntos de datos SJTU.}
     \label{fig:SJTU}
 \end{figure}
 
@@ -28,7 +28,7 @@ nubes de puntos que sirve como medida de calidad de las mismas y para evaluar la
     \rowcolor[HTML]{FFC702}
     \textbf{Número} & \textbf{Tipo de Distorsión} \\ 
     \hline 
-    0 & OT: Compresión octree\cite{OctreeCompression} \\ 
+    0 & OT: Compresión octree~\cite{OctreeCompression} \\ 
     \hline 
     1 & CN: Ruido fotométrico\\ 
     \hline 
@@ -43,11 +43,11 @@ nubes de puntos que sirve como medida de calidad de las mismas y para evaluar la
     6 & CN + GGN \\ 
     \hline 
   \end{tabular}
-  \caption{Ejemplo de distorsiones en SJTU\cite{SJTU}.}
+  \caption{Ejemplo de distorsiones en SJTU.}
   \label{tab:SJTU}
 \end{table}
 
-El segundo dataset, WPC\cite{WPC1, WPC2}, también posee distorsiones como submuestreo uniforme y 
+El segundo dataset, WPC~\cite{WPC1, WPC2}, también posee distorsiones como submuestreo uniforme y 
 ruido gaussiano (aplicados de manera distinta), pero a su vez posee nuevos tipos 
 de distorsiones. Estos son basados en distintos tipos de compresión: V-PCC, G-PCC y \emph{trisoup}.
 Además, posee distintos tipos de nubes de puntos, ver Figura \ref{fig:WPC}, que 
@@ -58,7 +58,7 @@ suficientemente amplio y representativo de lo que puede encontrarse una vez entr
   \begin{center}
     \includegraphics[width=0.95\textwidth]{imagenes/chapter4/WPC}
   \end{center}
-  \caption{Ejemplo de conjunto de datos WPC\cite{WPC1, WPC2}.}
+  \caption{Ejemplo de conjunto de datos WPC.}
   \label{fig:WPC}
 \end{figure}
 
@@ -67,7 +67,7 @@ del modelo de regresión a utilizar. Son los conjuntos de datos más conocidos
 y que habitualmente están presentes en las publicaciones más recientes. Además, se realizaron 
 pruebas de ejecuciones de algunos métodos de código abierto para verificar los 
 resultados. Sin embargo, es el último es el que finalmente se utiliza para entrenar un modelo para estimar 
-la calidad de las imágenes médicas. Esto es porque LS-SJTU-PCQA\cite{ResSCNN} 
+la calidad de las imágenes médicas. Esto es porque LS-SJTU-PCQA~\cite{ResSCNN} 
 es el mayor conjunto de datos 
 en el momento de escritura, y posee tipos de distorsiones que pueden simular 
 lo que sería ciertos errores y ruidos presentes en imágenes médicas. Por ejemplo, 
@@ -81,16 +81,118 @@ de objetos. Ver Figura \ref{fig:LS-SJTU-PCQA}.
   \begin{center}
     \includegraphics[width=0.95\textwidth]{imagenes/chapter4/LSPCQA}
   \end{center}
-  \caption{Ejemplo de conjunto de datos LS-SJTU-PCQA\cite{ResSCNN}.}
+  \caption{Ejemplo de conjunto de datos LS-SJTU-PCQA.}
   \label{fig:LS-SJTU-PCQA}
 \end{figure}
+
+\subsection{Métricas}
+\label{sec:Metricas}
+Las métricas más utilizadas en la resolución del problema de estimación de calidad 
+de imágenes suelen ser: el coeficiente de correlación de rangos de Spearman (SROCC, 
+por sus siglas en inglés), el coeficiente de correlación lineal de Pearson (PLCC), coeficiente de correlación de orden de rango de Kendall (KROCC)
+y error cuadrático medio (RMSE)~\cite{VisualMedicalQualityBook}.
+
+Las tres primeras al ser coeficientes de correlación toman valores en el intervalo 
+[-1, 1]. Siendo el valor -1 una correlación negativa entre los datos, es decir,
+ambos decrecen en el tiempo. Al contrario, cuando esta es +1, tenemos una relación 
+positiva que implica un crecimiento en el tiempo. Sin embargo, cada una de ellas 
+miden la correlación de forma distinta. 
+
+PLCC es una métrica que mide la correlación lineal entre dos conjuntos de datos.
+Evalúa si existe una relación lineal entre los valores de ambos conjuntos.
+Si definimos $x$ e $y$ como los vectores que contienen las puntuaciones de 
+calidad objetiva y subjetiva de $m$ imágenes, siendo $x_i$ e $y_i$ 
+los elementos contenidos en la posición $i$, entonces podemos formular 
+PLCC como la Ecuación \eqref{eq:PLCC}.
+
+\begin{equation}
+  PLCC(x,y) = \frac{\sum_{i=1}^m (x_i - \bar x)(y_i - \bar y)}{\sqrt{\sum_{i=1}^m (x_i - \bar x)^2}\sqrt{\sum_{i=1}^m (y_i - \bar y)^2}}
+\label{eq:PLCC}
+\end{equation}
+
+Como mencionado en \cite{ResSCNN} o \cite{VQA-PC}, se sugiere una transformación 
+no lineal para las puntuaciones objetivas antes de calcular el PLCC y el RMSE.
+Para ello utilizaremos la función de regresión logística-5, con 5 parámetros a aprender,
+como en la ecuación \eqref{eq:LG5}. 
+
+\begin{equation}
+  Q = \beta_1 \left(\frac{1}{2} - \frac{1}{1+e^{\beta_2 (Q_s-\beta_3}} \right) + \beta_4 Q_s + \beta_5
+  \label{eq:LG5}
+\end{equation}
+Donde $Q$ es el valor final normalizado, $Q_s$ es el valor predicho y $\beta_i$ se 
+refiere a los parámetros a aprender.
+La elección se debe al análisis comparativo entre esta, logística-4, con 4 parámetros, y la función de regresión cúbica-4
+desarrollado en~\cite{ResSCNN}. Los resultados se pueden ver en la Tabla \ref{tab:CompareNonLineal}, 
+y las fórmulas adicionales en el Apéndice \ref{ape:Formulas}.
+
+\begin{table}[htp]
+  \centering
+  \scriptsize
+  \begin{tabular}{|c|c|c|c|}
+    \hline
+    \rowcolor[HTML]{FFC702} 
+    & \textbf{Logística-4} & \textbf{Logística-5} & \textbf{Cúbica-4} \\
+    \hline 
+    SROCC & 0.8572 & \textbf{0.9026} & 0.8957\\
+    \hline
+    PLCC & 0.8626 & \textbf{0.9107} & 0.9044 \\
+    \hline 
+  \end{tabular}
+\caption[Comparativa entre funciones de normalización.]{Comparación de la correlación entre dos conjuntos de datos, la etiqueta y 
+  la predicción, tras utilizar las diferentes técnicas de normalización no lineal. 
+Vemos que hay una mayor correlación entre los datos si se normalizan con la 
+función logística-5.}
+  \label{tab:CompareNonLineal}
+\end{table}
+También podemos no depender de la escala de los datos, para ello tendríamos que 
+utilizar SROCC.
+Esta es una métrica que mide la correlación de clasificaciones o \emph{rankings} entre 
+dos conjuntos de datos. Evalúa si el orden relativo de los elementos es similar 
+en ambos conjuntos. Por ello, es también invariante a transformaciones monótonas 
+en los datos. Se puede formular como la Ecuación \ref{eq:SROCC}.
+
+\begin{equation}
+  SROCC(x,y) = \frac{\sum_i (x_i - \bar x)(y_i - \bar y)}{\sqrt{\sum_i (x_i - \bar x)^2}\sqrt{\sum_i (y_i - \bar y)^2}}
+\label{eq:SROCC}
+\end{equation}
+
+De hecho, la correlación de rangos de Spearman es equivalente a calcular 
+la correlación de Pearson sobre los rangos de los valores de entrada.
+
+\begin{equation}
+SROCC(x,y) = PLCC(rank(x), rank(y))
+\label{eq:SROCCasPLCC}
+\end{equation}
+
+KROCC es una métrica similar a SROCC, pero utiliza el coeficiente de correlación 
+de rangos de Kendall. También evalúa la correlación entre clasificaciones o \emph{rankings},
+pero se basa en la concordancia o discordancia de los pares de elementos en los 
+conjuntos.
+
+\begin{equation}
+  KROCC(x,y) = \frac{C-D}{\frac{1}{2} m (m-1)}
+\label{eq:KROCC}
+\end{equation}
+
+Donde $C$ alude a cuantos pares de datos, x e y, que están bien correlacionadas, 
+y $D$ es el número de pares discordantes.  
+
+Por último, RMSE es una métrica que mide la diferencia entre los valores 
+predichos y los valores reales en un conjunto de datos. 
+Calcula la raíz cuadrada del promedio de los errores al cuadrado. 
+Un valor de RMSE más bajo indica un mejor ajuste o precisión del modelo.
+
+\begin{equation}
+  RMSE(x,y) = \sqrt{\frac{1}{m}\sum_{i=1}^m (x_i - y_i)^2}
+\label{eq:RMSE}
+\end{equation}
 
 \subsection{Conjunto de datos médicos}
 \label{sec:OurData}
 Para este TFG se tiene disponible una conjunto de tomografías computerizadas, de distintas
-partes del cuerpo, de 2 individuos distintos del conjunto de datos privados NMID\cite{NMID}. 
+partes del cuerpo, de 2 individuos distintos del conjunto de datos públicos NMID~\cite{NMID}. 
 De los cuales han sido segmentados las clavículas, el seno frontal y los senos maxilares. 
-A parte, disponemos de modelos generados mediante escáner láser 3D, en concreto con el dispositivo ArtecSpider, que permite generar reconstrucciones 3D de objetos reales. Estos modelos 3D fueron adquiridos en el Departamento de Medicina Legal, Toxicología y Antropología Física de la Universidad de Granada y constan del cráneo de otros 3 individuos, una pubis izquierda y
+A parte, disponemos de modelos generados mediante escáner láser 3D, en concreto con el dispositivo Artec Spider, que permite generar reconstrucciones 3D de objetos reales. Estos modelos 3D fueron adquiridos en el Departamento de Medicina Legal, Toxicología y Antropología Física de la Universidad de Granada y constan del cráneo de otros 3 individuos, una pubis izquierda y
 una pubis derecha, ver Figura \ref{fig:OurDataExample}. Es decir, en total disponemos de 11 nubes de puntos de alta 
 calidad, que representan distintos volúmenes de exámenes médicos.
 A estos datos no se hicieron ningún tipo de pre-procesado, apenas se centraron 
@@ -98,7 +200,6 @@ las nubes de puntos a los ejes (operación necesaria para hacer la rotación par
 las distintas perspectivas, más detalles en la sección \ref{sec:Implementacion})
 y se eliminaron aquellos puntos aislado de todos, frutos de errores en el 
 algoritmo de reconstrucción 3D de las nubes de puntos a partir de segmentaciones DICOM. 
-Con las 5 distorsiones aplicadas a 7 niveles de intensidad sobre los 11 modelos obtenemos 385 ejemplos en total. 
 
 \begin{figure}[htp]
   \centering
@@ -125,6 +226,84 @@ Con las 5 distorsiones aplicadas a 7 niveles de intensidad sobre los 11 modelos 
   \label{fig:OurDataExample}
 \end{figure}
 
+Cada nube de punto es centrada sobre los ejes como paso previo. A continuación, 
+reducimos el número de puntos anormales analizando estadísticamente el vecindario de cada punto. 
+A cada uno de estos ejemplos disponibles, se les aplica las 5 distorsiones médicas
+discutidas en la Sección \ref{sec:Distorsiones}. 
+Estas son: compresión \emph{octree}, submuestreo uniforme, movimiento local, rotación local 
+y ruido gaussiano. Cada uno de estas distorsiones son 
+aplicadas en 7 niveles crecientes de intensidad.
+Las resoluciones de compresión \emph{octree} van de 0.4 a 1.0 en intervalos de 0.1.
+El submuestreo aleatorio realiza una reducción del 10\% al 70\% de los puntos.
+Tanto el movimiento como la rotación local se aplican de 1 a 7 veces.
+Por último, el ruido gaussiano va de 0.15\%, 0.20\%, 0.25\%, 0.30\%, 0.35\%, 0.4\% y 0.5\% del \emph{bounding box}.
+resultado, disponemos de un conjunto de datos de 385 ejemplos, 
+ver Apéndice \ref{sec:DatosSinteticos}. 
+
+
+\subsection{Pseudo-MOS}
+Para la generación de la etiqueta, se optó seguir el camino propuesto por~\cite{ResSCNN}. 
+En opción a generar un entorno controlado con los estándares ITU-R~\cite{ITU-R.2012, ITU-R.2021}, 
+organizar al menos 16 personas, y que cada uno evalúe durante 30 segundos el nivel 
+de calidad de cada nube de punto en una escala 1-5, hemos hecho uso del gran 
+avance de las métricas con referencia que poseen un alto nivel de correlación con 
+la percepción de calidad del observador final. 
+Para ello, se hace un desglose de rendimiento de cada métrica para cada tipo 
+de distorsión, como se observa en la Tabla \ref{tab:MetricsPerDistortion}. El 
+rendimiento es medido con el coeficiente de correlación de rangos de Spearman.
+Las métricas comparadas son p2p0~\cite{PointToPoint} y p2pl~\cite{PointToPlane}, 
+con distancia manhattan (M) y hausdorff (H), PCQM~\cite{PCQM}, GraphSIM~\cite{GraphSIM} y 
+MPED~\cite{MPED}.
+
+\begin{table}[htp]
+    \scriptsize
+    \hspace{-.7cm}
+    \begin{tabular}{|c|c|c|c|c|c|c|c|}
+    \hline
+        \rowcolor[HTML]{FFC702} 
+        \textbf{Distortion} & \textbf{M-p2po} & \textbf{M-p2pl} & \textbf{H-p2po} & \textbf{H-p2pl} & \textbf{PCQM} & \textbf{GraphSIM} & \textbf{MPED} \\ \hline
+        DownSample & \textbf{0.881} & 0.626 & 0.841 & 0.811 & 0.524 & 0.842 & 0.857 \\ \hline
+        GaussianShifting & 0.741 & 0.718 & 0.829 & \textbf{0.834} & 0.816 & 0.742 & 0.598 \\ \hline
+        LocalOffset & \textbf{0.937} & 0.934 & 0.770 & 0.770 & 0.851 & 0.906 & 0.897 \\ \hline
+        LocalRotation & 0.819 & 0.712 & \textbf{0.831} & 0.734 & 0.657 & 0.723 & 0.742 \\ \hline
+        Octree & 0.779 & 0.788 & \textbf{0.819} & 0.752 & 0.676 & 0.757 & 0.710 \\ \hline
+    \end{tabular}
+    \caption[Tabla de métricas para generación de etiquetas.]{
+      Tabla de métricas para generación de etiquetas extraídas de~\cite{ResSCNN}.
+  }
+    \label{tab:MetricsPerDistortion}
+\end{table}
+
+En~\cite{ResSCNN} validaron sus muestras generadas con las métricas SOTA FR 
+por medio de un análisis subjetivo con el estándar ITU-R, en
+un entorno controlado, definido anteriormente, y obtuvieron una correlación del 
+90\% entre las muestras 
+etiquetadas subjetivamente y las que fueron etiquetadas objetivamente, ver Tabla \ref{tab:PseudoCorr}.
+Con ello, se logra justificar la generación de las etiquetas como una sustitución 
+de los métodos de evaluación subjetivos. 
+
+\begin{table}[H]
+  \centering 
+  \scriptsize
+  \begin{tabular}{|c|c|c|}
+    \hline
+    \rowcolor[HTML]{FFC702}
+     & \textbf{Parte I} & \textbf{Parte II} \\
+    \hline 
+    SROCC & 0.902697 & 0.878517\\
+    \hline
+    PLCC & 0.910713 & 0.871917\\
+    \hline
+  \end{tabular}
+  \caption[Correlación de métricas sintéticas.]{
+  Correlación de métricas sintéticas extraídas de~\cite{ResSCNN}.
+  Donde ``Parte I'' y ``Parte II' se refieren a dos conjuntos de datos etiquetados 
+  manualmente. El primero se utiliza para la elección de las métricas y el segundo 
+  para test.
+}
+  \label{tab:PseudoCorr}
+\end{table}
+
 
 \section{Métodos}
 Como se pudo observar en la Sección \ref{sec:EstadoDelArte}, actualmente hay una 
@@ -145,10 +324,10 @@ ML basado en la extracción de características de escena y entrenamiento de un
 modelo de vectores soporte para la regresión. Para ello necesitamos definir 
 que tipo de características queremos extraer. 
 
-Zhang et al\cite{NR3DQA} proponen utilizar características geométricas y de 
-color. Para la primera, extraen la curvatura\eqref{eq:Curvatura}, 
-anisotropía\eqref{eq:Anisotropia}, linealidad\eqref{eq:Linealidad}, 
-planaridad\eqref{eq:Planaridad} y esfericidad\eqref{eq:Esfericidad} de los puntos. 
+Zhang et al~\cite{NR3DQA} proponen utilizar características geométricas y de 
+color. Para la primera, extraen la curvatura \eqref{eq:Curvatura}, 
+anisotropía \eqref{eq:Anisotropia}, linealidad \eqref{eq:Linealidad}, 
+planaridad \eqref{eq:Planaridad} y esfericidad \eqref{eq:Esfericidad} de los puntos. 
 Estas características se pueden extraer del vecindario 
 de un punto por medio de la matriz de covarianza y los valores singulares. 
 Las fórmulas que las definen son: 
@@ -230,8 +409,8 @@ estabilidad numérica.
 \end{equation}
 
 
-\subsection{VQA-PC}
-Zhang et al\cite{VQA-PC} propusieron un modelo de estimación de calidad de nubes 
+\subsection{Modelo VQA-PC}
+Zhang et al~\cite{VQA-PC} propusieron un modelo de estimación de calidad de nubes 
 de puntos utilizando proyecciones 2D de diferentes perspectivas. 
 Observaron que los métodos que trabajan directamente sobre la nube de puntos tienen
 una elevada dificultad computacional, sin suponer una mejora excesiva, y que 
@@ -246,7 +425,7 @@ a las proyecciones como vídeos.
 
 De esta forma, se puede extraer características espaciales y temporales, como 
 discutido en la Sección \ref{sec:VideoCNN}, utilizando redes convolucionales 
-adaptadas a vídeos, de la familia \emph{SlowFast}\cite{SlowFastNetworks}.
+adaptadas a vídeos, de la familia \emph{SlowFast}~\cite{SlowFastNetworks}.
 Siguiendo la motivación de que las deformaciones geométricas no deseadas se presentan 
 de forma abrupta según la perspectiva, ver Figura \ref{fig:ViewPoint}, y que 
 incluso se pueden observar incoherencias entre perspectivas adyacentes
@@ -278,8 +457,8 @@ en la imagen de abajo se ve cierta deformación de la cabeza.}
   \begin{center}
     \includegraphics[width=\textwidth]{imagenes/chapter4/VQARotation}
   \end{center}
-  \caption[Ejemplo de las rotaciones que utiliza el modelo VQA-PC\cite{VQA-PC}.]
-  {Ejemplo de las rotaciones que utiliza el modelo VQA-PC\cite{VQA-PC}.
+  \caption[Ejemplo de las rotaciones que utiliza el modelo VQA-PC.]
+  {Ejemplo de las rotaciones que utiliza el modelo VQA-PC.
   Se observa que el final de cualquier eje de rotación es la posición inicial, 
 permitiendo así unir suavemente una secuencia de imágenes encadenada de los ejes 
 que genere un vídeo de rotación utilizado luego para la estimación.}
@@ -343,7 +522,7 @@ nube de punto, y $\sigma_n$ representa la coordenada del punto $n$-ésimo punto.
 Utilizando ese centro, aplicamos las ecuaciones \eqref{eq:RotationA} a \eqref{eq:RotationD}.
 
 Para extraer las características espaciales empleamos un modelo pre-entrenado, 
-en concreto se investigaron variaciones de arquitecturas ResNet\cite{ResNet}. Una 
+en concreto se investigaron variaciones de arquitecturas ResNet~\cite{ResNet}. Una 
 familia de redes residuales, que en su momento resolvieron el problema 
 del estancamiento en el entrenamiento de redes neuronales profundas debido 
 a la degradación del gradiente. El único modelo al que optimizaremos sus pesos es 
@@ -353,7 +532,6 @@ ResNet, el modelo de extracción temporal solo es un paso previo.
   \begin{center}
     \includegraphics[width=0.60\textwidth]{imagenes/chapter4/PipelineCompleto}
   \end{center}
-  \caption{Ejemplo detallado de las etapas del método de VQA-PC\cite{VQA-PC}.}
+  \caption{Ejemplo detallado de las etapas del método de VQA-PC.}
   \label{fig:VQAPipeline}
 \end{figure}
-

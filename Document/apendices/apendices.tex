@@ -1,5 +1,5 @@
 \chapter*{}
-\subsection*{Búsquedas en Scopus}
+\section*{Búsquedas en Scopus}
 \label{subs:Scopus}
 \begin{enumerate}
 \item 
@@ -30,7 +30,149 @@ OR LIMIT-TO (SUBJAREA , ``ENGI''))
 }
 \end{enumerate}
 
-\subsubsection*{Fórmulas Adicionales}
+
+\section*{Detalles Técnicos de Implementación} 
+\label{sec:Implementacion}
+Este proyecto ha sido realizado mayoritariamente con el lenguaje de programación Python, 
+debido a que casi todos los modelos analizados estaban descritos en el mismo.
+No obstante, para la distorsión por compresión \emph{octree}\cite{OctreeCompression}, 
+se hizo uso de la librería PCL\cite{PCL} en el lenguaje C++.
+
+Para el desarrollo y ejecución de los modelos fue necesario el uso de librería 
+la librería de DL Pytorch junto con las librerías CUDA de para poder ejecutar 
+los modelos en las tarjetas gráficas de NVIDIA. Para los cálculos numéricos y 
+el manejo de datos se utilizaron Numpy y Polars, librería similar a Pandas 
+pero basada en Rust, más eficiente y fácilmente paralelizable. Además, para el
+cálculo de las métricas se utilizó la librería scikit-learn.
+Para la visualización y fácil manipulación de las nubes de puntos se hizo uso 
+de la librería de Open3D\cite{Open3D} y Pyntcloud.
+Se ha gestionado el uso de estas librerías y todas sus dependencias tanto en entornos virtuales 
+de python como en entornos creados por cuadernos jupyter de Colab.
+
+Para el control de versiones del proyecto se utilizó de forma conjunta Git, GitHub
+y la gestión de versiones de Google Drive. El repositorio de este proyecto se 
+puede acceder por la siguiente dirección: \url{https://github.com/CodeBoy-source/TFG_NRPCQA}.
+Este mismo, se encuentra dividido en un conjunto de carpetas: 
+\begin{itemize}
+  \item \textbf{Distort}, donde se encuentra todo lo necesario para la generación 
+    de las distorsiones médicas dado un directorio de archivos \code{.ply}. 
+    A su vez, posee lo necesario para la generación de las etiquetas sintéticas 
+    de calidad, ver Sección \ref{sec:DatosSinteticos}.
+  \item \textbf{Document}, donde se encuentra la documentación del proyecto, 
+    incluyendo a este documento. 
+  \item \textbf{NR3DQA}, implementación y experimentos del método propuesto 
+    por Zhang et al\cite{NR3DQA}.
+  \item \textbf{Utils}, conjunto de scripts de python para la realización de distintas 
+    tareas. Como por ejemplo la lectura de un directorio DICOM, la visualización 
+    de una o un conjunto de nubes de puntos y división del conjunto de datos LS-SJTU-PCQA\cite{ResSCNN}.
+  \item \textbf{VQA\_PC}, implementación de la variante VQA-PC\cite{VQA-PC} para 
+    la estimación de calidad de nubes de puntos y las modificaciones pertinentes 
+    sobre los métodos de fusión de características mencionados en \cite{EnsemblePCQA}. 
+\end{itemize}
+\subsection*{Generación de un conjunto de datos de imágenes médicas.}
+Los datos se encuentran en una carpeta del servicio UGRDrive, que provee almacenamiento 
+en la nube para investigadores. Los modelos mencionados en la Sección \ref{sec:OurData} 
+se encuentran dentro de una carpeta numerada por cada individuo con los ficheros 
+necesarios para el desarrollo del proyecto. Se incluyen incluso algunos directorios 
+DICOM enteros por si fuera necesario generar más datos a partir de la segmentación 
+manual. 
+
+Se desarrolló un fichero \code{gen_distortions.py} que automáticamente genera 
+un conjunto de distorsiones dado un directorio de entrada con archivos \code{.ply} y los 
+guarda en un directorio de salida especificado por argumento. Para ello se hace 
+uso de las distorsiones realizadas con Open3D\cite{Open3D} 
+con el archivo del directorio \code{utils/distortions.py} y un ejecutable hecho 
+con C++ y Makefile para la distorsión \emph{octree}. A continuación, 
+podemos generar las etiquetas sintéticas con \code{get_metrics.py}, que dado un 
+directorio de entrada con las nubes de referencia y uno con las distorsiones, 
+genera un \code{.csv} con las etiquetas sintéticas generadas con las métricas 
+del estado del arte de los métodos FR-PCQA. Para ello se hace uso de un 
+software desarrollado con PCL\cite{PCL} y el archivo del directorio \code{utils/metrics.py}. 
+
+\subsubsection*{Preprocesado de datos}
+El único preprocesado que sufren los datos iniciales es el centrado de la nube 
+de puntos sobre los ejes, paso previo a la rotación. Y la reducción de puntos 
+anormales por medio de un análisis de consistencia estadística del vecindario,
+eliminado así puntos aislados y ruido. 
+
+El proceso es muy sencillo, dado el vecindario de un punto definido por sus 
+K vecinos más cercanos, calculamos la desviación típica y la media de sus atributos 
+geométricos y eliminamos aquellos que sobrepasen un umbral determinado. 
+En nuestro caso utilizamos K = 32 y el umbral a 5 desviaciones típicas. Para 
+ello se puede utilizar \code{Utils/std_remove.py}.
+
+\subsection*{Distorsiones}
+\label{sec:DatosSinteticos}
+\subsubsection*{Ruido Gaussiano} 
+Para la generación del ruido gaussiano, que en este caso simula posibles 
+errores de transmisión y generación, se hizo uso de la función que se denomina
+\code{gaussian_geometric_shift}. 
+Esa función toma como entrada 
+una nube de punto y un nivel de intensidad. La salida es una nube de puntos que, 
+a cada punto, se le ha aplicado un desplazamiento geométrico, cuyo valor 
+viene sacado de una distribución gaussiana de media 0 y desviación típica 
+basada en el nivel de intensidad. Ese nivel de intensidad es un porcentaje 
+de la caja que recubre la nube de puntos, en inglés \emph{bounding box}.
+Los valores utilizados son: 0.15\%, 0.2\%, 0.25\%, 0.30\%, 0.35\%, 0.4\% y 0.5\%
+del \emph{bounding box}.
+\subsubsection*{Compresión \emph{Octree}}
+En la carpeta \code{Distort/octree/} tenemos la implementación en C++ de esta 
+distorsión, en concreto en \code{point_cloud_compression.cpp}. Se facilita 
+un \code{CMakeLists.txt} para la generación del ejecutable con el comando 
+\code{cmake}. Recibe de entrada la ruta a la nube de puntos de referencia, 
+la resolución de compresión \emph{octree} y el directorio de salida. 
+La resolución se refiere al tamaño de los vóxeles más pequeños en el nivel más 
+bajo del \emph{octree}. Cuanto más pequeña sea la resolución, mayor será la precisión 
+en la representación de los detalles espaciales. 
+La profundidad del \emph{octree} depende tanto de la resolución como de la dimensión 
+espacial de la nube de puntos, ya que determina cuántos niveles de subdivisión 
+serán necesarios para cubrir toda el área de la nube de puntos con la resolución 
+especificada. Parar más detalles repasar \ref{sec:Distorsiones}. 
+Se facilita también la entrada de dos parámetros adicionales para obtener 
+las estadísticas de compresión y otro para visualizar el resultado final del 
+decodificador. Las resoluciones son: 0.4, 0.5, 0.6, 0.7, 0.8, 0.9 y 1.0.
+\subsubsection*{Submuestreo aleatorio}
+Esta distorsión también simula pérdida de datos en momentos de transmisión o 
+generación de la nube de puntos. Incluso se podría considerar una forma de 
+compresión. El método es trivial, dado un nivel de intensidad en el intervalo 
+0--1, que representa el porcentaje de reducción, se procede a elegir de forma 
+aleatoria puntos a ser eliminados hasta alcanzar ese porcentaje. Los valores 
+de reducción son: 10\%, 20\%, 30\%, 40\%, 50\%, 60\% y 70\%.
+\subsubsection*{Rotación y Movimiento Local}
+Esta distorsión simula el movimiento del paciente durante el examen médico. 
+Para ello hemos elegido de forma aleatoria una región local de la nube de punto, 
+cuyo tamaño corresponde al 20\% del lado más grande del \emph{bounding box}, y 
+le hemos aplicado un desplazamiento geométrico que equivale al 1\% del lado 
+más largo. Los niveles de intensidad en este caso se refieren a cuántas veces 
+se repiten el proceso de seleccionado y desplazamiento local. 
+La rotación es simplemente una extensión de la anterior, reflejando otro tipo de movimiento, 
+donde la selección se rota 15 grados sobre el eje X. Se aplican niveles del 1 al 7 en intervalos de 1.
+\subsection*{Detalles técnicos de la experimentación} 
+\label{sec:TrainML}
+La estimación de calidad del modelo DL se puede realizar invocando al script \code{train.py} de la carpeta \code{VQA_PC},
+el cual recibe múltiples parámetros de entrada: se define el modelo a utilizar, 
+se define el método de fusión de características, el ratio de aprendizaje base,
+la frecuencia en la que decrece, dónde están los datos, etc. Ese script nos 
+provee las métricas resultantes de haber realizado validación cruzada, 
+ver Sección \ref{sec:Validation}, 
+para un conjunto de datos con los parámetros establecidos. 
+Para realizar una prueba desde un modelo pre-entrenado disponemos del script 
+\code{test.py}, al igual que el anterior recibe parámetros similares de entrada.
+Mientras que para el modelo ML, disponemos de los scripts de extracción 
+de características y los scripts necesario para la evaluación del 
+modelo sobre SJTU\cite{SJTU} o WPC\cite{WPC1, WPC2} en la carpeta \code{NR3DQA}.
+
+Para la ejecución se utilizaron dos sistemas distintos. En las pruebas de alta 
+carga de CPU, como la generación de las distorsiones y las proyecciones, 
+se utilizó un ordenador portátil ASUS FX505DY con una CPU AMD Ryzen 5 
+3550H, 16 GB de RAM DDR4 y una AMD Radeon RX560X que posee 4GB de VRAM. Ya 
+que, en contra del Intel Xeon CPU E5-2699 2.2GHZ de 2 vCPUs (hebras virtuales), 
+nos permite utilizar hasta 4 núcleos, para un total de 8 hebras en paralelo. 
+Sin embargo, dado la necesidad de una gran cantidad VRAM, aproximadamente 13GB, 
+se utilizó los servicios de Colab para la ejecución del entrenamiento del modelo. 
+En este, disponemos de una NVIDIA Tesla P100 con 16 GB de VRAM.  
+
+\section*{Fórmulas Adicionales}
 \label{ape:Formulas}
 La función logística-4 se puede definir como la Ecuación \eqref{eq:LG4}:
 \begin{equation}
@@ -43,4 +185,4 @@ Q = aQ_s^3 + bQ_s^2 + cQ_s + d
 \label{eq:CB4}
 \end{equation}
 Donde $\beta_i$, $a$, $b$, $c$ y $d$ son parámetros a aprender, $Q$ es el valor 
-normalizado y $Q_s$ es el valor predecido.
+normalizado y $Q_s$ es el valor predicho.

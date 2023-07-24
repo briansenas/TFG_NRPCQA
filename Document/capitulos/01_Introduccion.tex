@@ -5,17 +5,17 @@ como para el estudio biomédico, la información visual cada vez tiene un rol
 más importante. Sin embargo, la calidad de la información puede sufrir drásticamente
 con las etapas de adquisición, procesado, compresión, transmisión y reproducción.
 Es por ello que poder evaluar dicha calidad se ha vuelto un 
-tema cada vez más importante\cite{VisualMedicalQualityBook}.
+tema cada vez más importante~\cite{VisualMedicalQualityBook}.
 
 En concreto, este TFG se centra en el estudio de la evaluación de la calidad de la imagen,
-en inglés \emph{Image Quality assessment} (\emph{IQA})\cite{MinkowskiFailure}.
+en inglés \emph{Image Quality assessment} (\emph{IQA})~\cite{MinkowskiFailure}.
 Es un problema fundamental en el procesamiento de imágenes y de visión 
 por computador. Se refiere a la tarea de medir y cuantificar 
 la calidad perceptual de una imagen, 
 teniendo en cuenta factores como el contenido, la resolución, 
 el contraste, las distorsiones visuales y la percepción humana. 
 La mejora de las técnicas suele estar altamente conectado con el avance 
-de los estudio del sistema de visión humano\cite{Wang2006ModernIQ}.
+de los estudio del sistema de visión humano~\cite{Wang2006ModernIQ}.
  
 El problema de la evaluación de la calidad de la imagen se aborda mediante enfoques 
 subjetivos y objetivos. Los enfoques subjetivos implican realizar experimentos 
@@ -58,7 +58,7 @@ modelos de percepción visual, aprendizaje automático y técnicas de procesamie
 \cite{SSIM, MMF, DSS}.
 Uno de los enfoques comunes es utilizar características básicas de la imagen. 
 Las características elementales de la imagen son por ejemplo el contraste, 
-la nitidez, la exposición y la uniformidad del color\cite{MinkowskiFailure,Wang2006ModernIQ}. 
+la nitidez, la exposición y la uniformidad del color~\cite{MinkowskiFailure,Wang2006ModernIQ}. 
 Estas características pueden ser cuantificadas mediante algoritmos de procesamiento de 
 imágenes y proporcionar una estimación inicial de la calidad. 
  
@@ -68,7 +68,7 @@ en el entendimiento de los mecanismos y procesos perceptuales del cerebro humano
 y utilizan características visuales y estadísticas para calcular la calidad percibida
 \cite{MinkowskiFailure, SSIM}.
 Buscan emular la forma en que los humanos responden 
-a las imágenes en términos de su calidad visual\cite{VSI, CascadedIQA}.
+a las imágenes en términos de su calidad visual~\cite{VSI, CascadedIQA}.
  
 Finalmente, se suelen emplear algoritmos de aprendizaje automático para tratar
 de resolver el problema. Se intenta aproximar una función que a partir del conjunto 
@@ -78,21 +78,20 @@ específica, generalmente en el rango de 0 a 10.
 Las aplicaciones comunes de los algoritmos de estimación de calidad suele ser 
 la comparativa entre algoritmos de compresión, ya que permite elegir aquellos con 
 menor pérdida de información, la generación de mapas de calidad\footnote{
-  Calidad perceptual en diferentes regiones de la imagen. Resaltan áreas que 
-  pueden tener degradación visual o distorsiones.
+  Calidad perceptual en diferentes regiones de la imagen. 
 },
 permitiendo el estudio de métodos de reducción de ruido,
 y la determinación de la calidad del servicio de transmisión o \emph{quality-of-service (QoS)},
-ya que permiten evaluar los errores de transmisión\cite{VMAF, VMAFReproducibility}. Se podría incluso 
+ya que permiten evaluar los errores de transmisión~\cite{VMAF, VMAFReproducibility}. Se podría incluso 
 extender al pre-procesamiento de datos de entrenamiento o estimar la precisión 
-de un modelo de predicción basado en la calidad de los datos\cite{ApplicationsOfIQA}.
+de un modelo de predicción basado en la calidad de los datos~\cite{ApplicationsOfIQA}.
 
 El uso de algoritmos IQA se encuentra ampliamente difundido en el ámbito general de las imágenes 2D. 
 Sin embargo, el número de métodos propuestos decrece al desplazarnos a tres dimensiones
 debido al aumento de complejidad.
 Además, en el ámbito médico, la naturaleza de estas imágenes y las distorsiones que pueden 
 presentar, ver Figura \ref{fig:DicomDistortionsExample}, implican una disminución en 
-la precisión de los modelos cuando se aplican directamente sobre ellas\cite{VisualMedicalQualityBook}.
+la precisión de los modelos cuando se aplican directamente sobre ellas~\cite{VisualMedicalQualityBook}.
 Por lo tanto, el número de métodos médicos existentes se reduce, con ninguno, al 
 momento de escritura, aplicado a imágenes médicas 3D. 
 
@@ -114,9 +113,8 @@ Cada vez más frecuentemente se emplean volúmenes tridimensionales, como tomogr
 resonancias magnéticas en lugar de radiografías convencionales, porque 
 proporcionan una visión más completa y detallada de la anatomía y las estructuras 
 internas del cuerpo, ver Figura \ref{fig:SlicerVisualization}. 
-Esto brinda a los médicos una comprensión más completa de la anatomía,
-les ayuda a identificar con mayor precisión lesiones, enfermedades o anormalidades,
-así como también facilita la planificación quirúrgica, entre otros\cite{3DImagingInMedicine, 3DImagingInMedicine2, ADAS3D}.
+Les ayuda a identificar con mayor precisión lesiones, enfermedades o anormalidades,
+así como también facilita la planificación quirúrgica y entre otros~\cite{3DImagingInMedicine, 3DImagingInMedicine2, ADAS3D}.
  
 \begin{figure}[htp]
   \begin{center}
@@ -172,7 +170,7 @@ Este objetivo se puede descomponer en una serie de metas parciales:
   \item Analizar los enfoques de inteligencia artificial más prometedores que permitan abordar el problema planteado. 
   \item Generar un conjunto de datos sintético que permita validar 
     los métodos analizados. Para ello, será necesario estudiar diferentes 
-    estrategias y métricas de evaluación objetivas\cite{ResSCNN}.
+    estrategias y métricas de evaluación objetivas.
   \item Realizar un estudio experimental que permita validar los enfoques 
     propuestos y extraer conclusiones sobre su aplicabilidad al problema. 
 \end{enumerate}
@@ -265,9 +263,9 @@ responsable I+D de una empresa tecnológica en España.
 Respecto al servidor GPU, con las especificaciones actuales de \emph{Google}, 
 se estima un coste aproximado de 10.000\officialeuro. Se asume una amortización de 2 años, 
 lo que implica un pago diario de 13.70\officialeuro. El desglose total de los costes 
-se puede ver en la siguiente tabla (\ref{tab:TotalGastos})
+se puede ver en la siguiente Tabla (\ref{tab:TotalGastos})
 
-\begin{table}[htp]
+\begin{table}[H]
 \centering
 \begin{tabular}{ll}
 \hline
@@ -279,7 +277,8 @@ se puede ver en la siguiente tabla (\ref{tab:TotalGastos})
 \caption{Total de horas y días trabajados.}
 \label{tab:TotalTrabajado}
 \end{table}
-\begin{table}[htp] 
+
+\begin{table}[H] 
   \centering
   \begin{tabular}{ll}
 \hline
@@ -297,4 +296,3 @@ se puede ver en la siguiente tabla (\ref{tab:TotalGastos})
 \caption{Estimación final de coste del proyecto.}
 \label{tab:TotalGastos}
 \end{table}
-

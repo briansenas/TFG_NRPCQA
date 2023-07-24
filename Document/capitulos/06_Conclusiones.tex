@@ -46,7 +46,7 @@ de segmentación de nubes de puntos. Esta mejora logra un incremento del 5\% de 
 Por otro lado, al transferir el modelo DL elegido directamente a imágenes médicas ya se consiguen 
 buenos resultados, con una correlación media del 71\%. Con las mejoras propuestas de 
 fusión de características se obtiene una mayor media con F1 a 73\%. No obstante, 
-se justifica el rescalado de las imágenes para mejorar el ratio de información 
+se justifica el reescalado de las imágenes para mejorar el ratio de información 
 por recorte y se obtiene un 84\% de correlación media con el modelo estándar. 
 Por último, tras entrenar con datos sintéticos de distorsiones similares y 
 diversas nubes de puntos, se logra una media de 86\% con F3 y una mediana de 92\% con F0.
@@ -70,12 +70,13 @@ sobre el conjunto de imágenes 2D generadas tras el examen en vez de hacerlo
 sobre la representación 3D final. 
 
 Por otro lado, se pueden explorar otros métodos que procesen modelos 3D directamente, 
-o que hagan uso de proyecciones y de la nube de puntos simultáneamente como en MM-PCQA\cite{MM-PCQA}.
-Actualmente, ha crecido el número de publicaciones de adaptaciones de PointNet\cite{PointNet} y 
-PointNet++\cite{PointNet++} para resolver distintos problemas de nubes de puntos, 
+o que hagan uso de proyecciones y de la nube de puntos simultáneamente como en MM-PCQA~\cite{MM-PCQA}.
+Actualmente, ha crecido el número de publicaciones de adaptaciones de PointNet~\cite{PointNet} y 
+PointNet++~\cite{PointNet++} para resolver distintos problemas de nubes de puntos, 
 por lo que quizás se podría adaptar para la resolución de este problema, como 
-el método de ResSCNN\cite{ResSCNN}\footnote{Este método no se empleó porque no se 
+el método de ResSCNN~\cite{ResSCNN}\footnote{Este método no se empleó porque no se 
 logró realizar la ejecución del modelo en los entornos disponibles 
 del desarrollo del proyecto.} y evitar así 
 la pérdida de información al proyectar en 2D.
+
 
