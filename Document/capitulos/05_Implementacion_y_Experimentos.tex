@@ -394,14 +394,21 @@ Dado la importancia de la información adicional sobre las distorsiones a la
 hora de estimar la calidad de las imágenes de nuestro pequeño conjunto médico, 
 se propone pre-entrenar sobre el conjunto LS-SJTU-PCQA.
 En este caso, se utilizará las imaǵenes reescaladas y las métricas sin normalizar, 
-dado que se ha observado anteriormente que es la mejor combinación.
-Se observa una mejora significativa en el método F3, y se logra 
-pasar la barrera del 90\% en la mediana del método F0, ver Tabla \ref{tab:LS-SJTU-FN}.
-Gracias a la información adicional hemos logrado medianas mucho mejores, llegando a 
-obtener una correlación del 92\% con el modelo F0. Sin embargo, en algunos pliegues 
-la información adicional ha empeorado la capacidad del modelo de aprender, con 
-excepción del modelo F3 que en este caso ha logrado obtener la mejor media, un 86\%.
-  
+dado que se ha observado anteriormente que es la mejor combinación. Sobre los 
+datos de LS-SJTU-PCQA, se invierte el MOS para que pase a representar el nivel 
+de distorsión en lugar del nivel de calidad en escala 0-1, para que se asemeje a los 
+valores sintéticos sin normalizar, y también utilizamos imágenes reescaladas.
+
+Se observa una mejora significativa en los métodos F2-F3, y se logra 
+pasar la barrera del 90\% en la mediana de los métodos F0-F2, ver Tabla \ref{tab:LS-SJTU-FN}.
+Gracias a la información adicional hemos logrado valores mucho mejores, llegando a 
+obtener una correlación del 88\% de media, con mediana al 94\%, utilizando el modelo F2. 
+En general, poseer información adicional ha resultado ser crucial para el aprendijaze 
+del modelo. No obstante, la distribución de esa información es de suma importancia a la 
+hora de determinar la capacidad de generalización del modelo. Vemos que con el nuevo 
+conjunto de datos, el modelo F0 recibe un incremento en desviación típica al
+volverse incapaz de predecir correctamente el último pliegue al igual que los demás métodos.  
+
 \begin{table}[htp]
   \scriptsize
   \centering
@@ -463,19 +470,20 @@ es el más estable en todos los casos. }
 }
 \label{tab:VQAF0}
 \end{table}
+
 \begin{table}[H]
   \scriptsize 
   \centering
 \begin{tabular}{|c|c|c|c|}
-  \hline
+\hline
 \rowcolor[HTML]{FFC702}
-                       & \multicolumn{3}{c|}{\textbf{SROCC}} \\ \hline
+                       & \multicolumn{3}{c|}{\textbf{SROCC}}                                                                                                          \\ \hline
 \rowcolor[HTML]{FFC702}
-\textbf{Modelo}    & \textbf{Media} & \textbf{Desviación} & \textbf{Mediana}   \\ \hline
-\textbf{VQA-PC F0} & 0.7980           & 0.2332              & \textbf{0.9258}    \\ \hline
-\textbf{VQA-PC F1} & 0.7378           & 0.2265              & 0.8322             \\ \hline
-\textbf{VQA-PC F2} & 0.8354           & \textbf{0.1040}     & 0.8370             \\ \hline
-\textbf{VQA-PC F3} & \textbf{0.8605}  & 0.1104              & 0.8824             \\ \hline
+\textbf{Modelo}    & \textbf{Media} & \textbf{Desviación} & \textbf{Mediana} \\ \hline
+\textbf{VQA-PC F0} & 0.8325           & 0.2017              & 0.9140           \\ \hline
+\textbf{VQA-PC F1} & 0.8242           & 0.2025              & 0.9095           \\ \hline
+\textbf{VQA-PC F2} & \textbf{0.8757}  & \textbf{0.1468}     & \textbf{0.9347}  \\ \hline
+\textbf{VQA-PC F3} & 0.8071           & 0.1811              & 0.8692           \\ \hline
 \end{tabular}
 \caption[Resultados en imágenes médicas reescaladas entrenando en LS-SJTU-PCQA.]{
   Resultados en imágenes médicas reescaladas con modelos pre-entrenados 

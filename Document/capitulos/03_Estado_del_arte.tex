@@ -45,8 +45,8 @@ PSNR-HVS~\cite{PSNR-HVS} combina el ese ratio con la función que determina
 nuestra sensibilidad al contraste. 
 Wang y Bovik afirmaron que los ojos humanos obtienen información de imagen a 
 través de tres canales: brillo, contraste y estructura~\cite{SSIM} y desarrollaron 
-un índice universal de calidad de imagen (UQI, por sus siglas en inglés)~\cite{UQI} y una similitud 
-estructural (SSIM)~\cite{SSIM} para problemas FR. Surgieron incluso métodos que, basados en las 
+un índice universal de calidad de imagen~\cite{UQI} y una similitud 
+estructural (SSIM, por sus siglas en inglés)~\cite{SSIM} para problemas FR. Surgieron incluso métodos que, basados en las 
 respuestas del HVS, introducen la saliencia visual\footnote{
   Cualidad estética de la forma de un objeto o una configuración que destaca.
 } en la evaluación de la calidad de imagen como VSI~\cite{VSI}, 
@@ -85,7 +85,7 @@ métodos mencionados, donde las métricas SROCC y PLCC, que se explican
 en la Sección \ref{sec:Metricas}, son mejores cuanto más cercas al 1 y 
 el RMSE es mejor cuánto más pequeño sea.  Se comparan sobre los conjuntos de datos públicos
 LIVE~\cite{LIVE, LIVE1, SSIM}, CSIQ~\cite{CSIQ} y TID2008~\cite{TID2008}. El primero y el segundo poseen información de distorsiones por compresión JPEG, por difuminado gaussiano y ruido blanco. El último, posee más distorsiones, llegando hasta 17 diferentes.
-
+@
 \begin{table}[htp]
   \tiny
   \centering
@@ -151,7 +151,7 @@ mayoría considera tanto información geométrica como los atributos lumínicos.
 Un ejemplo sería PointSSIM~\cite{PointSSIM}, una métrica que busca la similitud estructural entre nubes de puntos basándose en
 las estadísticas locales de curvatura de los puntos, junto a la información 
 extraída de los colores, como adaptación del método SSIM~\cite{SSIM}, o 
-PCQM~\cite{PCQM} que experimentaron con combinaciones de 3 medidas geométricas 
+PCQM~\cite{PCQM} donde experimentaron con combinaciones de 3 medidas geométricas 
 y 5 comparaciones de color para encontrar el mejor vector características.
 Los métodos NR utilizan características similares, sin embargo no pueden 
 hacer la diferencia entre las características de la imagen original y la 
@@ -192,7 +192,7 @@ de métodos NR-PCQA de aprendizaje profundo, construyeron el mayor conjunto de d
 de nubes de puntos sintético, en el momento de escritura, con su estimación de calidad. 
 Otro método que trabaja directamente sobre la nube de puntos es SGR~\cite{SGR}, 
 que extraen regiones locales de la nube de puntos y analizan la calidad de los parches.
-Recientemente, ha salido el modelo MM-PCQA~\cite{MM-PCQA} que utilizan tanto información 
+Recientemente, ha salido el modelo MM-PCQA~\cite{MM-PCQA} que utiliza tanto información 
 directa de la nube de puntos como información de las proyecciones. Incluso, hay 
 métodos que han optado por utilizar un \emph{ensemble}~\cite{EnsemblePCQA} de 
 modelos pre-entrenado en 2D y obtuvieron muy buenos resultados. 
@@ -260,7 +260,7 @@ jerárquico y proporciona una evaluación a nivel de corte, volumen y sujeto.
 Otro método de estimación utiliza una red generativa adversaria no emparejada 
 y un clasificador entrenado débilmente supervisado para evaluar imágenes MRI~\cite{MIGAN}.
 Para abordar el problema de desperdiciar información espacial 3D potencialmente importante, 
-se creó el enfoque HyS-net~\cite{Hys-net}, basado en una hiper-red y que es capaz de 
+se creó el enfoque HyS-net~\cite{Hys-net}, basado en una hiper-red que es capaz de 
 auto adaptación. Así como fue expuesto anteriormente, no es posible 
 simplemente implementar métodos IQA, es por ello que Chow y Rajagopal~\cite{MedicalBRISQUE} 
 propusieron un enfoque más reciente que adapta el evaluador de calidad de imagen más famoso BRISQUE~\cite{BRISQUE}.

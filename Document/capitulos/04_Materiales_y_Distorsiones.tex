@@ -66,7 +66,7 @@ Los dos anteriores han sido utilizados sobre todo para la evaluación y elecció
 del modelo de regresión a utilizar. Son los conjuntos de datos más conocidos 
 y que habitualmente están presentes en las publicaciones más recientes. Además, se realizaron 
 pruebas de ejecuciones de algunos métodos de código abierto para verificar los 
-resultados. Sin embargo, es el último es el que finalmente se utiliza para entrenar un modelo para estimar 
+resultados. Sin embargo, es el último el que finalmente se utiliza para entrenar un modelo para estimar 
 la calidad de las imágenes médicas. Esto es porque LS-SJTU-PCQA~\cite{ResSCNN} 
 es el mayor conjunto de datos 
 en el momento de escritura, y posee tipos de distorsiones que pueden simular 
@@ -174,7 +174,7 @@ conjuntos.
 \label{eq:KROCC}
 \end{equation}
 
-Donde $C$ alude a cuantos pares de datos, x e y, que están bien correlacionadas, 
+Donde $C$ alude a cuantos pares de datos, x e y, están bien correlacionadas, 
 y $D$ es el número de pares discordantes.  
 
 Por último, RMSE es una métrica que mide la diferencia entre los valores 
@@ -237,7 +237,7 @@ Las resoluciones de compresión \emph{octree} van de 0.4 a 1.0 en intervalos de 
 El submuestreo aleatorio realiza una reducción del 10\% al 70\% de los puntos.
 Tanto el movimiento como la rotación local se aplican de 1 a 7 veces.
 Por último, el ruido gaussiano va de 0.15\%, 0.20\%, 0.25\%, 0.30\%, 0.35\%, 0.4\% y 0.5\% del \emph{bounding box}.
-resultado, disponemos de un conjunto de datos de 385 ejemplos, 
+ Como resultado, disponemos de un conjunto de datos de 385 ejemplos, 
 ver Apéndice \ref{sec:DatosSinteticos}. 
 
 
@@ -307,15 +307,16 @@ de los métodos de evaluación subjetivos.
 
 \section{Métodos}
 Como se pudo observar en la Sección \ref{sec:EstadoDelArte}, actualmente hay una 
-tendencia, justificada, a los métodos de DL. No obstante, se tuvo 
-que descartar todos los métodos que tuvieran en cuenta información de textura, 
+tendencia, justificada, a los métodos de DL frente a ML. Sin embargo, se experimentará con 
+ambos. No obstante, se tuvo 
+que descartar o adaptar todos los métodos que tuvieran en cuenta información de textura, 
 cosa que no existe en los volúmenes médicos habituales. Además, necesitamos 
 información perceptual de la imagen en su totalidad y no de regiones locales 
 específicas. Ambas características son dificultades añadidas a la hora 
 de resolver el problema. La primera restringe el problema 
 a la estimación de calidad de las estructuras en la imagen, eliminando la 
 percepción de calidad por contraste y saturación. La segunda incrementa 
-la complejidad computacional.
+la complejidad computacional. 
 
 \subsection{Modelo NR 3D-QA}
 \label{sec:NR3DQA}
@@ -390,10 +391,10 @@ Sin embargo, en el caso de las imágenes médicas estas características deben
 ser descartadas, dado que el color existente al visualizar las nubes de puntos 
 médicas no son más que un valor sintético añadido previamente que permite 
 una visualización más agradable de las mismas. 
-Además, estiman la entropía de cada una de las características 
+Finalmente, estiman la entropía de cada una de las características 
 ya que argumentan que existe una alta correlación entre la 
 entropía y la distorsión por cuantización. 
-Por último, a las características geométricas se les calcula 
+Además, a las características geométricas se les calcula 
 la distancia a las distribuciones gaussiana y gamma tras observarse 
 que la distribución de estas se veía afectada por la intensidad 
 de las distorsiones. 
@@ -414,7 +415,7 @@ Zhang et al~\cite{VQA-PC} propusieron un modelo de estimación de calidad de nub
 de puntos utilizando proyecciones 2D de diferentes perspectivas. 
 Observaron que los métodos que trabajan directamente sobre la nube de puntos tienen
 una elevada dificultad computacional, sin suponer una mejora excesiva, y que 
-deben todavía que madurar en el campo dado la alta complejidad de las nubes de puntos.
+deben todavía madurar en el campo dado la alta complejidad de las nubes de puntos.
 Por ello proponen utilizar proyección multi-vista. No obstante, argumentaron que 
 los métodos anteriores de proyección se basan en la hipótesis de que los humanos 
 percibimos la calidad de modelos 3D desde una perspectiva estática, cosa que no 

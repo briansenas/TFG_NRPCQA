@@ -15,8 +15,8 @@
 ### :pushpin: Introducción. 
 Este TFG trata de la implementación de un meta-modelo capaz de estimar la calidad de 
 representaciones 3D biomédicas por medio del uso de un dataset generado 
-sintéticamente. Obtiene un resultado promedio de 86\% de <emph>SROCC</emph>, con 
-desviación del 0.11 y mediana 88\%.
+sintéticamente. Obtiene un resultado promedio de 88\% de <emph>SROCC</emph>, con 
+desviación del 0.15 y mediana 94\%.
 
 Para una lectura detallada de los modelos y experimentación pulsar [aquí](https://github.com/CodeBoy-source/TFG_NRPCQA/blob/main/Document/proyecto.tex).
 
@@ -130,8 +130,8 @@ learn.fit_one_cycle(30, lr_max=lr[0], cbs=cbs)
 ### :pushpin: Introduction. 
 This bachelor's thesis is about the implementation of a meta-model capable of 
 estimating the quality of biomedical 3D representations using a synthetically 
-generated dataset. It achieves an average result of 86% <emph>SROCC</emph>, 
-with a deviation of 0.11 and a median of 88%.
+generated dataset. It achieves an average result of 88% <emph>SROCC</emph>, 
+with a deviation of 0.15 and a median of 94%.
 
 For a detailed reading of the models and experimentation, click [here](https://github.com/CodeBoy-source/TFG_NRPCQA/blob/main/Document/proyecto.tex).
 

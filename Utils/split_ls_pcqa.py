@@ -9,7 +9,7 @@ def main(config: dict):
 
     # Define the distortions I will be evaluating: 
     distortions = [
-        "Octree", "LocalOffset", "LocalRotation", "DownSampling", "GaussianShifting"
+        "Octree", "LocalOffset", "LocalRotation", "DownSample", "GaussianShifting"
     ]
 
     # From the whole name_distortion_level.ply get the basename 
@@ -60,7 +60,7 @@ def main(config: dict):
 
         tmp_train.write_csv(tmp_train_path) 
         tmp_test.write_csv(tmp_test_path) 
-        
+
      
 
 if __name__ == '__main__':
