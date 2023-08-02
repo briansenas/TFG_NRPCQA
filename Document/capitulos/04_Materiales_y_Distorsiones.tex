@@ -7,9 +7,9 @@ evaluación y elección de los modelos anteriormente descritos. De entre ellos
 están SJTU~\cite{SJTU}, WPC~\cite{WPC1,WPC2} y LS-SJTU-PCQA~\cite{ResSCNN} que tratan 
 de conjuntos de nubes de puntos generalistas, de personas, animales y objetos.
 
-El primero de ellos parte de 10 nubes de puntos de referencia, ver Figura \ref{fig:SJTU}, 
+El primero de ellos parte de 10 nubes de puntos de referencia (véase Figura \ref{fig:SJTU}), 
 a las cuales se aplican 7 tipos de distorsiones. Estas son: compresión, ruido 
-al color, ruido geométrico, ruido gaussiano y combinación entre ellas, ver Tabla \ref{tab:SJTU}. Todas se aplican en una escala creciente
+al color, ruido geométrico, ruido gaussiano y combinación entre ellas (véase Tabla \ref{tab:SJTU}). Todas se aplican en una escala creciente
 de intensidad del 1 al 6. Luego, se obtiene un MOS de 10 individuos para las 420 
 nubes de puntos que sirve como medida de calidad de las mismas y para evaluar las predicciones del modelo.
 
@@ -50,7 +50,7 @@ nubes de puntos que sirve como medida de calidad de las mismas y para evaluar la
 El segundo dataset, WPC~\cite{WPC1, WPC2}, también posee distorsiones como submuestreo uniforme y 
 ruido gaussiano (aplicados de manera distinta), pero a su vez posee nuevos tipos 
 de distorsiones. Estos son basados en distintos tipos de compresión: V-PCC, G-PCC y \emph{trisoup}.
-Además, posee distintos tipos de nubes de puntos, ver Figura \ref{fig:WPC}, que 
+Además, posee distintos tipos de nubes de puntos (véase Figura \ref{fig:WPC}) que 
 pueden influir en el rendimiento del modelo si el conjunto no es
 suficientemente amplio y representativo de lo que puede encontrarse una vez entrenado. 
 
@@ -75,7 +75,7 @@ el ruido gaussiano (simular errores de transmisión y almacenado de datos),
 rotación y movimiento local (simular el movimiento del paciente) y compresión 
 octree y por submuestreo uniforme (algoritmos de compresión comúnmente usados).
 Aparte, es el con mayor amplitud de modelos base, con distintos tipos y categorías 
-de objetos. Ver Figura \ref{fig:LS-SJTU-PCQA}.
+de objetos (véase Figura \ref{fig:LS-SJTU-PCQA}).
 
 \begin{figure}[htp]
   \begin{center}
@@ -193,7 +193,7 @@ Para este TFG se tiene disponible una conjunto de tomografías computerizadas, d
 partes del cuerpo, de 2 individuos distintos del conjunto de datos públicos NMID~\cite{NMID}. 
 De los cuales han sido segmentados las clavículas, el seno frontal y los senos maxilares. 
 A parte, disponemos de modelos generados mediante escáner láser 3D, en concreto con el dispositivo Artec Spider, que permite generar reconstrucciones 3D de objetos reales. Estos modelos 3D fueron adquiridos en el Departamento de Medicina Legal, Toxicología y Antropología Física de la Universidad de Granada y constan del cráneo de otros 3 individuos, una pubis izquierda y
-una pubis derecha, ver Figura \ref{fig:OurDataExample}. Es decir, en total disponemos de 11 nubes de puntos de alta 
+una pubis derecha (véase Figura \ref{fig:OurDataExample}). Es decir, en total disponemos de 11 nubes de puntos de alta 
 calidad, que representan distintos volúmenes de exámenes médicos.
 A estos datos no se hicieron ningún tipo de pre-procesado, apenas se centraron 
 las nubes de puntos a los ejes (operación necesaria para hacer la rotación para 
@@ -236,10 +236,8 @@ aplicadas en 7 niveles crecientes de intensidad.
 Las resoluciones de compresión \emph{octree} van de 0.4 a 1.0 en intervalos de 0.1.
 El submuestreo aleatorio realiza una reducción del 10\% al 70\% de los puntos.
 Tanto el movimiento como la rotación local se aplican de 1 a 7 veces.
-Por último, el ruido gaussiano va de 0.15\%, 0.20\%, 0.25\%, 0.30\%, 0.35\%, 0.4\% y 0.5\% del \emph{bounding box}.
- Como resultado, disponemos de un conjunto de datos de 385 ejemplos, 
-ver Apéndice \ref{sec:DatosSinteticos}. 
-
+Por último, el ruido gaussiano va de 0.15\%, 0.20\%, 0.25\%, 0.30\%, 0.35\%, 0.4\% y 0.5\% del \emph{bounding box}. 
+Como resultado, tenemos un conjunto de datos con 385 ejemplos (véase Apéndice \ref{sec:DatosSinteticos}). 
 
 \subsection{Pseudo-MOS}
 Para la generación de la etiqueta, se optó seguir el camino propuesto por~\cite{ResSCNN}. 
@@ -274,11 +272,11 @@ MPED~\cite{MPED}.
     \label{tab:MetricsPerDistortion}
 \end{table}
 
-En~\cite{ResSCNN} validaron sus muestras generadas con las métricas SOTA FR 
-por medio de un análisis subjetivo con el estándar ITU-R, en
+En~\cite{ResSCNN} validaron sus muestras generadas con las métricas del estado del arte 
+para el subproblema FR por medio de un análisis subjetivo con el estándar ITU-R, en
 un entorno controlado, definido anteriormente, y obtuvieron una correlación del 
 90\% entre las muestras 
-etiquetadas subjetivamente y las que fueron etiquetadas objetivamente, ver Tabla \ref{tab:PseudoCorr}.
+etiquetadas subjetivamente y las que fueron etiquetadas objetivamente (véase Tabla \ref{tab:PseudoCorr}).
 Con ello, se logra justificar la generación de las etiquetas como una sustitución 
 de los métodos de evaluación subjetivos. 
 
@@ -428,11 +426,11 @@ De esta forma, se puede extraer características espaciales y temporales, como
 discutido en la Sección \ref{sec:VideoCNN}, utilizando redes convolucionales 
 adaptadas a vídeos, de la familia \emph{SlowFast}~\cite{SlowFastNetworks}.
 Siguiendo la motivación de que las deformaciones geométricas no deseadas se presentan 
-de forma abrupta según la perspectiva, ver Figura \ref{fig:ViewPoint}, y que 
+de forma abrupta según la perspectiva (véase Figura \ref{fig:ViewPoint}), y que 
 incluso se pueden observar incoherencias entre perspectivas adyacentes
 utilizaron 4 ejes de rotación: vertical, horizontal, diagonal derecha 
 y diagonal izquierda. Para cada eje se genera un total de 30 \emph{frames}, 
-en total habrá 120, ver Figura \ref{fig:VQARotation}. El ángulo de rotación es de 12 grados para todos los casos. 
+en total habrá 120 (véase Figura \ref{fig:VQARotation}). El ángulo de rotación es de 12 grados para todos los casos. 
 Terminando la rotación de un eje en la misma posición inicial. 
 A continuación se extraen características temporales del vídeo, que es posible 
 generar a partir de cada \emph{frame} de los distintos ejes de rotación encadenados
@@ -456,7 +454,7 @@ en la imagen de abajo se ve cierta deformación de la cabeza.}
 
 \begin{figure}
   \begin{center}
-    \includegraphics[width=\textwidth]{imagenes/chapter4/VQARotation}
+    \includegraphics[width=.95\textwidth]{imagenes/chapter4/VQARotation}
   \end{center}
   \caption[Ejemplo de las rotaciones que utiliza el modelo VQA-PC.]
   {Ejemplo de las rotaciones que utiliza el modelo VQA-PC.

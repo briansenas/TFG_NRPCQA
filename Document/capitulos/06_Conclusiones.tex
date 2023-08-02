@@ -3,20 +3,20 @@ La estimación de la calidad de imágenes es un problema esencial a la hora
 de optimizar el formato y visualización de la información, además de ser 
 un problema de suma importancia para el ámbito biomédico. Este TFG aborda 
 la obtención de una métrica de estimación de calidad capaz de evaluar volúmenes 
-3D, en concreto nubes de puntos, del ámbito biomédico sin referencia para poder asistir 
+3D sin referencia, en concreto nubes de puntos, del ámbito biomédico para poder asistir 
 en la mejora de los algoritmos de reconstrucción y visualización 3D. 
 
 En primer lugar, se realizó un estudio de la literatura relativa a la estimación de calidad 
-de imágenes 2D, desde los métodos basado en extracción de características de escenas NSS y modelos de ML, hasta la extracción automática con DL. 
+de imágenes 2D, desde los métodos basados en extracción de características de escenas naturales y modelos de ML, hasta la extracción automática con DL. 
 A continuación, se estudió el uso de estos y otros métodos sobre imágenes médicas 2D, donde se presenta la complejidad del problema. Posteriormente se analizó el estado del arte de métodos dedicados a representaciones tridimensionales, para tratar con las reconstrucciones 3D médicas que cada vez se usan más en la medicina. Se observa un salto en complejidad teórica y computacional al tratarse de problemas en tres dimensiones y sin el objeto de referencia. También se observa una tendencia justificada a métodos DL. 
  Por último, se concluye que no existe hasta el momento 
 otra investigación que haya tomado el enfoque novedoso de estimar la calidad de 
 representaciones biomédicas 3D directamente. 
 
-Se realizó un análisis de los métodos SOTA de estimación de calidad de objetos 
+Se realizó un análisis de los métodos del estado del arte de estimación de calidad de objetos 
 3D, tanto desde la perspectiva de ML como del DL. El primero hace uso de características 
-extraídas manualmente utilizando conocimiento humano sobre el HVS, como fenómenos 
-de planaridad, esfericidad, anisotropía, curvatura, linealidad y consistencia de 
+extraídas manualmente utilizando conocimiento humano sobre el sistema visual humano (HVS, por sus siglas en inglés), 
+como fenómenos de planaridad, esfericidad, anisotropía, curvatura, linealidad y consistencia de 
 colores de las nubes de puntos, que luego se utilizan para estimar una regresión por 
 SVM. En comparativa, de los modelos DL se utilizó un modelo capaz de extraer 
 información estática y dinámica de nubes de puntos haciendo uso de múltiples 
@@ -29,7 +29,7 @@ Para la validación sobre un conjunto de datos médicos se necesitó el desarrol
 de un conjunto de datos sintético debido a la no existencia de un conjunto de 
 datos públicos para este análisis. Para ello se estudiaron y se fabricaron las distorsiones más 
 comunes del ámbito biomédico con respecto a las representaciones 3D. Para las etiquetas, 
-se hizo uso de las métricas SOTA del problema con referencia, que es el subproblema 
+se hizo uso de las métricas estándar del problema con referencia, que es el subproblema 
 más avanzado y que en diversas publicaciones se demuestra la alta correlación 
 de esas métricas y el HVS, pudiendo así justificarse el uso de esas 
 etiquetas generadas antes que la ejecución de un experimento de estimación 

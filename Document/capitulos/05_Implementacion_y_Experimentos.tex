@@ -17,7 +17,7 @@ validación cruzada, también conocida por \emph{K-fold}.
 Esta técnica se distingue por realizar la división del conjunto de datos 
 en K partes (pliegues). A continuación el modelo se entrena y evalúa K veces, utilizando 
 cada una de los pliegues como conjunto de prueba y el resto de los pliegues como 
-conjunto de entrenamiento en cada iteración, ver Figura \ref{fig:K-fold}. 
+conjunto de entrenamiento en cada iteración (véase Figura \ref{fig:K-fold}). 
 Al finalizar las K iteraciones, se promedia los resultados de evaluación 
 obtenidos para obtener una medida general de rendimiento. 
 Es decir, un K-fold con K=1 equivale a la técnica de \emph{hold-out} 
@@ -33,7 +33,7 @@ Para las pruebas preliminares se utilizó el conjunto SJTU con las condiciones i
 \cite{VQA-PC}, es decir, con nueve pliegues, uno por modelo para un total de 336 ejemplos para entrenamiento y 42 para test. 
 
 
-\subsection{Experimentos Preliminares ML: Modelo NR3D-QA}
+\subsection{Experimentos ML: Modelo NR3D-QA}
 Para replicar el método de Zhang et al~\cite{NR3DQA} podemos utilizar los 
 scripts en \code{NR3DQA/}. Para ello disponemos de unos cuántos scripts para la extracción de las características y visualización de las distribuciones 
 como indica la publicación, ver Apéndice \ref{sec:Implementacion}. 
@@ -41,7 +41,7 @@ Utilizaremos la librería de Pyntcloud para obtener
 la matriz de covarianza y calcular las características en base a lo definido 
 en la Sección \ref{sec:NR3DQA}.
 Para los conjuntos de datos SJTU y WPC, los resultados 
-son similares a los obtenidos en la publicación original, ver Tabla \ref{tab:PlainNR3DQA}.
+son similares a los obtenidos en la publicación original (véase Tabla \ref{tab:PlainNR3DQA}).
 Hay que tener en cuenta que para ambos se realiza un K-fold, donde el número 
 K es igual al número de nubes de puntos 
 
@@ -143,7 +143,7 @@ resultados preliminares de la Sección \ref{sec:PreResults}, se determina
 conveniente hacer uso de modelos más complejos y permitir que la extracción 
 de características sea automática. 
 
-\subsection{Experimentos Preliminares DL: Modelo VQA-PC}
+\subsection{Experimentos DL: Modelo VQA-PC}
 \label{sec:PreResults}
 Previo a tratar con los datos médicos, se han realizado pruebas de ejecución 
 para verificar el funcionamiento del modelo, validar los resultados, familiarizarse 
@@ -155,8 +155,7 @@ en~\cite{VQA-PC}, seguimos el experimento en las mismas condiciones descrita
 por ellos en el conjunto de datos SJTU. Como ese posee 10 modelos, 
 ver Sección \ref{sec:DatosPublicos}, se realiza un 9-fold. Se han utilizado 
 los mismos hiper parámetros, estructura de red convolucional y transformaciones 
-de datos, ver Tablas 
-\ref{tab:ResNet50} y \ref{tab:HiperSJTU}. 
+de datos (véase Tablas \ref{tab:ResNet50} y \ref{tab:HiperSJTU}). 
 
 \begin{table}[htp]
   \scriptsize
@@ -291,9 +290,8 @@ utilizando el criterio del promedio del mejor resultado de cada pliegue de valid
   \end{subfigure}
   \caption[Curvas de aprendizaje del test preliminar.]{Curvas de aprendizaje del test preliminar. 
   Cada curva describe el comportamiento medio en cada pliegue. A la derecha 
-  podemos ver el comportamiento de la métrica SROCC en valor absoluto 
-  (resolver el problema inverso sería equivalente).}
-  \label{fig:PreTestCurves}
+  podemos ver el comportamiento de la métrica SROCC.
+} \label{fig:PreTestCurves}
 \end{figure}
 
 
@@ -384,7 +382,7 @@ que se puede observar la mediana de cada modelo en la Tabla \ref{tab:PercentileM
 
 Para validar el rápido aprendizaje de los métodos F1-F3 y la posible mejora 
 sobre el método de concatenación, se experimenta utilizar el modelo VQA-PC sin 
-modificaciones desde 0 sobre las imágenes reescaladas, ver Tabla \ref{tab:VQAF0}.
+modificaciones desde 0 sobre las imágenes reescaladas (véase Tabla \ref{tab:VQAF0}).
 Se obtiene en media resultados algo peor que el modelo 
 pre-entrenado, remarcando la importancia de información adicional y etapas 
 de entrenamiento más largas a la hora de lidiar con algunas nubes de puntos, aunque su
@@ -400,7 +398,7 @@ de distorsión en lugar del nivel de calidad en escala 0-1, para que se asemeje 
 valores sintéticos sin normalizar, y también utilizamos imágenes reescaladas.
 
 Se observa una mejora significativa en los métodos F2-F3, y se logra 
-pasar la barrera del 90\% en la mediana de los métodos F0-F2, ver Tabla \ref{tab:LS-SJTU-FN}.
+pasar la barrera del 90\% en la mediana de los métodos F0-F2 (véase Tabla \ref{tab:LS-SJTU-FN}).
 Gracias a la información adicional hemos logrado valores mucho mejores, llegando a 
 obtener una correlación del 88\% de media, con mediana al 94\%, utilizando el modelo F2. 
 En general, poseer información adicional ha resultado ser crucial para el aprendijaze 

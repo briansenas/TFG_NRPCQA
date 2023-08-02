@@ -37,7 +37,7 @@ se interpreta como indicador de lo novedoso y pionero de este proyecto.
 
 \section{Estado del arte de IQA}
 Para la resolución del problema, tanto FR como NR, ha sido crucial los avances de los conocimientos 
-del sistema visual humano. Se han propuesto métricas inspiradas en el HVS y 
+del sistema visual humano (HVS, por sus siglas en inglés). Se han propuesto métricas inspiradas en el HVS y 
 conscientes del contenido de la imagen, que combinan las características del HVS 
 con algoritmos matemáticos. En FR por ejemplo, Visual SNR~\cite{VSNR} cuantifica 
 la fidelidad visual de las imágenes con el ratio de relación entre señal-ruido y 
@@ -85,7 +85,7 @@ métodos mencionados, donde las métricas SROCC y PLCC, que se explican
 en la Sección \ref{sec:Metricas}, son mejores cuanto más cercas al 1 y 
 el RMSE es mejor cuánto más pequeño sea.  Se comparan sobre los conjuntos de datos públicos
 LIVE~\cite{LIVE, LIVE1, SSIM}, CSIQ~\cite{CSIQ} y TID2008~\cite{TID2008}. El primero y el segundo poseen información de distorsiones por compresión JPEG, por difuminado gaussiano y ruido blanco. El último, posee más distorsiones, llegando hasta 17 diferentes.
-@
+
 \begin{table}[htp]
   \tiny
   \centering
@@ -245,7 +245,7 @@ Predominantemente, el conocimiento del ámbito de la imagen es crítico para est
 su calidad. Es por ello que la mayoría de los métodos actuales son para un tipo específico 
 de examen médico o distorsión.
 
-Por ejemplo, basándose en el sistema visual humano (HVS), 
+Por ejemplo, basándose en el sistema visual humano, 
 Bhateja et al.~\cite{MultiModalMRIFusionMethod} utilizaron métricas de fusión
 de imágenes de resonancia magnética (MRI) de dos etapas para IQA.
 Con el objetivo de desarrollar métodos automáticos de aprendizaje profundo,

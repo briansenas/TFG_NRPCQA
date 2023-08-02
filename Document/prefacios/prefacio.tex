@@ -19,36 +19,52 @@
 
 %\vspace{0.7cm}
 \noindent{\textbf{Palabras clave}: 
-aprendizaje automático, aprendizaje profundo, visión por computador, 
-estimación de calidad, nubes de punto, imágenes médicas. }\\
+modelos 3D, nubes de puntos, imágenes biomédicas, estimación de la calidad, aprendizaje profundo, visión por computador.
+}\\
 
 \noindent{\textbf{Resumen}}\\
-En el campo biomédico, la visualización y análisis de estructuras 3D, 
-habitualmente nubes de puntos, desempeña un papel fundamental para el diagnóstico y investigación. 
+En el campo biomédico, la visualización y análisis de estructuras 3D
+desempeña un papel fundamental para el diagnóstico e investigación. 
 Sin embargo, la calidad de estas representaciones pueden variar debido a diversos factores, como la adquisición, procesamiento y reconstrucción. 
 Para mejorar cada uno de estos pasos es necesario una manera de cuantificar las distorsiones que puedan surgir. 
-Ese problema se conoce como la estimación de calidad de nubes de puntos, 
-un campo de especial y reciente importancia. No obstante, 
-es un campo todavía sin explorar en el ámbito biomédico.
+Es decir, es necesario aboradr el problema que consiste en estimar la calidad 
+de dichas nubes de puntos. Este campo de investigación todavía no ha sido 
+suficientemente explorado en el ámbito biomédico.
 Para estimar la calidad de representaciones 2D o 3D, generalmente se extraen características de la imagen original y la distorsionada para su posterior 
 comparación. Estas características provienen del análisis de estructuras, colores y 
 del conocimiento del sistema visual humano. No obstante, 
-muchas veces no disponemos de la información de referencia, como es el caso en 
-la medicina, sino solo la versión distorsionada.
+muchas veces no disponemos de la información de referencia, sino solo de la versión distorsionada.
 \\
 
-Este TFG trata del desarrollo de un sistema capaz de estimar la calidad de 
-una representación 3D biomédica sin referencia. La propuesta presenta la posibilidad de 
+Este TFG trata presenta un sistema capaz de estimar la calidad de 
+una representación 3D biomédica sin referencia, es decir, sin emplear una imagen 
+no distorsionada de referencia. La propuesta presenta la posibilidad de 
 adaptación de modelos de estimación de calidad de nubes de puntos genéricas 
-al ámbito médico haciendo uso de un meta-modelo de aprendizaje profundo para 
+al ámbito médico. En concreto, haciendo uso de un meta-modelo de aprendizaje profundo para 
 procesar proyecciones 2D multi-vista y un vídeo del objeto 3D rotando. 
-De esta forma extraemos características tanto estáticas como dinámicas.
-Para los experimentos se utilizaron diversos conjuntos de datos públicos 
-de nubes de puntos genéricas, debido a que no existen en el caso biomédico, 
-para la validación entre modelos y se propone un conjunto de datos médicos 
-sintéticos generados a partir de datos privados. Aún siendo un conjunto de datos 
-muy reducido, se logró una correlación entre los valores predicho y la 
-estimación real de calidad del 88\% mostrando el potencial que posee esta línea de investigación.
+De esta forma extraemos características tanto estáticas, de imágenes 
+sacadas desde una perspectiva fija, como dinámicas, conjunto de imágenes de 
+perspectiva variante.
+\\
+
+De cara a la validación experimental, como no existen bases de datos públicas con imágenes 
+biomédicas, se emplearon nubes de puntos generalistas, de personas, animales y objetos. 
+De hecho, como parte de este TFG, se propone un conjunto de datos médicos sintéticos 
+generados a partir de datos privados. 
+Los datos consisten de un conjunto de tomografías computerizadas y modelos 
+generados a mediante escáner láser 3D de diferentes partes óseas del cuerpo 
+humano. A este conjunto de datos se le aplican las distorsiones más comúnes 
+sobre las representaciones 3D médicas. 
+El valor real de calidad, de cada ejemplo generado, es estimado por medio de 
+los mejores métodos con referencia para cada tipo de distorsión. De forma que, 
+comparando la imagen distorsionada respecto a la original, 
+podemos aproximar la calidad perceptual humana.
+\\
+
+A pesar de que los resultados obtenidos en este trabajo no dejan de ser preliminares, 
+cabe mencionar que se alcanzó una correlación entre valores de calidad obtenidos y 
+deseados del 88\%, sugiriendo que se trata de una línea de investigación tremendamente 
+prometedora. 
 
 \cleardoublepage
 

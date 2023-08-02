@@ -1,8 +1,8 @@
 \chapter{Fundamentos Teóricos}
-\section{Image Quality Assessment IQA}
+\section{Image Quality Assessment (IQA)}
 \label{sec:IQA}
 Existen tres subproblemas presenten en el ámbito de \emph{IQA}. Los primeros, son problemas 
-dónde tenemos acceso a la imagen original, que suponemos exenta de desperfectos, 
+donde tenemos acceso a la imagen original, que suponemos exenta de desperfectos, 
 en la cual se pueden aplicar métodos basados en diferencia de características 
 entre ambas, como puede ser al nivel del color de píxel posición a posición,
 y se denomina ``\emph{Full Reference}''(\emph{FR}). 
@@ -14,11 +14,41 @@ resultado de la métrica.
 
 La mayoría de las veces no se menciona, pero al optar métodos de sensibilidad 
 al error (distancias) se imponen un conjunto de suposiciones cuestionables. 
-Primeramente se asume la misma importancia para todas las señales de la imagen, que
+Primeramente, se asume la misma importancia para todas las señales de la imagen\footnote{
+  Con \emph{señales} nos referimos a los diferentes canales de color RGB.
+}, que
 la magnitud del error es lo único que determina la calidad, que el contenido de la imagen 
-no afecta al resultado final tras aplicar una distorsión y que si cambiamos el 
+no afecta al resultado final tras aplicar una distorsión, y que si cambiamos el 
 orden de las señales la medida de distorsión no es afectada.
-Lamentablemente, ninguna de estas suposiciones se cumplen~\cite{Wang2006ModernIQ}, ver Figuras \ref{fig:FailureMinkowskiMetric} y \ref{fig:MSEHyperSphere}.
+Lamentablemente, ninguna de estas suposiciones se cumplen~\cite{Wang2006ModernIQ} (véase Figuras \ref{fig:FailureMinkowskiMetric} y \ref{fig:MSEHyperSphere}, 
+que utilizan distancias \emph{Minkowski}\footnotemark[2] y \emph{MSE}\footnotemark[3] respectivamente).
+
+\begin{figure}[htp]
+  \begin{center}
+    \includegraphics[width=0.6\textwidth]{imagenes/chapter2/failure_minkowski_metric.png}
+  \end{center}
+  \caption[Visualización del problema de la métrica \emph{Minkowski}.]{En este ejemplo, extraído de~\cite{MinkowskiFailure},
+  vemos que sumar una constante positiva a una imagen  de referencia (a) produce la imagen (b) que contiene la misma distancia \emph{Minkowski}
+  que (c), imagen fabricada por la misma constante pero permutando signo de forma aleatoria, resultando que
+  la percepción final es que la imagen (c) es peor que la imagen (b).
+\label{fig:FailureMinkowskiMetric}}
+\end{figure}
+\begin{figure}[htp]
+  \begin{center}
+    \includegraphics[width=0.6\textwidth]{imagenes/chapter2/MSE_Hypersphere.png}
+  \end{center}
+  \caption[Visualización del hiperplano MSE de imágenes distorsionadas.]{En este ejemplo, extraído de~\cite{Wang2006ModernIQ}, la misma imagen distorsionada de distintas 
+    maneras resulta en la misma distancia, con valor MSE=181. 
+    No obstante, es evidente que algunas distorsiones producen efectos visuales más marcados que otras.}
+  \label{fig:MSEHyperSphere}
+\end{figure}
+\footnotetext[2]{La distancia de \emph{Minkowski} es una métrica 
+vectorial que puede considerarse como una generalización tanto de 
+la distancia euclídea como de la distancia de Manhattan. }
+\footnotetext[3]{\emph{Mean squared error} o error cuadrático medio 
+  es una métrica de distancia que se calcula como la media de la suma de las 
+  diferencias al cuadrado.
+} 
  
 El siguiente subproblema es aquel donde tenemos algún tipo de información adicional, incompleta, respecto 
 a la imagen original el momento de análisis de la calidad de la imagen final,
@@ -30,6 +60,22 @@ Y por último, tenemos aquellos problemas donde desconocemos el origen y cualqui
 información respecto a la imagen inicial, denominados problemas ``\emph{No reference}''(\emph{NR}).
 Estas métricas están exentas de cualquier información de referencia y se 
 centran en capturar características generales de calidad.
+
+\begin{figure}[htp]
+  \centering
+  \begin{subfigure}{0.49\textwidth}
+  \includegraphics[width=0.95\textwidth]{imagenes/chapter2/FullReferenceInk.png}
+  \end{subfigure}
+  \begin{subfigure}{0.49\textwidth}
+  \includegraphics[width=0.95\textwidth]{imagenes/chapter2/ReducedReferenceInk.png}
+  \end{subfigure}
+  \par\bigskip
+  \includegraphics[]{imagenes/chapter2/NoReferenceInk.png}
+  \caption{Resumen de subproblemas IQA. La imagen (a) representa el subproblema FR, 
+  la imagen (b) RR y la imagen (c) NR.}
+  \label{fig:IQASubproblems}
+\end{figure}
+
 
 La evaluación de calidad de imagen sin referencia es, quizás, el problema 
 más difícil en el análisis de imágenes. De cierto modo, el modelo debe ser 
@@ -56,13 +102,6 @@ dado que nos enfrentamos a dos grandes retos: La complejidad computacional
 de las operaciones y la escasez de bases de datos etiquetadas
 sobre objetos tridimensionales para entrenar y evaluar modelos. 
 
-\footnotetext[2]{La distancia de \emph{Minkowski} es una métrica 
-vectorial que puede considerarse como una generalización tanto de 
-la distancia euclídea como de la distancia de Manhattan . }
-\footnotetext[3]{\emph{Mean squared error} o error cuadrático medio 
-  es una métrica de distancia que se calcula como la media de la suma de las 
-  diferencias al cuadrado.}
- 
 Para las nubes de puntos, que representan una colección de puntos en un espacio 
 tridimensional $(x,y,z)$ cada uno con un color asociado \emph{RGB}\footnote{
   RGB son las siglas en inglés para rojo, verde y azul. Los colores se representan 
@@ -80,24 +119,6 @@ complejidad computacional, pudiendo implementar métodos y soluciones ya existen
 Teniendo en cuenta todas estas consideraciones, el presente TFG aborda la
 estimación, sin referencia, de calidad de imágenes médicas en espacio tridimensional.
 
-\begin{figure}[htp]
-  \begin{center}
-    \includegraphics[width=0.6\textwidth]{imagenes/chapter2/failure_minkowski_metric.png}
-  \end{center}
-  \caption[Visualización del problema de la métrica \emph{Minkowski}.]{En este ejemplo, extraído de~\cite{MinkowskiFailure},
-  vemos que sumar una constante positiva a una imagen  de referencia (a) produce la imagen (b) que contiene la misma distancia \emph{Minkowski}\footnotemark[2]
-  que (c), imagen fabricada por la misma constante pero permutando signo de forma aleatoria, resultando que
-  la percepción final es que la imagen (c) es peor que la imagen (b).
-\label{fig:FailureMinkowskiMetric}}
-\end{figure}
-\begin{figure}[htp]
-  \begin{center}
-    \includegraphics[width=0.6\textwidth]{imagenes/chapter2/MSE_Hypersphere.png}
-  \end{center}
-  \caption[Visualización del hiperplano MSE de imágenes distorsionadas.]{En este ejemplo, extraído de~\cite{Wang2006ModernIQ}, la misma imagen distorsionada de distintas maneras resulta en el mismo valor MSE\footnotemark[3]=181. Siendo evidente que 
-algunas distorsiones producen efectos visuales más marcados que otras.}
-  \label{fig:MSEHyperSphere}
-\end{figure}
 
 
 \section{Aprendizaje Automático y Profundo}
@@ -119,7 +140,7 @@ de los datos a utilizar o el objetivo a alcanzar, podemos encontrar distintos ti
 algoritmos de aprendizaje. En este documento se recogerán dos grandes grupos: aprendizaje supervisado 
 y aprendizaje no supervisado. En el primero disponemos de un conjunto de datos 
 anotados, es decir, con las salidas deseadas para cada ejemplo y en el segundo 
-se espera que sea la máquina la que determine los patrones, ver Figuras \ref{fig:SupervisedExample} y \ref{fig:UnsupervisedExample}. 
+se espera que sea la máquina la que determine los patrones (véase Figuras \ref{fig:SupervisedExample} y \ref{fig:UnsupervisedExample}). 
 En general se suelen aplicar las técnicas de \emph{ML} sobre grandes conjuntos 
 de datos sobre los cuales deseamos detectar los patrones subyacentes~\cite{
 DataMiningHandbook}.
@@ -235,8 +256,8 @@ a superficies tridimensionales.
 Utilizan capas convolucionales que aplican filtros a regiones locales de la entrada 
 para extraer características relevantes. En la Figura \ref{fig:RadiographyConvolutionExample}
 podemos ver un ejemplo de esquema jerárquico de extracción de características para el 
-diagnóstico médico a partir de una radiografía. Con ese ejemplo se puede observar 
-las diferencias con respecto a las ANN, posee dos capas adicionales: capas convolucionales 
+diagnóstico médico a partir de una radiografía. Se puede observar 
+que, a diferencia de una ANN, existen dos capas adicionales: capas convolucionales 
 y capas de \emph{pooling}.
 
 \begin{figure}[htp]
@@ -352,7 +373,8 @@ para obtener información de movimiento (Figura \ref{fig:SlowFastPathways}).
     \includegraphics[width=0.5\textwidth]{imagenes/chapter2/SlowFastPathways.png}
   \end{center}
   \caption[Red convolucional espaciotemporal \emph{SlowFast}.]{Ejemplo extraído de~\cite{SlowFastNetworks} para ilustrar la distinción 
-  entre la extracción espacial del camino ``\emph{slow path}'' y de movimiento con el ``\emph{fast path}''.}
+  entre la extracción espacial del camino ``\emph{slow path}'' (camino superior) y 
+  de movimiento con el camino ``\emph{fast path}'' (camino inferior).}
   \label{fig:SlowFastPathways}
 \end{figure}
 
@@ -386,7 +408,7 @@ de datos 3D.
   \label{fig:VoxelizationExample}
 \end{figure}
 
-\subsection{Ensemble o Conjunto \emph{Deep Learning}}
+\subsection{Ensemble de modelos de Deep Learning}
 Un \emph{ensemble}, en el contexto del aprendizaje automático, es una técnica que 
 combina múltiples modelos de aprendizaje para mejorar la precisión y el rendimiento 
 general de las predicciones. En lugar de depender de un único modelo, 
@@ -427,7 +449,7 @@ las imágenes médicas 3D sin referencia.
 
 \section{Imágenes médicas y distorsiones}
 \label{sec:Distorsiones}
-Las tomografías computarizadas (CT) son un tipo de técnica de imagen médica 
+Las tomografías computarizadas son un tipo de técnica de imagen médica 
 que utiliza rayos X para obtener imágenes detalladas del interior del cuerpo. 
 Durante una tomografía computarizada, el paciente se coloca en una mesa que se 
 mueve a través de un anillo en forma de donut llamado \emph{gantry}. Dentro del \emph{gantry},
@@ -457,7 +479,6 @@ obtiene de la exploración. Afecta directamente a la calidad del modelo 3D gener
 al final ya que el número de cortes es la tercera dimensión que relaciona las imágenes 
 (profundidad).
 
-
 Sobre todo nos centraremos en las distorsiones geométricas que ocurren en la 
 generación volumétrica de la imagen. La generación del volumen consiste en 
 disponer de un conjunto segmentado\footnote{
@@ -465,20 +486,20 @@ La segmentación se refiere al proceso de dividir una imagen o conjunto de datos
 Ejemplo, en una foto del bosque, segmentamos los árboles para distinguirlos del suelo.
 } en todas las capas de las imágenes. A continuación usando el conjunto segmentado 
 unificamos las coordenadas de los puntos por medio de intersecciones entre rayos 
-proyectados sobre las imágenes (\emph{ray casting}), ver Figura \ref{fig:CT2Volume}.
+proyectados sobre las imágenes (\emph{ray casting}, véase Figura \ref{fig:CT2Volume}).
 
-\begin{figure}[htp]
-  \centering 
-  \includegraphics[width=\textwidth]{imagenes/chapter2/DicomDistortionsExample.png}
-  \caption[Ejemplo de artefactos sobre imágenes DICOM.]{Ejemplo de artefactos sobre imágenes DICOM~\cite{DicomDistortionsExample}: 
-  (a) un artefacto de anillo, (b) un difuminado provocado por movimiento, 
-  (c) artefactos producidos por interpolación helicoidal, (d) artefactos de iluminación y dispersión del haz.  }
-  \label{fig:DicomDistortionsExample}
-\end{figure}
+% \begin{figure}[htp]
+%   \centering 
+%   \includegraphics[width=\textwidth]{imagenes/chapter2/DicomDistortionsExample.png}
+%   \caption[Ejemplo de artefactos sobre imágenes DICOM.]{Ejemplo de artefactos sobre imágenes DICOM~\cite{DicomDistortionsExample}: 
+%   (a) un artefacto de anillo, (b) un difuminado provocado por movimiento, 
+%   (c) artefactos producidos por interpolación helicoidal, (d) artefactos de iluminación y dispersión del haz.  }
+%   \label{fig:DicomDistortionsExample}
+% \end{figure}
 
 Dentro de las causas de las distorsiones geométricas sobre los volúmenes 
 3D están el difuminado por movimiento, errores de contraste (dificultad al segmentar),
-artefactos luminosos y problemas de interpolación o ruido al generar la proyección, ver Figura \ref{fig:DicomDistortionsExample}. 
+artefactos luminosos y problemas de interpolación o ruido al generar la proyección (véase Figura \ref{fig:DicomDistortionsExample}). 
 
 Para simularlo, partiremos de ejemplos de imágenes médicas consideradas exentas de 
 distorsiones, con su segmentación correspondiente realizada por profesionales.
