@@ -85,32 +85,45 @@ prometedora.
 %\vspace{0.7cm}
 \noindent{\textbf{Abstract}}\\
 
-In the biomedical field, the visualization and analysis of 3D structures, 
-typically point clouds, play a fundamental role in diagnosis and research. 
-However, the quality of these representations can vary due to various factors, 
-such as acquisition, processing, and reconstruction. 
-To improve each of these steps, a way to quantify the distortions that may 
-arise is necessary. This problem is known as point cloud quality estimation, 
-a field of special and recent importance. However, it is still an unexplored 
-field in the biomedical domain.
-To estimate the quality of 2D or 3D representations, features are generally 
-extracted from both the original and distorted images for subsequent comparison. 
-These features come from the analysis of structures, colors, and knowledge of 
-the human visual system. However, in many cases, we do not have the reference 
-information, as is the case in medicine, but only the distorted version.
+In the biomedical field, the visualization and analysis of 3D structures play 
+a fundamental role in diagnosis and research. However, the quality of these 
+representations can vary due to various factors such as acquisition, processing, 
+and reconstruction. To improve each of these steps, a way to quantify the distortions 
+that may arise is necessary. That is, it is necessary to address the problem of 
+estimating the quality of such point clouds. This research area has not been 
+sufficiently explored in the biomedical domain.
 \\
 
-This Bachelor's thesis deals with the development of a system capable of estimating 
-the quality of a biomedical 3D representation without a reference. The proposal 
-presents the possibility of adapting generic point cloud quality estimation models 
-to the medical field by using a meta-model of deep learning to process multi-view 
-2D projections and a video of the rotating 3D object. In this way, 
-we extract both static and dynamic characteristics.
-For the experiments, various public datasets of generic point clouds were used, 
-as they do not exist in the biomedical case, for model validation. 
-Additionally, a set of synthetic medical data generated from private data is proposed. 
-Despite being a very limited dataset, a correlation of 88\% was achieved between 
-the predicted values and the actual quality estimation, demonstrating the potential of this line of research.
+To estimate the quality of 2D or 3D representations, features are generally extracted 
+from both the original and distorted images for subsequent comparison. 
+These features are derived from the analysis of structures, colors, and knowledge 
+of the human visual system. However, in many cases, we only have access to the 
+distorted version without the reference information.
+\\
+
+This Bachelor's thesis presents a system capable of estimating the quality of a 
+biomedical 3D representation without a reference, meaning it does not require an 
+undistorted reference image. The proposed approach offers the possibility of adapting 
+generic point cloud quality estimation models to the medical domain. Specifically, 
+it leverages a meta-model based on deep learning to process multi-view 2D projections 
+and a video of the 3D object rotating. By doing so, both static features from images 
+taken from a fixed perspective and dynamic features from a set of perspective-varying images are extracted.
+\\
+
+For experimental validation, as there are no publicly available databases with biomedical images, 
+generalist point clouds of people, animals, and objects were used. 
+Additionally, as part of this thesis, synthetic medical data was generated from private data, 
+consisting of a collection of computed tomography scans and 3D laser-scanned models of 
+different bone parts of the human body. Distortions commonly affecting medical 3D 
+representations were applied to this dataset. The ground truth quality values for 
+each generated example were estimated using the best reference-based methods for 
+each type of distortion. By comparing the distorted images to the original ones, 
+we approximate the human perceptual quality.
+\\
+
+While the results obtained in this work are preliminary, it is worth mentioning 
+that an 88\% correlation was achieved between the obtained quality values and the 
+desired ones, suggesting that this is an extremely promising line of research.
 
 \chapter*{}
 \thispagestyle{empty}

@@ -19,6 +19,8 @@ journal = {Science China Information Sciences},
 @book{IQABook,
 author = {Ke Gu, Hongyan Liu, Chengxu Zhou},
 year = {2022},
+pages = {1-242},
+volumne = {1},
 title = {Quality Assessment of Visual Content},
 publisher = {Springer}
 }
@@ -27,7 +29,7 @@ publisher = {Springer}
 @article{MinkowskiFailure,
 author = {Seshadrinathan, Kalpana and Pappas, Thrasyvoulos and Safranek, Robert and Chen, Junqing and Wang, Zhou and Sheikh, Hamid and Bovik, Alan},
 year = {2009},
-pages = {},
+pages = {553-595},
 title = {Image Quality Assessment},
 journal = {The Essential Guide to Image Processing},
 }
@@ -38,8 +40,7 @@ journal = {The Essential Guide to Image Processing},
   booktitle={Modern Image Quality Assessment},
   year={2006},
   volume={1},
-  number={1-146},
-  pages={2105-2109},
+  pages={1-146},
 }
 
 @article{MMF,
@@ -94,7 +95,8 @@ number = {6},
 @article{XrayRejectionFactor,
 author = {Kjelle, Elin and Chilanga, Catherine},
 year = {2022},
-pages = {},
+number = {1},
+pages = {36},
 title = {The assessment of image quality and diagnostic value in X-ray images: a survey on radiographers’ reasons for rejecting images},
 volume = {13},
 journal = {Insights into Imaging},
@@ -110,10 +112,11 @@ year = {2012},
 author = {Andriy Fedorov and Reinhard Beichel and Jayashree Kalpathy-Cramer and Julien Finet and Jean-Christophe Fillion-Robin and Sonia Pujol and Christian Bauer and Dominique Jennings and Fiona Fennessy and Milan Sonka and John Buatti and Stephen Aylward and James V. Miller and Steve Pieper and Ron Kikinis},
 }
 
-@misc{SlicerWebPage,
+@online{SlicerWebPage,
   title = {{3D Slicer} Image Computing Plataform},
-  howpublished = {\url{https://www.slicer.org/}},
-  note = {Visitada: 01-06-2023}
+  url = {https://www.slicer.org/},
+  year={2012},
+  urldate = {01-06-2023}
 }
 
 @techreport{ITU-R.2012,
@@ -154,16 +157,19 @@ title = {Subjective quality analyses of stereoscopic images in 3DTV system},
   pages={4270-4281},
 }
 
-@misc{StructureGuidedResampling,
+@article{SGR,
       title={Blind Quality Assessment of 3D Dense Point Clouds with Structure Guided Resampling}, 
       author={Wei Zhou and Qi Yang and Qiuping Jiang and Guangtao Zhai and Weisi Lin},
       year={2022},
+      eprint={2208.14603},
+      archivePrefix={arXiv},
 }
 
 @article{SSIM,
 title = {Structural similarity index ({SSIM}) revisited: A data-driven approach},
 journal = {Expert Systems with Applications},
 volume = {189},
+pages = {116087},
 year = {2022},
 author = {Illya Bakurov and Marco Buzzelli and Raimondo Schettini and Mauro Castelli and Leonardo Vanneschi},
 keywords = {Image quality assessment measures, Structural similarity, Evolutionary computation, Scale selection, Image processing},
@@ -182,7 +188,7 @@ keywords = {Image quality assessment measures, Structural similarity, Evolutiona
 
 @inproceedings{WhyIsIQASoDifficult,
   author={Wang, Zhou and Bovik, Alan C. and Lu, Ligang},
-  booktitle={2002 IEEE International Conference on Acoustics, Speech, and Signal Processing}, 
+  booktitle={2002 IEEE International Conference on Acoustics, Speech, and Signal Processing (ICASSP)}, 
   title={Why is image quality assessment so difficult?}, 
   year={2002},
   volume={4},
@@ -199,16 +205,20 @@ keywords = {Image quality assessment measures, Structural similarity, Evolutiona
   pages={7618-7631},
 }
 
-@misc{VQA-PC,
+@article{VQA-PC,
       title={Treating Point Cloud as Moving Camera Videos: A No-Reference Quality Assessment Metric}, 
       author={Zicheng Zhang and Wei Sun and Yucheng Zhu and Xiongkuo Min and Wei Wu and Ying Chen and Guangtao Zhai},
       year={2022},
+      eprint={2208.14085},
+      archivePrefix={arXiv},
 }
 
-@misc{GPA-NET,
-      title={GPA-Net:No-Reference Point Cloud Quality Assessment with Multi-task Graph Convolutional Network}, 
+@article{GPA-NET,
+      title={GPA-Net: No-Reference Point Cloud Quality Assessment with Multi-task Graph Convolutional Network}, 
       author={Ziyu Shan and Qi Yang and Rui Ye and Yujie Zhang and Yiling Xu and Xiaozhong Xu and Shan Liu},
       year={2023},
+      eprint={2210.16478},
+      archivePrefix={arXiv},
 }
 
 @article{MM-PCQA,
@@ -218,17 +228,20 @@ pages = {},
 title = {MM-PCQA: Multi-Modal Learning for No-reference Point Cloud Quality Assessment},
 }
 
-@misc{IT-PCQA,
+@article{IT-PCQA,
       title={No-Reference Point Cloud Quality Assessment via Domain Adaptation}, 
       author={Qi Yang and Yipeng Liu and Siheng Chen and Yiling Xu and Jun Sun},
       year={2022},
+      eprint={2112.02851},
+      archivePrefix={arXiv},
 }
 
-@inproceedings{3DImagingInMedicine,
-  title={3D imaging in medicine : algorithms, systems, applications},
+@book{3DImagingInMedicine,
+  title={3D imaging in medicine: algorithms, systems, applications},
   author={Karl Heinz Höhne and Henry Fuchs and Stephen M. Pizer},
   year={1990}
 }
+
 @article{3DImagingInMedicine2,
   title={Three-dimensional imaging techniques: A literature review},
   author={Orhan Hakki Karatas and Ebubekir Toy},
@@ -293,10 +306,11 @@ year = 2012
   pages={137-142},
 }
 
-@misc{VMAF,
+@online{VMAF,
   title = {Video Multi-Method Assessment Fusion},
-  howpublished = {\url{https://github.com/charlespwd/project-title}},
-  note = {Visitada: 01-07-2023}
+  url = {https://github.com/Netflix/vmaf},
+  urldate = {01-07-2023},
+  year = {2016}
 }
 
 @inproceedings{VMAFReproducibility,
@@ -341,10 +355,11 @@ pages={760-764},
    year = {2020},
 }
 
-@misc{Hallucinated-IQA,
-    title={Hallucinated-IQA: No-Reference Image Quality Assessment via Adversarial Learning}, 
-    author={Kwan-Yee Lin and Guanxiang Wang},
-    year={2018},
+@inproceedings{Hallucinated-IQA,
+author = {Lin, Kwan-Yee and Wang, Guanxiang},
+year = {2018},
+pages = {732-741},
+title = {Hallucinated-IQA: No-Reference Image Quality Assessment via Adversarial Learning},
 }
 
 @article{DIPIQA,
@@ -405,8 +420,9 @@ pages={436-444},
 @article{NeuronImages,
 author = {Meng, Zhenzhu and Hu, Yating and Ancey, Christophe},
 year = {2020},
-pages = {},
+pages = {600},
 title = {Using a Data Driven Approach to Predict Waves Generated by Gravity Driven Mass Flows},
+number = {2},
 volume = {12},
 journal = {Water},
 }
@@ -414,7 +430,7 @@ journal = {Water},
 @article{NeuronSimilarity,
 author = {Akgün, Ergün and Demir, Metin},
 year = {2018},
-pages = {},
+pages = {19},
 title = {Modeling Course Achievements of Elementary Education Teacher Candidates with Artificial Neural Networks},
 volume = {5},
 journal = {International Journal of Assessment Tools in Education},
@@ -464,7 +480,7 @@ number = {11},
 article-number = {1775},
 }
 
-@misc{ConvolutionalRepresentation,
+@article{ConvolutionalRepresentation,
       title={An Introduction to Convolutional Neural Networks}, 
       author={Keiron O'Shea and Ryan Nash},
       year={2015},
@@ -472,7 +488,7 @@ article-number = {1775},
       archivePrefix={arXiv},
 }
 
-@misc{SlowFastNetworks,
+@article{SlowFastNetworks,
       title={SlowFast Networks for Video Recognition}, 
       author={Christoph Feichtenhofer and Haoqi Fan and Jitendra Malik and Kaiming He},
       year={2019},
@@ -496,13 +512,16 @@ journal = {IEEE Transactions on Systems, Man, and Cybernetics, Part B: Cyberneti
   year={2017},
   pages={77-85},
 }
-@misc{PointNet++,
+
+@article{PointNet++,
     title={PointNet++: Deep Hierarchical Feature Learning on Point Sets in a Metric Space}, 
-      author={Charles R. Qi and Li Yi and Hao Su and Leonidas J. Guibas},
-      year={2017},
+    author={Charles R. Qi and Li Yi and Hao Su and Leonidas J. Guibas},
+    year={2017},
+    eprint={1706.02413},
+    archivePrefix={arXiv},
 }
 
-@misc{MedicalEnsembleExample,
+@article{MedicalEnsembleExample,
       title={An Analysis on Ensemble Learning optimized Medical Image Classification with Deep Convolutional Neural Networks}, 
       author={Dominik Müller and Iñaki Soto-Rey and Frank Kramer},
       year={2022},
@@ -518,10 +537,11 @@ author = {Li Sze Chow and Raveendran Paramesran},
 keywords = {Image Quality Assessment (IQA), No reference-IQA (NR-IQA), Medical images, MRI, CT},
 }
 
-@misc{CT2Volume,
+@online{CT2Volume,
   title = {Medical Visualization and Volume Rendering},
-  howpublished = {\url{https://sbme-tutorials.github.io/2019/CG/notes/7-week7.html}},
-  note = {Visitada: 01-06-2023}
+  url = {https://sbme-tutorials.github.io/2019/CG/notes/7-week7.html},
+  year={2019},
+  urldate = {01-06-2023}
 }
 
 
@@ -544,10 +564,12 @@ journal = {Eurographics Symposium on Point-Based Graphics},
 
 % STATE OF THE ART CITATIONS 
 
-@misc{MeanTeacher,
+@article{MeanTeacher,
       title={Mean teachers are better role models: Weight-averaged consistency targets improve semi-supervised deep learning results}, 
       author={Antti Tarvainen and Harri Valpola},
       year={2018},
+      eprint={1703.01780},
+      archivePrefix={arXiv},
 }
   
 @article{LIVE1,
@@ -561,10 +583,12 @@ journal = {Eurographics Symposium on Point-Based Graphics},
   publisher={IEEE}
 }
 
-@misc{LIVE,
+@online{LIVE,
   title={LIVE image quality assessment database},
   author={Sheikh, HR and Wang, Z and Cormack, L and Bovik, AC},
-  url={http://live.ece.utexas.edu/research/quality}
+  url={http://live.ece.utexas.edu/research/quality},
+  year={2004},
+  urldate = {01-06-2023}
 }
 
 @article{TID2008,
@@ -576,11 +600,12 @@ volume = {10},
 journal = {Advances of Modern Radioelectronics}
 }
 
-@misc{CSIQ,
+@online{CSIQ,
   author = {Chandler, E.C.L. and D.M.},
   title = {Categorical image quality (CSIQ) database},
   year = {2009},
-  howpublished = {[Online]. Available: \url{http://vision.okstate.edu/csiq}},
+  url = {http://vision.okstate.edu/csiq},
+  urldate = {01-06-2023}
 }
 
 
@@ -596,10 +621,9 @@ journal = {Advances of Modern Radioelectronics}
 
 @article{PSNR-HVS,
 author = {Egiazarian, Karen and Astola, J. and Lukin, Vladimir and Battisti, Federica and Carli, Marco},
+title = {A new full-reference quality metrics based on hvs},
 year = {2006},
-month = {01},
 pages = {},
-title = {A new full-reference quality metrics based on hvs}
 }
 
 @article{UQI,
@@ -708,10 +732,12 @@ year = {2020},
 author = {Vikrant Bhateja and Mansi Nigam and Anuj Singh Bhadauria and Anu Arya},
 }
 
-@misc{SemiSupervisedMRIFetalBrain,
+@article{SemiSupervisedMRIFetalBrain,
     title={Semi-Supervised Learning for Fetal Brain MRI Quality Assessment with ROI consistency}, 
     author={Junshen Xu and Sayeri Lala and Borjan Gagoski and Esra Abaci Turk and P. Ellen Grant and Polina Golland and Elfar Adalsteinsson},
     year={2020},
+    eprint={2006.12704},
+    archivePrefix={arXiv},
 }
 
 @article{IQAForPediatricMRIWithNoisySegmentation,
@@ -734,10 +760,12 @@ author = {Vikrant Bhateja and Mansi Nigam and Anuj Singh Bhadauria and Anu Arya}
 	journal = {Journal of Medical Systems}
 }
 
-@misc{Hys-net,
+@article{Hys-net,
       title={Blind Image Quality Assessment for MRI with A Deep Three-dimensional content-adaptive Hyper-Network}, 
       author={Kehan Qi and Haoran Li and Chuyu Rong and Yu Gong and Cheng Li and Hairong Zheng and Shanshan Wang},
       year={2021},
+      eprint={2107.06888},
+      archivePrefix={arXiv},
 }
 
 @article{MedicalBRISQUE,
@@ -816,10 +844,12 @@ journal = {Magnetic Resonance Imaging},
   year={2019}
 }
 
-@misc{MPED,
+@article{MPED,
     title={MPED: Quantifying Point Cloud Distortion based on Multiscale Potential Energy Discrepancy}, 
     author={Qi Yang and Yujie Zhang and Siheng Chen and Yiling Xu and Jun Sun and Zhan Ma},
     year={2022},
+    eprint={2103.02850},
+    archivePrefix={arXiv},
 }
 
 @article{bitstreamPCQ,
@@ -848,11 +878,6 @@ journal = {Magnetic Resonance Imaging},
   pages={4645-4660}
 }
 
-@misc{SGR,
-      title={Blind Quality Assessment of 3D Dense Point Clouds with Structure Guided Resampling}, 
-      author={Wei Zhou and Qi Yang and Qiuping Jiang and Guangtao Zhai and Weisi Lin},
-      year={2022},
-}
 
 @article{EnsemblePCQA,
 title = {No-reference mesh visual quality assessment via ensemble of convolutional neural networks and compact multi-linear pooling},
@@ -888,30 +913,31 @@ year={2019},
 }
 
 %Chapter 4 
-@misc{ResNet,
+@article{ResNet,
       title={Deep Residual Learning for Image Recognition}, 
       author={Kaiming He and Xiangyu Zhang and Shaoqing Ren and Jian Sun},
       year={2015},
       eprint={1512.03385},
       archivePrefix={arXiv},
-      primaryClass={cs.CV}
 }
 
 %chapter 5 
-@InProceedings{PCL,
-	author    = {Radu Bogdan Rusu and Steve Cousins},
-	title     = {{3D is here: Point Cloud Library (PCL)}},
-	booktitle = {{IEEE International Conference on Robotics and Automation (ICRA)}},
-	month     = {May 9-13},
-	year      = {2011},
+@inproceedings{PCL,
+  author={Rusu, Radu Bogdan and Cousins, Steve},
+  booktitle={2011 IEEE International Conference on Robotics and Automation (ICRA)}, 
+  title={3D is here: Point Cloud Library (PCL)}, 
+  year={2011},
+  pages={1-4},
 }
 
 @article{Open3D,
    author  = {Qian-Yi Zhou and Jaesik Park and Vladlen Koltun},
    title   = {{Open3D}: {A} Modern Library for {3D} Data Processing},
-   journal = {arXiv:1801.09847},
+    eprint={1801.09847},
+    archivePrefix={arXiv},
    year    = {2018},
 }
+
 
 @article{3DNSSMetrics,
 author = {Weinmann, Martin and Jutzi, Boris and Mallet, Clément and Weinmann, Michael},
@@ -920,9 +946,10 @@ volume = {IV-1/W1},
 journal = {ISPRS Annals of the Photogrammetry, Remote Sensing and Spatial Information Sciences},
 }
 
-@misc{LeslieS,
+@article{LeslieS,
       title={Super-Convergence: Very Fast Training of Neural Networks Using Large Learning Rates}, 
       author={Leslie N. Smith and Nicholay Topin},
+      eprint={1708.07120},
       archivePrefix={arXiv},
 }
 
