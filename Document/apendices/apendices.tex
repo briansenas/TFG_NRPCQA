@@ -35,17 +35,17 @@ OR LIMIT-TO (SUBJAREA , ``ENGI''))
 \label{sec:Implementacion}
 Este proyecto ha sido realizado mayoritariamente con el lenguaje de programación Python, 
 debido a que casi todos los modelos analizados estaban descritos en el mismo.
-No obstante, para la distorsión por compresión \emph{octree}\cite{OctreeCompression}, 
-se hizo uso de la librería PCL\cite{PCL} en el lenguaje C++.
+No obstante, para la distorsión por compresión \emph{octree}~\cite{OctreeCompression}, 
+se hizo uso de la librería PCL~\cite{PCL} en el lenguaje C++.
 
-Para el desarrollo y ejecución de los modelos fue necesario el uso de librería 
+Para el desarrollo y ejecución de los modelos fue necesario el uso de
 la librería de DL Pytorch junto con las librerías CUDA de para poder ejecutar 
 los modelos en las tarjetas gráficas de NVIDIA. Para los cálculos numéricos y 
 el manejo de datos se utilizaron Numpy y Polars, librería similar a Pandas 
 pero basada en Rust, más eficiente y fácilmente paralelizable. Además, para el
 cálculo de las métricas se utilizó la librería scikit-learn.
 Para la visualización y fácil manipulación de las nubes de puntos se hizo uso 
-de la librería de Open3D\cite{Open3D} y Pyntcloud.
+de la librería de Open3D~\cite{Open3D} y Pyntcloud~\cite{Pyntcloud}.
 Se ha gestionado el uso de estas librerías y todas sus dependencias tanto en entornos virtuales 
 de python como en entornos creados por cuadernos jupyter de Colab.
 
@@ -80,14 +80,14 @@ manual.
 Se desarrolló un fichero \code{gen_distortions.py} que automáticamente genera 
 un conjunto de distorsiones dado un directorio de entrada con archivos \code{.ply} y los 
 guarda en un directorio de salida especificado por argumento. Para ello se hace 
-uso de las distorsiones realizadas con Open3D\cite{Open3D} 
+uso de las distorsiones realizadas con Open3D~\cite{Open3D} 
 con el archivo del directorio \code{utils/distortions.py} y un ejecutable hecho 
 con C++ y Makefile para la distorsión \emph{octree}. A continuación, 
 podemos generar las etiquetas sintéticas con \code{get_metrics.py}, que dado un 
 directorio de entrada con las nubes de referencia y uno con las distorsiones, 
 genera un \code{.csv} con las etiquetas sintéticas generadas con las métricas 
 del estado del arte de los métodos FR-PCQA. Para ello se hace uso de un 
-software desarrollado con PCL\cite{PCL} y el archivo del directorio \code{utils/metrics.py}. 
+software desarrollado con PCL~\cite{PCL} y el archivo del directorio \code{utils/metrics.py}. 
 
 \subsubsection*{Preprocesado de datos}
 El único preprocesado que sufren los datos iniciales es el centrado de la nube 
@@ -158,6 +158,8 @@ ver Sección \ref{sec:Validation},
 para un conjunto de datos con los parámetros establecidos. 
 Para realizar una prueba desde un modelo pre-entrenado disponemos del script 
 \code{test.py}, al igual que el anterior recibe parámetros similares de entrada.
+Si se prefiere, se pone a disposición un cuaderno de jupyter con la implementación 
+bajo la librería \emph{fastai}~\cite{fastai}.
 Mientras que para el modelo ML, disponemos de los scripts de extracción 
 de características y los scripts necesario para la evaluación del 
 modelo sobre SJTU\cite{SJTU} o WPC\cite{WPC1, WPC2} en la carpeta \code{NR3DQA}.

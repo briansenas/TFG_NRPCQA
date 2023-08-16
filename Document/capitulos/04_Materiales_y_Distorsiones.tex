@@ -83,8 +83,10 @@ de objetos (véase Figura \ref{fig:LS-SJTU-PCQA}).
   \end{center}
   \caption{Ejemplo de conjunto de datos LS-SJTU-PCQA.
   Vemos que en este conjunto de datos tenemos una gran variedad de nubes 
-de puntos. En las primeras 6 filas tenemos modelos de animales, en 
-las dos siguientes seres humanos y por último varios objetos abstractos.}
+de puntos. 
+En las primeras filas tenemos un conjunto de modelos de animales, 
+seguidos de representaciones de seres humanos y, por último, 
+varios objetos abstractos.}
   \label{fig:LS-SJTU-PCQA}
 \end{figure}
 
@@ -311,9 +313,10 @@ Como se pudo observar en la Sección \ref{sec:EstadoDelArte}, actualmente hay un
 tendencia, justificada, a los métodos de DL frente a ML. Sin embargo, se experimentará con 
 ambos. No obstante, se tuvo 
 que descartar o adaptar todos los métodos que tuvieran en cuenta información de textura, 
-cosa que no existe en los volúmenes médicos habituales. Además, necesitamos 
-información perceptual de la imagen en su totalidad y no de regiones locales 
-específicas. Ambas características son dificultades añadidas a la hora 
+cosa que no existe en los volúmenes médicos habituales. También se descartaron 
+modelos que utilizan información perceptual de regiones locales, ya que necesitamos 
+dicha información respecto de la imagen en su totalidad. 
+Ambas características son dificultades añadidas a la hora 
 de resolver el problema. La primera restringe el problema 
 a la estimación de calidad de las estructuras en la imagen, eliminando la 
 percepción de calidad por contraste y saturación. La segunda incrementa 
@@ -401,10 +404,11 @@ que la distribución de estas se veía afectada por la intensidad
 de las distorsiones. 
 
 Para cada tipo de característica, se utiliza el valor medio y la desviación típica 
-obtenida para cada punto de la nube de punto. A continuación, sobre estas medidas, 
+obtenida para cada punto de la nube de punto. Por último, sobre estas medidas, 
 para el conjunto de datos de entrenamiento se normaliza como \eqref{eq:MeanNorm}.
 Donde F es la característica extraída y C una pequeña constante para la 
-estabilidad numérica. 
+estabilidad numérica. El conjunto de test se normaliza utilizando las medias y 
+desviaciones de los datos de entrenamiento.
 \begin{equation} 
   \hat F = \frac{F-mean(F)}{std(F) + C}
   \label{eq:MeanNorm}

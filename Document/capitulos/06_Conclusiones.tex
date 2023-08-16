@@ -22,14 +22,15 @@ hasta la extracción automática con DL.
 A continuación, se estudió el uso de estos y otros métodos sobre imágenes médicas 2D.
 Posteriormente se analizó el estado del arte de métodos dedicados a representaciones tridimensionales. 
 Se observa un salto en complejidad teórica y computacional al tratarse de problemas 
-en tres dimensiones y sin el objeto de referencia. 
+en tres dimensiones. 
 Por último, se concluye que no existe hasta el momento 
 otra investigación que haya tomado el enfoque novedoso de estimar la calidad de 
 reconstrucciones biomédicas 3D. 
 
-Se realizó un análisis de los métodos del estado del arte de estimación de calidad de objetos 
+Se implementó los métodos del estado del arte de estimación de calidad de objetos 
 3D, tanto desde la perspectiva de métodos tradicionales (ML, en donde la extracción 
-de características y la clasificación son etapas independientes) como de métodos \emph{end-to-end} DL. El primero hace uso de características 
+de características y la clasificación son etapas independientes) como de métodos 
+\emph{end-to-end} DL. El primero hace uso de características 
 extraídas manualmente utilizando conocimiento humano sobre el sistema visual humano (HVS), 
 como fenómenos de planaridad, esfericidad, anisotropía, curvatura, linealidad y consistencia de 
 colores de las nubes de puntos, que luego se utilizan para estimar una regresión por 
@@ -70,14 +71,14 @@ los valores de calidad inferidos, para distintas intensidades de submuestreo,
 y los valores de las etiquetas sintéticas correspondientes. 
 
 De los distintos métodos de fusión de características, se concluye que para 
-pocos conjuntos de datos los métodos F1, F2 y F3 quedan por detrás, aunque 
+pocos conjuntos de datos los métodos F1, F2 y F3 (fusión por \emph{pooling} bilineal) quedan por detrás, aunque 
 muy cerca, del método habitual de concatenar los vectores (F0). Siendo F3 el método 
 más estable para las distintas transformaciones de los datos (reescalado y normalización). 
 No obstante, es a la vez el método que obtiene los peores resultados. 
 Cuando pre-entrenamos en un conjunto de datos más largo, el método F3 sigue siendo 
-el con peores resultados, seguido de F1 que termina muy cerca de F0, mientras que F2 
-tiene un gran salto en sus resultados, logrando ser el mejor método de fusión de 
-características. 
+el con peores resultados, aunque más cerca de F1 que, a su vez, se acerca a F0. 
+Por otro lado, con más datos F2 tiene un gran salto en sus resultados, 
+logrando ser el mejor método de fusión de características. 
 
 Por lo tanto, se concluye que se han completado satisfactoriamente los objetivos 
 planteados, determinando la posibilidad de resolución del problema adaptado 
@@ -117,9 +118,11 @@ para normalizar las etiquetas sintéticas como lo hacen en la publicación origi
 en donde se parte de un conjunto pequeño extraído manualmente para obtener uno sintético varias 
 veces más grande. También, para mejorar el método propuesto, se podría permitir 
 que los pesos del modelo utilizado para la extracción de características 
-del vídeo fueran alterados en vez de ser solamente un paso previo. Además, se podría buscar simular las distorsiones 
+del vídeo fueran alterados en vez de ser solamente un paso previo, de extracción. 
+De esta forma se podría guiar el modelo a buscar nuevas características temporales.  
+Además, se podría buscar simular las distorsiones 
 sobre el conjunto de imágenes 2D generadas tras el examen en vez de hacerlo 
-sobre la representación 3D final. 
+sobre la representación 3D final, teniendo así datos más realistas. 
 
 Por otro lado, se pueden explorar otros métodos que procesen modelos 3D directamente, 
 o que hagan uso de proyecciones y de la nube de puntos simultáneamente, como en MM-PCQA~\cite{MM-PCQA}.

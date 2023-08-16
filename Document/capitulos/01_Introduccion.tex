@@ -18,7 +18,7 @@ La mejora de estas técnicas suele estar altamente conectada con el avance
 en los estudios del sistema de visión humano~\cite{Wang2006ModernIQ}.
  
 El problema de la evaluación de la calidad de la imagen se aborda mediante enfoques 
-subjetivos y objetivos~\cite{Wang2006ModernIQ}. 
+subjetivos y objetivos~\cite{Wang2006ModernIQ}.
 \begin{itemize}
   \item Los enfoques subjetivos implican realizar experimentos 
 perceptuales en los que se recopilan las opiniones y evaluaciones de los observadores 
@@ -48,17 +48,17 @@ sean muy prácticos para grandes cantidades de datos y diversas aplicaciones.
  
 No obstante, el objetivo del campo es desarrollar algoritmos y métricas que puedan proporcionar una 
 estimación precisa y consistente de la calidad de la imagen, teniendo en cuenta
-tanto aspectos subjetivos como objetivos respecto a las distorsiones.
+tanto aspectos subjetivos como objetivos respecto a las distorsiones~\cite{SJTU}.
 Y, de esta forma, poder evaluar y comparar diferentes métodos de adquisición, compresión, 
 restauración o manipulación de imágenes teniendo en cuenta que el receptor 
 final es el humano.
  
-Para abordar el problema de la IQA, se emplean diversas técnicas y enfoques
+Para abordar el problema de la IQA de forma objetiva, se emplean diversas técnicas y enfoques
 \cite{MinkowskiFailure, Wang2006ModernIQ, VisualMedicalQualityBook}.
 Entre ellos se incluyen métodos basados en características,
 modelos de percepción visual, aprendizaje automático y técnicas de procesamiento de señales
 \cite{SSIM, MMF, DSS}.
-Uno de los enfoques más habituales consiste enutilizar características básicas de la imagen. 
+Uno de los enfoques más habituales consiste en utilizar características básicas de la imagen. 
 Las características elementales de la imagen son por ejemplo el contraste, 
 la nitidez, la exposición y la uniformidad del color~\cite{MinkowskiFailure,Wang2006ModernIQ}. 
 Estas características pueden ser cuantificadas mediante algoritmos de procesamiento de 
@@ -81,9 +81,9 @@ Entre las aplicaciones más comunes de los algoritmos de estimación de calidad 
 la comparativa entre algoritmos de compresión (ya que permite elegir aquellos con 
 menor pérdida de información), la generación de mapas de calidad\footnote{
   Nivel de calidad perceptual de diferentes regiones o píxeles de la imagen.
-},
+}
 (permitiendo el estudio de métodos de reducción de ruido local)
-y la determinación de la calidad del servicio de transmisión o \emph{quality-of-service (QoS)},
+y la determinación de la calidad del servicio de transmisión o \emph{quality-of-service (QoS)}
 (ya que permiten evaluar los errores de transmisión). Se podría incluso 
 extender al pre-procesamiento de datos de entrenamiento o estimar la precisión 
 de un modelo de predicción basado en la calidad de los datos~\cite{ApplicationsOfIQA}.
@@ -130,19 +130,20 @@ En la Figura \ref{fig:DicomDistortionsExample} se aprecian las siguientes distor
   \item[(g)] \textbf{\emph{Zipper}}: área de píxeles alternantes claros y oscuros, presente en la dirección de codificación de frecuencia y que aparece en toda la serie de imágenes.
 \end{description}
 La mayoría de estas distorsiones, y combinaciones de ellas, no ocurren de forma natural 
-en las imágenes habituales del problema IQA. Como consecuencia, es necesario diseñar 
-adaptaciones de los modelos actuales y, por lo tanto, el número de métodos médicos 
+en las imágenes habituales del problema IQA. 
+Como consecuencia, es necesario diseñar adaptaciones de los modelos actuales y, por lo tanto, el número de métodos médicos 
 existentes se reduce, con ninguno, al momento de escritura, aplicado directamente a la reconstrucción 3D. 
-Dichas reconstrucciones suelen ser nubes de puntos~\cite{WhyUsePointCloud}. 
+Dichas reconstrucciones suelen ser nubes de puntos~\cite{WhyUsePointCloud} y las distorsiones 
+anteriores afectan al resultado final. 
 
 Las nubes de puntos o conjunto de puntos arbitrarios extraídos de la superficie 
-de un objeto de interés es uno de las representaciones más comunes y flexibles:
+de un objeto de interés es una de las representaciones más comunes y flexibles:
 los objetos representados ya sea mediante volúmenes de vóxeles o mallas poligonales
 pueden muestrearse fácilmente en nubes de puntos. Además, la adquisición de 
 datos a través de escaneo, segmentación u obtenidos de algoritmos de reconstrucción 
 3D generalmente proporcionan información geométrica en forma de un conjunto de puntos. 
 Las superficies reconstruidas pueden ser aplicadas para:
-medición morfológica para el grosor de la corteza o los huesos,
+medición morfológica del grosor de la corteza o los huesos,
 extracción de la línea central (esqueleto de curva) para traqueotomía o colonoscopía,
 particionamiento de superficies para clasificación de superficies corticales o
 anatómicas, así como registro y correspondencia de formas de tumores o huesos carpales 
@@ -150,8 +151,7 @@ anatómicas, así como registro y correspondencia de formas de tumores o huesos 
 
 Es por ello que se propone investigar específicamente el uso de métodos tridimensionales
 para el ámbito biomédico, aplicado a las reconstrucciones y visualizaciones volumétricas 
-que se suelen emplear en medicina. Todo el desarrollo del proyecto se puede 
-ver en el GitHub \url{https://github.com/CodeBoy-source/TFG_NRPCQA}.
+que se suelen emplear en medicina. El proyecto esta disponible en \url{https://github.com/CodeBoy-source/TFG_NRPCQA}.
 
 \section{Motivación}
  
@@ -184,13 +184,7 @@ de los huesos (arriba derecha).
 \end{figure}
 
 No obstante, cabe mencionar que las distorsiones
-están muy presentes en las imágenes médicas~\cite{MedicalImpactOfDistortions}, 
-prevaleciendo las distorsiones de contraste, ruido y difuminado\footnote{
-  Con \emph{ruido} nos referimos a pequeñas fluctuaciones no deseadas en los colores
-  debido a interferencias de todo tipo. \emph{Difuminado} se refiere a la 
-  pérdida de detalles en los bordes.
-}, 
-que se detallarán en la Sección \ref{sec:Distorsiones}.
+están muy presentes en las imágenes médicas~\cite{MedicalImpactOfDistortions}.
 Estas, a su vez, podrían afectar al volumen 3D que se puede generar a partir 
 las imágenes médicas, influyendo en el análisis y diagnóstico asociados. Por ejemplo, 
  en~\cite{XrayRejectionFactor} se estudiaron las razones por las que se suelen 
@@ -246,7 +240,8 @@ se requerirá dedicar al TFG unas 15 horas por semana, lo cual equivaldría a un
 diarias durante 5 días a la semana.
  
 La naturaleza del proyecto no presenta una complejidad significativa en términos 
-de su alcance y requisitos, lo cual permite abordar su desarrollo a través de un 
+de su alcance y requisitos, y el equipo de trabajo tampoco incluye un numeroso grupo 
+de personas cuya colaboración deba ser sincronizada, lo cual permite abordar su desarrollo a través de un 
 enfoque de ciclo de vida en cascada~\cite{ModeloEnCascada}. 
 No obstante, bajo este enfoque se evita retroceder en cualquiera de las fases 
 del ciclo, y aunque se espera que el diseño y los requisitos del sistema sean 
@@ -260,7 +255,7 @@ Las fases del ciclo de vida son:
     en este caso sería los directores del TFG. Se organiza el análisis bibliográfico 
     del problema \emph{IQA} y \emph{PCQA}\footnotemark[4], teniendo en cuenta un estudio previo 
     de las distorsiones médicas.
-  \item Diseño: Consistió en la investigación y selección de métodos conforme 
+  \item Diseño: Consiste en la investigación y selección de métodos conforme 
     al análisis anterior, tanto para la resolución como la validación de la solución. 
     Así como pruebas preliminares y diseño del software de experimentación. 
   \item Implementación: Consiste en la adaptación de las técnicas encontradas, 
