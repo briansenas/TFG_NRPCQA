@@ -24,42 +24,42 @@ modelos 3D, nubes de puntos, imágenes biomédicas, estimación de la calidad, a
 
 \noindent{\textbf{Resumen}}\\
 En el campo biomédico, la visualización y análisis de estructuras 3D
-desempeña un papel fundamental para el diagnóstico e investigación. 
-Sin embargo, la calidad de estas representaciones pueden variar debido a diversos factores, como la adquisición, procesamiento y reconstrucción. 
+desempeña un papel fundamental. 
+Sin embargo, la calidad de estas representaciones puede variar debido a diversos 
+factores, como la adquisición, procesamiento y reconstrucción de las estructuras anatómicas a analizar. 
 Para mejorar cada uno de estos pasos es necesario una manera de cuantificar las distorsiones que puedan surgir. 
-Es decir, es necesario aboradr el problema que consiste en estimar la calidad 
+Es decir, se hace necesaria abordar el problema que consiste en estimar la calidad 
 de dichas nubes de puntos. Este campo de investigación todavía no ha sido 
 suficientemente explorado en el ámbito biomédico.
 Para estimar la calidad de representaciones 2D o 3D, generalmente se extraen características de la imagen original y la distorsionada para su posterior 
-comparación. Estas características provienen del análisis de estructuras, colores y 
-del conocimiento del sistema visual humano. No obstante, 
-muchas veces no disponemos de la información de referencia, sino solo de la versión distorsionada.
-\\
+comparación.
+No obstante, muchas veces no disponemos de la información de referencia, sino solo de la versión distorsionada.
+\smallskip
 
-Este TFG trata presenta un sistema capaz de estimar la calidad de 
+Este TFG presenta un sistema capaz de estimar la calidad de 
 una representación 3D biomédica sin referencia, es decir, sin emplear una imagen 
-no distorsionada de referencia. La propuesta presenta la posibilidad de 
-adaptación de modelos de estimación de calidad de nubes de puntos genéricas 
-al ámbito médico. En concreto, haciendo uso de un meta-modelo de aprendizaje profundo para 
+no distorsionada de referencia. La propuesta 
+adapta modelos de estimación de calidad de nubes de puntos genéricas 
+al ámbito médico. En concreto, se hace uso de un meta-modelo de aprendizaje profundo para 
 procesar proyecciones 2D multi-vista y un vídeo del objeto 3D rotando. 
 De esta forma extraemos características tanto estáticas, de imágenes 
-sacadas desde una perspectiva fija, como dinámicas, conjunto de imágenes de 
+sacadas desde una perspectiva fija, como dinámicas, de imágenes de 
 perspectiva variante.
-\\
+\smallskip
 
 De cara a la validación experimental, como no existen bases de datos públicas con imágenes 
 biomédicas, se emplearon nubes de puntos generalistas, de personas, animales y objetos. 
 De hecho, como parte de este TFG, se propone un conjunto de datos médicos sintéticos 
 generados a partir de datos privados. 
-Los datos consisten de un conjunto de tomografías computerizadas y modelos 
-generados a mediante escáner láser 3D de diferentes partes óseas del cuerpo 
+Los datos consisten en un conjunto de tomografías computerizadas y modelos 
+generados mediante el escaneo láser 3D de diferentes estructuras óseas del cuerpo 
 humano. A este conjunto de datos se le aplican las distorsiones más comúnes 
-sobre las representaciones 3D médicas. 
+en las representaciones médicas 3D. 
 El valor real de calidad, de cada ejemplo generado, es estimado por medio de 
-los mejores métodos con referencia para cada tipo de distorsión. De forma que, 
+los mejores métodos, para cada tipo de distorsión, según la literatura. De forma que, 
 comparando la imagen distorsionada respecto a la original, 
 podemos aproximar la calidad perceptual humana.
-\\
+\smallskip
 
 A pesar de que los resultados obtenidos en este trabajo no dejan de ser preliminares, 
 cabe mencionar que se alcanzó una correlación entre valores de calidad obtenidos y 
@@ -94,14 +94,14 @@ and reconstruction. To improve each of these steps, a way to quantify the distor
 that may arise is necessary. That is, it is necessary to address the problem of 
 estimating the quality of such point clouds. This research area has not been 
 sufficiently explored in the biomedical domain.
-\\
+\smallskip
 
 To estimate the quality of 2D or 3D representations, features are generally extracted 
 from both the original and distorted images for subsequent comparison. 
 These features are derived from the analysis of structures, colors, and knowledge 
 of the human visual system. However, in many cases, we only have access to the 
 distorted version without the reference information.
-\\
+\smallskip
 
 This Bachelor's thesis presents a system capable of estimating the quality of a 
 biomedical 3D representation without a reference, meaning it does not require an 
@@ -110,7 +110,7 @@ generic point cloud quality estimation models to the medical domain. Specificall
 it leverages a meta-model based on deep learning to process multi-view 2D projections 
 and a video of the 3D object rotating. By doing so, both static features from images 
 taken from a fixed perspective and dynamic features from a set of perspective-varying images are extracted.
-\\
+\smallskip
 
 For experimental validation, as there are no publicly available databases with biomedical images, 
 generalist point clouds of people, animals, and objects were used. 
@@ -121,7 +121,7 @@ representations were applied to this dataset. The ground truth quality values fo
 each generated example were estimated using the best reference-based methods for 
 each type of distortion. By comparing the distorted images to the original ones, 
 we approximate the human perceptual quality.
-\\
+\smallskip
 
 While the results obtained in this work are preliminary, it is worth mentioning 
 that an 88\% correlation was achieved between the obtained quality values and the 
@@ -144,7 +144,7 @@ consultada por las personas que lo deseen.
 \vspace{2cm}
 
 \begin{flushright}
-Granada a 28 de julio de 2023.
+Granada a \today.
 \end{flushright}
 
 
@@ -166,13 +166,13 @@ D. \textbf{\myOtherProf}, Profesor del \myDepartment de la Universidad de Granad
 
 \vspace{0.5cm}
 
-Que el presente trabajo, titulado \textit{\textbf{\myTitle, \mySubTitle}},
+Que el presente trabajo, titulado \textit{\textbf{\myTitle}}
 ha sido realizado bajo su supervisión por \textbf{\myName}, y autorizamos la defensa de dicho trabajo ante el tribunal
 que corresponda.
 
 \vspace{0.5cm}
 
-Y para que conste, expiden y firman el presente informe en Granada a 28 de julio de 2023.
+Y para que conste, expiden y firman el presente informe en Granada a \today.
 
 \vspace{1cm}
 

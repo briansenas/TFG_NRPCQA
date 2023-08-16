@@ -3,15 +3,14 @@
 Con la demanda incremental de aplicaciones, tanto para el entretenimiento 
 como para el estudio biomédico, la información visual cada vez tiene un rol 
 más importante. Sin embargo, la calidad de dicha información puede 
-verse mermada
-con las etapas de adquisición, procesado, compresión, transmisión y reproducción.
+verse mermada con las etapas de adquisición, procesado, compresión, transmisión y reproducción.
 Es por ello que poder evaluar dicha calidad se ha vuelto un 
 tema cada vez más importante~\cite{RecentIQASurvey, IQABook, VisualMedicalQualityBook}.
-
-En concreto, este Trabajo Fin de Grado (TFG) se centra en el estudio de la evaluación de la calidad de la imagen,
+Es por ello que, este Trabajo Fin de Grado (TFG) se centra en el estudio de la 
+evaluación de la calidad de imágenes,
 en inglés \emph{Image Quality assessment} (\emph{IQA})~\cite{MinkowskiFailure}.
-Es un problema fundamental en el procesamiento de imágenes y la visión 
-por computador, que hace referencia a la tarea de medir y cuantificar 
+Se trata de un problema fundamental en el procesamiento de imágenes y la visión 
+por computador~\cite{CVAlgorithms,CVGeometry,CVModern,CVProcessing}, que hace referencia a la tarea de medir y cuantificar 
 la calidad perceptual de una imagen, 
 teniendo en cuenta factores como el contenido, la resolución, 
 el contraste, las distorsiones visuales y la percepción humana. 
@@ -19,7 +18,7 @@ La mejora de estas técnicas suele estar altamente conectada con el avance
 en los estudios del sistema de visión humano~\cite{Wang2006ModernIQ}.
  
 El problema de la evaluación de la calidad de la imagen se aborda mediante enfoques 
-subjetivos y objetivos. 
+subjetivos y objetivos~\cite{Wang2006ModernIQ}. 
 \begin{itemize}
   \item Los enfoques subjetivos implican realizar experimentos 
 perceptuales en los que se recopilan las opiniones y evaluaciones de los observadores 
@@ -32,8 +31,8 @@ como \emph{mean opinion score, MOS}\footnote{
 la media de la opinión de diversas personas para establecer un valor de referencia. 
 }.
 \item Los enfoques objetivos buscan desarrollar algoritmos y métricas 
-automáticas que puedan estimar la calidad de la imagen sin intervención humana. 
-Estos enfoques se basan en características y propiedades visuales extraídas de la 
+que puedan estimar la calidad de la imagen sin intervención humana. 
+Estos enfoques se basan en características y propiedades visuales extraídas automáticamente a partir de la 
 imagen, que se utilizan para calcular una puntuación de calidad. Estas características 
 pueden incluir medidas de nitidez, contraste, estructura, color, distribución de 
 texturas y otros aspectos relevantes para la percepción visual.
@@ -44,7 +43,7 @@ recursos disponibles. Los enfoques subjetivos son considerados como la referenci
 para la evaluación de la calidad de la imagen, ya que capturan la apreciación 
 humana. Sin embargo, estos enfoques pueden ser costosos y requieren de un número 
 significativo de participantes. 
-Mientras que los enfoques objetivos se pueden llegar a automatizar, haciendo que 
+Por otro lado, los enfoques objetivos se pueden llegar a automatizar, haciendo que 
 sean muy prácticos para grandes cantidades de datos y diversas aplicaciones.
  
 No obstante, el objetivo del campo es desarrollar algoritmos y métricas que puedan proporcionar una 
@@ -59,7 +58,7 @@ Para abordar el problema de la IQA, se emplean diversas técnicas y enfoques
 Entre ellos se incluyen métodos basados en características,
 modelos de percepción visual, aprendizaje automático y técnicas de procesamiento de señales
 \cite{SSIM, MMF, DSS}.
-Uno de los enfoques comunes es utilizar características básicas de la imagen. 
+Uno de los enfoques más habituales consiste enutilizar características básicas de la imagen. 
 Las características elementales de la imagen son por ejemplo el contraste, 
 la nitidez, la exposición y la uniformidad del color~\cite{MinkowskiFailure,Wang2006ModernIQ}. 
 Estas características pueden ser cuantificadas mediante algoritmos de procesamiento de 
@@ -78,25 +77,22 @@ de resolver el problema. Se intenta aproximar una función que a partir del conj
 de características extraídas pueda determinar la calidad de la imagen en una escala 
 específica, generalmente en el rango de 0 a 10.
 
-Las aplicaciones comunes de los algoritmos de estimación de calidad suele ser 
+Entre las aplicaciones más comunes de los algoritmos de estimación de calidad se podrían citar las siguientes~\cite{VMAF, VMAFReproducibility, Applications}:  
 la comparativa entre algoritmos de compresión (ya que permite elegir aquellos con 
-menor pérdida de información) la generación de mapas de calidad\footnote{
+menor pérdida de información), la generación de mapas de calidad\footnote{
   Nivel de calidad perceptual de diferentes regiones o píxeles de la imagen.
 },
-permitiendo el estudio de métodos de reducción de ruido local,
+(permitiendo el estudio de métodos de reducción de ruido local)
 y la determinación de la calidad del servicio de transmisión o \emph{quality-of-service (QoS)},
-ya que permiten evaluar los errores de transmisión~\cite{VMAF, VMAFReproducibility}. Se podría incluso 
+(ya que permiten evaluar los errores de transmisión). Se podría incluso 
 extender al pre-procesamiento de datos de entrenamiento o estimar la precisión 
 de un modelo de predicción basado en la calidad de los datos~\cite{ApplicationsOfIQA}.
 
 El uso de algoritmos IQA se encuentra ampliamente difundido en el ámbito general de las imágenes 2D. 
-Sin embargo, el número de métodos propuestos decrece al desplazarnos a tres dimensiones
-debido al aumento de complejidad.
+Sin embargo, el número de métodos propuestos decrece al desplazarnos a tres dimensiones.
 Además, en el ámbito médico, la naturaleza de estas imágenes y las distorsiones que pueden 
-presentar, véase Figura \ref{fig:DicomDistortionsExample}, implican una disminución en 
+presentar (véase Figura \ref{fig:DicomDistortionsExample}) implican una disminución en 
 la precisión de los modelos cuando se aplican directamente sobre ellas~\cite{VisualMedicalQualityBook}.
-Por lo tanto, el número de métodos médicos existentes se reduce, con ninguno, al 
-momento de escritura, aplicado a imágenes médicas 3D. 
 
 \begin{figure}[htp]
   \centering 
@@ -107,18 +103,64 @@ momento de escritura, aplicado a imágenes médicas 3D.
   \label{fig:DicomDistortionsExample}
 \end{figure}
 
+En la Figura \ref{fig:DicomDistortionsExample} se aprecian las siguientes distorsiones:
+\begin{description}
+  \item[(a)] \textbf{\emph{Herringbone}}: causa variaciones en intensidad y superposición 
+    de bandas oscuras en imágenes debido a la transformada de Fourier.
+  \item[(b)] \textbf{\emph{Ghosting}}: influenciado por reacciones físicas del paciente, 
+    factores ambientales y movimientos pulsátiles, como latidos cardíacos, 
+    puede causar distorsiones que se superponen con la imagen.
+  \item[(c)] \textbf{Susceptibilidad magnética}: al ubicar tejidos en un campo magnético, 
+    su magnetización desigual debido a la susceptibilidad magnética causa 
+    distorsiones geométricas y variaciones de señal, acentuadas por implantes 
+    metálicos altamente susceptibles.
+  \item[(d)] \textbf{Superposición de cortes}: pérdida de señal visible en la imagen 
+    debido a la adquisición desde múltiples ángulos. 
+    En esta distorsión, las secciones en los bordes tienen una intensidad de señal 
+    reducida y no crean un perfil de corte con bordes rectos.
+  \item[(e)] \textbf{\emph{Aliasing}}: Los artefactos de aliasing surgen cuando el campo 
+    de visión es menor que la zona corporal capturada, generando superposición 
+    de estructuras regulares. En imágenes médicas, estas distorsiones pueden 
+    aparecer como un patrón de franjas o líneas que no corresponden 
+    correctamente a la anatomía real.
+  \item[(f)] \textbf{Efecto de Gibbs}: también conocidos como artefactos de truncamiento 
+    o artefactos de anillos, son una serie de líneas en la imagen de resonancia 
+    magnética que aparecen paralelas al área donde ha ocurrido un cambio repentino 
+    e intenso en la intensidad de la señal.
+  \item[(g)] \textbf{\emph{Zipper}}: área de píxeles alternantes claros y oscuros, presente en la dirección de codificación de frecuencia y que aparece en toda la serie de imágenes.
+\end{description}
+La mayoría de estas distorsiones, y combinaciones de ellas, no ocurren de forma natural 
+en las imágenes habituales del problema IQA. Como consecuencia, es necesario diseñar 
+adaptaciones de los modelos actuales y, por lo tanto, el número de métodos médicos 
+existentes se reduce, con ninguno, al momento de escritura, aplicado directamente a la reconstrucción 3D. 
+Dichas reconstrucciones suelen ser nubes de puntos~\cite{WhyUsePointCloud}. 
+
+Las nubes de puntos o conjunto de puntos arbitrarios extraídos de la superficie 
+de un objeto de interés es uno de las representaciones más comunes y flexibles:
+los objetos representados ya sea mediante volúmenes de vóxeles o mallas poligonales
+pueden muestrearse fácilmente en nubes de puntos. Además, la adquisición de 
+datos a través de escaneo, segmentación u obtenidos de algoritmos de reconstrucción 
+3D generalmente proporcionan información geométrica en forma de un conjunto de puntos. 
+Las superficies reconstruidas pueden ser aplicadas para:
+medición morfológica para el grosor de la corteza o los huesos,
+extracción de la línea central (esqueleto de curva) para traqueotomía o colonoscopía,
+particionamiento de superficies para clasificación de superficies corticales o
+anatómicas, así como registro y correspondencia de formas de tumores o huesos carpales 
+\cite{WhyUsePointCloud}.
+
 Es por ello que se propone investigar específicamente el uso de métodos tridimensionales
 para el ámbito biomédico, aplicado a las reconstrucciones y visualizaciones volumétricas 
-que se suelen emplear en medicina.
+que se suelen emplear en medicina. Todo el desarrollo del proyecto se puede 
+ver en el GitHub \url{https://github.com/CodeBoy-source/TFG_NRPCQA}.
 
 \section{Motivación}
  
-En el caso del ámbito biomédico, dados los rápidos avances en las últimas décadas
+En el caso del ámbito biomédico, dados los rápidos avances 
 de las técnicas no invasivas y la gran cantidad de fabricantes 
 de equipamientos, nació el estándar \emph{DICOM}~\cite{Parisot1995} en 1995 
 con el objeto de hacer que el intercambio de imágenes médicas se realizase de forma 
-fácil, segura y con alta calidad. Permitiendo la integración con diversos sistemas, 
-almacenar información extra en forma de metadatos y anotaciones, así como segmentaciones que permitan la reconstrucción 3D de diferentes regiones anatómicas.
+fácil, segura y con alta calidad. Este estándar pretendía permitir la integración con diversos sistemas, 
+almacenar información extra en forma de metadatos y anotaciones, así como segmentaciones que facilitasen la reconstrucción 3D de diferentes regiones anatómicas.
 
 Cada vez más frecuentemente se emplean volúmenes tridimensionales, como tomografías computarizadas o
 resonancias magnéticas en lugar de radiografías convencionales, porque 
@@ -126,7 +168,7 @@ proporcionan una visión más completa y detallada de la anatomía y las estruct
 internas del cuerpo (véase Figura \ref{fig:SlicerVisualization}). 
 Esta visualización tridimensional permite a los médicos y personal sanitario 
 identificar con mayor precisión lesiones, enfermedades o anormalidades,
-así como también facilita la planificación quirúrgica y entre otros~\cite{3DImagingInMedicine, 3DImagingInMedicine2, ADAS3D}.
+así como facilitar la planificación quirúrgica, entre otros~\cite{3DImagingInMedicine, 3DImagingInMedicine2, ADAS3D}.
  
 \begin{figure}[htp]
   \begin{center}
@@ -144,16 +186,16 @@ de los huesos (arriba derecha).
 No obstante, cabe mencionar que las distorsiones
 están muy presentes en las imágenes médicas~\cite{MedicalImpactOfDistortions}, 
 prevaleciendo las distorsiones de contraste, ruido y difuminado\footnote{
-  Con \emph{ruido} nos referimos a pequeñas fluctuaciones no deseadas en los colores de 
-  los píxeles debido a interferencias de todo tipo. \emph{Difuminado} se refiere a la 
-  pérdida de detalles en los bordes, como una pérdida de enfoque.
+  Con \emph{ruido} nos referimos a pequeñas fluctuaciones no deseadas en los colores
+  debido a interferencias de todo tipo. \emph{Difuminado} se refiere a la 
+  pérdida de detalles en los bordes.
 }, 
 que se detallarán en la Sección \ref{sec:Distorsiones}.
-Estas a su vez, podrían afectar al volumen 3D que se puede generar a partir 
-las imágenes médicas, afectando el análisis y dianóstico asociados Por ejemplo, 
+Estas, a su vez, podrían afectar al volumen 3D que se puede generar a partir 
+las imágenes médicas, influyendo en el análisis y diagnóstico asociados. Por ejemplo, 
  en~\cite{XrayRejectionFactor} se estudiaron las razones por las que se suelen 
-rechazar las radiografías, la relación con la calidad de la imagen y el valor
-del diagnóstico final. Reveló que la mayoría de los rechazos se producen por 
+rechazar las radiografías y su relación relación con el diagnóstico final. 
+Reveló que la mayoría de los rechazos se producen por 
 errores de posicionamiento, valores inadecuados de exposición, artefactos 
 y los problemas de cooperación del paciente. 
 Además, no es difícil imaginar que una alta 
@@ -169,12 +211,12 @@ en la calidad del diagnóstico médico.
 
 \section{Objetivos}
 El objetivo principal de este Trabajo de Fin de Grado (TFG) 
-consiste en desarrollar un método adecuado para abordar al 
-problema de la estimación de la calidad de imágenes médicas tridimensionales. 
+consiste en desarrollar un \textbf{método adecuado para abordar al 
+problema de la estimación de la calidad de imágenes médicas tridimensionales}. 
 Este objetivo se puede descomponer en una serie de metas parciales: 
 \begin{enumerate}
   \item Realizar una revisión exhaustiva del estado del arte para la estimación de calidad 
-    de imágenes \emph{3D}, así como de la calidad de imágenes médicas 3D en particular.
+    de imágenes 3D, así como de la calidad de imágenes médicas 3D en particular.
   \item Estudiar las distorsiones de imagen más comunes, en general, y analizar los patrones de distorsión que afectan la calidad de las imágenes 
     biomédicas.
   \item Analizar pausadamente los enfoques de inteligencia artificial más prometedores que permitan abordar el problema planteado. 
@@ -185,9 +227,17 @@ Este objetivo se puede descomponer en una serie de metas parciales:
     propuestos y extraer conclusiones sobre su aplicabilidad al problema. 
 \end{enumerate}
 
+\begin{figure}
+  \begin{center}
+    \includegraphics[width=\textwidth]{imagenes/chapter1/Objetivos}
+  \end{center}
+  \caption{Objetivos de este proyecto.}
+  \label{fig:Objetivos}
+\end{figure}
+
 
 \section{Planificación del proyecto}
-Al planificar el proyecto, es fundamental tener en cuenta el TFG 
+Al planificar el proyecto, es fundamental tener en cuenta que el TFG 
 tiene una carga de 12 créditos ECTS, donde cada 
 crédito representa aproximadamente 25 horas de trabajo. 
 En total, se estima que se necesitarán alrededor de 300 horas para llevar a cabo 
@@ -240,11 +290,11 @@ Pruebas & 6 - 90 &  &  &  &  &  &  &  &  &  &  &  &  &  &  & & \cellcolor[HTML]{
 \label{tab:PlanificacionTemporal}
 \end{table}
 
-La planificación inicial se muestra en la tabla \ref{tab:PlanificacionTemporal}. 
+La planificación inicial se muestra en la Tabla \ref{tab:PlanificacionTemporal}. 
 Dicha planificación sufrió ciertos retrasos debido a que el alumno estaba realizando prácticas de empresa, tenía 
 una asignatura y participaba de un curso de \emph{Google} ofrecido por la universidad.
 Además, se esperaba que ocurrieran retrasos, sobre todo en la implementación, 
-como se puede ver en la Tabla(\ref{tab:PlanificacionFinal}), dada la novedad de la propuesta
+como se puede ver en la Tabla \ref{tab:PlanificacionFinal}, dada la novedad de la propuesta
 y la dificultad del problema. En concreto, por ejemplo, el hecho de simular las distorsiones 
 médicas fue un proceso iterativo y manual que llevó más tiempo de lo esperado. 
 
@@ -267,7 +317,7 @@ Pruebas & 6 - 90 &  &  &  &  &  &  &  &  &  &  &  &  & \cellcolor[HTML]{9B9B9B} 
 \end{table}
 
 Para realizar este proyecto se tuvo en cuenta los siguientes materiales:
-Suscripción a \emph{Google Colab Pro}, un portátil personal de gama media, 
+suscripción a \emph{Google Colab Pro}, un portátil personal de gama media, 
 \emph{Google Drive 100GB} y otros gastos. 
 Además, para el coste estimado, se asume un salario de 25\officialeuro/hora, como para un investigador \emph{senior} o
 responsable I+D de una empresa tecnológica en España. 
@@ -275,7 +325,7 @@ responsable I+D de una empresa tecnológica en España.
 Respecto al servidor GPU, con las especificaciones actuales de \emph{Google}, 
 se estima un coste aproximado de 10.000\officialeuro. Se asume una amortización de 2 años, 
 lo que implica un pago diario de 13.70\officialeuro. El desglose total de los costes 
-se puede ver en la siguiente Tabla (\ref{tab:TotalGastos})
+se puede ver en la siguiente Tabla \ref{tab:TotalGastos}.
 
 \begin{table}[H]
 \centering
@@ -302,7 +352,7 @@ se puede ver en la siguiente Tabla (\ref{tab:TotalGastos})
 \multicolumn{1}{|l|}{Servidor GPU} & \multicolumn{1}{l|}{2 109.8\officialeuro} \\ \hline
 \multicolumn{1}{|l|}{Google Drive 100GB} & \multicolumn{1}{l|}{10.00\officialeuro} \\ \hline
 \multicolumn{1}{|l|}{Otros} & \multicolumn{1}{l|}{300.00\officialeuro} \\ \hline
-\multicolumn{1}{|r|}{\cellcolor[HTML]{FFCB2F}{\textbf{Total}}} & \multicolumn{1}{l|}{ 11 425.3 \officialeuro} \\ \hline
+\multicolumn{1}{|r|}{\cellcolor[HTML]{FFCB2F}{\textbf{Total}}} & \multicolumn{1}{l|}{ 11.425,3 \officialeuro} \\ \hline
 \textbf{} & 
 \end{tabular}
 \caption{Estimación final de coste del proyecto.}

@@ -1,7 +1,7 @@
 \chapter{Fundamentos Teóricos}
 \section{Image Quality Assessment (IQA)}
 \label{sec:IQA}
-Existen tres subproblemas presenten en el ámbito de \emph{IQA}. Los primeros, son problemas 
+Existen tres subproblemas presenten en el ámbito de \emph{IQA}~\cite{RecentIQASurvey, IQABook, VisualMedicalQualityBook}. Los primeros, son problemas 
 donde tenemos acceso a la imagen original, que suponemos exenta de desperfectos, 
 en la cual se pueden aplicar métodos basados en diferencia de características 
 entre ambas, como puede ser al nivel del color de píxel posición a posición,
@@ -20,8 +20,13 @@ Primeramente, se asume la misma importancia para todas las señales de la imagen
 la magnitud del error es lo único que determina la calidad, que el contenido de la imagen 
 no afecta al resultado final tras aplicar una distorsión, y que si cambiamos el 
 orden de las señales la medida de distorsión no es afectada.
-Lamentablemente, ninguna de estas suposiciones se cumplen~\cite{Wang2006ModernIQ} (véase Figuras \ref{fig:FailureMinkowskiMetric} y \ref{fig:MSEHyperSphere}, 
-que utilizan distancias \emph{Minkowski}\footnotemark[2] y \emph{MSE}\footnotemark[3] respectivamente).
+Lamentablemente, ninguna de estas suposiciones se cumplen~\cite{Wang2006ModernIQ} (véasne Figuras \ref{fig:FailureMinkowskiMetric} y \ref{fig:MSEHyperSphere}, 
+que utilizan distancias \emph{Minkowski}, 
+que puede considerarse como una generalización tanto de 
+la distancia euclídea como de la distancia de Manhattan, 
+y \emph{MSE}, 
+que se calcula como la media de la suma de las 
+diferencias al cuadrado, respectivamente).
 
 \begin{figure}[htp]
   \begin{center}
@@ -42,13 +47,13 @@ que utilizan distancias \emph{Minkowski}\footnotemark[2] y \emph{MSE}\footnotema
     No obstante, es evidente que algunas distorsiones producen efectos visuales más marcados que otras.}
   \label{fig:MSEHyperSphere}
 \end{figure}
-\footnotetext[2]{La distancia de \emph{Minkowski} es una métrica 
-vectorial que puede considerarse como una generalización tanto de 
-la distancia euclídea como de la distancia de Manhattan. }
-\footnotetext[3]{\emph{Mean squared error} o error cuadrático medio 
-  es una métrica de distancia que se calcula como la media de la suma de las 
-  diferencias al cuadrado.
-} 
+% \footnotetext[2]{La distancia de \emph{Minkowski} es una métrica 
+% vectorial que puede considerarse como una generalización tanto de 
+% la distancia euclídea como de la distancia de Manhattan. }
+% \footnotetext[3]{\emph{Mean squared error} o error cuadrático medio 
+%   es una métrica de distancia que se calcula como la media de la suma de las 
+%   diferencias al cuadrado.
+% } 
  
 El siguiente subproblema es aquel donde tenemos algún tipo de información adicional, incompleta, respecto 
 a la imagen original el momento de análisis de la calidad de la imagen final,
@@ -85,7 +90,7 @@ es una tarea sorprendentemente sencilla para el ser humano~\cite{Wang2006ModernI
 
 Para resolver problemas NR, debemos disponer de conocimientos de la naturaleza de las imágenes 
 de las que tratamos y los efectos de las distorsiones. Lo que se denomina 
-estadísticas naturales de escena (NSS, por sus siglas en inglés). Un ejemplo 
+estadísticas de escena naturales (NSS, por sus siglas en inglés). Un ejemplo 
 sería JPEG, un algoritmo de compresión que se codifica por bloques 8x8. Los efectos
 negativos de la compresión se representan por el difuminado entre bloques y los artefactos que generan.
 Entender estos efectos permite diseñar métricas específicas~\cite{SpatialDomainForJPEG}
@@ -140,7 +145,7 @@ de los datos a utilizar o el objetivo a alcanzar, podemos encontrar distintos ti
 algoritmos de aprendizaje. En este documento se recogerán dos grandes grupos: aprendizaje supervisado 
 y aprendizaje no supervisado. En el primero disponemos de un conjunto de datos 
 anotados, es decir, con las salidas deseadas para cada ejemplo y en el segundo 
-se espera que sea la máquina la que determine los patrones (véase Figuras \ref{fig:SupervisedExample} y \ref{fig:UnsupervisedExample}). 
+se espera que sea la máquina la que determine los patrones (véanse Figuras \ref{fig:SupervisedExample} y \ref{fig:UnsupervisedExample}). 
 En general se suelen aplicar las técnicas de \emph{ML} sobre grandes conjuntos 
 de datos sobre los cuales deseamos detectar los patrones subyacentes~\cite{
 DataMiningHandbook}.
@@ -242,8 +247,12 @@ restricciones sobre el entrenamiento para evitar el sobre ajuste.
   \includegraphics[width=\textwidth]{imagenes/chapter2/ANNVisualization.png}
   \caption[Ejemplo gráfico de una red neuronal.]
   {Ejemplo gráfico de una red neuronal~\cite{NeuronImages, NeuronSimilarity,ShallowAndDeepNN}. 
-      En (a) vemos una neurona con su representación artificial simplificada (b). En (c) vemos una conexión entre 
-  neuronas y en (d) la representación de diferentes profundidades de conexiones artificiales.}
+    (a) y (b) muestran una neurona biológica y una artificial, respectivamente. 
+    (c) visualiza la sinapsis (o proceso mediante el cual las neuronas se comunican 
+    entre sí para transmitir información). (d) muestra dos redes neuronales artificiales: 
+    a la izquierda, una red neuronal superficial (\emph{shallow}), con una única 
+    capa oculta; a la derecha, una red neuronal profunda (\emph{deep}), con múltiples capas ocultas.
+  }
   \label{fig:ANNVisualization}
 \end{figure}
 
@@ -263,8 +272,11 @@ y capas de \emph{pooling}.
 \begin{figure}[htp]
   \centering
   \includegraphics[width=\textwidth]{imagenes/chapter2/RadiographyConvolutionExample.png}
-  \caption[Ejemplo de red convolucional para imágenes médicas]{Ejemplo extraída de~\cite{RadiographyConvolutionExample} del proceso de convolución sobre una radiografía pulmonar 
-  para la detección de enfermedades.}
+  \caption[Ejemplo de red convolucional para imágenes médicas]{
+    Red neuronal convolucional (CNN) aplicada a un problema de clasificación de imágenes biomédicas~\cite{RadiographyConvolutionExample}.
+    Se pueden identificar los principales bloques constitutivos de una CNN: capa convolucional, 
+    capa de pooling, función de activación, y capa totalmente conectada.
+  }
   \label{fig:RadiographyConvolutionExample}
 \end{figure}
 
@@ -333,7 +345,7 @@ Dependiendo de la complejidad del problema, se puede ajustar el número de estas
   \end{center}
 
   \caption{
-    Ejemplo de operación de \emph{max-pooling} con \emph{stride} a 2.
+    Ejemplo de operación de \emph{max-pooling} con \emph{stride} a 2x2.
   }
   \label{fig:PoolingExample}
 \end{figure}
@@ -343,7 +355,7 @@ Las capas totalmente conectadas o \emph{fully connected}, también llamadas
 capas densas o \emph{dense}, son aquellas en las que todas sus neuronas 
 están conectadas con todas las neuronas de la capa anterior y de la
 siguiente. Si bien existen modelos totalmente convolucionales, resulta común
-que las CNN's incluyan capas totalmente conectadas al final de la arquitectura.
+que las CNNs incluyan capas totalmente conectadas al final de la arquitectura.
 Estas capas forman una ANN clásica.
 La salida de la última capa densa, siendo la salida de la red entera, es donde
 se evaluará la función de pérdida elegida, y al igual que en una red neuronal
@@ -380,7 +392,7 @@ para obtener información de movimiento (Figura \ref{fig:SlowFastPathways}).
 
 \subsubsection{Aplicadas a nubes de puntos}
 
-De forma similar al caso de lo vídeos, actualmente existen modelos de 3D CNN's 
+De forma similar al caso de los videos, actualmente existen modelos de 3D CNNs 
 capaces de procesar nubes de puntos al añadir una dimensión más que representa 
 la profundidad de los puntos.  Sin embargo, la complejidad de diseño y tiempo de cómputo para 
 estos modelos 3D crece enormemente. Ya que habitualmente las nubes de puntos 
@@ -443,7 +455,12 @@ las imágenes médicas 3D sin referencia.
 \begin{figure}[htp]
   \centering
   \includegraphics[width=\textwidth]{imagenes/chapter2/EnsembleExample.png}
-  \caption[Representación de métodos de \emph{ensemble}.]{Representación de métodos de \emph{ensemble} extraído de~\cite{MedicalEnsembleExample}.}
+  \caption[Representación de métodos de \emph{ensemble}.]{Representación de métodos de \emph{ensemble}~\cite{MedicalEnsembleExample}.
+    A la izquierda vemos una definición general de los distintos tipos de \emph{ensemble}. A la derecha, el primer esquema es sobre 
+    aumentación de datos (un conjunto de datos y un modelo que se entrena con varias ejemplos alterados o no). El siguiente 
+    esquema representa \emph{bagging} (el mismo modelo entrenado con distintos subconjuntos de datos). 
+    Por último, observamos el empleo de \emph{stacking} (distintos modelos entrenados con el mismo conjunto de datos).
+  }
   \label{fig:EnsembleExample}
 \end{figure}
 
@@ -516,40 +533,46 @@ llamado octante. En la compresión se analiza los octantes y se elimina los que 
 menos información. 
 En el segundo, establecemos un porcentaje de puntos que eliminar y los eliminamos 
 de forma aleatoria hasta alcanzar ese porcentaje de reducción.
-
 Las demás representarán efectos que podrían ocurrir por desplazamiento de los puntos, 
 como el movimiento del paciente y aquellos provocados por ruido en la transmisión de datos.
 
 \begin{figure}[htp]
   \begin{subfigure}[b]{.5\textwidth}
     \centering
-    \includegraphics[width=\textwidth]{imagenes/chapter2/clavicula/clavicula_0.png}
+    \includegraphics[width=.95\textwidth]{imagenes/chapter2/clavicula/clavicula_0.png}
+    \caption{}
   \end{subfigure}
   \hfill
   \begin{subfigure}[b]{.5\textwidth}
     \centering
-    \includegraphics[width=\textwidth]{imagenes/chapter2/clavicula/clavicula_1.png}
+    \includegraphics[width=.95\textwidth]{imagenes/chapter2/clavicula/clavicula_1.png}
+    \caption{}
   \end{subfigure}
   \begin{subfigure}[b]{.5\textwidth}
     \centering
-    \includegraphics[width=\textwidth]{imagenes/chapter2/clavicula/clavicula_2.png}
+    \includegraphics[width=.95\textwidth]{imagenes/chapter2/clavicula/clavicula_2.png}
+    \caption{}
   \end{subfigure}
   \hfill
   \begin{subfigure}[b]{.5\textwidth}
     \centering
-    \includegraphics[width=\textwidth]{imagenes/chapter2/clavicula/clavicula_3.png}
+    \includegraphics[width=.95\textwidth]{imagenes/chapter2/clavicula/clavicula_3.png}
+    \caption{}
   \end{subfigure}
   \begin{subfigure}[b]{.5\textwidth}
     \centering
-    \includegraphics[width=\textwidth]{imagenes/chapter2/clavicula/clavicula_4.png}
+    \includegraphics[width=.95\textwidth]{imagenes/chapter2/clavicula/clavicula_4.png}
+    \caption{}
   \end{subfigure}
   \begin{subfigure}[b]{.5\textwidth}
     \centering
-    \includegraphics[width=\textwidth]{imagenes/chapter2/clavicula/clavicula_5.png}
+    \includegraphics[width=.95\textwidth]{imagenes/chapter2/clavicula/clavicula_5.png}
+    \caption{}
   \end{subfigure}
-  \caption[Ejemplo de distorsiones generadas sobre clavículas.]{Ejemplo de distorsiones generadas sobre clavículas. Leyendo de izquierda a derecha tenemos:
-    la imagen original, compresión \emph{octree}, reducción de puntos por \emph{random downsampling},
-    movimiento local, rotación local y ruido gaussiano.
+  \caption[Ejemplo de distorsiones generadas sobre clavículas.]{Ejemplo de distorsiones generadas sobre clavículas.
+    Tenemos la imagen original (a) y luego su versión tras compresión \emph{octree} (b), 
+    tras reducción de puntos por \emph{random downsampling} (c), tras simulación 
+    de movimiento local (d) y rotación local (e), y, por último, ruido gaussiano (f).
   }
   \label{fig:DistorsionesGeneradas}
 \end{figure}

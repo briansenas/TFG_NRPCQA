@@ -5,7 +5,7 @@ ligado al avance tecnológico y necesidades de manejo de información digital, h
 tomado mayor interés en el comienzo del siglo actual.
 Puede observarse en la Figura \ref{fig:ScopusMLinMedicalAndPC} que existe 
 una tendencia creciente en el número de publicaciones en relación a la aplicación 
-de inteligencia artificial en las nubes de puntos y en imágenes médicas, llegando
+de IA en las nubes de puntos y en imágenes médicas, llegando
 ambas a sobrepasar 6000 documentos a partir de 2020.  Vemos que ambos incluso siguen 
 lado al lado en número de publicaciones cuando especificamos que sean documentos 
 relacionados con la estimación de calidad, sobrepasando los 250 documentos. 
@@ -62,7 +62,7 @@ imágenes con artefactos de bloque~\cite{DeblockedImages} y imágenes con
 cambios de contraste~\cite{ContrastDistorted}.
 Luego, se buscaron maneras de estimar la calidad de imágenes de forma más genérica, 
 sin depender del tipo de distorsión. Para ello, se han propuesto varias métricas 
-basadas en estadísticas de escenas naturales (NSS) y el sistema HVS. 
+basadas en NSS y el sistema HVS. 
 Un ejemplo conocido es el evaluador sin referencia BRISQUE~\cite{BRISQUE}, que extrae 
 características NSS de un modelo estadístico de coeficientes de luminancia 
 normalizados localmente en el dominio espacial y demuestra que estas características 
@@ -81,10 +81,15 @@ mediante el diseño de estructuras convolucionales más profundas. En concreto,
 DIQaM-NR~\cite{DIQaM}, que mejora frente redes menos profundas.
 
 En las Tablas \ref{tab:SOTAFRIQA} y \ref{tab:SOTANRIQA} se recogen los 
-métodos mencionados, donde las métricas SROCC y PLCC, que se explican 
-en la Sección \ref{sec:Metricas}, son mejores cuanto más cercas al 1 y 
-el RMSE es mejor cuánto más pequeño sea.  Se comparan sobre los conjuntos de datos públicos
-LIVE~\cite{LIVE, LIVE1, SSIM}, CSIQ~\cite{CSIQ} y TID2008~\cite{TID2008}. El primero y el segundo poseen información de distorsiones por compresión JPEG, por difuminado gaussiano y ruido blanco. El último, posee más distorsiones, llegando hasta 17 diferentes.
+métodos mencionados con las métricas SROCC, PLCC y RMSE. Estas métricas 
+se explicaran en detalle en la Sección \ref{sec:Metricas}. 
+Las dos primeras son mejores cuanto más cercas al 1 y 
+la última, RMSE, es mejor cuánto más pequeña sea.  
+Se comparan sobre los conjuntos de datos públicos
+LIVE~\cite{LIVE, LIVE1, SSIM}, CSIQ~\cite{CSIQ} y TID2008~\cite{TID2008}.
+El primero y el segundo poseen información de distorsiones por compresión JPEG, 
+por difuminado gaussiano y ruido blanco. 
+El último, posee más distorsiones, llegando hasta 17 diferentes.
 
 \begin{table}[htp]
   \tiny

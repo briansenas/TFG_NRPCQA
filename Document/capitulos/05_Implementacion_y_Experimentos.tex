@@ -1,5 +1,23 @@
 \chapter{Implementación y Experimentos} 
 \section{Experimentos} 
+
+\begin{figure}[H]
+  \begin{center}
+    \includegraphics[width=0.90\textwidth]{imagenes/chapter5/TFGSequence}
+  \end{center}
+  \caption{Diagrama de secuencias del proyecto.}
+  \label{fig:TFGSequence}
+\end{figure}
+
+Todo el código desarrollado se encuentra 
+en el GitHub \url{https://github.com/CodeBoy-source/TFG_NRPCQA}.
+En la Figura \ref{fig:TFGSequence} se observa el diagrama de secuencias 
+que determina el flujo de tareas implementadas para el desarrollo de este proyecto. 
+Se divide en dos grandes bloques: la generación de los datos sintéticos y 
+la obtención de los resultados promedios de los modelos. A continuación 
+se expone el proceso de obtención de dichos resultados y el correspondiente
+análisis de cada uno de ellos. 
+
 \subsection{Protocolo de validación experimental} 
 \label{sec:Validation}
 
@@ -7,7 +25,7 @@
  \begin{center}
    \includegraphics[width=\textwidth]{imagenes/chapter5/cross-validation}
  \end{center}
- \caption{Ejemplo de uso de K-fold para la búsqueda de hiper parámetros.}
+ \caption{Ejemplo de uso de K-fold para la búsqueda de hiperparámetros.}
  \label{fig:K-fold}
 \end{figure}
 
@@ -32,12 +50,18 @@ nuestras distorsiones, se optó por utilizar 80\% para entrenamiento y 20\% para
 Para las pruebas preliminares se utilizó el conjunto SJTU con las condiciones indicadas por 
 \cite{VQA-PC}, es decir, con nueve pliegues, uno por modelo para un total de 336 ejemplos para entrenamiento y 42 para test. 
 
+Primeramente se replican los resultados obtenidos en las publicaciones originales 
+de los métodos NR3DQA~\cite{NR3DQA} y VQA-PC~\cite{VQA-PC}. Para ello se utilizan
+los conjuntos de datos públicos SJTU~\cite{SJTU} y WPC~\cite{WPC1,WPC2}. 
+A continuación, se analizan los resultados obtenidos sobre nuestro conjunto 
+de imágenes médicas y, con ello, se proponen mejoras y adaptaciones con fin 
+de obtener mejores resultados. 
 
-\subsection{Experimentos ML: Modelo NR3D-QA}
+\subsection{Experimentos NR3DQA}
 Para replicar el método de Zhang et al~\cite{NR3DQA} podemos utilizar los 
 scripts en \code{NR3DQA/}. Para ello disponemos de unos cuántos scripts para la extracción de las características y visualización de las distribuciones 
-como indica la publicación, ver Apéndice \ref{sec:Implementacion}. 
-Utilizaremos la librería de Pyntcloud para obtener 
+como indica la publicación (ver Apéndice \ref{sec:Implementacion}). 
+Utilizaremos la librería de Pyntcloud~\cite{Pyntcloud} para obtener 
 la matriz de covarianza y calcular las características en base a lo definido 
 en la Sección \ref{sec:NR3DQA}.
 Para los conjuntos de datos SJTU y WPC, los resultados 
@@ -53,7 +77,7 @@ K es igual al número de nubes de puntos
       \rowcolor[HTML]{FFC702}
       \textbf{Dataset} & \textbf{PLCC} & \textbf{SROCC} & \textbf{KROCC} \\ 
       \hline
-      SJTU & 0.810325 & 0.777403 & 0.608302 \\ 
+      SJTU & \textbf{0.810325} & \textbf{0.777403} & \textbf{0.608302} \\ 
       \hline 
       WPC & 0.637953 & 0.634853 & 0.463578 \\
       \hline
@@ -69,7 +93,7 @@ y experimentando con múltiples modelos de regresión,
 vemos, en la Tabla \ref{tab:MedicalNR3DQA}, que el método no es capaz
 de determinar con precisión la calidad de imágenes, ya que la correlación entre 
 la predicción y el valor real es muy cercano a 0. 
-rncluso utilizando el conjunto SJTU para ayudar al entrenamiento 
+Incluso utilizando el conjunto SJTU para ayudar al entrenamiento 
 del SVM, no obtenemos mejoras significativas, sino que obtenemos un 0.225 de SROCC.
 
 
@@ -90,19 +114,19 @@ del SVM, no obtenemos mejoras significativas, sino que obtenemos un 0.225 de SRO
       \hline
       Valor normalizado & KNNRegressor & RobustScaler & 0.2671 & 0.1882  \\
       \hline
-      Valor en escala 0-5 & DecisionTree & StandardScaler & 0.309176 & 0.196713 \\
+      Valor en escala 0-5 & DecisionTree & StandardScaler & \textbf{0.309176} & \textbf{0.196713} \\
       \hline
     \end{tabular}
   \end{center}
   \caption[Resultados de prueba preliminar con SVM.]{Resultados de prueba preliminar con SVM. 
   Vemos los mejores modelos y normalización para las diferentes escalas de las etiquetas sintéticas. 
   Se observa que con el conjunto de imágenes médicas no hemos logrado buena correlación entre 
-  los valores predecidos y el valor real.}
+  los valores predichos y el valor real.}
   \label{tab:MedicalNR3DQA}
 \end{table}
 
 Algo similar ocurre cuando intentamos utilizar más características geométricas
-como se indica en la publicación~\cite{3DNSSMetrics}. Se argumenta que, en el proceso de segmentación, 
+como se indica en el trabjo de Weinmann et al~\cite{3DNSSMetrics}. Se argumenta que, en el proceso de segmentación, 
 detección y clasificación de estructuras en nubes de puntos, 
 las mejores métricas suelen ser: 
 omnivarianza, entropía de valores singulares, la verticalidad del vecindario y 
@@ -118,7 +142,7 @@ se pueden observar en la Tabla \ref{tab:ImprovNR3DQA}, no son significativos.
       \rowcolor[HTML]{FFC702}
       \textbf{Dataset} & \textbf{PLCC} & \textbf{SROCC} & \textbf{KROCC} \\ 
       \hline
-      SJTU & 0.853709 & 0.820057 & 0.649406 \\ 
+      SJTU & \textbf{0.853709} & \textbf{0.820057} & \textbf{0.649406} \\ 
       \hline 
       WPC & 0.642356 & 0.62917 & 0.455562 \\
       \hline 
@@ -143,19 +167,20 @@ resultados preliminares de la Sección \ref{sec:PreResults}, se determina
 conveniente hacer uso de modelos más complejos y permitir que la extracción 
 de características sea automática. 
 
-\subsection{Experimentos DL: Modelo VQA-PC}
+\subsection{Experimentos VQA-PC}
 \label{sec:PreResults}
 Previo a tratar con los datos médicos, se han realizado pruebas de ejecución 
 para verificar el funcionamiento del modelo, validar los resultados, familiarizarse 
 con el código e identificar zonas de posibles mejoras.
 
 \subsubsection{Replicando los resultados sobre SJTU}
+\label{sec:VQAPCSJTU}
 Para validar el correcto funcionamiento del código y los resultados obtenidos 
-en~\cite{VQA-PC}, seguimos el experimento en las mismas condiciones descrita 
+en~\cite{VQA-PC}, realizamos el experimento en las mismas condiciones descrita 
 por ellos en el conjunto de datos SJTU. Como ese posee 10 modelos, 
-ver Sección \ref{sec:DatosPublicos}, se realiza un 9-fold. Se han utilizado 
-los mismos hiper parámetros, estructura de red convolucional y transformaciones 
-de datos (véase Tablas \ref{tab:ResNet50} y \ref{tab:HiperSJTU}). 
+(ver Sección \ref{sec:DatosPublicos}) se realiza un 9-fold. Se han utilizado 
+los mismos hiperparámetros, estructura de red convolucional y transformaciones 
+de datos (véanse Tablas \ref{tab:ResNet50} y \ref{tab:HiperSJTU}). 
 
 \begin{table}[htp]
   \scriptsize
@@ -179,13 +204,15 @@ de datos (véase Tablas \ref{tab:ResNet50} y \ref{tab:HiperSJTU}).
       \hline 
     \end{tabular}
   \end{center}
-  \caption[Hiper parámetros de prueba preliminar.]{Hiper parámetros de prueba preliminar, establecidos por~\cite{VQA-PC}.}
+  \caption[Hiperparámetros empleados en la experimentación preliminar.]{
+    Hiperparámetros empleados en la experimentación preliminar~\cite{VQA-PC}.
+  }
   \label{tab:HiperSJTU}
 \end{table}
 
 Para el conjunto de entrenamiento se recorta una zona aleatoria de la imagen con 
 tamaño 224x224, a continuación se normaliza los colores conforme al siguiente 
-vector de medias $\mu = \left[ 0.485, 0.456, 0.406 \right]$ y de desviación 
+vector de medias $\mu = \left[ 0.485, 0.456, 0.406 \right]$ y de desviación típica
 $\sigma = \left[ 0.229, 0.224, 0.225 \right]$. Valores con los cuales se 
 normalizaron las imágenes con las que entrenó ResNet~\cite{ResNet}.
 Para el conjunto de test, se utiliza la misma normalización de colores, pero 
@@ -233,7 +260,7 @@ en la Tabla \ref{tab:PreTestResults}.
 Como vemos el error de validación tiende a bajar, aunque con cierta variabilidad 
 entre épocas en contra del error de entrenamiento que es más estable. . 
 
-Se debe tener en cuenta que, aunque el error cuadrático medio pueda parecer 
+Se debe tener en cuenta que, aunque el error cuadrático medio (MSE, por sus siglas en inglés) pueda parecer 
 sustancialmente grande, nuestro criterio de elección sería la correlación 
 entre las métricas. Es decir, no necesitamos estimar los valores de distorsión 
 en la misma escala que las etiquetas. Apenas necesitamos ser capaces de comparar 
@@ -273,8 +300,9 @@ utilizando el criterio del promedio del mejor resultado de cada pliegue de valid
       \hline
     \end{tabular}
   \end{center}
-  \caption[Resultados de experimento preliminar.]{Resultados de experimento preliminar.
-  El error enseñado es el error MSE del modelo, sin utilizar la regresión logística para normalizar.
+  \caption[Resultados de experimento preliminar.]{
+    Resultados de experimento preliminar. 
+    Se enseña el MSE del modelo sin utilizar la regresión logística para normalizar las distancias.
   }
   \label{tab:PreTestResults}
 \end{table}
@@ -295,7 +323,7 @@ utilizando el criterio del promedio del mejor resultado de cada pliegue de valid
 \end{figure}
 
 
-\subsection{Propuestas de mejoras}
+\subsection{Experimentos finales}
 En nuestro modelo, una parte importante de la inferencia viene de la capacidad del mismo de unificar las características 
 estáticas con las dinámicas. En la publicación~\cite{EnsemblePCQA} se proponen distintos métodos para la fusión
 de vectores características de modelos \emph{ensemble}.
@@ -314,9 +342,22 @@ ya iguales, a la misma dimensión los vectores. De forma similar, la fusión por
 permite realizar una proyección lineal de ambos vectores a uno de menor dimensionalidad. 
 Por último, la fusión por \emph{bi-linear pooling} (F3) permite realizar la multiplicación de 
 los vectores en el dominio de fourier, de tal forma que todos los elementos afectan al 
-resultado final de forma multiplicativa sin un alto coste computacional, y luego proyecta 
+resultado final de forma multiplicativa, y luego proyectar 
 el vector resultante a una menor dimensión utilizando algún algoritmo de proyección, 
 como \emph{Count Sketch}. 
+
+\begin{figure}[htp]
+  \begin{center}
+    \includegraphics[width=.8\textwidth]{imagenes/chapter5/FeatureFusionExample}
+  \end{center}
+  \caption[Ejemplo visual de los distintos métodos de fusión a comparar.]{Ejemplo visual de los distintos métodos de fusión a comparar.
+   El modelo estándar utiliza el método de concatenación (a) que genera un vector 
+ característica de alta dimensionalidad. 
+Por otro lado, las propuestas que figuran en (b) y (c) generan un vector de 
+menor dimensionalidad, la última operando sobre el dominio de fourier.
+}
+  \label{fig:FeatureFusionExample}
+\end{figure}
 
 Por último, se observa que el modelo realiza un recorte aleatorio de las imágenes de entrada, 
 originalmente a escala 1920x1080, durante el entrenamiento 
@@ -335,14 +376,16 @@ si el error de validación crece para evitar sobre-entrenamiento, con una pacien
 de 6 épocas (en este contexto, paciencia alude a la espera de los resultados de 
 las N siguientes épocas, en la que el error de validación crece, antes de terminar 
 la ejecución por sobre-entrenamiento). 
-Se han utilizado los mismos hiper parámetros que definido en la Tabla \ref{tab:HiperSJTU}.
+Se han utilizado los mismos hiperparámetros que definido en la Tabla \ref{tab:HiperSJTU}.
+Se omitirá el MSE del modelo debido a que la información principal se encuentra 
+en la métrica SROCC como mencionado anteriormente al principio de la Sección \ref{sec:VQAPCSJTU}.
 
 En la Tabla \ref{tab:SroccMedRes} hacemos 11-fold sobre nuestro conjunto de datos teniendo en cuenta las métricas originales, las métricas
 normalizadas a escala 0-5 y las imágenes reescaladas. También se investiga rescalar y normalizar (última columna).
 Se compara estos resultados con los demás métodos de fusión de características propuesto.
 Vemos que el modelo con información previa, al utilizar el reescalado, obtiene los mejores resultados.
 No obstante, F1 y F2 sin información previa consiguen acercarse a un margen de 4\% de ese valor. 
-Por otro lado, la fusión F3 no logra mejorar de forma significativas los resultados. 
+Por otro lado, la fusión F3 no logra mejorar de forma significativa. 
 
 \begin{table}[htp]
   \scriptsize
