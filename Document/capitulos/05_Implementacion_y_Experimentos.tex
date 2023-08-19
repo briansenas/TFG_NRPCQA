@@ -45,7 +45,7 @@ el conjunto de test.
 En el caso de nuestro dataset de imágenes médicas, al ser pocos ejemplos 
 se ha realizado un pliegue por modelo 3D, así que por cada pliegue hay un total de 
 350 ejemplos de entrenamiento y 35 ejemplos en test. 
-En el caso de pre-entrenar usando LS-SJTU-PCQA~\cite{ResSCNN}, con 3640 ejemplos en total para 
+En el caso de pre-entrenar usando LS-PCQA~\cite{ResSCNN}, con 3640 ejemplos en total para 
 nuestras distorsiones, se optó por utilizar 80\% para entrenamiento y 20\% para test. 
 Para las pruebas preliminares se utilizó el conjunto SJTU con las condiciones indicadas por 
 \cite{VQA-PC}, es decir, con nueve pliegues, uno por modelo para un total de 336 ejemplos para entrenamiento y 42 para test. 
@@ -118,7 +118,7 @@ del SVM, no obtenemos mejoras significativas, sino que obtenemos un 0.225 de SRO
       \hline
     \end{tabular}
   \end{center}
-  \caption[Resultados de prueba preliminar con SVM.]{Resultados de prueba preliminar con SVM. 
+  \caption[Resultados de prueba preliminar NR3DQA.]{Resultados de prueba preliminar NR3DQA. 
   Vemos los mejores modelos y normalización para las diferentes escalas de las etiquetas sintéticas. 
   Se observa que con el conjunto de imágenes médicas no hemos logrado buena correlación entre 
   los valores predichos y el valor real.}
@@ -126,7 +126,7 @@ del SVM, no obtenemos mejoras significativas, sino que obtenemos un 0.225 de SRO
 \end{table}
 
 Algo similar ocurre cuando intentamos utilizar más características geométricas
-como se indica en el trabjo de Weinmann et al~\cite{3DNSSMetrics}. Se argumenta que, en el proceso de segmentación, 
+como se indica en el trabajo de Weinmann et al~\cite{3DNSSMetrics}. Se argumenta que, en el proceso de segmentación, 
 detección y clasificación de estructuras en nubes de puntos, 
 las mejores métricas suelen ser: 
 omnivarianza, entropía de valores singulares, la verticalidad del vecindario y 
@@ -150,7 +150,7 @@ se pueden observar en la Tabla \ref{tab:ImprovNR3DQA}, no son significativos.
       \hline
     \end{tabular}
   \end{center}
-  \caption[Resultado de mejores sobre el método SVM]{Resultado de mejores sobre el método SVM.
+  \caption[Resultado de mejoras sobre el método SVM]{Resultado de mejoras sobre el método SVM.
    Se observa mejoras, no sustanciales, sobre los conjuntos SJTU, WPC e imágenes médicas.
    No obstante, todavía sigue por detrás de los métodos DL, como el método VQA-PC 
    que se discutirá más adelante.
@@ -433,15 +433,15 @@ mediana es la mejor de los 4 modelos sin pre-entrenar en distorsiones.
 Se determina que, para un conjunto de datos pequeños, las mejoras F1-F3 no son significativas sin información adicional. 
 Dado la importancia de la información adicional sobre las distorsiones a la 
 hora de estimar la calidad de las imágenes de nuestro pequeño conjunto médico, 
-se propone pre-entrenar sobre el conjunto LS-SJTU-PCQA.
+se propone pre-entrenar sobre el conjunto LS-PCQA.
 En este caso, se utilizará las imaǵenes reescaladas y las métricas sin normalizar, 
 dado que se ha observado anteriormente que es la mejor combinación. Sobre los 
-datos de LS-SJTU-PCQA, se invierte el MOS para que pase a representar el nivel 
+datos de LS-PCQA, se invierte el MOS para que pase a representar el nivel 
 de distorsión en lugar del nivel de calidad en escala 0-1, para que se asemeje a los 
 valores sintéticos sin normalizar, y también utilizamos imágenes reescaladas.
 
 Se observa una mejora significativa en los métodos F2-F3, y se logra 
-pasar la barrera del 90\% en la mediana de los métodos F0-F2 (véase Tabla \ref{tab:LS-SJTU-FN}).
+pasar la barrera del 90\% en la mediana de los métodos F0-F2 (véase Tabla \ref{tab:LS-PCQA-FN}).
 Gracias a la información adicional hemos logrado valores mucho mejores, llegando a 
 obtener una correlación del 88\% de media, con mediana al 94\%, utilizando el modelo F2. 
 En general, poseer información adicional ha resultado ser crucial para el aprendijaze 
@@ -526,8 +526,8 @@ es el más estable en todos los casos. }
 \textbf{VQA-PC F2} & \textbf{0.8757}  & \textbf{0.1468}     & \textbf{0.9347}  \\ \hline
 \textbf{VQA-PC F3} & 0.8071           & 0.1811              & 0.8692           \\ \hline
 \end{tabular}
-\caption[Resultados en imágenes médicas reescaladas entrenando en LS-SJTU-PCQA.]{
+\caption[Resultados en imágenes médicas reescaladas entrenando en LS-PCQA.]{
   Resultados en imágenes médicas reescaladas con modelos pre-entrenados 
-  sobre el conjunto de datos LS-SJTU-PCQA. 
-}\label{tab:LS-SJTU-FN}
+  sobre el conjunto de datos LS-PCQA. 
+}\label{tab:LS-PCQA-FN}
 \end{table}

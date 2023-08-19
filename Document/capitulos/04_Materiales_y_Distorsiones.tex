@@ -4,7 +4,7 @@
 \label{sec:DatosPublicos}
 Para este TFG se han utilizado diversos conjuntos de datos públicos para la 
 evaluación y elección de los modelos anteriormente descritos. De entre ellos 
-están SJTU~\cite{SJTU}, WPC~\cite{WPC1,WPC2} y LS-SJTU-PCQA~\cite{ResSCNN} que tratan 
+están SJTU~\cite{SJTU}, WPC~\cite{WPC1,WPC2} y LS-PCQA~\cite{ResSCNN} que tratan 
 de conjuntos de nubes de puntos generalistas, de personas, animales y objetos.
 
 El primero de ellos parte de 10 nubes de puntos de referencia (véase Figura \ref{fig:SJTU}), 
@@ -67,7 +67,7 @@ del modelo de regresión a utilizar. Son los conjuntos de datos más conocidos
 y que habitualmente están presentes en las publicaciones más recientes. Además, se realizaron 
 pruebas de ejecuciones de algunos métodos de código abierto para verificar los 
 resultados. Sin embargo, es el último el que finalmente se utiliza para entrenar un modelo para estimar 
-la calidad de las imágenes médicas. Esto es porque LS-SJTU-PCQA~\cite{ResSCNN} 
+la calidad de las imágenes médicas. Esto es porque LS-PCQA~\cite{ResSCNN} 
 es el mayor conjunto de datos 
 en el momento de escritura, y posee tipos de distorsiones que pueden simular 
 lo que sería ciertos errores y ruidos presentes en imágenes médicas. Por ejemplo, 
@@ -75,19 +75,19 @@ el ruido gaussiano (simular errores de transmisión y almacenado de datos),
 rotación y movimiento local (simular el movimiento del paciente) y compresión 
 octree y por submuestreo uniforme (algoritmos de compresión comúnmente usados).
 Aparte, es el con mayor amplitud de modelos base, con distintos tipos y categorías 
-de objetos (véase Figura \ref{fig:LS-SJTU-PCQA}).
+de objetos (véase Figura \ref{fig:LS-PCQA}).
 
 \begin{figure}[htp]
   \begin{center}
     \includegraphics[width=\textwidth]{imagenes/chapter4/LSPCQA}
   \end{center}
-  \caption{Ejemplo de conjunto de datos LS-SJTU-PCQA.
+  \caption{Ejemplo de conjunto de datos LS-PCQA.
   Vemos que en este conjunto de datos tenemos una gran variedad de nubes 
 de puntos. 
 En las primeras filas tenemos un conjunto de modelos de animales, 
 seguidos de representaciones de seres humanos y, por último, 
 varios objetos abstractos.}
-  \label{fig:LS-SJTU-PCQA}
+  \label{fig:LS-PCQA}
 \end{figure}
 
 \subsection{Métricas}
@@ -95,7 +95,7 @@ varios objetos abstractos.}
 Las métricas más utilizadas en la resolución del problema de estimación de calidad 
 de imágenes suelen ser: el coeficiente de correlación de rangos de Spearman (SROCC, 
 por sus siglas en inglés), el coeficiente de correlación lineal de Pearson (PLCC), coeficiente de correlación de orden de rango de Kendall (KROCC)
-y error cuadrático medio (RMSE)~\cite{VisualMedicalQualityBook}.
+y raíz del error cuadrático medio (RMSE)~\cite{VisualMedicalQualityBook}.
 
 Las tres primeras al ser coeficientes de correlación toman valores en el intervalo 
 [-1, 1]. Siendo el valor -1 una correlación negativa entre los datos, es decir,

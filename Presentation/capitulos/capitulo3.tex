@@ -1,0 +1,301 @@
+\section{Materiales y métodos}
+\subsection{Materiales}
+\begin{frame}
+    \frametitle{Datos públicos SJTU}
+    \begin{columns}
+      \column{0.5\textwidth}
+      \begin{enumerate}[<+->]
+        \item \textbf{10 nubes de puntos} de referencia.  
+        \item \textbf{7} tipos de \textbf{distorsiones}: compresión, ruido al color, 
+          ruido geométrico, ruido gaussiano y combinación entre ellas.
+        \item \textbf{6 niveles} de intensidad.
+        \item \textbf{Total de 420 nubes de puntos}.
+      \end{enumerate}
+      \column{0.5\textwidth}
+      \begin{figure}
+        \includegraphics[width=0.95\textwidth]{imagenes/chapter3/SJTU}
+        \caption{Ejemplo de conjuntos de datos SJTU\footnotemark}
+        \label{fig:SJTU}
+      \end{figure}
+    \end{columns}
+    \footcitetext{SJTU}
+\end{frame}
+
+\begin{frame}
+    \frametitle{Datos públicos WPC}
+    \begin{columns}
+      \column{0.5\textwidth}
+      \begin{enumerate}[<+->]
+        \item \textbf{25 nubes de puntos} de referencia.  
+        \item \textbf{5} tipos de \textbf{distorsiones}: 
+          sumuestreo, ruido gaussiano, \emph{trisoup}, V-PCC y \emph{octree}.
+        \item Longitud de \textbf{intensidades variantes}.
+        \item \textbf{Total de 741 nubes de puntos}.
+      \end{enumerate}
+      \column{0.5\textwidth}
+      \begin{figure}
+        \includegraphics[width=.95\textwidth]{imagenes/chapter3/WPC}
+        \caption{Ejemplo de conjuntos de datos WPC\footnotemark}
+        \label{fig:WPC}
+      \end{figure}
+    \end{columns}
+    \footcitetext{WPC1}
+\end{frame}
+
+\begin{frame}
+\frametitle{Datos públicos LS-PCQA}
+  \begin{columns}
+    \column{0.5\textwidth}
+    \begin{enumerate}[<+->]
+      \item \alert{104 nubes de puntos} de referencia.  
+      \item \alert{31} tipos de \alert{distorsiones}.
+      \item \alert{7 niveles} de intensidad.
+      \item \textbf{Total de 22000 nubes de puntos}.
+    \end{enumerate}
+    \column{0.5\textwidth}
+    \begin{figure}
+      \includegraphics[width=0.8\textwidth]{imagenes/chapter3/LSPCQA}
+      \caption{Ejemplo de conjuntos de datos LS-PCQA\footnotemark}
+      \label{fig:LSSJTU}
+    \end{figure}
+  \end{columns}
+  \footcitetext{ResSCNN}
+\end{frame}
+
+\begin{frame}
+  \frametitle{Datos médicos}
+  \vspace{-1cm}
+    \begin{figure}[htp]
+      \subfloat[]{\includegraphics[width=.3\textwidth]{imagenes/chapter3/clavicula/clavicula_0.png}}
+      \subfloat[]{\includegraphics[width=.3\textwidth]{imagenes/chapter3/clavicula/clavicula_2.png}}
+      \subfloat[]{\includegraphics[width=.3\textwidth]{imagenes/chapter3/clavicula/clavicula_3.png}}
+      \caption{Ejemplo de distorsiones generadas sobre clavículas, donde (a) es la imagen original, 
+      (b) la distorsionada por submuestreo y (c) por movimiento local.}
+      \label{fig:DistorsionesGeneradas}
+    \end{figure}
+  \vspace{-.3cm}
+    \begin{enumerate}[<+->]
+      \item \alert{11 nubes de puntos} de referencia.  
+      \item \alert{5} tipos de \alert{distorsiones}: 
+        submuestreo, compresión, ruido, rotación y movimiento local.
+      \item \alert{7 niveles} de intensidad para un \textbf{total de 385 nubes de puntos}.
+    \end{enumerate}
+\end{frame}
+
+\begin{frame}
+  \frametitle{Métricas}
+  \vspace{-.4cm}
+  \begin{table}
+      \setlength{\tabcolsep}{16pt}
+  \hskip-.9cm \begin{tabular}[c]{cc}
+        \textbf{Correlación lineal de Pearson} 
+        &
+        \textbf{Correlación de rangos de Spearman} 
+        \\
+        \parbox[c]{6cm}{ 
+   \centering
+          $
+  PLCC(x,y) = \frac{\sum_{i=1}^m (x_i - \bar x)(y_i - \bar y)}{\sqrt{\sum_{i=1}^m (x_i - \bar x)^2}\sqrt{\sum_{i=1}^m (y_i - \bar y)^2}}
+        $ 
+        \vspace{.3cm}
+    }
+& 
+\parbox[c]{6cm}{
+   \centering
+  $
+  SROCC(x,y) = \frac{\sum_i (x_i - \bar x)(y_i - \bar y)}{\sqrt{\sum_i (x_i - \bar x)^2}\sqrt{\sum_i (y_i - \bar y)^2}}
+        \vspace{.3cm}
+$
+}
+\\ 
+\parbox[c]{6cm}{
+  \centering
+    Evalúa si existe una \alert{relación lineal} entre conjuntos. 
+    \vspace{.5cm}
+}
+&
+\parbox[c]{6cm}{
+  \centering
+  Evalúa la relación lineal entre los \alert{\emph{rankings}}.
+  \vspace{.5cm}
+    \
+}
+\\
+\textbf{Correlación de orden de rango de Kendall} 
+& 
+\textbf{Error cuadrático medio} 
+\\
+ \parbox[c]{6cm}{
+   \centering
+   $
+  KROCC(x,y) = \frac{C-D}{\frac{1}{2} m (m-1)}
+    $
+        \vspace{.3cm}
+  }
+& 
+\parbox[c]{6cm}{
+  \centering
+  $
+  RMSE(x,y) = \sqrt{\frac{1}{m}\sum_{i=1}^m (x_i - y_i)^2}
+  $
+}
+\\
+\parbox[c]{6cm}{
+  \centering
+    Evalúa la \alert{concordancia y discordancia} de relación entre pares.
+  }
+  & 
+\parbox[c]{6cm}{
+  \centering
+  Evalúa la \alert{diferencia media} de los pares de valores.
+   
+  }
+  \\
+
+      \end{tabular}
+  \end{table}
+  
+\end{frame}
+
+\begin{frame}
+  \frametitle{Generación de etiquetas}
+\begin{table}[htp]
+    \footnotesize
+    \begin{tabular}{|c|c|c|c|c|c|c|c|}
+    \hline
+        \rowcolor[HTML]{FFC702} 
+        \textbf{Distortion} & \textbf{M-p2po} & \textbf{M-p2pl} & \textbf{H-p2po} & \textbf{H-p2pl} & \textbf{PCQM} & \textbf{GraphSIM} & \textbf{MPED} \\ \hline
+        DownSample & \textbf{0.881} & 0.626 & 0.841 & 0.811 & 0.524 & 0.842 & 0.857 \\ \hline
+        GaussianShifting & 0.741 & 0.718 & 0.829 & \textbf{0.834} & 0.816 & 0.742 & 0.598 \\ \hline
+        LocalOffset & \textbf{0.937} & 0.934 & 0.770 & 0.770 & 0.851 & 0.906 & 0.897 \\ \hline
+        LocalRotation & 0.819 & 0.712 & \textbf{0.831} & 0.734 & 0.657 & 0.723 & 0.742 \\ \hline
+        Octree & 0.779 & 0.788 & \textbf{0.819} & 0.752 & 0.676 & 0.757 & 0.710 \\ \hline
+    \end{tabular}
+    \caption[Tabla de métricas para generación de etiquetas.]{
+      Tabla de métricas para generación de etiquetas.\footnotemark[10].
+  }
+    \label{tab:MetricsPerDistortion}
+    \vspace{-.4cm}
+\end{table}
+\begin{table}[htp]
+  \centering 
+  \footnotesize
+  \begin{tabular}{|c|c|c|}
+    \hline
+    \rowcolor[HTML]{FFC702}
+     & \textbf{Parte I} & \textbf{Parte II} \\
+    \hline 
+    SROCC & 0.902697 & 0.878517\\
+    \hline
+    PLCC & 0.910713 & 0.871917\\
+    \hline
+  \end{tabular}
+  \caption[Correlación de métricas sintéticas.]{
+  Correlación de métricas sintéticas.\footnotemark[10]. }
+  \label{tab:PseudoCorr}
+  \vspace{-.5cm}
+\end{table}
+
+\footcitetext{ResSCNN}
+\end{frame}
+
+\subsection{Métodos}
+\begin{frame}
+\frametitle{Model NR3DQA\footnotemark}
+  \begin{columns}
+    \column{0.5\textwidth}
+    \begin{enumerate}[<+->]
+      \item \textbf{Extracción independiente} del modelo.
+        \begin{itemize}
+          \item Anisotropía
+          \item Planaridad
+          \item Esfericidad 
+          \item Curvatura 
+          \item Linealidad
+        \end{itemize}
+      \item \alert{Descartamos} las características lumínicas.
+      \item Usamos: \textbf{media, desviación y entropía}.
+    \end{enumerate}
+    \column{0.5\textwidth}
+    \begin{figure}
+      \begin{center}
+        \includegraphics[width=\textwidth]{imagenes/chapter3/PatchSelection}
+      \end{center}
+      \caption{Extracción de características del vecindario.}
+    \end{figure}
+    \end{columns}
+    \footcitetext{NR3DQA}
+\end{frame}
+
+\begin{frame}
+  \frametitle{Modelo VQA-PC\footnotemark}
+  \begin{columns}
+    \column{0.5\textwidth}
+    \begin{enumerate}[<+->]
+      \item \textbf{Extracción automática} de características.
+      \item Extracción \alert{espacial y temporal} de las reconstrucciones.
+        \begin{itemize}
+          \item Espacial por fotogramas estáticos de \textbf{distintas perspectivas}.
+          \item Temporal por tratar la \alert{nube como video}.
+        \end{itemize}
+      \item Es como un \textbf{meta-modelo} de aprendizaje profundo. 
+    \end{enumerate}
+    \column{0.5\textwidth}
+    \begin{figure}
+      \begin{center}
+        \includegraphics[width=\textwidth]{imagenes/chapter3/PipelineCompleto}
+      \end{center}
+      \caption{Estructura del modelo VQA-PC}
+    \end{figure}
+  \end{columns}
+  \footcitetext{VQA-PC}
+\end{frame}
+
+\subsection{Entorno}
+\begin{frame}
+  \frametitle{Tecnologías utilizadas}
+  \begin{table}[htp]
+    \vspace{-.5cm}
+      \begin{tabular}{cccc}
+        \begin{minipage}{.2\textwidth}
+          \includegraphics[width=\textwidth]{imagenes/chapter3/Python}
+        \end{minipage} 
+                                  & 
+        \begin{minipage}{.2\textwidth}
+          \includegraphics[width=.9\textwidth]{imagenes/chapter3/FastAI}
+        \end{minipage} 
+                                  & 
+        \begin{minipage}{.2\textwidth}
+          \includegraphics[width=\textwidth]{imagenes/chapter3/Pytorch}
+        \end{minipage} 
+                                  &
+        \begin{minipage}{.2\textwidth}
+          \includegraphics[width=.9\textwidth]{imagenes/chapter3/Open3D}
+        \end{minipage} 
+                                  \\
+        \begin{minipage}{.2\textwidth}
+          \includegraphics[width=\textwidth]{imagenes/chapter3/Numpy}
+        \end{minipage} 
+                                                        & 
+        \begin{minipage}{.2\textwidth}
+          \includegraphics[width=.9\textwidth]{imagenes/chapter3/Scikit}
+        \end{minipage} 
+                                                        & 
+        \begin{minipage}{.2\textwidth}
+          \includegraphics[width=.9\textwidth]{imagenes/chapter3/Polars}
+        \end{minipage} 
+        &
+                                                        \\
+                                                        & 
+        \begin{minipage}{.2\textwidth}
+          \includegraphics[width=.9\textwidth]{imagenes/chapter3/Nvidia}
+        \end{minipage} 
+                                                        & 
+        \begin{minipage}{.2\textwidth}
+          \includegraphics[width=.9\textwidth]{imagenes/chapter3/Colab}
+        \end{minipage} 
+                                                        &
+                                                        \\
+      \end{tabular}
+  \end{table}
+\end{frame}

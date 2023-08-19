@@ -109,7 +109,7 @@ El último, posee más distorsiones, llegando hasta 17 diferentes.
                    VSI~\cite{VSI} & 0.952 & 0.948 & 8.682 & 0.942 & 0.928 & 0.098 & 0.898 & 0.876 & 0.647 \\
                    DSS~\cite{DSS} & 0.962 & 0.931 & 9.961 & 0.961 & 0.957 & 0.076 & 0.873 & 0.877 & 0.644 \\
                    CD-MMF~\cite{MMF} & \textbf{0.981} & \textbf{0.980} & \textbf{5.413} & \textbf{0.967} & \textbf{0.9614} & \textbf{0.067} & \textbf{0.942} & \textbf{0.9414} & \textbf{0.429} \\
-                   WaDIQaM~\cite{DIQaM} & \textbf{0.970} & \textbf{0.980} & - & - & - & - & - & - & - \\
+                   WaDIQaM~\cite{DIQaM} & 0.970 & \textbf{0.980} & - & - & - & - & - & - & - \\
                   \hline 
   \end{tabular}
   \caption[Tablas estado del arte FR-IQA.]{Tabla extraída de~\cite{SurveyOf2D3DMetrics}, 
@@ -203,36 +203,30 @@ métodos que han optado por utilizar un \emph{ensemble}~\cite{EnsemblePCQA} de
 modelos pre-entrenado en 2D y obtuvieron muy buenos resultados. 
 
 \begin{table}[htp]
-    \tiny
-    \centering
-    \begin{tabular}{|c|c|c|c|c|}
-        \hline
-        \rowcolor[HTML]{FFC702}
-        \cellcolor[HTML]{FFC702} & \multicolumn{2}{c|}{\cellcolor[HTML]{FFC702}\textbf{STJU-PCQA}} & \multicolumn{2}{c|}{\cellcolor[HTML]{FFC702}\textbf{WPC}} \\ 
-        \cline{2-5}
-       \multirow{-2}{*}{\cellcolor[HTML]{FFC702}\textbf{MODELO}}  &\multicolumn{1}{c|}{\cellcolor[HTML]{FFC702} PLCC} & \multicolumn{1}{c|}{\cellcolor[HTML]{FFC702}SRCC} & \multicolumn{1}{c|}{\cellcolor[HTML]{FFC702}PLCC} & \multicolumn{1}{c|}{\cellcolor[HTML]{FFC702}SRCC} \\
-        \hline
-       MM-PCQA~\cite{MM-PCQA} & \textbf{0.92} & \textbf{0.91} & \textbf{0.83} & \textbf{0.83}\\
-        \hline
-        SGR~\cite{SGR} & 0.89 & 0.84 & - & - \\
-        \hline
-        VQA-PC~\cite{VQA-PC} & 0.8635 & 0.8509 & 0.7976 & 0.7968\\
-        \hline
-        ResSCNN~\cite{ResSCNN} & 0.86 & 0.81 & 0.72 & 0.75\\
-        \hline
-        GPA-Net~\cite{GPA-NET} & 0.806 & 0.78 & - & - \\
-        \hline
-        Zhang et al.~\cite{NR3DQA}& 0.7382 & 0.7144 & 0.6514 & 0.6479\\
-        \hline
-        IT-PCQA~\cite{IT-PCQA}& 0.58 & 0.63 & 0.55  & 0.54\\
-        \hline
-        % bitstreamPCQ~\cite{bitstreamPCQ} & ? & ? & ? & ?\\
-        % \hline
-        % PQA-Net~\cite{PQA-Net} & ? & ? & ? & ?\\
-        % \hline 
-        % Chetouni et al.~\cite{NR-CNN-3D-PC}& ? & ? & ? & ? \\
-        % \hline
-    \end{tabular}
+  \tiny
+  \centering
+  \begin{tabular}{|c|c|c|c|c|}
+      \hline
+      \rowcolor[HTML]{FFC702}
+      \cellcolor[HTML]{FFC702} & \multicolumn{2}{c|}{\cellcolor[HTML]{FFC702}\textbf{STJU-PCQA}} & \multicolumn{2}{c|}{\cellcolor[HTML]{FFC702}\textbf{WPC}} \\ 
+      \cline{2-5}
+     \multirow{-2}{*}{\cellcolor[HTML]{FFC702}\textbf{MODELO}}  &\multicolumn{1}{c|}{\cellcolor[HTML]{FFC702} PLCC} & \multicolumn{1}{c|}{\cellcolor[HTML]{FFC702}SRCC} & \multicolumn{1}{c|}{\cellcolor[HTML]{FFC702}PLCC} & \multicolumn{1}{c|}{\cellcolor[HTML]{FFC702}SRCC} \\
+      \hline
+      IT-PCQA~\cite{IT-PCQA}& 0.58 & 0.63 & 0.55  & 0.54\\
+      \hline
+      Zhang et al.~\cite{NR3DQA}& 0.7382 & 0.7144 & 0.6514 & 0.6479\\
+      \hline
+      GPA-Net~\cite{GPA-NET} & 0.806 & 0.78 & - & - \\
+      \hline
+      ResSCNN~\cite{ResSCNN} & 0.86 & 0.81 & 0.72 & 0.75\\
+      \hline
+      VQA-PC~\cite{VQA-PC} & 0.8635 & 0.8509 & 0.7976 & 0.7968\\
+      \hline
+      SGR~\cite{SGR} & 0.89 & 0.84 & - & - \\
+      \hline
+     MM-PCQA~\cite{MM-PCQA} & \textbf{0.92} & \textbf{0.91} & \textbf{0.83} & \textbf{0.83}\\
+      \hline
+  \end{tabular}
     \caption[Estado del arte de modelos NR-PCQA]{Resumen del estado del arte de modelos NR-PCQA en dos datasets muy conocidos: SJTU~\cite{SJTU} y WPC~\cite{WPC1,WPC2}.}
 \end{table}
 
