@@ -1,6 +1,6 @@
 \chapter{Materiales y Métodos}
 \section{Materiales}
-\subsection{Datos públicos} 
+\subsection{Conjunto de datos genéricos} 
 \label{sec:DatosPublicos}
 Para este TFG se han utilizado diversos conjuntos de datos públicos para la 
 evaluación y elección de los modelos anteriormente descritos. De entre ellos 
@@ -68,8 +68,7 @@ y que habitualmente están presentes en las publicaciones más recientes. Ademá
 pruebas de ejecuciones de algunos métodos de código abierto para verificar los 
 resultados. Sin embargo, es el último el que finalmente se utiliza para entrenar un modelo para estimar 
 la calidad de las imágenes médicas. Esto es porque LS-PCQA~\cite{ResSCNN} 
-es el mayor conjunto de datos 
-en el momento de escritura, y posee tipos de distorsiones que pueden simular 
+es el mayor conjunto de datos, en el momento de escritura, y posee tipos de distorsiones que pueden simular 
 lo que sería ciertos errores y ruidos presentes en imágenes médicas. Por ejemplo, 
 el ruido gaussiano (simular errores de transmisión y almacenado de datos), 
 rotación y movimiento local (simular el movimiento del paciente) y compresión 
@@ -90,111 +89,9 @@ varios objetos abstractos.}
   \label{fig:LS-PCQA}
 \end{figure}
 
-\subsection{Métricas}
-\label{sec:Metricas}
-Las métricas más utilizadas en la resolución del problema de estimación de calidad 
-de imágenes suelen ser: el coeficiente de correlación de rangos de Spearman (SROCC, 
-por sus siglas en inglés), el coeficiente de correlación lineal de Pearson (PLCC), coeficiente de correlación de orden de rango de Kendall (KROCC)
-y raíz del error cuadrático medio (RMSE)~\cite{VisualMedicalQualityBook}.
-
-Las tres primeras al ser coeficientes de correlación toman valores en el intervalo 
-[-1, 1]. Siendo el valor -1 una correlación negativa entre los datos, es decir,
-ambos decrecen en el tiempo. Al contrario, cuando esta es +1, tenemos una relación 
-positiva que implica un crecimiento en el tiempo. Sin embargo, cada una de ellas 
-miden la correlación de forma distinta. 
-
-PLCC es una métrica que mide la correlación lineal entre dos conjuntos de datos.
-Evalúa si existe una relación lineal entre los valores de ambos conjuntos.
-Si definimos $x$ e $y$ como los vectores que contienen las puntuaciones de 
-calidad objetiva y subjetiva de $m$ imágenes, siendo $x_i$ e $y_i$ 
-los elementos contenidos en la posición $i$, entonces podemos formular 
-PLCC como la Ecuación \eqref{eq:PLCC}.
-
-\begin{equation}
-  PLCC(x,y) = \frac{\sum_{i=1}^m (x_i - \bar x)(y_i - \bar y)}{\sqrt{\sum_{i=1}^m (x_i - \bar x)^2}\sqrt{\sum_{i=1}^m (y_i - \bar y)^2}}
-\label{eq:PLCC}
-\end{equation}
-
-Como mencionado en \cite{ResSCNN} o \cite{VQA-PC}, se sugiere una transformación 
-no lineal para las puntuaciones objetivas antes de calcular el PLCC y el RMSE.
-Para ello utilizaremos la función de regresión logística-5, con 5 parámetros a aprender,
-como en la ecuación \eqref{eq:LG5}. 
-
-\begin{equation}
-  Q = \beta_1 \left(\frac{1}{2} - \frac{1}{1+e^{\beta_2 (Q_s-\beta_3}} \right) + \beta_4 Q_s + \beta_5
-  \label{eq:LG5}
-\end{equation}
-Donde $Q$ es el valor final normalizado, $Q_s$ es el valor predicho y $\beta_i$ se 
-refiere a los parámetros a aprender.
-La elección se debe al análisis comparativo entre esta, logística-4, con 4 parámetros, y la función de regresión cúbica-4
-desarrollado en~\cite{ResSCNN}. Los resultados se pueden ver en la Tabla \ref{tab:CompareNonLineal}, 
-y las fórmulas adicionales en el Apéndice \ref{ape:Formulas}.
-
-\begin{table}[htp]
-  \centering
-  \scriptsize
-  \begin{tabular}{|c|c|c|c|}
-    \hline
-    \rowcolor[HTML]{FFC702} 
-    & \textbf{Logística-4} & \textbf{Logística-5} & \textbf{Cúbica-4} \\
-    \hline 
-    SROCC & 0.8572 & \textbf{0.9026} & 0.8957\\
-    \hline
-    PLCC & 0.8626 & \textbf{0.9107} & 0.9044 \\
-    \hline 
-  \end{tabular}
-\caption[Comparativa entre funciones de normalización.]{Comparación de la correlación entre dos conjuntos de datos, la etiqueta y 
-  la predicción, tras utilizar las diferentes técnicas de normalización no lineal. 
-Vemos que hay una mayor correlación entre los datos si se normalizan con la 
-función logística-5.}
-  \label{tab:CompareNonLineal}
-\end{table}
-También podemos no depender de la escala de los datos, para ello tendríamos que 
-utilizar SROCC.
-Esta es una métrica que mide la correlación de clasificaciones o \emph{rankings} entre 
-dos conjuntos de datos. Evalúa si el orden relativo de los elementos es similar 
-en ambos conjuntos. Por ello, es también invariante a transformaciones monótonas 
-en los datos. Se puede formular como la Ecuación \ref{eq:SROCC}.
-
-\begin{equation}
-  SROCC(x,y) = \frac{\sum_i (x_i - \bar x)(y_i - \bar y)}{\sqrt{\sum_i (x_i - \bar x)^2}\sqrt{\sum_i (y_i - \bar y)^2}}
-\label{eq:SROCC}
-\end{equation}
-
-De hecho, la correlación de rangos de Spearman es equivalente a calcular 
-la correlación de Pearson sobre los rangos de los valores de entrada.
-
-\begin{equation}
-SROCC(x,y) = PLCC(rank(x), rank(y))
-\label{eq:SROCCasPLCC}
-\end{equation}
-
-KROCC es una métrica similar a SROCC, pero utiliza el coeficiente de correlación 
-de rangos de Kendall. También evalúa la correlación entre clasificaciones o \emph{rankings},
-pero se basa en la concordancia o discordancia de los pares de elementos en los 
-conjuntos.
-
-\begin{equation}
-  KROCC(x,y) = \frac{C-D}{\frac{1}{2} m (m-1)}
-\label{eq:KROCC}
-\end{equation}
-
-Donde $C$ alude a cuantos pares de datos, x e y, están bien correlacionadas, 
-y $D$ es el número de pares discordantes.  
-
-Por último, RMSE es una métrica que mide la diferencia entre los valores 
-predichos y los valores reales en un conjunto de datos. 
-Calcula la raíz cuadrada del promedio de los errores al cuadrado. 
-Un valor de RMSE más bajo indica un mejor ajuste o precisión del modelo.
-
-\begin{equation}
-  RMSE(x,y) = \sqrt{\frac{1}{m}\sum_{i=1}^m (x_i - y_i)^2}
-\label{eq:RMSE}
-\end{equation}
-
 \subsection{Conjunto de datos médicos}
 \label{sec:OurData}
-Para este TFG se tiene disponible una conjunto de tomografías computerizadas, de distintas
+Para este TFG se tiene disponible una conjunto de tomografías computarizadas, de diferentes
 partes del cuerpo, de 2 individuos distintos del conjunto de datos públicos NMID~\cite{NMID}. 
 De los cuales han sido segmentados las clavículas, el seno frontal y los senos maxilares. 
 A parte, disponemos de modelos generados mediante escáner láser 3D, en concreto con el dispositivo Artec Spider, que permite generar reconstrucciones 3D de objetos reales. Estos modelos 3D fueron adquiridos en el Departamento de Medicina Legal, Toxicología y Antropología Física de la Universidad de Granada y constan del cráneo de otros 3 individuos, una pubis izquierda y
@@ -202,7 +99,7 @@ una pubis derecha (véase Figura \ref{fig:OurDataExample}). Es decir, en total d
 calidad, que representan distintos volúmenes de exámenes médicos.
 A estos datos no se hicieron ningún tipo de pre-procesado, apenas se centraron 
 las nubes de puntos a los ejes (operación necesaria para hacer la rotación para 
-las distintas perspectivas, más detalles en la sección \ref{sec:Implementacion})
+las distintas perspectivas, más detalles en el Apéndice \ref{sec:Implementacion})
 y se eliminaron aquellos puntos aislado de todos, frutos de errores en el 
 algoritmo de reconstrucción 3D de las nubes de puntos a partir de segmentaciones DICOM. 
 
@@ -231,82 +128,77 @@ algoritmo de reconstrucción 3D de las nubes de puntos a partir de segmentacione
   \label{fig:OurDataExample}
 \end{figure}
 
+
 Cada nube de punto es centrada sobre los ejes como paso previo. A continuación, 
 reducimos el número de puntos anormales analizando estadísticamente el vecindario de cada punto. 
 A cada uno de estos ejemplos disponibles, se les aplica las 5 distorsiones médicas
 discutidas en la Sección \ref{sec:Distorsiones}. 
-Estas son: compresión \emph{octree}, submuestreo uniforme, movimiento local, rotación local 
+Para simular dichas distorsiones, partiremos de todos los ejemplos de imágenes médicas 
+mencionados anteriomente, considerados exentos de desperfectos. Dichos ejemplos 
+están segmentados por profesionales. 
+
+Dos de las distorsiones serán para simular los resultados de varios algoritmos de 
+compresión, como puede ser \emph{octree compression}~\cite{OctreeCompression} 
+y la reducción de número de puntos por medio de submuestreo aleatorio (en inglés \emph{random downsampling}). 
+Un \emph{octree} es una representación más eficiente que los vóxeles, se trata 
+de la descomposición de forma recursiva de la escena en 8 partes hasta 
+la profundidad máxima, donde cada nodo representa un cubo tridimensional 
+llamado octante. En la compresión se analiza los octantes y se elimina los que aportan 
+menos información. 
+En el segundo, establecemos un porcentaje de puntos que eliminar y los eliminamos 
+de forma aleatoria hasta alcanzar ese porcentaje de reducción.
+Las demás representarán efectos que podrían ocurrir por desplazamiento de los puntos, 
+como el movimiento del paciente y aquellos provocados por ruido en la transmisión de datos.
+
+\begin{figure}[htp]
+  \begin{subfigure}[b]{.5\textwidth}
+    \centering
+    \includegraphics[width=.95\textwidth]{imagenes/chapter2/clavicula/clavicula_0.png}
+    \caption{}
+  \end{subfigure}
+  \hfill
+  \begin{subfigure}[b]{.5\textwidth}
+    \centering
+    \includegraphics[width=.95\textwidth]{imagenes/chapter2/clavicula/clavicula_1.png}
+    \caption{}
+  \end{subfigure}
+  \begin{subfigure}[b]{.5\textwidth}
+    \centering
+    \includegraphics[width=.95\textwidth]{imagenes/chapter2/clavicula/clavicula_2.png}
+    \caption{}
+  \end{subfigure}
+  \hfill
+  \begin{subfigure}[b]{.5\textwidth}
+    \centering
+    \includegraphics[width=.95\textwidth]{imagenes/chapter2/clavicula/clavicula_3.png}
+    \caption{}
+  \end{subfigure}
+  \begin{subfigure}[b]{.5\textwidth}
+    \centering
+    \includegraphics[width=.95\textwidth]{imagenes/chapter2/clavicula/clavicula_4.png}
+    \caption{}
+  \end{subfigure}
+  \begin{subfigure}[b]{.5\textwidth}
+    \centering
+    \includegraphics[width=.95\textwidth]{imagenes/chapter2/clavicula/clavicula_5.png}
+    \caption{}
+  \end{subfigure}
+  \caption[Ejemplo de distorsiones generadas sobre clavículas.]{Ejemplo de distorsiones generadas sobre clavículas.
+    Tenemos la imagen original (a) y luego su versión tras compresión \emph{octree} (b), 
+    tras reducción de puntos por \emph{random downsampling} (c), tras simulación 
+    de movimiento local (d) y rotación local (e), y, por último, ruido gaussiano (f).
+  }
+  \label{fig:DistorsionesGeneradas}
+\end{figure}
+
+En total tendremos: compresión \emph{octree}, submuestreo uniforme, movimiento local, rotación local 
 y ruido gaussiano. Cada uno de estas distorsiones son 
 aplicadas en 7 niveles crecientes de intensidad.
 Las resoluciones de compresión \emph{octree} van de 0.4 a 1.0 en intervalos de 0.1.
 El submuestreo aleatorio realiza una reducción del 10\% al 70\% de los puntos.
 Tanto el movimiento como la rotación local se aplican de 1 a 7 veces.
 Por último, el ruido gaussiano va de 0.15\%, 0.20\%, 0.25\%, 0.30\%, 0.35\%, 0.4\% y 0.5\% del \emph{bounding box}. 
-Como resultado, tenemos un conjunto de datos con 385 ejemplos (véase Apéndice \ref{sec:DatosSinteticos}). 
-
-\subsection{Pseudo-MOS}
-Para la generación de la etiqueta, se optó seguir el camino propuesto por~\cite{ResSCNN}. 
-En opción a generar un entorno controlado con los estándares ITU-R~\cite{ITU-R.2012, ITU-R.2021}, 
-organizar al menos 16 personas, y que cada uno evalúe durante 30 segundos el nivel 
-de calidad de cada nube de punto en una escala 1-5, hemos hecho uso del gran 
-avance de las métricas con referencia que poseen un alto nivel de correlación con 
-la percepción de calidad del observador final. 
-Para ello, se hace un desglose de rendimiento de cada métrica para cada tipo 
-de distorsión, como se observa en la Tabla \ref{tab:MetricsPerDistortion}. El 
-rendimiento es medido con el coeficiente de correlación de rangos de Spearman.
-Las métricas comparadas son p2p0~\cite{PointToPoint} y p2pl~\cite{PointToPlane}, 
-con distancia manhattan (M) y hausdorff (H), PCQM~\cite{PCQM}, GraphSIM~\cite{GraphSIM} y 
-MPED~\cite{MPED}.
-
-\begin{table}[htp]
-    \scriptsize
-    \hspace{-.7cm}
-    \begin{tabular}{|c|c|c|c|c|c|c|c|}
-    \hline
-        \rowcolor[HTML]{FFC702} 
-        \textbf{Distortion} & \textbf{M-p2po} & \textbf{M-p2pl} & \textbf{H-p2po} & \textbf{H-p2pl} & \textbf{PCQM} & \textbf{GraphSIM} & \textbf{MPED} \\ \hline
-        DownSample & \textbf{0.881} & 0.626 & 0.841 & 0.811 & 0.524 & 0.842 & 0.857 \\ \hline
-        GaussianShifting & 0.741 & 0.718 & 0.829 & \textbf{0.834} & 0.816 & 0.742 & 0.598 \\ \hline
-        LocalOffset & \textbf{0.937} & 0.934 & 0.770 & 0.770 & 0.851 & 0.906 & 0.897 \\ \hline
-        LocalRotation & 0.819 & 0.712 & \textbf{0.831} & 0.734 & 0.657 & 0.723 & 0.742 \\ \hline
-        Octree & 0.779 & 0.788 & \textbf{0.819} & 0.752 & 0.676 & 0.757 & 0.710 \\ \hline
-    \end{tabular}
-    \caption[Tabla de métricas para generación de etiquetas.]{
-      Tabla de métricas para generación de etiquetas extraídas de~\cite{ResSCNN}.
-  }
-    \label{tab:MetricsPerDistortion}
-\end{table}
-
-En~\cite{ResSCNN} validaron sus muestras generadas con las métricas del estado del arte 
-para el subproblema FR por medio de un análisis subjetivo con el estándar ITU-R, en
-un entorno controlado, definido anteriormente, y obtuvieron una correlación del 
-90\% entre las muestras 
-etiquetadas subjetivamente y las que fueron etiquetadas objetivamente (véase Tabla \ref{tab:PseudoCorr}).
-Con ello, se logra justificar la generación de las etiquetas como una sustitución 
-de los métodos de evaluación subjetivos. 
-
-\begin{table}[H]
-  \centering 
-  \scriptsize
-  \begin{tabular}{|c|c|c|}
-    \hline
-    \rowcolor[HTML]{FFC702}
-     & \textbf{Parte I} & \textbf{Parte II} \\
-    \hline 
-    SROCC & 0.902697 & 0.878517\\
-    \hline
-    PLCC & 0.910713 & 0.871917\\
-    \hline
-  \end{tabular}
-  \caption[Correlación de métricas sintéticas.]{
-  Correlación de métricas sintéticas extraídas de~\cite{ResSCNN}.
-  Donde ``Parte I'' y ``Parte II' se refieren a dos conjuntos de datos etiquetados 
-  manualmente. El primero se utiliza para la elección de las métricas y el segundo 
-  para test.
-}
-  \label{tab:PseudoCorr}
-\end{table}
-
+Como resultado, tenemos un total de 385 ejemplos (véase Apéndice \ref{sec:DatosSinteticos}). 
 
 \section{Métodos}
 Como se pudo observar en la Sección \ref{sec:EstadoDelArte}, actualmente hay una 
@@ -405,7 +297,7 @@ de las distorsiones.
 
 Para cada tipo de característica, se utiliza el valor medio y la desviación típica 
 obtenida para cada punto de la nube de punto. Por último, sobre estas medidas, 
-para el conjunto de datos de entrenamiento se normaliza como \eqref{eq:MeanNorm}.
+para el conjunto de datos de entrenamiento se normaliza con \eqref{eq:MeanNorm}.
 Donde F es la característica extraída y C una pequeña constante para la 
 estabilidad numérica. El conjunto de test se normaliza utilizando las medias y 
 desviaciones de los datos de entrenamiento.
@@ -541,3 +433,175 @@ ResNet, el modelo de extracción temporal solo es un paso previo.
   \caption{Ejemplo detallado de las etapas del método de VQA-PC.}
   \label{fig:VQAPipeline}
 \end{figure}
+
+\section{Evaluación}
+\subsection{Etiquetado}
+Al tener que generar un conjunto de datos médicos por medio de la simulación 
+de distorsiones a distintos niveles de intensidad, es también necesario una manera 
+de etiquetar cada ejemplo generado con el valor de calidad esperado. 
+Para la generación de dicha etiqueta, se optó seguir el camino propuesto por~\cite{ResSCNN}. 
+En opción a generar un entorno controlado con los estándares ITU-R~\cite{ITU-R.2012, ITU-R.2021}, 
+organizar al menos 16 personas, y que cada uno evalúe durante 30 segundos el nivel 
+de calidad de cada nube de punto en una escala 1-5, hemos hecho uso del gran 
+avance de las métricas con referencia que poseen un alto nivel de correlación con 
+la percepción de calidad del observador final. 
+Para ello, se hace un desglose de rendimiento de cada métrica para cada tipo 
+de distorsión, como se observa en la Tabla \ref{tab:MetricsPerDistortion}. El 
+rendimiento es medido con el coeficiente de correlación de rangos de Spearman.
+Las métricas comparadas son p2p0~\cite{PointToPoint} y p2pl~\cite{PointToPlane}, 
+con distancia manhattan (M) y hausdorff (H), PCQM~\cite{PCQM}, GraphSIM~\cite{GraphSIM} y 
+MPED~\cite{MPED}.
+
+\begin{table}[htp]
+    \scriptsize
+    \hspace{-.7cm}
+    \begin{tabular}{|c|c|c|c|c|c|c|c|}
+    \hline
+        \rowcolor[HTML]{FFC702} 
+        \textbf{Distortion} & \textbf{M-p2po} & \textbf{M-p2pl} & \textbf{H-p2po} & \textbf{H-p2pl} & \textbf{PCQM} & \textbf{GraphSIM} & \textbf{MPED} \\ \hline
+        DownSample & \textbf{0.881} & 0.626 & 0.841 & 0.811 & 0.524 & 0.842 & 0.857 \\ \hline
+        GaussianShifting & 0.741 & 0.718 & 0.829 & \textbf{0.834} & 0.816 & 0.742 & 0.598 \\ \hline
+        LocalOffset & \textbf{0.937} & 0.934 & 0.770 & 0.770 & 0.851 & 0.906 & 0.897 \\ \hline
+        LocalRotation & 0.819 & 0.712 & \textbf{0.831} & 0.734 & 0.657 & 0.723 & 0.742 \\ \hline
+        Octree & 0.779 & 0.788 & \textbf{0.819} & 0.752 & 0.676 & 0.757 & 0.710 \\ \hline
+    \end{tabular}
+    \caption[Tabla de métricas para generación de etiquetas.]{
+      Tabla de métricas para generación de etiquetas extraídas de~\cite{ResSCNN}.
+  }
+    \label{tab:MetricsPerDistortion}
+\end{table}
+
+En~\cite{ResSCNN} validaron sus muestras generadas con las métricas del estado del arte 
+para el subproblema FR por medio de un análisis subjetivo con el estándar ITU-R, en
+un entorno controlado, definido anteriormente, y obtuvieron una correlación del 
+90\% entre las muestras 
+etiquetadas subjetivamente y las que fueron etiquetadas objetivamente (véase Tabla \ref{tab:PseudoCorr}).
+Con ello, se logra justificar la generación de las etiquetas como una sustitución 
+de los métodos de evaluación subjetivos. 
+
+\begin{table}[H]
+  \centering 
+  \scriptsize
+  \begin{tabular}{|c|c|c|}
+    \hline
+    \rowcolor[HTML]{FFC702}
+     & \textbf{Parte I} & \textbf{Parte II} \\
+    \hline 
+    SROCC & 0.902697 & 0.878517\\
+    \hline
+    PLCC & 0.910713 & 0.871917\\
+    \hline
+  \end{tabular}
+  \caption[Correlación de métricas sintéticas.]{
+  Correlación de métricas sintéticas extraídas de~\cite{ResSCNN}.
+  Donde ``Parte I'' y ``Parte II' se refieren a dos conjuntos de datos etiquetados 
+  manualmente. El primero se utiliza para la elección de las métricas y el segundo 
+  para test.
+}
+  \label{tab:PseudoCorr}
+\end{table}
+
+\subsection{Métricas de similitud}
+\label{sec:Metricas}
+Las métricas más utilizadas en la resolución del problema de estimación de calidad 
+de imágenes suelen ser: el coeficiente de correlación de rangos de Spearman (SROCC, 
+por sus siglas en inglés), el coeficiente de correlación lineal de Pearson (PLCC), coeficiente de correlación de orden de rango de Kendall (KROCC)
+y raíz del error cuadrático medio (RMSE)~\cite{VisualMedicalQualityBook}.
+
+Las tres primeras al ser coeficientes de correlación toman valores en el intervalo 
+[-1, 1]. Siendo el valor -1 una correlación negativa entre los datos, es decir,
+ambos decrecen en el tiempo. Al contrario, cuando esta es +1, tenemos una relación 
+positiva que implica un crecimiento en el tiempo. Sin embargo, cada una de ellas 
+miden la correlación de forma distinta. 
+
+PLCC es una métrica que mide la correlación lineal entre dos conjuntos de datos.
+Evalúa si existe una relación lineal entre los valores de ambos conjuntos.
+Si definimos $x$ e $y$ como los vectores que contienen las puntuaciones de 
+calidad objetiva y subjetiva de $m$ imágenes, siendo $x_i$ e $y_i$ 
+los elementos contenidos en la posición $i$, entonces podemos formular 
+PLCC como la Ecuación \eqref{eq:PLCC}.
+
+\begin{equation}
+  PLCC(x,y) = \frac{\sum_{i=1}^m (x_i - \bar x)(y_i - \bar y)}{\sqrt{\sum_{i=1}^m (x_i - \bar x)^2}\sqrt{\sum_{i=1}^m (y_i - \bar y)^2}}
+\label{eq:PLCC}
+\end{equation}
+
+Como mencionado en \cite{ResSCNN} o \cite{VQA-PC}, se sugiere una transformación 
+no lineal para las puntuaciones objetivas antes de calcular el PLCC y el RMSE.
+Para ello utilizaremos la función de regresión logística-5, con 5 parámetros a aprender,
+como en la ecuación \eqref{eq:LG5}. 
+
+\begin{equation}
+  Q = \beta_1 \left(\frac{1}{2} - \frac{1}{1+e^{\beta_2 (Q_s-\beta_3}} \right) + \beta_4 Q_s + \beta_5
+  \label{eq:LG5}
+\end{equation}
+Donde $Q$ es el valor final normalizado, $Q_s$ es el valor predicho y $\beta_i$ se 
+refiere a los parámetros a aprender.
+La elección se debe al análisis comparativo entre esta, logística-4, con 4 parámetros, y la función de regresión cúbica-4
+desarrollado en~\cite{ResSCNN}. Los resultados se pueden ver en la Tabla \ref{tab:CompareNonLineal}, 
+y las fórmulas adicionales en el Apéndice \ref{ape:Formulas}.
+
+\begin{table}[htp]
+  \centering
+  \scriptsize
+  \begin{tabular}{|c|c|c|c|}
+    \hline
+    \rowcolor[HTML]{FFC702} 
+    & \textbf{Logística-4} & \textbf{Logística-5} & \textbf{Cúbica-4} \\
+    \hline 
+    SROCC & 0.8572 & \textbf{0.9026} & 0.8957\\
+    \hline
+    PLCC & 0.8626 & \textbf{0.9107} & 0.9044 \\
+    \hline 
+  \end{tabular}
+\caption[Comparativa entre funciones de normalización.]{Comparación de la correlación entre dos conjuntos de datos, la etiqueta y 
+  la predicción, tras utilizar las diferentes técnicas de normalización no lineal. 
+Vemos que hay una mayor correlación entre los datos si se normalizan con la 
+función logística-5.}
+  \label{tab:CompareNonLineal}
+\end{table}
+También podemos no depender de la escala de los datos, para ello tendríamos que 
+utilizar SROCC.
+Esta es una métrica que mide la correlación de clasificaciones o \emph{rankings} entre 
+dos conjuntos de datos. Evalúa si el orden relativo de los elementos es similar 
+en ambos conjuntos. Por ello, es también invariante a transformaciones monótonas 
+en los datos. Se puede formular como la Ecuación \ref{eq:SROCC}.
+
+\begin{equation}
+  SROCC(x,y) = \frac{\sum_i (x_i - \bar x)(y_i - \bar y)}{\sqrt{\sum_i (x_i - \bar x)^2}\sqrt{\sum_i (y_i - \bar y)^2}}
+\label{eq:SROCC}
+\end{equation}
+
+De hecho, la correlación de rangos de Spearman es equivalente a calcular 
+la correlación de Pearson sobre los rangos de los valores de entrada.
+
+\begin{equation}
+SROCC(x,y) = PLCC(rank(x), rank(y))
+\label{eq:SROCCasPLCC}
+\end{equation}
+
+KROCC es una métrica similar a SROCC, pero utiliza el coeficiente de correlación 
+de rangos de Kendall. También evalúa la correlación entre clasificaciones o \emph{rankings},
+pero se basa en la concordancia o discordancia de los pares de elementos en los 
+conjuntos.
+
+\begin{equation}
+  KROCC(x,y) = \frac{C-D}{\frac{1}{2} m (m-1)}
+\label{eq:KROCC}
+\end{equation}
+
+Donde $C$ alude a cuantos pares de datos, x e y, están bien correlacionadas, 
+y $D$ es el número de pares discordantes.  
+
+Por último, RMSE es una métrica que mide la diferencia entre los valores 
+predichos y los valores reales en un conjunto de datos. 
+Calcula la raíz cuadrada del promedio de los errores al cuadrado. 
+Un valor de RMSE más bajo indica un mejor ajuste o precisión del modelo.
+
+\begin{equation}
+  RMSE(x,y) = \sqrt{\frac{1}{m}\sum_{i=1}^m (x_i - y_i)^2}
+\label{eq:RMSE}
+\end{equation}
+
+
+

@@ -53,12 +53,12 @@ respuestas del HVS, introducen la saliencia visual\footnote{
 ya que se ha observado que la saliencia de la imagen desempeña un papel importante.
 
 Desde entonces se han propuesto diversas variantes de estos métodos, adaptadas 
-al contexto y información disponible. 
+al contexto e información disponible. 
 Para la estimación de calidad de las imágenes sin referencia surgieron métricas para 
 tipos de distorsiones específicas como 
 imágenes borrosas~\cite{GradientBasedBlurAssessment}, 
 imágenes comprimidas en JPEG~\cite{JPEGBasedOnLuminance}, 
-imágenes con artefactos de bloque~\cite{DeblockedImages} y imágenes con 
+imágenes con artefactos de bloque~\cite{DeblockedImages} e imágenes con 
 cambios de contraste~\cite{ContrastDistorted}.
 Luego, se buscaron maneras de estimar la calidad de imágenes de forma más genérica, 
 sin depender del tipo de distorsión. Para ello, se han propuesto varias métricas 
@@ -169,11 +169,11 @@ método centrado en predecir la calidad de nubes de puntos
 codificadas mediante V-PCC, algoritmo de compresión, utilizando un modelo NR 
 a nivel de \emph{bitstream}. A continuación, los métodos siguen el camino explorado 
 por los métodos FR-PCQA extrayendo características de las nubes de puntos para 
-entrenar modelos.  Chetouni et al.~\cite{NR-CNN-3D-PC} utilizó distancias geométricas, nivel de curvatura medio
+entrenar modelos.  Chetouni et al.~\cite{NR-CNN-3D-PC} utilizó distancias geométricas, nivel de curvatura media
 y niveles de color, en escala gris. Zhang et al.~\cite{NR3DQA} siguiendo la misma 
 línea extrajo características de los vectores y valores singulares de cada punto,
 además de utilizar características lumínicas.
-El siguiente paso, al igual que en FR, se adaptaron ideas de otros ámbitos, por ejemplo, utilizando 
+En el siguiente paso, al igual que en FR, se adaptaron ideas de otros ámbitos, por ejemplo, utilizando 
 proyecciones que trasladan el mundo tridimensional a un espacio 2D para utilizar 
 los métodos más conocidos de estimación de calidad en imágenes.
 En PQA-Net~\cite{PQA-Net} se realiza un mapeado 
@@ -183,7 +183,7 @@ que calculan conjuntamente la calidad de la nube de puntos degradada.
 En IT-PCQA~\cite{IT-PCQA} deciden utilizar métodos IQA aplicadas a las multi-proyecciones.
 Extendiendo los trabajos anteriores, tenemos VQA-PC~\cite{VQA-PC} que trata las 
 multi-proyecciones como vídeo, pudiendo así utilizar información espacial, 
-imágenes en posiciones específicas, y información de consistencia temporal 
+imágenes en posiciones específicas, e información de consistencia temporal 
 de la nube de puntos rotando. 
 Se realizó incluso un estudio sobre el impacto del número de proyecciones 2D de 
 distintas perspectivas en el rendimiento de las métricas de calidad~\cite{ImpactOf2DProyections, IT-PCQA}.
@@ -193,10 +193,10 @@ entender remediar cierta pérdida de información que puede ocurrir al proyectar
 En ResSCNN~\cite{ResSCNN} modifican el esqueleto de PointNet~\cite{PointNet} para 
 utilizar convoluciones dispersas, extraer características de forma jerárquica y 
 predecir la calidad de la nube. También, con intención de ayudar al desarrollo 
-de métodos NR-PCQA de aprendizaje profundo, construyeron el mayor conjunto de datos
-de nubes de puntos sintético, en el momento de escritura, con su estimación de calidad. 
+de métodos NR-PCQA de aprendizaje profundo, construyeron el mayor conjunto de datos sintéticos
+de nubes de puntos distorsionadas, en el momento de escritura, con sus correspondientes estimaciones de calidad. 
 Otro método que trabaja directamente sobre la nube de puntos es SGR~\cite{SGR}, 
-que extraen regiones locales de la nube de puntos y analizan la calidad de los parches.
+que extrae regiones locales de la nube de puntos y analiza la calidad de los parches.
 Recientemente, ha salido el modelo MM-PCQA~\cite{MM-PCQA} que utiliza tanto información 
 directa de la nube de puntos como información de las proyecciones. Incluso, hay 
 métodos que han optado por utilizar un \emph{ensemble}~\cite{EnsemblePCQA} de 
@@ -264,8 +264,11 @@ auto adaptación. Así como fue expuesto anteriormente, no es posible
 simplemente implementar métodos IQA, es por ello que Chow y Rajagopal~\cite{MedicalBRISQUE} 
 propusieron un enfoque más reciente que adapta el evaluador de calidad de imagen más famoso BRISQUE~\cite{BRISQUE}.
 
+Estos métodos consisten de aproximaciones 2D, específicas a un tipo de examen, 
+que resuelven el problema de la estimación de calidad de imágenes médicas
+por medio de los múltiples planos anatómicos bidimensionales. 
 Sin embargo, no se ha encontrado nada específico en la literatura para las 
-reconstrucciones 3D generadas a partir de las imágenes médicas, por lo que es un campo sin explorar. 
+reconstrucciones 3D generadas a partir de dichas imágenes médicas, por lo que es un campo sin explorar. 
 No obstante, cada vez más frecuentemente se emplean 
 volúmenes tridimensionales en la medicina y, consecuentemente, es necesario explorar ese 
 campo a pesar de la complejidad existente.

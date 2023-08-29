@@ -4,7 +4,7 @@
     \frametitle{Datos públicos SJTU}
     \begin{columns}
       \column{0.5\textwidth}
-      \begin{enumerate}[<+->]
+      \begin{enumerate}
         \item \textbf{10 nubes de puntos} de referencia.  
         \item \textbf{7} tipos de \textbf{distorsiones}: compresión, ruido al color, 
           ruido geométrico, ruido gaussiano y combinación entre ellas.
@@ -25,7 +25,7 @@
     \frametitle{Datos públicos WPC}
     \begin{columns}
       \column{0.5\textwidth}
-      \begin{enumerate}[<+->]
+      \begin{enumerate}
         \item \textbf{25 nubes de puntos} de referencia.  
         \item \textbf{5} tipos de \textbf{distorsiones}: 
           sumuestreo, ruido gaussiano, \emph{trisoup}, V-PCC y \emph{octree}.
@@ -46,10 +46,10 @@
 \frametitle{Datos públicos LS-PCQA}
   \begin{columns}
     \column{0.5\textwidth}
-    \begin{enumerate}[<+->]
-      \item \alert{104 nubes de puntos} de referencia.  
-      \item \alert{31} tipos de \alert{distorsiones}.
-      \item \alert{7 niveles} de intensidad.
+    \begin{enumerate}
+      \item \textbf{104 nubes de puntos} de referencia.  
+      \item \textbf{31} tipos de \textbf{distorsiones}.
+      \item \textbf{7 niveles} de intensidad.
       \item \textbf{Total de 22000 nubes de puntos}.
     \end{enumerate}
     \column{0.5\textwidth}
@@ -74,11 +74,11 @@
       \label{fig:DistorsionesGeneradas}
     \end{figure}
   \vspace{-.3cm}
-    \begin{enumerate}[<+->]
-      \item \alert{11 nubes de puntos} de referencia.  
-      \item \alert{5} tipos de \alert{distorsiones}: 
+    \begin{enumerate}
+      \item \textbf{11 nubes de puntos} de referencia.  
+      \item \textbf{5} tipos de \textbf{distorsiones}: 
         submuestreo, compresión, ruido, rotación y movimiento local.
-      \item \alert{7 niveles} de intensidad para un \textbf{total de 385 nubes de puntos}.
+      \item \textbf{7 niveles} de intensidad para un \textbf{total de 385 nubes de puntos}.
     \end{enumerate}
 \end{frame}
 
@@ -110,13 +110,13 @@ $
 \\ 
 \parbox[c]{6cm}{
   \centering
-    Evalúa si existe una \alert{relación lineal} entre conjuntos. 
+    Evalúa si existe una \textbf{relación lineal} entre conjuntos. 
     \vspace{.5cm}
 }
 &
 \parbox[c]{6cm}{
   \centering
-  Evalúa la relación lineal entre los \alert{\emph{rankings}}.
+  Evalúa la relación lineal entre los \textbf{\emph{rankings}}.
   \vspace{.5cm}
     \
 }
@@ -142,12 +142,12 @@ $
 \\
 \parbox[c]{6cm}{
   \centering
-    Evalúa la \alert{concordancia y discordancia} de relación entre pares.
+    Evalúa la \textbf{concordancia y discordancia} de relación entre pares.
   }
   & 
 \parbox[c]{6cm}{
   \centering
-  Evalúa la \alert{diferencia media} de los pares de valores.
+  Evalúa la \textbf{diferencia media} de los pares de valores.
    
   }
   \\
@@ -204,7 +204,7 @@ $
   \frametitle{Model NR3DQA\footnote[frame]{\cite{NR3DQA}}}
   \begin{columns}
     \column{0.5\textwidth}
-    \begin{enumerate}[<+->]
+    \begin{enumerate}
       \item \textbf{Extracción independiente} del modelo.
         \begin{itemize}
           \item Anisotropía
@@ -213,7 +213,7 @@ $
           \item Curvatura 
           \item Linealidad
         \end{itemize}
-      \item \alert{Descartamos} las características lumínicas.
+      \item \textbf{Descartamos} las características lumínicas.
       \item Usamos: \textbf{media, desviación y entropía}.
     \end{enumerate}
     \column{0.5\textwidth}
@@ -230,12 +230,12 @@ $
   \frametitle{Modelo VQA-PC\footnote[frame]{\cite{VQA-PC}}}
   \begin{columns}
     \column{0.5\textwidth}
-    \begin{enumerate}[<+->]
+    \begin{enumerate}
       \item \textbf{Extracción automática} de características.
-      \item Extracción \alert{espacial y temporal} de las reconstrucciones.
+      \item Extracción \textbf{espacial y temporal} de las reconstrucciones.
         \begin{itemize}
           \item Espacial por fotogramas estáticos de \textbf{distintas perspectivas}.
-          \item Temporal por tratar la \alert{nube como video}.
+          \item Temporal por tratar la \textbf{nube como video}.
         \end{itemize}
       \item Es como un \textbf{meta-modelo} de aprendizaje profundo. 
     \end{enumerate}

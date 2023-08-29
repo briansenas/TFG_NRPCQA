@@ -18,7 +18,7 @@
           \includegraphics[width=\textwidth]{imagenes/chapter2/ScopusQualityAssessment}
         \end{center}
         \caption{Estimación de calidad en imágenes médicas (azul), nubes de puntos (naranja) 
-          y en imágenes médicas 3D (verde). Esta última, tan solo llega a \alert{60 publicaciones}}
+          y en imágenes médicas 3D (verde). Esta última, tan solo llega a \textbf{60 publicaciones}}
       \end{figure}
     \end{columns}
 \end{frame}
@@ -30,10 +30,10 @@
     \column{0.5\textwidth}
     \begin{enumerate}
       \item Están basados en los avances del conocimiento sobre el sistema visual humano (HVS):
-        \begin{enumerate}[<+->]
+        \begin{enumerate}
           \item Cuantificación de la señal. 
           \item La \textbf{sensibilidad al contraste}.
-          \item Hipótesis de percepción a través de: brillo, contraste y \alert{estructuras}.
+          \item Hipótesis de percepción a través de: \textbf{brillo, contraste y estructuras}.
           \item La \textbf{saliencia visual}. 
           \item Empleo de \textbf{modelos DL}.
         \end{enumerate}
@@ -50,12 +50,12 @@
       \rowcolor[HTML]{FFC702}
       \multirow{-2}{*}{\textbf{Métrica}} & SRCC & PLCC & RMSE \\ 
       \hline
-                    \alert<1-2>{PSNRHVS} & 0.919 & 0.903 & 12.540 \\
+                    \textbf<1-2>{PSNRHVS} & 0.919 & 0.903 & 12.540 \\
                      UQI & 0.894 & 0.899 & 11.982 \\
-                     \alert<3>{SSIM} & 0.948 & 0.845 & 8.946 \\
-                     \alert<4>{VSI} & 0.952 & 0.948 & 8.682 \\
+                     \textbf<3>{SSIM} & 0.948 & 0.845 & 8.946 \\
+                     \textbf<4>{VSI} & 0.952 & 0.948 & 8.682 \\
                      DSS & 0.962 & 0.931 & 9.961 \\
-                     \alert<5>{CD-MMF} & \textbf{0.981} & \textbf{0.980} & \textbf{5.413}\\ 
+                     \textbf<5>{CD-MMF} & \textbf{0.981} & \textbf{0.980} & \textbf{5.413}\\ 
                      WaDIQaM & 0.970 & \textbf{0.980} & - \\
                     \hline 
     \end{tabular}
@@ -72,11 +72,11 @@
   \frametitle{Estado del arte NR-IQA}
   \begin{columns}
     \column{0.5\textwidth}
-    \begin{enumerate}[<+->]
+    \begin{enumerate}
       \item Métricas basadas en \textbf{tipos específicos de distorsiones}.
-      \item Métricas basadas en \alert{estadísticas de escenas naturales} (NSS).
+      \item Métricas basadas en \textbf{estadísticas de escenas naturales} (NSS).
       \item Métricas basadas en \textbf{aprendizaje automático}.
-      \item Métricas basadas en \alert{aprendizaje profundo}.
+      \item Métricas basadas en \textbf{aprendizaje profundo}.
     \end{enumerate}
     \column{0.5\textwidth}
     \begin{table}[htp]
@@ -89,11 +89,11 @@
         \rowcolor[HTML]{FFC702}
           \multirow{-2}{*}{\textbf{Métrica}} & SROCC & PLCC & RMSE \\
         \hline
-                              \alert<2>{BRISQUE} & 0.940 & 0.942 & - \\
-                               \alert<3>{LGP} & 0.957 & 0.954 & 7.901 \\
+                              \textbf<2>{BRISQUE} & 0.940 & 0.942 & - \\
+                               \textbf<3>{LGP} & 0.957 & 0.954 & 7.901 \\
                                IQA-CNN & 0.956 & 0.953 & - \\
                                DIQaM-NR & \textbf{0.960} & \textbf{0.972} & - \\
-                               \alert<4>{Hallucinated-IQA} & \textbf{0.982} & \textbf{0.982} & - \\
+                               \textbf<4>{Hallucinated-IQA} & \textbf{0.982} & \textbf{0.982} & - \\
                               \hline
       \end{tabular}
       \caption[Tablas estado del arte NR-IQA.]{
@@ -109,7 +109,7 @@
   \frametitle{Estado del arte PCQA}
   \begin{columns}
     \column{0.5\textwidth}
-    \begin{enumerate}[<+->]
+    \begin{enumerate}
       \item Extracción de características del vecindario del punto.
         \begin{enumerate}
           \item Características \textbf{geométricas}.
@@ -138,13 +138,13 @@
               \hline
               IT-PCQA & 0.58 & 0.63 & 0.55  & 0.54\\
               \hline
-              \alert<3->{NR3DQA} & 0.7382 & 0.7144 & 0.6514 & 0.6479\\
+              \textbf<1->{NR3DQA} & 0.7382 & 0.7144 & 0.6514 & 0.6479\\
               \hline
               GPA-Net & 0.806 & 0.78 & - & - \\
               \hline
               ResSCNN & 0.86 & 0.81 & 0.72 & 0.75\\
               \hline
-              \alert<4->{VQA-PC} & 0.8635 & 0.8509 & 0.7976 & 0.7968\\
+              \textbf<2->{VQA-PC} & 0.8635 & 0.8509 & 0.7976 & 0.7968\\
               \hline
               MM-PCQA & \textbf{0.92} & \textbf{0.91} & \textbf{0.83} & \textbf{0.83}\\
               \hline
@@ -160,10 +160,10 @@
 \begin{frame}
   \frametitle{Estado del arte en imágenes médicas}
   \begin{enumerate}
-    \item \textbf{No existe} una imagen o representación \alert{``sin distorsión''} en la medicina.
+    \item \textbf{No existe} una imagen o representación \textbf{``sin distorsión''} en la medicina.
     \item Los métodos \textbf{actuales} utilizan adaptaciones \textbf{IQA} para 
       exámenes médicos específicos como \textbf{MRI}.
-    \item No se ha encontrado nada específico en la literatura sobre 
-      métodos aplicados a reconstrucciones 3D.
+    \item \textbf{No se ha encontrado} nada específico en la literatura sobre 
+      métodos aplicados \textbf{directamente a reconstrucciones 3D}.
   \end{enumerate}
 \end{frame}

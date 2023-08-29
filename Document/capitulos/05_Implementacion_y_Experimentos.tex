@@ -1,22 +1,43 @@
 \chapter{Implementación y Experimentos} 
-\section{Experimentos} 
-
-\begin{figure}[H]
-  \begin{center}
-    \includegraphics[width=0.90\textwidth]{imagenes/chapter5/TFGSequence}
-  \end{center}
-  \caption{Diagrama de secuencias del proyecto.}
-  \label{fig:TFGSequence}
-\end{figure}
+\section{Diseño Experimental} 
 
 Todo el código desarrollado se encuentra 
 en el GitHub \url{https://github.com/CodeBoy-source/TFG_NRPCQA}.
+Más detalles sobre la simulación de las distorsiones y el entorno de 
+ejecución se recogen en el Apéndice \ref{sec:Implementacion}.
 En la Figura \ref{fig:TFGSequence} se observa el diagrama de secuencias 
 que determina el flujo de tareas implementadas para el desarrollo de este proyecto. 
-Se divide en dos grandes bloques: la generación de los datos sintéticos y 
-la obtención de los resultados promedios de los modelos. A continuación 
-se expone el proceso de obtención de dichos resultados y el correspondiente
-análisis de cada uno de ellos. 
+Como vimos en la sección anterior, el primer paso se divide en la simulación 
+de distorsiones y en el etiquetado de un valor de calidad objetivo.
+A continuación, en esta sección se expone el proceso de obtención de los resultados de 
+experimentación y el correspondiente análisis de cada uno de ellos. 
+
+\begin{figure}[htp]
+  \begin{center}
+    \includegraphics[width=\textwidth]{imagenes/chapter5/TFGSequence}
+  \end{center}
+  \caption{Diagrama de secuencias del proyecto. Se observan dos grandes bloques:
+    generación de datos sintéticos (0 a 3) y experimentación (4 a 8).  }
+  \label{fig:TFGSequence}
+\end{figure}
+  
+
+% \begin{figure}[htp]
+%   \begin{center}
+%     \includegraphics[width=0.9\textwidth]{imagenes/chapter5/TFGSequence1}
+%   \end{center}
+%   \caption{Diagrama de secuencias del bloque generación de datos.}
+%   \label{fig:TFGSequence1}
+% \end{figure}
+%
+% \begin{figure}[htp]
+%   \begin{center}
+%     \includegraphics[width=0.9\textwidth]{imagenes/chapter5/TFGSequence2}
+%   \end{center}
+%   \caption{Diagrama de secuencias del bloque de experimentación.}
+%   \label{fig:TFGSequence2}
+% \end{figure}
+%
 
 \subsection{Protocolo de validación experimental} 
 \label{sec:Validation}
@@ -42,24 +63,25 @@ Es decir, un K-fold con K=1 equivale a la técnica de \emph{hold-out}
 donde se divide el conjunto de datos en el conjunto de entrenamiento y 
 el conjunto de test.  
 
-En el caso de nuestro dataset de imágenes médicas, al ser pocos ejemplos 
-se ha realizado un pliegue por modelo 3D, así que por cada pliegue hay un total de 
-350 ejemplos de entrenamiento y 35 ejemplos en test. 
 En el caso de pre-entrenar usando LS-PCQA~\cite{ResSCNN}, con 3640 ejemplos en total para 
 nuestras distorsiones, se optó por utilizar 80\% para entrenamiento y 20\% para test. 
 Para las pruebas preliminares se utilizó el conjunto SJTU con las condiciones indicadas por 
 \cite{VQA-PC}, es decir, con nueve pliegues, uno por modelo para un total de 336 ejemplos para entrenamiento y 42 para test. 
 
+En el caso de nuestro dataset de imágenes médicas, al ser pocos ejemplos 
+se ha realizado un pliegue por modelo 3D, así que por cada pliegue hay un total de 
+350 ejemplos de entrenamiento y 35 ejemplos en test. 
+
 Primeramente se replican los resultados obtenidos en las publicaciones originales 
 de los métodos NR3DQA~\cite{NR3DQA} y VQA-PC~\cite{VQA-PC}. Para ello se utilizan
 los conjuntos de datos públicos SJTU~\cite{SJTU} y WPC~\cite{WPC1,WPC2}. 
 A continuación, se analizan los resultados obtenidos sobre nuestro conjunto 
-de imágenes médicas y, con ello, se proponen mejoras y adaptaciones con fin 
-de obtener mejores resultados. 
+de imágenes médicas y, con ello, se proponen mejoras y adaptaciones.
 
+\section{Resultados}
 \subsection{Experimentos NR3DQA}
 Para replicar el método de Zhang et al~\cite{NR3DQA} podemos utilizar los 
-scripts en \code{NR3DQA/}. Para ello disponemos de unos cuántos scripts para la extracción de las características y visualización de las distribuciones 
+archivos del directorio \code{NR3DQA/}. Para ello disponemos de unos cuántos scripts para la extracción de las características y visualización de las distribuciones 
 como indica la publicación (ver Apéndice \ref{sec:Implementacion}). 
 Utilizaremos la librería de Pyntcloud~\cite{Pyntcloud} para obtener 
 la matriz de covarianza y calcular las características en base a lo definido 
@@ -403,14 +425,14 @@ Por otro lado, la fusión F3 no logra mejorar de forma significativa.
 \end{tabular}
 \caption[Valor medio sobre imágenes médicas.]{Tabla de resultados iniciales sobre imágenes médicas. 
 Partimos del modelo pre-entrenado de la publicación original~\cite{VQA-PC} sobre SJTU y 
-a continuación desde 0 con los métodos de fusión de característica.
+a continuación desde cero con los métodos de fusión de característica.
 }
 \label{tab:SroccMedRes}
 \end{table}
 
 Los resultados son prometedores. El modelo con información adicional sobre otros 
 tipos de distorsiones, conocimiento del conjunto SJTU, es el que obtiene el mejor 
-resultado tras reescalar las imágenes, seguido por el modelo entrenado desde 0 
+resultado tras reescalar las imágenes, seguido por el modelo entrenado desde cero 
 con la fusión por multiplicación (F1). No obstante, se ha observado cierta 
 variabilidad en los resultados de cada pliegue, como se observa en la Tabla \ref{tab:STDevMed}.
 Esto puede ser debido a diversos factores, desde la dificultad del modelo de 
@@ -425,7 +447,7 @@ que se puede observar la mediana de cada modelo en la Tabla \ref{tab:PercentileM
 
 Para validar el rápido aprendizaje de los métodos F1-F3 y la posible mejora 
 sobre el método de concatenación, se experimenta utilizar el modelo VQA-PC sin 
-modificaciones desde 0 sobre las imágenes reescaladas (véase Tabla \ref{tab:VQAF0}).
+modificaciones desde cero sobre las imágenes reescaladas (véase Tabla \ref{tab:VQAF0}).
 Se obtiene en media resultados algo peor que el modelo 
 pre-entrenado, remarcando la importancia de información adicional y etapas 
 de entrenamiento más largas a la hora de lidiar con algunas nubes de puntos, aunque su
@@ -434,7 +456,7 @@ Se determina que, para un conjunto de datos pequeños, las mejoras F1-F3 no son 
 Dado la importancia de la información adicional sobre las distorsiones a la 
 hora de estimar la calidad de las imágenes de nuestro pequeño conjunto médico, 
 se propone pre-entrenar sobre el conjunto LS-PCQA.
-En este caso, se utilizará las imaǵenes reescaladas y las métricas sin normalizar, 
+En este caso, se utilizará las imágenes reescaladas y las métricas sin normalizar, 
 dado que se ha observado anteriormente que es la mejor combinación. Sobre los 
 datos de LS-PCQA, se invierte el MOS para que pase a representar el nivel 
 de distorsión en lugar del nivel de calidad en escala 0-1, para que se asemeje a los 
@@ -531,3 +553,51 @@ es el más estable en todos los casos. }
   sobre el conjunto de datos LS-PCQA. 
 }\label{tab:LS-PCQA-FN}
 \end{table}
+
+\section{Discussión de resultados}
+El modelo adaptado de ML demuestra no ser capaz de determinar con calidad 
+el nivel de distorsiones de las imágenes médicas. Incluso tras la implementación 
+de la extracción de nuevas características según publicaciones recientes 
+de segmentación de nubes de puntos. Esta mejora logra un incremento del 5\% de correlación en un conjunto de datos públicos llegando al 85\%, pero apenas consigue un 20\% sobre los datos médicos. 
+Por otro lado, al transferir el modelo DL elegido directamente a imágenes médicas ya se consiguen 
+buenos resultados, con una correlación media del 71\%. Con las mejoras propuestas de 
+fusión de características se obtiene una mayor media con el método F1 (fusión por multiplicación) a 73\%. 
+No obstante, se justifica el reescalado de las imágenes para mejorar el 
+ratio de información por recorte y se obtiene un 84\% de correlación media 
+con el modelo estándar. Por último, tras entrenar con datos sintéticos de distorsiones similares y 
+diversas nubes de puntos, se logra una media de 88\%, con mediana al 94\%, utilizando el método F2 (fusión por convolución).
+En la Figura \ref{fig:Cualitativos} se observa un ejemplo de la correlación entre 
+los valores de calidad inferidos, para distintas intensidades de submuestreo, 
+y los valores de las etiquetas sintéticas correspondientes. 
+
+De los distintos métodos de fusión de características, se concluye que para 
+pocos conjuntos de datos los métodos F1, F2 y F3 (fusión por \emph{pooling} bilineal) quedan por detrás, aunque 
+muy cerca, del método habitual de concatenar los vectores (F0). Siendo F3 el método 
+más estable para las distintas transformaciones de los datos (reescalado y normalización). 
+No obstante, es a la vez el método que obtiene los peores resultados. 
+Cuando pre-entrenamos en un conjunto de datos más largo, el método F3 sigue siendo 
+el con peores resultados, aunque más cerca de F1 que, a su vez, se acerca a F0. 
+Por otro lado, con más datos F2 tiene un gran salto en sus resultados, 
+logrando ser el mejor método de fusión de características. 
+
+\begin{figure}[htp]
+  \begin{subfigure}[b]{0.31\textwidth}
+  \centering
+    \includegraphics[width=\textwidth]{imagenes/chapter6/Maxiliar100014_7.png}
+  \caption{Submuestreo del 10\%.}
+\end{subfigure}\hspace{10pt}
+  \begin{subfigure}[b]{0.31\textwidth}
+  \centering
+    \includegraphics[width=\textwidth]{imagenes/chapter6/Maxiliar100014_9.png}
+  \caption{Submuestreo del 30\%.}
+\end{subfigure}\hspace{10pt}
+  \begin{subfigure}[b]{0.31\textwidth}
+  \centering
+    \includegraphics[width=\textwidth]{imagenes/chapter6/Maxiliar100014_11.png}
+  \caption{Submuestreo del 60\%.}
+  \end{subfigure}
+  \caption{Ejemplo de correspondencia de pendiente entre valores inferidos (sin normalizar) y 
+  los valores reales de las etiquetas.} 
+  \label{fig:Cualitativos}
+\end{figure}
+

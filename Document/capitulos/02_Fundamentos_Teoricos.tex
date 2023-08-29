@@ -20,7 +20,7 @@ Primeramente, se asume la misma importancia para todas las señales de la imagen
 la magnitud del error es lo único que determina la calidad, que el contenido de la imagen 
 no afecta al resultado final tras aplicar una distorsión, y que si cambiamos el 
 orden de las señales la medida de distorsión no es afectada.
-Lamentablemente, ninguna de estas suposiciones se cumplen~\cite{Wang2006ModernIQ} (véasne Figuras \ref{fig:FailureMinkowskiMetric} y \ref{fig:MSEHyperSphere}, 
+Lamentablemente, ninguna de estas suposiciones se cumplen~\cite{Wang2006ModernIQ} (véasen Figuras \ref{fig:FailureMinkowskiMetric} y \ref{fig:MSEHyperSphere}, 
 que utilizan distancias \emph{Minkowski}, 
 que puede considerarse como una generalización tanto de 
 la distancia euclídea como de la distancia de Manhattan, 
@@ -326,7 +326,7 @@ En la Figura \ref{fig:PoolingExample} vemos un operador de \emph{pooling} común
 el operador de valor máximo. También es habitual el uso del operador de valor medio y
 valor mínimo.
 El \emph{pooling}, al igual que la convolución, posee un filtro o ventana que recorre
-los datos dado un salto o \emph{stride} al moverse por los mismos,
+los datos dado un salto o \emph{stride} al moverse por los mismos.
 
 Las capas convolucionales y de \emph{pooling} trabajan en conjunto para procesar y extraer 
 características. 
@@ -351,8 +351,8 @@ siguiente. Si bien existen modelos totalmente convolucionales, resulta común
 que las CNNs incluyan capas totalmente conectadas al final de la arquitectura.
 Estas capas forman una ANN clásica.
 La salida de la última capa densa, siendo la salida de la red entera, es donde
-se evaluará la función de pérdida elegida, y al igual que en una red neuronal
-clásica se utilizará este valor para ajustar los pesos.
+se evaluará la función de pérdida elegida y, al igual que en una red neuronal
+clásica, se utilizará este valor para ajustar los pesos.
 
 \subsubsection{Aplicadas a Videos} 
 \label{sec:VideoCNN}
@@ -371,7 +371,7 @@ En este TFG se explora el uso de una 3D CNN capaz de analizar vídeos que perten
 a la familia que se conoce como \emph{SlowFast networks}~\cite{SlowFastNetworks}. Están basadas en dos caminos 
 de entrada de datos. Un conjunto de \emph{frames} espaciados en el tiempo, 
 \emph{slow path}, para obtener información espacial y otro con todos ellos, \emph{fast path}, 
-para obtener información de movimiento (Figura \ref{fig:SlowFastPathways}). 
+para obtener información de movimiento (véase Figura \ref{fig:SlowFastPathways}). 
 
 \begin{figure}[htp]
   \begin{center}
@@ -387,8 +387,8 @@ para obtener información de movimiento (Figura \ref{fig:SlowFastPathways}).
 
 De forma similar al caso de los videos, actualmente existen modelos de 3D CNNs 
 capaces de procesar nubes de puntos al añadir una dimensión más que representa 
-la profundidad de los puntos.  Sin embargo, la complejidad de diseño y tiempo de cómputo para 
-estos modelos 3D crece enormemente. Ya que habitualmente las nubes de puntos 
+la profundidad de los píxeles.  Sin embargo, la complejidad de diseño y tiempo de cómputo para 
+estos modelos 3D crece enormemente. Esto es debido a que, habitualmente, las nubes de puntos 
 están formadas por puntos dispersos en el espacio, en lo que denominamos datos 
 sin estructura ni orden propio, y debemos mapear una operación 
 de convolución que está basada en operaciones sobre datos ordenados y estructurados. 
@@ -486,7 +486,7 @@ clínico de la exploración y las preferencias del radiólogo o médico que inte
 las imágenes. Ajustar el número de imágenes puede influir en el tiempo de adquisición, 
 la cantidad de radiación utilizada y la cantidad de información detallada que se 
 obtiene de la exploración. Afecta directamente a la calidad del modelo 3D generado 
-al final ya que el número de cortes es la tercera dimensión que relaciona las imágenes 
+al final, ya que el número de cortes es la tercera dimensión que relaciona las imágenes 
 (profundidad).
 
 Sobre todo nos centraremos en las distorsiones geométricas que ocurren en la 
@@ -509,63 +509,6 @@ proyectados sobre las imágenes (\emph{ray casting}, véase Figura \ref{fig:CT2V
 
 Dentro de las causas de las distorsiones geométricas sobre los volúmenes 
 3D están el difuminado por movimiento, errores de contraste (dificultad al segmentar),
-artefactos luminosos y problemas de interpolación o ruido al generar la proyección (véase Figura \ref{fig:DicomDistortionsExample}). 
+artefactos luminosos y problemas de interpolación o ruido al generar la proyección. 
 
-Para simularlo, partiremos de ejemplos de imágenes médicas consideradas exentas de 
-distorsiones, con su segmentación correspondiente realizada por profesionales.
-A continuación, generaremos la representación volumétrica como una nube de puntos 
-y sobre ella simularemos las distorsiones. 
 
-Dos de ellas serán para simular los resultados de varios algoritmos de compresión, 
-como puede ser \emph{octree compression}~\cite{OctreeCompression} y la reducción de número de puntos 
-por medio de submuestreo aleatorio (en inglés \emph{random downsampling}). 
-Un \emph{octree} es una representación más eficiente que los vóxeles, se trata 
-de la descomposición de forma recursiva de la escena en 8 partes hasta 
-la profundidad máxima, donde cada nodo representa un cubo tridimensional 
-llamado octante. En la compresión se analiza los octantes y se elimina los que aportan 
-menos información. 
-En el segundo, establecemos un porcentaje de puntos que eliminar y los eliminamos 
-de forma aleatoria hasta alcanzar ese porcentaje de reducción.
-Las demás representarán efectos que podrían ocurrir por desplazamiento de los puntos, 
-como el movimiento del paciente y aquellos provocados por ruido en la transmisión de datos.
-
-\begin{figure}[htp]
-  \begin{subfigure}[b]{.5\textwidth}
-    \centering
-    \includegraphics[width=.95\textwidth]{imagenes/chapter2/clavicula/clavicula_0.png}
-    \caption{}
-  \end{subfigure}
-  \hfill
-  \begin{subfigure}[b]{.5\textwidth}
-    \centering
-    \includegraphics[width=.95\textwidth]{imagenes/chapter2/clavicula/clavicula_1.png}
-    \caption{}
-  \end{subfigure}
-  \begin{subfigure}[b]{.5\textwidth}
-    \centering
-    \includegraphics[width=.95\textwidth]{imagenes/chapter2/clavicula/clavicula_2.png}
-    \caption{}
-  \end{subfigure}
-  \hfill
-  \begin{subfigure}[b]{.5\textwidth}
-    \centering
-    \includegraphics[width=.95\textwidth]{imagenes/chapter2/clavicula/clavicula_3.png}
-    \caption{}
-  \end{subfigure}
-  \begin{subfigure}[b]{.5\textwidth}
-    \centering
-    \includegraphics[width=.95\textwidth]{imagenes/chapter2/clavicula/clavicula_4.png}
-    \caption{}
-  \end{subfigure}
-  \begin{subfigure}[b]{.5\textwidth}
-    \centering
-    \includegraphics[width=.95\textwidth]{imagenes/chapter2/clavicula/clavicula_5.png}
-    \caption{}
-  \end{subfigure}
-  \caption[Ejemplo de distorsiones generadas sobre clavículas.]{Ejemplo de distorsiones generadas sobre clavículas.
-    Tenemos la imagen original (a) y luego su versión tras compresión \emph{octree} (b), 
-    tras reducción de puntos por \emph{random downsampling} (c), tras simulación 
-    de movimiento local (d) y rotación local (e), y, por último, ruido gaussiano (f).
-  }
-  \label{fig:DistorsionesGeneradas}
-\end{figure}

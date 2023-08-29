@@ -106,43 +106,6 @@
 \subsection{Modelo VQA-PC}
 \begin{frame}
   \frametitle{Hiperparámetros del modelo VQA-PC\footnotemark[12]}
-    \begin{columns} 
-      \column{0.5\textwidth}
-\bgroup
-\begin{table}[htp]
-  \vspace{-.4cm}
-  \scriptsize
-  \begin{center}
-    % \[\setcellgapes{5pt}\makegapedcells % <--- for vertical space around cells contents
-    \begin{tabular}[b]{|c|c|}
-      \hline
-      \rowcolor[HTML]{FFC702}
-      \multicolumn{1}{|c|}{\textbf{Salida}}  &
-      \multicolumn{1}{c|}{\textbf{Estructura}} \\
-      \hline
-      $112\times112$ & $7\times7,\; 64$, stride 2 \\ 
-      \hline 
-      \multirow{2}{*}{$56\times56$} & $3\times3$ max pool, stride 2 \\ 
-      \cline{2-2}
-      & $\begin{bmatrix}1\times1,\; 64 \\ 3\times3,\; 64 \\ 1\times1,\; 256 \end{bmatrix}\times 3$ \\ 
-      \hline
-      $28\times28$ & $\begin{bmatrix}1\times1,\; 128 \\ 3\times3,\; 128 \\ 1\times1,\; 512 \end{bmatrix}  \times 3 $\\ 
-      \hline
-      $14\times14$ & $\begin{bmatrix}1\times1,\; 256 \\ 3\times3,\; 256 \\ 1\times1,\; 1024 \end{bmatrix} \times 3$ \\ 
-      \hline
-      $7\times7$   & $\begin{bmatrix}1\times1,\; 512 \\ 3\times3,\; 512 \\ 1\times1,\; 2048 \end{bmatrix}  \times 3 $\\ 
-      \hline
-      $1\times1$   & average pool, 1000-d fc, softmax\\ 
-      \hline
-      \end{tabular}
-    % \]
-  \end{center}
-  \caption{Descripción de la arquitectura ResNet50.}
-  \label{tab:ResNet50}
-\end{table}
-\egroup
-
-      \column{0.5\textwidth}
   \begin{table}[htp]
     \small
     \begin{center}
@@ -172,7 +135,6 @@
     \label{tab:HiperSJTU}
   \end{table}
   \footnotetext[12]{\cite{VQA-PC}}
-    \end{columns}
 \end{frame}
 
 \begin{frame}
@@ -230,7 +192,7 @@
 \begin{frame}
   \frametitle{Modificaciones}
   \begin{enumerate}
-    \item Abouelaziz et al\footnotemark~ experimentaron \alert{distintos métodos de fusión de características}.
+    \item Abouelaziz et al\footnotemark~ experimentaron \textbf{distintos métodos de fusión de características}.
       \begin{itemize}
         \item Fusión por \textbf{concatenación} (F0).
         \item Fusión por \textbf{multiplicación} (F1). 
