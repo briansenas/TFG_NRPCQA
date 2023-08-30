@@ -55,13 +55,13 @@ def camera_rotation(path, img_path,frame_path,video_path,frame_index):
         vis.update_renderer()    
         img = vis.capture_screen_float_buffer(True)
         img = Image.fromarray((np.asarray(img)* 255).astype(np.uint8))
+        # save resized imgs as frames of the video with resolution of (,224)
+        img = transform(img)
 
         # save the fram_index -th of every 30 frames as the 2D input with resolution of about 1920x1061
         if (tmp-frame_index) % 30 == 0:
             img.save(img_path + '/'+str(tmp).zfill(3)+'.png')
 
-        # save resized imgs as frames of the video with resolution of (,224)
-        img = transform(img)
         img.save(frame_path + '/'+str(tmp).zfill(3)+'.png')
 
         # save videos
@@ -79,7 +79,7 @@ def process_object(one_object_path, img_path, frame_path, video_path, frame_inde
 def projection(path, img_path, frame_path, video_path, frame_index):
     # find all the .ply objects
     objs = glob.glob(os.path.join(path, '**/*.ply'), recursive=True)
-    pool = multiprocessing.Pool(6)
+    pool = multiprocessing.Pool()
     pfunc = functools.partial(process_object,img_path=img_path,
                               frame_path=frame_path, video_path=video_path,
                               frame_index=frame_index)

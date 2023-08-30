@@ -1,5 +1,6 @@
 NR3DQA/feature_extract_pc/rawnp/
 *.ply
+*.ods
 rotation/imgs
 rotation/frames 
 rotation/videos

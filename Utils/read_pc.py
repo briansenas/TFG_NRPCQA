@@ -185,26 +185,20 @@ def convert_obj_to_ply(file_name, output_file=None):
     return output_file 
 
 def generate_examples_png(input_dir, output_dir): 
-    example_1 = os.path.join(input_dir, 'Clavicula100014_6.ply') 
-    example_2 = os.path.join(input_dir, 'Clavicula100014_13.ply') 
-    example_3 = os.path.join(input_dir, 'Clavicula100014_18.ply') 
-    example_4 = os.path.join(input_dir, 'Clavicula100014_24.ply') 
-    example_5 = os.path.join(input_dir, 'Clavicula100014_30.ply') 
-
-    reference = os.path.join(input_dir, '../../STDRemoved', 'Clavicula100014.ply')  
+    basename = 'SenoFrontal100205'
+    example_1 = os.path.join(input_dir, basename,  'SenoFrontal100205_28.ply') 
+    example_2 = os.path.join(input_dir, basename,  'SenoFrontal100205_30.ply') 
+    example_3 = os.path.join(input_dir, basename,  'SenoFrontal100205_32.ply') 
 
     examples = [
-        reference, 
         example_1, 
         example_2, 
         example_3, 
-        example_4, 
-        example_5, 
     ]
 
     vis = o3d.visualization.Visualizer() # fix: move outside of the loop
     vis.create_window(visible=False)
-    rot_mat = np.dot(np.eye(3), o3d.geometry.get_rotation_matrix_from_axis_angle([0, np.radians(180), 0]))
+    rot_mat = np.dot(np.eye(3), o3d.geometry.get_rotation_matrix_from_axis_angle([90, np.radians(0), 0]))
     for i, example in enumerate(examples):
         pcd = o3d.io.read_point_cloud(example)
         pcd.estimate_normals()
@@ -214,12 +208,12 @@ def generate_examples_png(input_dir, output_dir):
         vis.clear_geometries()
         vis.add_geometry(pcd) # fix: use the loaded point cloud
         ctr = vis.get_view_control()
-        ctr.set_zoom(0.27)
+        # ctr.set_zoom(0.30)
         vis.update_renderer()
         vis.poll_events()
         img = vis.capture_screen_float_buffer(True)
         img = Image.fromarray((np.asarray(img) * 255).astype(np.uint8))
-        img.save(os.path.join(output_dir, f"clavicula_{i}.png"))
+        img.save(os.path.join(output_dir, os.path.basename(example).split('.')[0]+'.png'))
 
 
 if __name__ == "__main__":

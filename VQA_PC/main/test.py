@@ -29,9 +29,9 @@ def main(config):
     images_dir = config.path_imgs
     data_3d_dir = config.path_3d_features
     datainfo_test = config.data_info
-    transformations_test = transforms.Compose([transforms.CenterCrop(224),transforms.ToTensor(),\
+    transformations_test = transforms.Compose([transforms.CenterCrop(224), transforms.ToTensor(),\
         transforms.Normalize(mean = [0.485, 0.456, 0.406], std = [0.229, 0.224, 0.225])])
-    testset = VideoDataset_NR_image_with_fast_features(images_dir, data_3d_dir, datainfo_test, transformations_test, crop_size=224)
+    testset = VideoDataset_NR_image_with_fast_features(images_dir, data_3d_dir, datainfo_test, transformations_test, crop_size=224, frame_index=5)
     
     ## initialize dataloader
     n_test = len(testset)
@@ -73,10 +73,9 @@ if __name__ == '__main__':
     parser.add_argument('--data_info', type=str)
     parser.add_argument('--num_workers', type=int, default=10)
     parser.add_argument('--output_csv_path', type=str, default = 'prediction.csv')
-    parser.add_argument('--feature_fusion_method', type=str, default = 2)
+    parser.add_argument('--feature_fusion_method', type=int, default = 2)
 
     config = parser.parse_args()
 
     main(config)
-
 
