@@ -93,7 +93,7 @@ software desarrollado con PCL~\cite{PCL} y el archivo del directorio \code{utils
 El único preprocesado que sufren los datos iniciales es el centrado de la nube 
 de puntos sobre los ejes, paso previo a la rotación. Y la reducción de puntos 
 anormales por medio de un análisis de consistencia estadística del vecindario,
-eliminado así puntos aislados y ruido. 
+eliminando así puntos aislados y ruido. 
 
 El proceso es muy sencillo, dado el vecindario de un punto definido por sus 
 K vecinos más cercanos, calculamos la desviación típica y la media de sus atributos 
@@ -127,7 +127,7 @@ en la representación de los detalles espaciales.
 La profundidad del \emph{octree} depende tanto de la resolución como de la dimensión 
 espacial de la nube de puntos, ya que determina cuántos niveles de subdivisión 
 serán necesarios para cubrir toda el área de la nube de puntos con la resolución 
-especificada. Parar más detalles repasar \ref{sec:Distorsiones}. 
+especificada (para más detalles repasar Sección \ref{sec:Distorsiones}). 
 Se facilita también la entrada de dos parámetros adicionales para obtener 
 las estadísticas de compresión y otro para visualizar el resultado final del 
 decodificador. Las resoluciones son: 0.4, 0.5, 0.6, 0.7, 0.8, 0.9 y 1.0.

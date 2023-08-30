@@ -67,12 +67,11 @@ En el caso de pre-entrenar usando LS-PCQA~\cite{ResSCNN}, con 3640 ejemplos en t
 nuestras distorsiones, se optó por utilizar 80\% para entrenamiento y 20\% para test. 
 Para las pruebas preliminares se utilizó el conjunto SJTU con las condiciones indicadas por 
 \cite{VQA-PC}, es decir, con nueve pliegues, uno por modelo para un total de 336 ejemplos para entrenamiento y 42 para test. 
-
 En el caso de nuestro dataset de imágenes médicas, al ser pocos ejemplos 
 se ha realizado un pliegue por modelo 3D, así que por cada pliegue hay un total de 
 350 ejemplos de entrenamiento y 35 ejemplos en test. 
 
-Primeramente se replican los resultados obtenidos en las publicaciones originales 
+Primeramente, se replican los resultados obtenidos en las publicaciones originales 
 de los métodos NR3DQA~\cite{NR3DQA} y VQA-PC~\cite{VQA-PC}. Para ello se utilizan
 los conjuntos de datos públicos SJTU~\cite{SJTU} y WPC~\cite{WPC1,WPC2}. 
 A continuación, se analizan los resultados obtenidos sobre nuestro conjunto 
@@ -82,7 +81,7 @@ de imágenes médicas y, con ello, se proponen mejoras y adaptaciones.
 \subsection{Experimentos NR3DQA}
 Para replicar el método de Zhang et al~\cite{NR3DQA} podemos utilizar los 
 archivos del directorio \code{NR3DQA/}. Para ello disponemos de unos cuántos scripts para la extracción de las características y visualización de las distribuciones 
-como indica la publicación (ver Apéndice \ref{sec:Implementacion}). 
+como indica la publicación (véase Apéndice \ref{sec:Implementacion}). 
 Utilizaremos la librería de Pyntcloud~\cite{Pyntcloud} para obtener 
 la matriz de covarianza y calcular las características en base a lo definido 
 en la Sección \ref{sec:NR3DQA}.
@@ -200,7 +199,7 @@ con el código e identificar zonas de posibles mejoras.
 Para validar el correcto funcionamiento del código y los resultados obtenidos 
 en~\cite{VQA-PC}, realizamos el experimento en las mismas condiciones descrita 
 por ellos en el conjunto de datos SJTU. Como ese posee 10 modelos, 
-(ver Sección \ref{sec:DatosPublicos}) se realiza un 9-fold. Se han utilizado 
+(véase Sección \ref{sec:DatosPublicos}) se realiza un 9-fold. Se han utilizado 
 los mismos hiperparámetros, estructura de red convolucional y transformaciones 
 de datos (véanse Tablas \ref{tab:ResNet50} y \ref{tab:HiperSJTU}). 
 
@@ -344,7 +343,6 @@ utilizando el criterio del promedio del mejor resultado de cada pliegue de valid
 } \label{fig:PreTestCurves}
 \end{figure}
 
-
 \subsection{Experimentos finales}
 En nuestro modelo, una parte importante de la inferencia viene de la capacidad del mismo de unificar las características 
 estáticas con las dinámicas. En la publicación~\cite{EnsemblePCQA} se proponen distintos métodos para la fusión
@@ -359,7 +357,7 @@ Es por ello que se experimenta con cada uno de estos métodos.
 
 La fusión por multiplicación (F1) puede provocar pérdida de información (valores cercanos a 0). 
 No obstante, permiten una interacción directa de los vectores y genera un vector salida 
-de menor dimensionalidad. Otro inconveniente es que tenemos normalizar, si no son 
+de menor dimensionalidad. Otro inconveniente es que tenemos que normalizar, si no son 
 ya iguales, a la misma dimensión los vectores. De forma similar, la fusión por convolución (F2)
 permite realizar una proyección lineal de ambos vectores a uno de menor dimensionalidad. 
 Por último, la fusión por \emph{bi-linear pooling} (F3) permite realizar la multiplicación de 
@@ -387,8 +385,10 @@ para ajustarlas a una escala de 224x224, lo cual reduce el tiempo de cómputo y
 evita el sobre-entrenamiento. Durante la ejecución del test, se recorta el centro de la imagen. 
 Este proceso de reescalado, conocido como aumentación de datos, incrementa la cantidad de ejemplos 
 y previene el sobreajuste. Sin embargo, debido a que las nubes de puntos ocupan principalmente 
-la zona central de la imagen y poca proporción, se propone un reescalado uniforme a una escala de 
-398x224 para obtener recortes válidos.
+la zona central de la imagen y en poca proporción, dichos recortes pueden provocar 
+ejemplos sin o con muy poca información. Esto puede ser perjudicial al modelo. 
+Es por ello que se propone un reescalado uniforme a una escala de 
+398x224 para obtener siempre recortes válidos.
 
 Para realizar la comparativa de estas mejoras, se utiliza el conjunto de datos 
 médicos definidos anteriormente. Se hace la comparativa con las métricas sin 
@@ -442,7 +442,7 @@ entre nubes de puntos (pocos ejemplos similares y muchas partes del cuerpo)
 o por dificultades en la generación de etiquetas sintéticas de calidad. 
 Además, observándose detenidamente los valores obtenidos en cada pliegue, 
 se observa una alta variabilidad para un ejemplo en concreto, el último pliegue, 
-con SROCC a más de 3 desviaciones típicas para los casos F1-F3.  Es por ello, 
+con SROCC a más de 3 desviaciones típicas para los casos F1-F3.  Es por ello
 que se puede observar la mediana de cada modelo en la Tabla \ref{tab:PercentileMed}.
 
 Para validar el rápido aprendizaje de los métodos F1-F3 y la posible mejora 
@@ -488,7 +488,7 @@ volverse incapaz de predecir correctamente el último pliegue al igual que los d
 \end{tabular}
 \caption[Desviación típica de los resultados médicos]{Desviación típica de los 
 resultados obtenidos. Se observa que la mejora del reescalado de las imágenes 
-de entrada mejora la estabilidad del modelo inicial. El método de fusión F3 
+incrementa la estabilidad del modelo inicial. El método de fusión F3 
 es el más estable en todos los casos. }
 \label{tab:STDevMed}
 \end{table}
