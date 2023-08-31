@@ -171,7 +171,7 @@ se pueden observar en la Tabla \ref{tab:ImprovNR3DQA}, no son significativos.
       \hline
     \end{tabular}
   \end{center}
-  \caption[Resultado de mejoras sobre el método SVM]{Resultado de mejoras sobre el método SVM.
+  \caption[Resultado de mejoras sobre el método SVM.]{Resultado de mejoras sobre el método SVM.
    Se observa mejoras, no sustanciales, sobre los conjuntos SJTU, WPC e imágenes médicas.
    No obstante, todavía sigue por detrás de los métodos DL, como el método VQA-PC 
    que se discutirá más adelante.
@@ -403,7 +403,7 @@ Se omitirá el MSE del modelo debido a que la información principal se encuentr
 en la métrica SROCC como mencionado anteriormente al principio de la Sección \ref{sec:VQAPCSJTU}.
 
 En la Tabla \ref{tab:SroccMedRes} hacemos 11-fold sobre nuestro conjunto de datos teniendo en cuenta las métricas originales, las métricas
-normalizadas a escala 0-5 y las imágenes reescaladas. También se investiga rescalar y normalizar (última columna).
+normalizadas a escala 0-5 y las imágenes reescaladas. También se investiga reescalar y normalizar (última columna).
 Se compara estos resultados con los demás métodos de fusión de características propuesto.
 Vemos que el modelo con información previa, al utilizar el reescalado, obtiene los mejores resultados.
 No obstante, F1 y F2 sin información previa consiguen acercarse a un margen de 4\% de ese valor. 
@@ -466,7 +466,7 @@ Se observa una mejora significativa en los métodos F2-F3, y se logra
 pasar la barrera del 90\% en la mediana de los métodos F0-F2 (véase Tabla \ref{tab:LS-PCQA-FN}).
 Gracias a la información adicional hemos logrado valores mucho mejores, llegando a 
 obtener una correlación del 88\% de media, con mediana al 94\%, utilizando el modelo F2. 
-En general, poseer información adicional ha resultado ser crucial para el aprendijaze 
+En general, poseer información adicional ha resultado ser crucial para el aprendizaje 
 del modelo. No obstante, la distribución de esa información es de suma importancia a la 
 hora de determinar la capacidad de generalización del modelo. Vemos que con el nuevo 
 conjunto de datos, el modelo F0 recibe un incremento en desviación típica al
@@ -486,7 +486,7 @@ volverse incapaz de predecir correctamente el último pliegue al igual que los d
 \textbf{VQA-PC F2}     & \multicolumn{1}{c|}{0.1462}            & \multicolumn{1}{c|}{0.1905}               & \multicolumn{1}{c|}{0.1741}             & \textbf{0.1187} \\ \hline
 \textbf{VQA-PC F3}     & \multicolumn{1}{c|}{0.1507}            & \multicolumn{1}{c|}{\textbf{0.1304}}      & \multicolumn{1}{c|}{0.1326}             & 0.1462          \\ \hline
 \end{tabular}
-\caption[Desviación típica de los resultados médicos]{Desviación típica de los 
+\caption[Desviación típica de los resultados médicos.]{Desviación típica de los 
 resultados obtenidos. Se observa que la mejora del reescalado de las imágenes 
 incrementa la estabilidad del modelo inicial. El método de fusión F3 
 es el más estable en todos los casos. }
