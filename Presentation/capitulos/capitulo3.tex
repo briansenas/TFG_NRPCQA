@@ -83,6 +83,48 @@
 \end{frame}
 
 \begin{frame}
+  \frametitle{Generación de etiquetas}
+\begin{table}[htp]
+    \footnotesize
+    \begin{tabular}{|c|c|c|c|c|c|c|c|}
+    \hline
+        \rowcolor[HTML]{FFC702} 
+        \textbf{Distortion} & \textbf{M-p2po} & \textbf{M-p2pl} & \textbf{H-p2po} & \textbf{H-p2pl} & \textbf{PCQM} & \textbf{GraphSIM} & \textbf{MPED} \\ \hline
+        DownSample & \textbf{0.881} & 0.626 & 0.841 & 0.811 & 0.524 & 0.842 & 0.857 \\ \hline
+        GaussianShifting & 0.741 & 0.718 & 0.829 & \textbf{0.834} & 0.816 & 0.742 & 0.598 \\ \hline
+        LocalOffset & \textbf{0.937} & 0.934 & 0.770 & 0.770 & 0.851 & 0.906 & 0.897 \\ \hline
+        LocalRotation & 0.819 & 0.712 & \textbf{0.831} & 0.734 & 0.657 & 0.723 & 0.742 \\ \hline
+        Octree & 0.779 & 0.788 & \textbf{0.819} & 0.752 & 0.676 & 0.757 & 0.710 \\ \hline
+    \end{tabular}
+    \caption[Tabla de métricas para generación de etiquetas.]{
+      Tabla de métricas para generación de etiquetas.\footnotemark[10].
+  }
+    \label{tab:MetricsPerDistortion}
+    \vspace{-.4cm}
+\end{table}
+\begin{table}[htp]
+  \centering 
+  \footnotesize
+  \begin{tabular}{|c|c|c|}
+    \hline
+    \rowcolor[HTML]{FFC702}
+     & \textbf{Parte I} & \textbf{Parte II} \\
+    \hline 
+    SROCC & 0.902697 & 0.878517\\
+    \hline
+    PLCC & 0.910713 & 0.871917\\
+    \hline
+  \end{tabular}
+  \caption[Correlación de métricas sintéticas.]{
+  Correlación de métricas sintéticas.\footnotemark[10]. }
+  \label{tab:PseudoCorr}
+  \vspace{-.5cm}
+\end{table}
+
+\footcitetext{ResSCNN}
+\end{frame}
+
+\begin{frame}
   \frametitle{Métricas}
   \vspace{-.4cm}
   \begin{table}
@@ -157,47 +199,6 @@ $
   
 \end{frame}
 
-\begin{frame}
-  \frametitle{Generación de etiquetas}
-\begin{table}[htp]
-    \footnotesize
-    \begin{tabular}{|c|c|c|c|c|c|c|c|}
-    \hline
-        \rowcolor[HTML]{FFC702} 
-        \textbf{Distortion} & \textbf{M-p2po} & \textbf{M-p2pl} & \textbf{H-p2po} & \textbf{H-p2pl} & \textbf{PCQM} & \textbf{GraphSIM} & \textbf{MPED} \\ \hline
-        DownSample & \textbf{0.881} & 0.626 & 0.841 & 0.811 & 0.524 & 0.842 & 0.857 \\ \hline
-        GaussianShifting & 0.741 & 0.718 & 0.829 & \textbf{0.834} & 0.816 & 0.742 & 0.598 \\ \hline
-        LocalOffset & \textbf{0.937} & 0.934 & 0.770 & 0.770 & 0.851 & 0.906 & 0.897 \\ \hline
-        LocalRotation & 0.819 & 0.712 & \textbf{0.831} & 0.734 & 0.657 & 0.723 & 0.742 \\ \hline
-        Octree & 0.779 & 0.788 & \textbf{0.819} & 0.752 & 0.676 & 0.757 & 0.710 \\ \hline
-    \end{tabular}
-    \caption[Tabla de métricas para generación de etiquetas.]{
-      Tabla de métricas para generación de etiquetas.\footnotemark[10].
-  }
-    \label{tab:MetricsPerDistortion}
-    \vspace{-.4cm}
-\end{table}
-\begin{table}[htp]
-  \centering 
-  \footnotesize
-  \begin{tabular}{|c|c|c|}
-    \hline
-    \rowcolor[HTML]{FFC702}
-     & \textbf{Parte I} & \textbf{Parte II} \\
-    \hline 
-    SROCC & 0.902697 & 0.878517\\
-    \hline
-    PLCC & 0.910713 & 0.871917\\
-    \hline
-  \end{tabular}
-  \caption[Correlación de métricas sintéticas.]{
-  Correlación de métricas sintéticas.\footnotemark[10]. }
-  \label{tab:PseudoCorr}
-  \vspace{-.5cm}
-\end{table}
-
-\footcitetext{ResSCNN}
-\end{frame}
 
 \subsection{Métodos}
 \begin{frame}
