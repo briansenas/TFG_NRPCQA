@@ -104,39 +104,39 @@
 
 
 \subsection{Modelo VQA-PC}
-\begin{frame}
-  \frametitle{Hiperparámetros del modelo VQA-PC\footnotemark[12]}
-  \begin{table}[htp]
-    \small
-    \begin{center}
-      \begin{tabular}[c]{|c|c|}
-        \hline
-        \rowcolor[HTML]{FFC702}
-        \textbf{Hiperparámetro} & \textbf{Valor} \\ 
-        \hline 
-        Tasa de aprendizaje &  0.0004 \\ 
-        \hline 
-        Tamaño de batches & 32 \\ 
-        \hline 
-        Tasa de decadencia & 0.9 \\ 
-        \hline 
-        Frecuencia de decadencia & 10 \\ 
-        \hline 
-        Épocas & 30 \\ 
-        \hline 
-        K-fold & 9 \\ 
-        \hline 
-      \end{tabular}
-    \end{center}
-    \caption[Hiperparámetros empleados en la experimentación preliminar.]{
-      Hiperparámetros empleados en la experimentación preliminar\footnotemark[12]
-    }
-      \vspace{-.6cm}
-    \label{tab:HiperSJTU}
-  \end{table}
-  \footnotetext[12]{\cite{VQA-PC}}
-\end{frame}
-
+% \begin{frame}
+%   \frametitle{Hiperparámetros del modelo VQA-PC\footnotemark[12]}
+%   \begin{table}[htp]
+%     \small
+%     \begin{center}
+%       \begin{tabular}[c]{|c|c|}
+%         \hline
+%         \rowcolor[HTML]{FFC702}
+%         \textbf{Hiperparámetro} & \textbf{Valor} \\ 
+%         \hline 
+%         Tasa de aprendizaje &  0.0004 \\ 
+%         \hline 
+%         Tamaño de batches & 32 \\ 
+%         \hline 
+%         Tasa de decadencia & 0.9 \\ 
+%         \hline 
+%         Frecuencia de decadencia & 10 \\ 
+%         \hline 
+%         Épocas & 30 \\ 
+%         \hline 
+%         K-fold & 9 \\ 
+%         \hline 
+%       \end{tabular}
+%     \end{center}
+%     \caption[Hiperparámetros empleados en la experimentación preliminar.]{
+%       Hiperparámetros empleados en la experimentación preliminar\footnotemark[12]
+%     }
+%       \vspace{-.6cm}
+%     \label{tab:HiperSJTU}
+%   \end{table}
+%   \footnotetext[12]{\cite{VQA-PC}}
+% \end{frame}
+%
 \begin{frame}
   \frametitle{Experimentos preliminares VQA-PC}
 \begin{table}[htp]
@@ -227,29 +227,29 @@
 \end{table}
 \end{frame}
 
-\begin{frame}
-  \frametitle{Experimentos finales VQA-PC}
-\begin{table}[htp]
-  \small
-  \centering
-\begin{tabular}{|c|cccc|}
-\hline
-\rowcolor[HTML]{FFC702}
-                       & \multicolumn{4}{c|}{\textbf{Mediana SROCC}}                                                                                                          \\ \hline
-\rowcolor[HTML]{FFC702}
-\textbf{Modelo}        & \multicolumn{1}{c|}{\textbf{Estándar}} & \multicolumn{1}{c|}{\textbf{Normalizado}} & \multicolumn{1}{c|}{\textbf{Reescalado}} & \textbf{Ambos}  \\ \hline
-\textbf{VQA-PC (SJTU)} & \multicolumn{1}{c|}{\textbf{0.7400}}   & \multicolumn{1}{c|}{\textbf{0.7510}}      & \multicolumn{1}{c|}{0.8417}             & 0.7434          \\ \hline
-\textbf{VQA-PC F1}     & \multicolumn{1}{c|}{0.7022}            & \multicolumn{1}{c|}{0.6331}               & \multicolumn{1}{c|}{\textbf{0.8636}}    & \textbf{0.7849} \\ \hline
-\textbf{VQA-PC F2}     & \multicolumn{1}{c|}{0.6350}            & \multicolumn{1}{c|}{0.5955}               & \multicolumn{1}{c|}{0.8538}             & 0.7165          \\ \hline
-\textbf{VQA-PC F3}     & \multicolumn{1}{c|}{0.7118}            & \multicolumn{1}{c|}{0.5179}               & \multicolumn{1}{c|}{0.7518}             & 0.7334          \\ \hline
-\end{tabular}
-\caption[Mediana de los valores sobre imágenes médicas.]{
-  Mediana de los valores obtenidos. Se observa una mejora significativa para 
-  los métodos F1 y F2. También es evidente la estabilidad del modelo pre-entrenado sobre SJTU. 
-}
-\label{tab:PercentileMed}
-\end{table}
-\end{frame}
+% \begin{frame}
+%   \frametitle{Experimentos finales VQA-PC}
+% \begin{table}[htp]
+%   \small
+%   \centering
+% \begin{tabular}{|c|cccc|}
+% \hline
+% \rowcolor[HTML]{FFC702}
+%                        & \multicolumn{4}{c|}{\textbf{Mediana SROCC}}                                                                                                          \\ \hline
+% \rowcolor[HTML]{FFC702}
+% \textbf{Modelo}        & \multicolumn{1}{c|}{\textbf{Estándar}} & \multicolumn{1}{c|}{\textbf{Normalizado}} & \multicolumn{1}{c|}{\textbf{Reescalado}} & \textbf{Ambos}  \\ \hline
+% \textbf{VQA-PC (SJTU)} & \multicolumn{1}{c|}{\textbf{0.7400}}   & \multicolumn{1}{c|}{\textbf{0.7510}}      & \multicolumn{1}{c|}{0.8417}             & 0.7434          \\ \hline
+% \textbf{VQA-PC F1}     & \multicolumn{1}{c|}{0.7022}            & \multicolumn{1}{c|}{0.6331}               & \multicolumn{1}{c|}{\textbf{0.8636}}    & \textbf{0.7849} \\ \hline
+% \textbf{VQA-PC F2}     & \multicolumn{1}{c|}{0.6350}            & \multicolumn{1}{c|}{0.5955}               & \multicolumn{1}{c|}{0.8538}             & 0.7165          \\ \hline
+% \textbf{VQA-PC F3}     & \multicolumn{1}{c|}{0.7118}            & \multicolumn{1}{c|}{0.5179}               & \multicolumn{1}{c|}{0.7518}             & 0.7334          \\ \hline
+% \end{tabular}
+% \caption[Mediana de los valores sobre imágenes médicas.]{
+%   Mediana de los valores obtenidos. Se observa una mejora significativa para 
+%   los métodos F1 y F2. También es evidente la estabilidad del modelo pre-entrenado sobre SJTU. 
+% }
+% \label{tab:PercentileMed}
+% \end{table}
+% \end{frame}
 
 \begin{frame}
   \frametitle{Resultados Finales}
