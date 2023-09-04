@@ -218,12 +218,30 @@
 \rowcolor[HTML]{FFC702}
 \textbf{Modelo}        & \multicolumn{1}{c|}{\textbf{Estándar}} & \multicolumn{1}{c|}{\textbf{Normalizado}} & \multicolumn{1}{c|}{\textbf{Reescalado}} & \textbf{Ambos}  \\ \hline
 \textbf{VQA-PC (SJTU)} & \multicolumn{1}{c|}{0.7094}            & \multicolumn{1}{c|}{\textbf{0.6235}}      & \multicolumn{1}{c|}{\textbf{0.8425}}    & 0.7126          \\ \hline
+
 \textbf{VQA-PC F1}     & \multicolumn{1}{c|}{\textbf{0.7305}}   & \multicolumn{1}{c|}{0.6140}               & \multicolumn{1}{c|}{0.8164}             & 0.7291          \\ \hline
 \textbf{VQA-PC F2}     & \multicolumn{1}{c|}{0.6816}            & \multicolumn{1}{c|}{0.5770}               & \multicolumn{1}{c|}{0.8057}             & \textbf{0.7324} \\ \hline
 \textbf{VQA-PC F3}     & \multicolumn{1}{c|}{0.7080}            & \multicolumn{1}{c|}{0.5671}      & \multicolumn{1}{c|}{0.7482}             & 0.7006          \\ \hline
 \end{tabular}
 \caption[Valor medio sobre imágenes médicas.]{Tabla de resultados iniciales sobre imágenes médicas.}
 \label{tab:SroccMedRes}
+\end{table}
+
+\begin{table}[htp] 
+  \scriptsize
+  \centering
+  \begin{tabular}{|c|c|c|c|}
+\hline
+\rowcolor[HTML]{FFC702}
+                       & \multicolumn{3}{c|}{\textbf{SROCC}}                                                                                                          \\ \hline
+\rowcolor[HTML]{FFC702}
+\textbf{Modelo}        & \multicolumn{1}{c|}{\textbf{Media}} & \multicolumn{1}{c|}{\textbf{Desviación}} & \multicolumn{1}{c|}{\textbf{Mediana}} \\ \hline
+\textbf{VQA-PC F0} & \multicolumn{1}{c|}{\textbf{0.8261}}   & \multicolumn{1}{c|}{0.1589}      & \multicolumn{1}{c|}{\textbf{0.8657}}      \\ \hline
+  \end{tabular}
+  \caption[Resultados del método original sin pre-entrenar sobre imágenes reescaladas.]{
+    Resultados del método original con modelo original sin pre-entrenar sobre imágenes médicas reescaladas. 
+  
+}
 \end{table}
 \end{frame}
 

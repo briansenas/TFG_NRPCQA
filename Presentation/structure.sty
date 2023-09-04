@@ -33,6 +33,10 @@
 \RequirePackage{caption}
 \RequirePackage{newfloat}
 \RequirePackage[export]{adjustbox}
+\RequirePackage{datetime}
+\newdateformat{onlydayandmonth}{
+  \THEDAY ~de \monthname[\THEMONTH].
+}
 
 \usetikzlibrary{automata, arrows.meta, positioning, shapes}
 
@@ -90,6 +94,7 @@
 \newcommand{\coorientador}[1]{\def\@coorientadorLabel{#1}}
 \newcommand{\curso}[1]{\def\@cursoLabel{#1}}
 \newcommand{\local}[1]{\def\@localLabel{#1}}
+\newcommand{\github}[1]{\def\@github{#1}}
 \newcommand{\dia}[1]{\def\@diaLabel{#1}}
 \newcommand{\mes}[1]{\def\@mesLabel{#1}}
 \newcommand{\ano}[1]{\def\@anoLabel{#1}}
@@ -127,6 +132,7 @@
 
 \newcommand{\footlinepayoff}[1]{\renewcommand{\@footlinepayoff}{#1}}
 
+\captionsetup{labelformat=empty,labelsep=none}
 \setbeamertemplate{footline}{
 \leavevmode%
 \hbox{%
@@ -189,23 +195,29 @@
 \setbeamertemplate{title page}{%
   %\vskip0pt plus 1filll%
   \hspace{-12mm}
-  \vspace{-2cm}
+  \vspace{-3cm}
   \begin{beamercolorbox}[wd=0.6\textwidth,sep=10pt,leftskip=8mm]{title}%
     {\ifdef{\@tituloLabel}{{\usebeamerfont{title}\@tituloLabel}{\ifdef{\@subtituloLabel}{{\usebeamerfont{title}:}}{}}}{}}
-  
     {\ifdef{\@subtituloLabel}{{\usebeamerfont{subtitle}\@subtituloLabel}}{}}
+    \vspace{.5cm} 
     
-    {\ifdef{\@cursoLabel}{{\usebeamerfont{author}\usebeamercolor[fg]{author}\textbf{Curso: }\@cursoLabel}}{}}
+    {\ifdef{\@cursoLabel}{{\usebeamerfont{author}\usebeamercolor[fg]{author}\textbf{Titulacion: }\par\@cursoLabel}}{}}
+
+    {\ifdef{\@nomeLabel}{{\usebeamerfont{author}\usebeamercolor[fg]{author}\par\@nomeLabel}}{}}
+    \vspace{.1cm} 
     
-    {\ifdef{\@nomeLabel}{{\usebeamerfont{author}\usebeamercolor[fg]{author}\@nomeLabel}}{}}
+    {\ifdef{\@autorLabel}{{\usebeamerfont{author}\usebeamercolor[fg]{author}\textbf{Autor: }\par\@autorLabel}}{}}
+    \vspace{.1cm} 
     
-    {\ifdef{\@autorLabel}{{\usebeamerfont{author}\usebeamercolor[fg]{author}\textbf{Autor: }\@autorLabel}}{}}
+    {\ifdef{\@orientadorLabel}{{\usebeamerfont{author}\usebeamercolor[fg]{author}\textbf{Directores: }\par\@orientadorLabel\par\@coorientadorLabel}}{}}
+    \vspace{.1cm} 
     
-    {\ifdef{\@orientadorLabel}{{\usebeamerfont{author}\usebeamercolor[fg]{author}\textbf{Tutor: }\@orientadorLabel}}{}}
-    
-    {\ifdef{\@coorientadorLabel}{\usebeamerfont{author}\usebeamercolor[fg]{author}\textbf{Co-Tutor: }\@coorientadorLabel}{}}
+    % {\ifdef{\@coorientadorLabel}{\usebeamerfont{author}\usebeamercolor[fg]{author}\textbf{Co-Tutor: }\@coorientadorLabel}{}}
   
-    {\ifdef{\@localLabel}{{\usebeamerfont{date}\usebeamercolor[fg]{date}\@localLabel,{ } \today}}{}}
+    %{\ifdef{\@localLabel}{{\usebeamerfont{date}\usebeamercolor[fg]{date}\@localLabel,{ } \onlydayandmonth\today}}{}}
+    \vspace{1cm}
+    {\ifdef{\@github}{{\usebeamerfont{footnote}\usebeamercolor[fg]{author}\vfill\rule{7cm}{.5pt}\par\@github}}{}}
+      
   \end{beamercolorbox}
 }
 

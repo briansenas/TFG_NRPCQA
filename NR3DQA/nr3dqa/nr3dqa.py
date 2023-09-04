@@ -166,7 +166,7 @@ if __name__ == '__main__':
                                schema=schema)])
 
     thresh = 1
-    groups = df.groupby(['function', 'scaler']).agg(pl.mean(['srocc','plcc', 'krocc'])).sort(pl.exclude(['function', 'scaler']))
+    groups = df.groupby(['function', 'scaler']).agg(pl.mean(['srocc','plcc', 'krocc'])).sort(pl.col(['function', 'scaler']))
     with pl.Config(tbl_rows=-1):
         print(groups)
 
