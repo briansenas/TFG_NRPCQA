@@ -23,9 +23,9 @@
     \end{columns}
 \end{frame}
 
-\subsection{Estado del arte IQA}
+\subsection{Estado del arte IQA: métricas}
 \begin{frame}
-  \frametitle{Estado del arte FR-IQA}
+  \frametitle{Estado del arte IQA: métricas}
   \begin{columns}
     \column{0.5\textwidth}
     \begin{enumerate}
@@ -51,12 +51,16 @@
       \multirow{-2}{*}{\textbf{Métrica}} & SRCC & PLCC & RMSE \\ 
       \hline
                     \textbf<2>{PSNRHVS} & 0.919 & 0.903 & 12.540 \\
+                    \hline
                      UQI & 0.894 & 0.899 & 11.982 \\
+                    \hline
                      \textbf<3>{SSIM} & 0.948 & 0.845 & 8.946 \\
+                    \hline
                      \textbf<4>{VSI} & 0.952 & 0.948 & 8.682 \\
+                    \hline
                      DSS & 0.962 & 0.931 & 9.961 \\
+                    \hline
                      \textbf<5>{CD-MMF} & \textbf{0.981} & \textbf{0.980} & \textbf{5.413}\\ 
-                     WaDIQaM & 0.970 & \textbf{0.980} & - \\
                     \hline 
     \end{tabular}
     \caption[Progreso de las métricas FR.]{
@@ -68,9 +72,9 @@
 \footcitetext{SurveyOf2D3DMetrics}
 \end{frame}
 
-\subsection{Estado del arte PCQA}
+\subsection{Estado del arte PCQA: métodos}
 \begin{frame}
-  \frametitle{Estado del arte PCQA}
+  \frametitle{Estado del arte PCQA: métodos}
   \begin{columns}
     \column{0.5\textwidth}
     \begin{enumerate}
@@ -123,6 +127,9 @@
 \subsection{Estado del arte en imágenes médicas}
 \begin{frame}
   \frametitle{Estado del arte en imágenes médicas}
+  \vspace{-0.4cm}
+  \begin{columns}
+    \column{0.5\textwidth}
   \begin{enumerate}
     \item \textbf{No existe} una imagen o representación \textbf{``sin distorsión''} en la medicina.
     \item Los métodos \textbf{actuales} utilizan adaptaciones \textbf{IQA} para 
@@ -130,4 +137,15 @@
     \item \textbf{No se ha encontrado} nada específico en la literatura sobre 
       métodos aplicados \textbf{directamente a reconstrucciones 3D}.
   \end{enumerate}
+    \column{0.5\textwidth}
+    \begin{figure}
+      \begin{center}
+        \includegraphics[width=0.95\textwidth]{imagenes/chapter2/MRIVoxel}
+      \end{center}
+      \caption{Generación de imagen volumétrica.}
+      \label{fig:}
+    \end{figure}
+    
+  \end{columns}
+  \footcitetext{MRIVoxel}
 \end{frame}

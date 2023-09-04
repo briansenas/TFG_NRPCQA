@@ -1,8 +1,8 @@
 \section{Materiales y métodos}
 
-\subsection{Materiales}
+\subsection{Materiales: datos generalistas}
 \begin{frame}
-    \frametitle{Datos públicos SJTU}
+    \frametitle{Materiales: datos generalistas (SJTU)}
     \begin{columns}
       \column{0.5\textwidth}
       \begin{enumerate}
@@ -23,7 +23,7 @@
 \end{frame}
 
 \begin{frame}
-    \frametitle{Datos públicos WPC}
+    \frametitle{Materiales: datos generalistas (WPC)}
     \begin{columns}
       \column{0.5\textwidth}
       \begin{enumerate}
@@ -44,7 +44,7 @@
 \end{frame}
 
 \begin{frame}
-\frametitle{Datos públicos LS-PCQA}
+  \frametitle{Materiales: datos generalistas (LS-PCQA)}
   \begin{columns}
     \column{0.5\textwidth}
     \begin{enumerate}
@@ -63,9 +63,10 @@
   \footcitetext{ResSCNN}
 \end{frame}
 
+\subsection{Materiales: datos sintéticos}
 \begin{frame}
-  \frametitle{Datos médicos}
-  \vspace{-1cm}
+  \frametitle{Materiales: datos sintéticos}
+  \vspace{-.8cm}
     \begin{figure}[htp]
       \subfloat[]{\includegraphics[width=.3\textwidth]{imagenes/chapter3/clavicula/clavicula_0.png}}
       \subfloat[]{\includegraphics[width=.3\textwidth]{imagenes/chapter3/clavicula/clavicula_2.png}}
@@ -84,56 +85,48 @@
 \end{frame}
 
 \begin{frame}
-  \frametitle{Generación de etiquetas}
-\begin{table}[htp]
-    \footnotesize
-    \begin{tabular}{|c|c|c|c|c|c|c|c|}
-    \hline
-        \rowcolor[HTML]{FFC702} 
-        \textbf{Distortion} & \textbf{M-p2po} & \textbf{M-p2pl} & \textbf{H-p2po} & \textbf{H-p2pl} & \textbf{PCQM} & \textbf{GraphSIM} & \textbf{MPED} \\ \hline
-        DownSample & \textbf{0.881} & 0.626 & 0.841 & 0.811 & 0.524 & 0.842 & 0.857 \\ \hline
-        GaussianShifting & 0.741 & 0.718 & 0.829 & \textbf{0.834} & 0.816 & 0.742 & 0.598 \\ \hline
-        LocalOffset & \textbf{0.937} & 0.934 & 0.770 & 0.770 & 0.851 & 0.906 & 0.897 \\ \hline
-        LocalRotation & 0.819 & 0.712 & \textbf{0.831} & 0.734 & 0.657 & 0.723 & 0.742 \\ \hline
-        Octree & 0.779 & 0.788 & \textbf{0.819} & 0.752 & 0.676 & 0.757 & 0.710 \\ \hline
-    \end{tabular}
-    \caption[Tabla de métricas para generación de etiquetas.]{
-      Tabla de correlación de métricas para generación de etiquetas.\footnotemark[10].
-  }
-    \label{tab:MetricsPerDistortion}
-    \vspace{-.4cm}
-\end{table}
-\begin{table}[htp]
+  \frametitle{Materiales: Generación de etiquetas}
+  \begin{enumerate}
+    \item Evitamos el problema logístico de obtención del MOS.
+      \begin{itemize}
+        \item Evaluación manual por grupo de personas en un entorno controlado.
+      \end{itemize}
+    \item Hacemos uso de las mejores métricas con referencia.
+      \begin{itemize}
+        \item Desglosamos el rendimiento por tipo de distorsión.
+      \end{itemize}
+  \end{enumerate}
+\begin{table}
   \centering 
-  \footnotesize
+  \scriptsize
   \begin{tabular}{|c|c|c|}
     \hline
     \rowcolor[HTML]{FFC702}
      & \textbf{Parte I} & \textbf{Parte II} \\
     \hline 
-    SROCC & 0.903 & 0.879\\
+    SROCC & 0.902697 & 0.878517\\
     \hline
-    PLCC & 0.911 & 0.872\\
+    PLCC & 0.910713 & 0.871917\\
     \hline
   \end{tabular}
   \caption[Correlación de métricas sintéticas.]{
-  Correlación de métricas sintéticas.\footnotemark[10]. }
+    Correlación de métricas sintéticas con experimento subjetivo de Liu et al\footnotemark[9].
+}
   \label{tab:PseudoCorr}
-  \vspace{-.5cm}
 \end{table}
-
 \footcitetext{ResSCNN}
 \end{frame}
 
 \begin{frame}
   \frametitle{Métricas}
   \vspace{-.4cm}
+  \begin{adjustwidth}{-.5cm}{}
   \begin{table}
-      \setlength{\tabcolsep}{16pt}
-  \hskip-.9cm \begin{tabular}[c]{cc}
-        \textbf{Correlación lineal de Pearson} 
+      \setlength{\tabcolsep}{12pt}
+  \begin{tabular}[l]{cc}
+        \textbf{Correlación lineal de Pearson (PLCC)} 
         &
-        \textbf{Correlación de rangos de Spearman} 
+        \textbf{Correlación de rangos de Spearman (SROCC)} 
         \\
         \parbox[c]{6cm}{ 
    \centering
@@ -145,51 +138,57 @@
 & 
 \parbox[c]{6cm}{
    \centering
+   \vskip5pt
   $
   SROCC(x,y) = \frac{\sum_i (x_i - \bar x)(y_i - \bar y)}{\sqrt{\sum_i (x_i - \bar x)^2}\sqrt{\sum_i (y_i - \bar y)^2}}
         \vspace{.3cm}
 $
 }
 \\ 
-\parbox[c]{6cm}{
+\parbox[c]{5cm}{
   \centering
+  \footnotesize
     Evalúa si existe una \textbf{relación lineal} entre conjuntos. 
     \vspace{.5cm}
 }
 &
-\parbox[c]{6cm}{
+\parbox[c]{5cm}{
   \centering
+  \footnotesize
   Evalúa la relación lineal entre los \textbf{\emph{rankings}}.
   \vspace{.5cm}
     \
 }
 \\
-\textbf{Correlación de orden de rango de Kendall} 
+\parbox[c]{5cm}{\centering \textbf{Correlación de orden de rango de Kendall (KROCC)}}
 & 
-\textbf{Raíz del error cuadrático medio} 
+\textbf{Raíz del error cuadrático medio (RMSE)} 
 \\
- \parbox[c]{6cm}{
+ \parbox[c]{5cm}{
    \centering
+   \vskip5pt
    $
   KROCC(x,y) = \frac{C-D}{\frac{1}{2} m (m-1)}
     $
         \vspace{.3cm}
   }
 & 
-\parbox[c]{6cm}{
+\parbox[c]{5cm}{
   \centering
   $
   RMSE(x,y) = \sqrt{\frac{1}{m}\sum_{i=1}^m (x_i - y_i)^2}
   $
 }
 \\
-\parbox[c]{6cm}{
+\parbox[c]{5cm}{
   \centering
+  \footnotesize
     Evalúa la \textbf{concordancia y discordancia} de relación entre pares.
   }
   & 
-\parbox[c]{6cm}{
+\parbox[c]{5cm}{
   \centering
+  \footnotesize
   Evalúa la \textbf{diferencia media} de los pares de valores.
    
   }
@@ -197,7 +196,7 @@ $
 
       \end{tabular}
   \end{table}
-  
+\end{adjustwidth} 
 \end{frame}
 
 

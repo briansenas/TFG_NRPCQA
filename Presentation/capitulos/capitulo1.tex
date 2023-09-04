@@ -4,7 +4,7 @@
     \frametitle{Contexto}
     \begin{columns}
       \column{0.6\textwidth}
-    \begin{itemize}
+    \begin{enumerate}
       \item \textbf{La información visual} es cada vez más \textbf{importante}.
         \begin{itemize}
           \item Tanto para el entretenimiento como para el ámbito biomédico.
@@ -13,7 +13,7 @@
         \begin{itemize}
           \item Factores importantes: \textbf{contenido, contraste, distorsiones y la percepción humana}
         \end{itemize}
-    \end{itemize}
+    \end{enumerate}
     \column{0.4\textwidth}
     \begin{figure}
       \begin{center}
@@ -26,37 +26,23 @@
   \footcitetext{MinkowskiFailure}
 \end{frame}
 
-\subsection{Subproblemas}
 \begin{frame}
-  \frametitle{Estimación con referencia}
-  \begin{columns}
-  \column{0.5\textwidth}
-    \begin{figure}
-    \includegraphics[width=\textwidth]{imagenes/chapter1/FullReferenceInk.png}
-    \caption{Problema con referencia (FR).}
-    \end{figure}
-  \column{0.5\textwidth}
-    \begin{figure}
-    \includegraphics[width=\textwidth]{imagenes/chapter1/ReducedReferenceInk.png}
-    \caption{Problema con referencia reducida (RR).}
-    \end{figure}
-  \end{columns}
-\end{frame}
-
-\begin{frame}
-  \frametitle{Estimación sin referencia}
+  \frametitle{Subproblemas}
+  \vspace{-.5cm}
   \begin{figure}
-    \includegraphics[width=0.95\textwidth]{imagenes/chapter1/NoReferenceInk.png}
-    \caption{Problema sin referencia (NR).}
+    \caption{Figuras (a) y (b): problemas con referencia (FR) y sin referencia (NR).}
+    \includegraphics[width=0.8\textwidth]{imagenes/chapter1/HFullReferenceInk.png}
+  \end{figure}
+  \begin{figure}
+    \includegraphics[width=0.8\textwidth]{imagenes/chapter1/NoReferenceInk.png}
   \end{figure}
   \begin{enumerate}
-    \item El subproblema más \textbf{difícil}.
-    \item Debemos disponer de conocimientos sobre: 
+    \item (b) es el subproblema más \textbf{difícil}.
+    \item Debemos disponer de conocimientos generales sobre: 
       \begin{enumerate}
         \item Naturaleza de las imágenes.
         \item Efecto de las distorsiones.
       \end{enumerate}
-    \item \textbf{Este TFG} aborda la estimación, \textbf{sin referencia}, de calidad de imágenes médicas 3D.
   \end{enumerate}
 \end{frame}
 
@@ -78,7 +64,7 @@
     \end{center}
     \caption{
       Eliminación de reflejos en imágenes\footnote[frame]{\cite{BRISQUEExample}}
-      con medida de calidad BRISQUE\footnote[frame]{\cite{BRISQUE}}.
+      con medida de calidad BRISQUE\footnote[frame]{\cite{BRISQUE}} (menor es mejor).
   }
   \end{figure}
   \end{columns}
@@ -88,16 +74,11 @@
   \frametitle{Motivación}
   \begin{columns}
     \column{0.5\textwidth}
-    \begin{itemize}
+    \begin{enumerate}
+    \item La naturaleza de las imaǵenes médicas \textbf{reduce} la precisión de modelos IQA estándares.
     \item Cada vez \textbf{más frecuentemente} se emplean volúmenes tridimensionales.
     \item No obstante, las distorsiones \textbf{afectan al volumen 3D generado}. 
-    \item Las contribuciones relativas al IQA en la medicina resulta en: 
-      \begin{itemize}
-        \item Reducción de costes. 
-        \item Reducción de tiempo de consulta.
-        \item Mejora de calidad del diagnóstico.
-      \end{itemize}
-    \end{itemize}
+    \end{enumerate}
   \column{0.5\textwidth}
   \begin{figure}
     \begin{center}
@@ -111,14 +92,20 @@
 
 
 \begin{frame}
-  \frametitle{Problemáticas}
+  \frametitle{Motivación}
+  \vspace{-0.2cm}
   \begin{columns}
     \column{0.5\textwidth}
-  \begin{itemize}
+  \begin{enumerate}
+    \item As veces no tenemos acceso a las imágenes médicas 2D.
     \item El número de métodos propuestos para 3D \textbf{decrece sustancialmente}.
-    \item La naturaleza de las imaǵenes médicas \textbf{reduce} la precisión de modelos IQA estándares.
-    \item No hay \textbf{ningún} método aplicado \textbf{directamente} a imágenes médicas 3D.
-  \end{itemize}
+    \item Las contribuciones relativas al IQA en la medicina resulta en: 
+      \begin{itemize}
+        \item \textbf{Reducción de costes}. 
+        \item Reducción de tiempo de consulta.
+        \item \textbf{Mejora de calidad del diagnóstico}.
+      \end{itemize}
+  \end{enumerate}
   \column{0.5\textwidth}
   \begin{figure}
     \begin{center}
@@ -127,6 +114,7 @@
     \caption{Ejemplo de distorsiones médicas\footnotemark.}
   \end{figure}
   \end{columns}
+  Este TFG se centra en \textbf{la estimación de calidad, sin referencia, de nubes de puntos}. 
   \footcitetext{MoreMedicalDistortion}
 \end{frame}
 
@@ -136,6 +124,7 @@
   \begin{columns}
 
     \column{0.3\textwidth}
+    \vspace{-1cm}
   \begin{enumerate}
     \item Estudio exhaustivo del estado del arte. 
     \item Generación de datos sintéticos.
@@ -143,7 +132,7 @@
   \end{enumerate}
 
   \column{0.7\textwidth}
-  \vspace{-.5cm}
+  \vspace{-.2cm}
   \begin{figure}
       \includegraphics[width=1.0\textwidth, left]{imagenes/chapter1/Objetivos}
   \end{figure}
