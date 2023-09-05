@@ -9,7 +9,6 @@ journal = {Visual Quality Assessment for Natural and Medical Image},
 @article{RecentIQASurvey,
 author = {Zhai, Guangtao and Min, Xiongkuo},
 year = {2020},
-month = {11},
 pages = {1-52},
 title = {Perceptual image quality assessment: a survey},
 volume = {63},
@@ -159,10 +158,14 @@ author = {Andriy Fedorov and Reinhard Beichel and Jayashree Kalpathy-Cramer and 
     number = {BT.500-13},
     institution = {{International Telecommunication Union - Radiocommunication Sector (ITU-R)}},
 }
-@article{ITU-R.2021,
-author = {Zhou, Junming and Jiang, Gangyi and Mao, Xiangying and Yu, Mei and Shao, Feng and Peng, Zongju and Zhang, Yun},
-year = {2011},
-title = {Subjective quality analyses of stereoscopic images in 3DTV system},
+
+@inproceedings{ITU-R.2021,
+  author={Zhou, Junming and Jiang, Gangyi and Mao, Xiangying and Yu, Mei and Shao, Feng and Peng, Zongju and Zhang, Yun},
+  booktitle={2011 Visual Communications and Image Processing}, 
+  title={Subjective quality analyses of stereoscopic images in 3DTV system}, 
+  year={2011},
+  volume={1},
+  pages={1-4},
 }
 
 @article{ResSCNN,
@@ -372,7 +375,7 @@ pages={1-2},
 
 @inproceedings{SpatialDomainForJPEG,
 author={Zhou Wang and Sheikh, H.R. and Bovik, A.C.},
-  booktitle={Proceedings. International Conference on Image Processing}, 
+  booktitle={Proceedings. International Conference on Image Processing (ICIP)}, 
   title={No-reference perceptual quality assessment of JPEG compressed images}, 
   year={2002},
   volume={1},
@@ -404,7 +407,7 @@ pages={760-764},
 
 @inproceedings{Hallucinated-IQA,
   author={Lin, Kwan-Yee and Wang, Guanxiang},
-  booktitle={2018 IEEE/CVF Conference on Computer Vision and Pattern Recognition}, 
+  booktitle={2018 IEEE/CVF Conference on Computer Vision and Pattern Recognition (CVPR)}, 
   title={Hallucinated-IQA: No-Reference Image Quality Assessment via Adversarial Learning}, 
   year={2018},
   pages={732-741},
@@ -573,6 +576,8 @@ journal = {IEEE Transactions on Systems, Man, and Cybernetics, Part B: Cyberneti
       title={An Analysis on Ensemble Learning optimized Medical Image Classification with Deep Convolutional Neural Networks}, 
       author={Dominik Müller and Iñaki Soto-Rey and Frank Kramer},
       year={2022},
+      eprint={2201.11440},
+      archivePrefix={arXiv},
 }
 
 @article{DicomDistortionsExample,
@@ -821,6 +826,7 @@ author = {Chow, Li Sze and Rajagopal, Heshalini},
 year = {2017},
 title = {Modified-BRISQUE as no reference image quality assessment for structural MR images},
 volume = {43},
+pages = {74--87},
 journal = {Magnetic Resonance Imaging},
 }
 
@@ -828,23 +834,21 @@ journal = {Magnetic Resonance Imaging},
   title={Evaluation criteria for PCC (Point Cloud Compression)},
   author={Mekuria, Rufael and Li, Zhenyu and Tulvan, Christian and Chou, Philip},
   booktitle={ISO/IEC MPEG Doc. N16332},
-  month={7},
   year={2016}
 }
 
 @inproceedings{PointToPlane,
-  title={Geometric distortion metrics for point cloud compression},
-  author={Tian, Dapeng and Ochimizu, Hiroshi and Feng, Chen and Cohen, Richard and Vetro, Anthony},
-  booktitle={IEEE International Conference on Image Processing (ICIP)},
-  month={9},
-  year={2017}
+  author={Tian, Dong and Ochimizu, Hideaki and Feng, Chen and Cohen, Robert and Vetro, Anthony},
+  booktitle={2017 IEEE International Conference on Image Processing (ICIP)}, 
+  title={Geometric distortion metrics for point cloud compression}, 
+  year={2017},
+  pages={3460-3464},
 }
 
 @inproceedings{PlaneToPlane,
   title={Point Cloud Quality Assessment Metric based on Angular Similarity},
   author={Alexiou, Eirini and Ebrahimi, Touradj},
   booktitle={IEEE International Conference on Multimedia \& Expo Workshops (ICMEW)},
-  month={6},
   year={2018}
 }
   
@@ -855,7 +859,6 @@ journal = {Magnetic Resonance Imaging},
   volume={17},
   number={2},
   pages={167--174},
-  month={1},
   year={1998}
 }
 
@@ -870,8 +873,8 @@ journal = {Magnetic Resonance Imaging},
   title={Towards a Point Cloud Structural Similarity Metric},
   author={Alexiou, Eleni and Ebrahimi, Touradj},
   booktitle={IEEE International Conference on Multimedia \& Expo Workshops (ICMEW)},
-  month={6},
-  year={2020}
+  year={2020},
+  pages={1-6}
 }
 
 @article{GraphSIM,
@@ -888,7 +891,7 @@ journal = {Magnetic Resonance Imaging},
   title={Exploiting user interactivity in quality assessment of point cloud imaging},
   author={Alexiou, Eleni and Ebrahimi, Touradj},
   booktitle={IEEE International Conference on Quality of Multimedia Experience (QoMEX)},
-  month={7},
+  pages={1-6},
   year={2019}
 }
 
@@ -905,7 +908,7 @@ journal = {Magnetic Resonance Imaging},
   journal={IEEE Transactions on Multimedia}, 
   title={No-reference Bitstream-layer Model for Perceptual Quality Assessment of V-PCC Encoded Point Clouds}, 
   year={2022},
-  pages={1-1}
+  pages={1-14}
 }
 
 @inproceedings{NR-CNN-3D-PC,
@@ -936,13 +939,14 @@ year = {2020},
 author = {Ilyass Abouelaziz and Aladine Chetouani and Mohammed {El Hassouni} and Longin Jan Latecki and Hocine Cherifi},
 }
 
-
 @article{WPC1,
-author={Liu, Qi and Su, Honglei and Duanmu, Zhengfang and Liu, Wentao and Wang, Zhou},
-journal={IEEE Transactions on Visualization and Computer Graphics (TVCG)},
-title={Perceptual Quality Assessment of Colored 3D Point Clouds},
-year={2022},
-pages={1-1},
+  author={Liu, Qi and Su, Honglei and Duanmu, Zhengfang and Liu, Wentao and Wang, Zhou},
+  journal={IEEE Transactions on Visualization and Computer Graphics}, 
+  title={Perceptual Quality Assessment of Colored 3D Point Clouds}, 
+  year={2023},
+  volume={29},
+  number={8},
+  pages={3642-3655},
 }
 
 @inproceedings{WPC2,
@@ -954,10 +958,12 @@ year={2019},
 }
 
 @article{SJTU,
-  author = {Yang, Qian and Chen, Haichuan and Ma, Zhihua and Xu, Yue and Tang, Rui and Sun, Jian},
-  title = {Predicting the Perceptual Quality of Point Cloud: A 3D-to-2D Projection-Based Exploration},
-  journal = {IEEE Transactions on Multimedia},
-  year = {2020},
+  author={Yang, Qi and Chen, Hao and Ma, Zhan and Xu, Yiling and Tang, Rongjun and Sun, Jun},
+  journal={IEEE Transactions on Multimedia}, 
+  title={Predicting the Perceptual Quality of Point Cloud: A 3D-to-2D Projection-Based Exploration}, 
+  year={2021},
+  volume={23},
+  pages={3877-3891},
 }
 
 %Chapter 4 
@@ -1022,7 +1028,7 @@ journal = {ISPRS Annals of the Photogrammetry, Remote Sensing and Spatial Inform
   urldate = {2023-07-01}
 }
 
-@inproceedings{WhyUsePointCloud,
+@article{WhyUsePointCloud,
 author = {Fol Leymarie, Frederic and Chang, Ming-Ching and Imielinska, Celina and Kimia, Benjamin},
 year = {2010},
 pages = {65-74},

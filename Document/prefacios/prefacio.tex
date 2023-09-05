@@ -28,21 +28,16 @@ desempeña un papel fundamental.
 Sin embargo, la calidad de estas representaciones puede variar debido a diversos 
 factores, como la adquisición, procesamiento y reconstrucción de las estructuras anatómicas a analizar. 
 Para mejorar cada uno de estos pasos se hace necesaria una manera de cuantificar las distorsiones que puedan surgir. 
-Este campo de investigación todavía no ha sido suficientemente explorado en el ámbito biomédico.
-\smallskip
-
 Este TFG presenta un sistema capaz de estimar la calidad de 
 una representación 3D biomédica sin referencia, es decir, sin emplear un objeto 
-no distorsionado de referencia. La propuesta 
+no distorsionado de referencia. Más concretamente, la propuesta 
 adapta modelos de estimación de calidad de nubes de puntos genéricas 
-al ámbito médico. Dicha representación es la más común y versátil para 
-estructuras complejas, reconstrucciones y segmentaciones en la medicina~\cite{WhyUsePointCloud}. 
+al ámbito médico. 
 \smallskip
 
 De cara a la validación experimental, como no existen bases de datos públicas con imágenes 
 biomédicas, se emplearon nubes de puntos generalistas, de personas, animales y objetos. 
-De hecho, como parte de este TFG, se propone un conjunto de datos médicos sintéticos 
-generados a partir de datos privados. 
+De hecho, como parte de este TFG, se propone un conjunto de datos médicos sintéticos.
 Los datos consisten en un conjunto de tomografías computarizadas y modelos 
 generados mediante el escaneo láser 3D de diferentes estructuras óseas. 
 A este conjunto de datos se le aplican las distorsiones más comunes 
@@ -76,38 +71,31 @@ prometedora.
 
 %\vspace{0.7cm}
 \noindent{\textbf{Abstract}}\\
-
-In the biomedical field, the visualization and analysis of 3D structures play a 
-fundamental role. However, the quality of these representations can vary due to 
-various factors, such as the acquisition, processing, and reconstruction of the 
-anatomical structures to be analyzed. To improve each of these steps, a way to 
-quantify the distortions that may arise is necessary. 
-This research area has not yet been sufficiently explored in the biomedical domain.
+In the biomedical field, the visualization and analysis of 3D structures 
+play a fundamental role. However, the quality of these representations can vary 
+due to various factors, such as the acquisition, processing, and reconstruction 
+of the anatomical structures under analysis. To improve each of these steps, 
+it is necessary to find a way to quantify the distortions that may arise. 
+This Bachelor's thesis presents a system capable of estimating the quality of 
+a 3D biomedical representation without reference, meaning without using an 
+undistorted reference object. More specifically, the proposal adapts quality 
+estimation models for generic point clouds to the medical domain.
 \smallskip
 
-This Bachelor's thesis presents a system capable of estimating the quality of a 
-3D biomedical representation without reference, that is, without using an 
-undistorted reference object. The proposal adapts quality estimation models from 
-generic point clouds to the medical field. 
-This representation is the most common and flexible for complex structures, 
-reconstructions, and segmentations in medicine~\cite{WhyUsePointCloud}.
+Regarding experimental validation, since there are no public databases with 
+biomedical images, generalist point clouds of people, animals, and objects were used. 
+In fact, as part of this Bachelor's thesis, a set of synthetic medical data is 
+proposed. The data consists of a collection of computed tomographies and models 
+generated through 3D laser scanning of different bone structures. Common distortions 
+in 3D medical representations (compression, noise, and others) are applied to this 
+data set. The real quality value of each generated example is estimated using 
+the best methods for each type of distortion, as found in the literature.
 \smallskip
 
-For experimental validation, as there are no public databases with biomedical images, 
-generic point clouds of people, animals, and objects were used. 
-In fact, as part of this Bachelor's thesis, a set of synthetic medical data generated 
-from private data is proposed. The data consists of a collection 
-of computerized tomographies and models generated through 3D laser scanning 
-of different bone structures. This dataset is subjected to the most common 
-distortions in 3D medical representations (compression, noise, and others). 
-The real quality value of each generated example is estimated using the best methods for 
-each type of distortion, according to the literature.
-\smallskip
-
-Although the results obtained in this work are still preliminary, 
-it's worth mentioning that a correlation of 88\% was achieved between obtained 
-quality values and desired values, suggesting that this is an extremely promising 
-line of research.
+Despite the fact that the results obtained in this work are preliminary, 
+it is worth mentioning that an 88\% correlation was achieved between 
+obtained quality values and desired values, 
+suggesting that this is an extremely promising line of research.
 
 \chapter*{}
 \thispagestyle{empty}
