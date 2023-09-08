@@ -58,9 +58,7 @@
                     \hline
                      \textbf<4>{VSI} & 0.952 & 0.948 & 8.682 \\
                     \hline
-                     DSS & 0.962 & 0.931 & 9.961 \\
-                    \hline
-                     \textbf<5>{CD-MMF} & \textbf{0.981} & \textbf{0.980} & \textbf{5.413}\\ 
+                     \textbf<5>{WaDIQaM} & \textbf{0.970} & \textbf{0.980} & -\\ 
                     \hline 
     \end{tabular}
     \caption[Progreso de las métricas FR.]{
@@ -84,7 +82,6 @@
           \item Características \textbf{geométricas}.
           \item Características \textbf{lumínicas}.
         \end{enumerate}
-      \item Métodos genéricos por ML. 
       \item Métodos genéricos por DL.
         \begin{enumerate}
           \item \textbf{Proyecciones 2D.}
@@ -102,7 +99,7 @@
               \rowcolor[HTML]{FFC702}
               \cellcolor[HTML]{FFC702} & \multicolumn{2}{c|}{\cellcolor[HTML]{FFC702}\textbf{STJU-PCQA}} & \multicolumn{2}{c|}{\cellcolor[HTML]{FFC702}\textbf{WPC}} \\ 
               \cline{2-5}
-             \multirow{-2}{*}{\cellcolor[HTML]{FFC702}\textbf{MODELO}}  &\multicolumn{1}{c|}{\cellcolor[HTML]{FFC702} PLCC} & \multicolumn{1}{c|}{\cellcolor[HTML]{FFC702}SRCC} & \multicolumn{1}{c|}{\cellcolor[HTML]{FFC702}PLCC} & \multicolumn{1}{c|}{\cellcolor[HTML]{FFC702}SRCC} \\
+             \multirow{-2}{*}{\cellcolor[HTML]{FFC702}\textbf{Método}}  &\multicolumn{1}{c|}{\cellcolor[HTML]{FFC702} PLCC} & \multicolumn{1}{c|}{\cellcolor[HTML]{FFC702}SRCC} & \multicolumn{1}{c|}{\cellcolor[HTML]{FFC702}PLCC} & \multicolumn{1}{c|}{\cellcolor[HTML]{FFC702}SRCC} \\
               \hline
               IT-PCQA & 0.58 & 0.63 & 0.55  & 0.54\\
               \hline
@@ -127,25 +124,18 @@
 \subsection{Estado del arte en imágenes médicas}
 \begin{frame}
   \frametitle{Estado del arte en imágenes médicas}
-  \vspace{-0.4cm}
-  \begin{columns}
-    \column{0.5\textwidth}
   \begin{enumerate}
     \item \textbf{No existe} una imagen o representación \textbf{``sin distorsión''} en la medicina.
     \item Los métodos \textbf{actuales} utilizan adaptaciones \textbf{IQA} para 
-      exámenes médicos específicos como \textbf{MRI}.
+      exámenes médicos concretos, como \textbf{MRI}.
     \item \textbf{No se ha encontrado} nada específico en la literatura sobre 
-      métodos aplicados \textbf{directamente a reconstrucciones 3D}.
+      métodos aplicados \textbf{directamente a 3D}.
+      \begin{itemize}
+        \item Reconstrucción.
+        \item Escaneo laser forense.
+        \item Segmentación.
+      \end{itemize}
+    \item Este TFG se centra en \textbf{la estimación de calidad, sin referencia, de nubes de puntos biomédicas}. 
   \end{enumerate}
-    \column{0.5\textwidth}
-    \begin{figure}
-      \begin{center}
-        \includegraphics[width=0.95\textwidth]{imagenes/chapter2/MRIVoxel}
-      \end{center}
-      \caption{Generación de imagen volumétrica\footnotemark.}
-      \label{fig:}
-    \end{figure}
-    
-  \end{columns}
-  \footcitetext{MRIVoxel}
+  %\footcitetext{MRIVoxel}
 \end{frame}

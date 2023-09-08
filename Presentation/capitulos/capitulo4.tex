@@ -1,7 +1,16 @@
 \section{Experimentación}
 \subsection{Modelo NR3DQA}
+\begin{frame} 
+  \frametitle{Introducción}
+  \begin{enumerate}
+    \item Para la validación hacemos uso de \textbf{validación cruzada ó \emph{K-fold}}.
+    \item Primeramente, \textbf{replicamos los resultados} de las publicaciones originales.
+    \item A continuación adaptamos los modelos. 
+    \item Por último, \textbf{proponemos mejoras y analizamos los resultados}.
+  \end{enumerate}
+\end{frame}
 \begin{frame}
-  \frametitle{Modelo NR3DQA\footnotemark[12]}
+  \frametitle{Modelo NR3DQA\footnotemark[10]}
 \begin{table}[htp]
   \small
   \begin{center}
@@ -28,11 +37,11 @@
     \end{tabular}
   \end{center}
   \caption[Resultados de prueba preliminar con NR3DQA.]{
-    Resultados de prueba preliminar con NR3DQA\footnotemark[12]. 
+    Resultados de prueba preliminar con NR3DQA\footnotemark[10]. 
   }
   \label{tab:MedicalNR3DQA}
 \end{table}
-\footnotetext[12]{\cite{NR3DQA}}
+\footnotetext[10]{\cite{NR3DQA}}
 
 \end{frame}
 
@@ -54,7 +63,7 @@
         \hline 
         Biomédico & SVM & StandardScaler & 0.344601 &  0.170793 \\
         \hline
-        Biomédico escalado & DecisionTree & StandardScaler & 0.30025  & 0.182296 \\
+        Biomédico en escala 0-5 & DecisionTree & StandardScaler & 0.30025  & 0.182296 \\
         \hline
       \end{tabular}
     \end{center}
@@ -119,11 +128,11 @@
     \end{tabular}
   \end{center}
   \caption[Resultados de experimento preliminar VQA-PC en SJTU.]{
-    Resultados de experimento preliminar VQA-PC\footnotemark[13] en SJTU\footnotemark[7]. 
+    Resultados de experimento preliminar VQA-PC\footnotemark[11] en SJTU\footnotemark[7]. 
   }
   \label{tab:PreTestResults}
 \end{table}
-\footnotetext[13]{\cite{VQA-PC}}
+\footnotetext[11]{\cite{VQA-PC}}
 \footnotetext[7]{\cite{SJTU}}
 \end{frame}
 
