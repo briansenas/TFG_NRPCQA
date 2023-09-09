@@ -18,10 +18,24 @@
           \includegraphics[width=\textwidth]{imagenes/chapter2/ScopusQualityAssessment}
         \end{center}
         \caption{Estimación de calidad en imágenes médicas (azul), nubes de puntos (naranja) 
-          y en imágenes médicas 3D (verde). Esta última, tan solo llega a \textbf{60 publicaciones}}
+          y en imágenes médicas 3D (verde). Esta última, tan solo llega a \textbf{62 publicaciones}}
       \end{figure}
     \end{columns}
 \end{frame}
+
+\note{
+Como iba comentando anteriormente.
+La estimación de calidad de imágenes y de objetos 3D, al ser un componente sumamente 
+ligado al avance tecnológico y de las necesidades de manejo 
+de información digital, 
+ha tomado mayor interés en el comienzo del siglo actual.
+Puede observarse en ambas Figuras que existe una tendencia creciente 
+en relación a la aplicación de IA en las nubes de puntos y en imágenes médicas
+Por otro lado, podemos afirmar lo mencionado sobre el bajo número de publicaciones 
+en el ámbito biomédico y representaciones 3D, 
+observando que, aunque hay también una tendencia positiva, en 2022 tenemos tan solo 60 publicaciones.
+Esto se interpreta como un indicador de lo novedoso y pionero que es este proyecto.
+}
 
 \subsection{Estado del arte IQA: métricas}
 \begin{frame}
@@ -69,6 +83,24 @@
   \end{columns}
 \footcitetext{SurveyOf2D3DMetrics}
 \end{frame}
+
+\note{
+Para poner un poco de contexto, hablaremos del progreso de los métodos 2D de IQA, 
+Con algunos ejemplos en la tabla a la derecha. Donde las 2 primeras 
+columnas son coeficientes de correlación que deben acercarse a 1 y la última 
+es la raíz del error que debe ser cercano a 0: 
+Digamos que primeramente, surgieron métodos de cuantificación de señal como el primer ejemplo que vimos. 
+A continuación empezaron a plasmarse conocimientos del sistema visual humano, utilizando 
+por ejemplo nuestra sensibilidad al contraste. 
+Seguidamente, propusieron la hipótesis de percepción a través de: brillo, contraste y
+estructuras.
+Con ello, surgió el famoso método de similitud estructural SSIM.
+Los avances de dichos conocimientos supusieron incluso la codificación de la 
+atención o saliencia visual humana con métodos como VSI. 
+Y por último, siendo esta la tendencia actual, se empezaron a utilizar
+métodos de extracción automática de características por 
+medio de aprendizaje profundo.
+}
 
 \subsection{Estado del arte PCQA: métodos}
 \begin{frame}
@@ -121,6 +153,24 @@
   \end{columns}
 \end{frame}
 
+\note{
+En el ámbito sin referencia, en particular las nubes de puntos, el avance es algo parecido. 
+Primeramente parten de soluciones para distorsiones específicas, por ejemplo la compresión. 
+A continuación, hacen uso de las estadísticas de escenas. En 3D esto consiste 
+de la posibilidad de extraer características geométricas: como densidad de puntos
+o lumínicas: como la consistencia del 
+color. Estas características provienen del vecindario de un punto, y se extraen 
+para todos los puntos. 
+En concreto, un ejemplo de ello sería el modelo NR3DQA, del cual hablaremos más adelante.
+No obstante, tanto en 3D como 2D,
+más rápidamente pasan a utilizar métodos de aprendizaje profundo. 
+En nubes de puntos se diferencian los siguientes métodos: los que proyectan dichas nubes 
+a 2D para adaptar modelos IQA habituales y los que utilizan 
+la representación 3D directamente. 
+Recientemente incluso han surgido adaptaciones mixtas.
+¿Pero.. qué es de las imágenes médicas?
+}
+
 \subsection{Estado del arte en imágenes médicas}
 \begin{frame}
   \frametitle{Estado del arte en imágenes médicas}
@@ -139,3 +189,19 @@
   \end{enumerate}
   %\footcitetext{MRIVoxel}
 \end{frame}
+
+\note{
+He aqui de explicar que las 62 publicaciones de las gráficas anteriores 
+representan métodos que consisten de aproximaciones 2D, en particular para un 
+tipo de examen concreto, por ejemplo resonancia magnética.
+Resuelven el problema por medio de los múltiples planos anatómicos 2D generados 
+por el mismo. 
+Sin embargo, no se ha encontrado nada específico en la literatura para las 
+reconstrucciones 3D generadas a partir de dichas imágenes médicas, por lo que es 
+un campo sin explorar. 
+No obstante, cada vez más se emplean 
+volúmenes 3D en la medicina y, consecuentemente, es necesario explorar ese 
+campo a pesar de la complejidad existente.
+Es por ello, que este TFG se centra en la estimación de calidad, sin referencia, 
+de nubes de puntos biomédicas.
+}

@@ -319,11 +319,11 @@ percibimos la calidad de modelos 3D desde una perspectiva estática, cosa que no
 es cierta en la práctica dado que los objetos 3D permiten operaciones geométricas 
 de rotación y escalado.
 Y por ello, proponen unificar la percepción estática con la dinámica tratando 
-a las proyecciones como vídeos.
+a las proyecciones como videos.
 
 De esta forma, se puede extraer características espaciales y temporales, como 
 discutido en la Sección \ref{sec:VideoCNN}, utilizando redes convolucionales 
-adaptadas a vídeos, de la familia \emph{SlowFast}~\cite{SlowFastNetworks}.
+adaptadas a videos, de la familia \emph{SlowFast}~\cite{SlowFastNetworks}.
 Siguiendo la motivación de que las deformaciones geométricas no deseadas se presentan 
 de forma abrupta según la perspectiva (véase Figura \ref{fig:ViewPoint}), y que 
 incluso se pueden observar incoherencias entre perspectivas adyacentes
@@ -331,7 +331,7 @@ utilizaron 4 ejes de rotación: vertical, horizontal, diagonal derecha
 y diagonal izquierda. Para cada eje se genera un total de 30 \emph{frames}, 
 en total habrá 120 (véase Figura \ref{fig:VQARotation}). El ángulo de rotación es de 12 grados para todos los casos. 
 Terminando la rotación de un eje en la misma posición inicial. 
-A continuación se extraen características temporales del vídeo, que es posible 
+A continuación se extraen características temporales del video, que es posible 
 generar a partir de cada \emph{frame} de los distintos ejes de rotación encadenados
 secuencialmente de forma ordenada, y se elige 1 \emph{frame} de cada 
 eje de rotación para representar la información espacial. Por último, 
@@ -359,11 +359,11 @@ en la imagen de abajo se ve cierta deformación de la cabeza.}
   {Ejemplo de las rotaciones que utiliza el modelo VQA-PC.
   Se observa que el final de cualquier eje de rotación es la posición inicial, 
 permitiendo así unir suavemente una secuencia de imágenes encadenada de los ejes 
-que genere un vídeo de rotación utilizado luego para la estimación.}
+que genere un video de rotación utilizado luego para la estimación.}
   \label{fig:VQARotation}
 \end{figure}
 
-Para realizar la secuencia de vídeo, necesitamos realizar correctamente 
+Para realizar la secuencia de video, necesitamos realizar correctamente 
 el conjunto de rotaciones descritos por las siguientes ecuaciones: 
 \begin{equation}
   \theta_A = 
@@ -439,7 +439,7 @@ ResNet, el modelo de extracción temporal solo es un paso previo.
 Al tener que generar un conjunto de datos médicos por medio de la simulación 
 de distorsiones a distintos niveles de intensidad, es también necesario una manera 
 de etiquetar cada ejemplo generado con el valor de calidad esperado. 
-Para la generación de dicha etiqueta, se optó seguir el camino propuesto por~\cite{ResSCNN}. 
+Para la generación de dicha etiqueta, se optó por seguir el camino propuesto por~\cite{ResSCNN}. 
 En opción a generar un entorno controlado con los estándares ITU-R~\cite{ITU-R.2012, ITU-R.2021}, 
 organizar al menos 16 personas, y que cada uno evalúe durante 30 segundos el nivel 
 de calidad de cada nube de punto en una escala 1-5, hemos hecho uso del gran 
@@ -449,7 +449,7 @@ Para ello, se hace un desglose de rendimiento de cada métrica para cada tipo
 de distorsión, como se observa en la Tabla \ref{tab:MetricsPerDistortion}. El 
 rendimiento es medido con el coeficiente de correlación de rangos de Spearman.
 Las métricas comparadas son p2p0~\cite{PointToPoint} y p2pl~\cite{PointToPlane}, 
-con distancia manhattan (M) y hausdorff (H), PCQM~\cite{PCQM}, GraphSIM~\cite{GraphSIM} y 
+con distancia Manhattan (M) y Hausdorff (H), PCQM~\cite{PCQM}, GraphSIM~\cite{GraphSIM} y 
 MPED~\cite{MPED}.
 
 \begin{table}[htp]

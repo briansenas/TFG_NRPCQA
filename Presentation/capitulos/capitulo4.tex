@@ -5,10 +5,28 @@
   \begin{enumerate}
     \item Para la validación hacemos uso de \textbf{validación cruzada ó \emph{K-fold}}.
     \item Primeramente, \textbf{replicamos los resultados} de las publicaciones originales.
+      \begin{itemize}
+        \item Modelo NR3DQA.
+        \item Modelo VQA-PC.
+      \end{itemize}
     \item A continuación adaptamos los modelos. 
     \item Por último, \textbf{proponemos mejoras y analizamos los resultados}.
   \end{enumerate}
 \end{frame}
+
+\note{
+Ya dentro de la experimentación, 
+para la validación del modelo y la estimación de su rendimiento para las distintas 
+mejoras propuestas hemos utilizado la técnica de  
+validación cruzada, también conocida por K-fold. 
+A modo resumen, a continuación replicamos los resultados obtenidos en 
+las publicaciones originales de los métodos NR3DQA y VQA-PC. 
+Para ello utilizamos los conjuntos de datos públicos SJTU y WPC. 
+Por último, analizamos los resultados obtenidos sobre nuestro conjunto 
+de imágenes médicas y, con ello, proponemos mejoras y adaptaciones.
+}
+
+
 \begin{frame}
   \frametitle{Modelo NR3DQA\footnotemark[10]}
 \begin{table}[htp]
@@ -42,8 +60,19 @@
   \label{tab:MedicalNR3DQA}
 \end{table}
 \footnotetext[10]{\cite{NR3DQA}}
-
 \end{frame}
+
+\note{
+Con el modelo NR3DQA seguimos el protocolo de experimentación especificado por sus 
+autores. Logramos obtener resultados similares.
+No obstante, utilizando las mismas funciones para el caso de los imágenes médicas 
+y experimentando con múltiples modelos de regresión y escalado de características, 
+observamos, que el método no parece ser capaz
+de determinar con precisión la calidad de dichas imágenes, 
+ya que la correlación es cercana a 0.
+En la tabla podéis ver los mejores resultados, 
+reafirmando así la dificultad de aplicar métodos IQA directamente a imágenes médicas.
+}
 
 \begin{frame}
   \frametitle{Modificaciones}
@@ -92,6 +121,18 @@
 \footcitetext{3DNSSMetrics}
 \end{frame}
 
+\note{
+Algo similar ocurre cuando intentamos utilizar más características geométricas
+como se indica en el trabajo de Weinmann y sus colaboradores. Argumentan que 
+en el proceso de segmentación, detección y clasificación de estructuras en nubes 
+de puntos, las mejores características suelen ser: 
+omnivarianza, entropía de valores singulares y la verticalidad del vecindario.
+Esta adaptación logra un incremento del 5\% de correlación en SJTU llegando 
+al 85\%, y de un 15\% en las imágenes médicas con la regresión por vectores soporte.
+Sin embargo, sigue siendo apenas un 35\% de correlación.
+El modelo adaptado de ML demuestra no ser capaz de determinar con calidad 
+el nivel de distorsiones de nuestras imágenes médicas. 
+}
 
 \subsection{Modelo VQA-PC}
 
@@ -103,39 +144,44 @@
     \begin{tabular}[c]{|c|c|c|}
       \hline
       \rowcolor[HTML]{FFC702}
-      \textbf{Kfold} & \textbf{MSE} & \textbf{SROCC} \\ 
-      \hline 
-      0 & 13.9222 & 0.8995 \\
-      \hline 
-      1 & 418120.5625 & 0.8547 \\ 
-      \hline 
-      2 & 10.9271 & 0.9081 \\
-      \hline 
-      3 & 19.8226 & 0.9295 \\ 
-      \hline 
-      4 & 443.6077 & 0.8700 \\ 
-      \hline 
-      5 & 28.3165 & 0.9544 \\ 
-      \hline 
-      6 & 292.239 & 0.7675 \\ 
-      \hline 
-      7 & 329.0685 & 0.8833 \\ 
-      \hline 
-      8 & 357.0455 & 0.8647 \\ 
+      \textbf{Modelo} & \textbf{Dataset} & \textbf{SROCC} \\ 
       \hline
-      \textbf{\cellcolor[HTML]{FFC702}Promedio} & \textbf{46623.94} & \textbf{0.8813} \\ 
+      VQA-PC & SJTU & \textbf{0.8813} \\ 
+      \hline
+      VQA-PC & WPC & \textbf{0.7181} \\
       \hline
     \end{tabular}
   \end{center}
   \caption[Resultados de experimento preliminar VQA-PC en SJTU.]{
-    Resultados de experimento preliminar VQA-PC\footnotemark[11] en SJTU\footnotemark[7]. 
+    Resultados de experimento preliminar VQA-PC\footnotemark[11]. 
   }
   \label{tab:PreTestResults}
 \end{table}
+\begin{enumerate}
+  \item Las predicciones del modelo no tienen porque estar en la misma escala.
+  \item Seria necesario utilizar regresión logística-5 para normalizar la escala. 
+  \item Pero podemos centrarnos en el \textbf{SROCC} que es \textbf{invariante a la escala}.
+\end{enumerate}
 \footnotetext[11]{\cite{VQA-PC}}
-\footnotetext[7]{\cite{SJTU}}
 \end{frame}
 
+\note{
+Para el modelo de DL hemos utilizado el mismo protocolo de validación. 
+Cabe observar que los valores se acercan a los resultados obtenidos en la 
+publicación original. 
+
+Durante dicho procedimiento, hemos observado que el modelo no predice 
+valores en la misma escala, sobre todo en el conjunto biomédico. 
+Aun así, nuestro criterio de elección será la 
+correlación entre las métricas. 
+No necesitamos estimar los valores de distorsión 
+en la misma escala que las etiquetas. Digamos que apenas necesitamos 
+ser capaces de comparar de forma ordenada las imágenes de menor a mayor calidad. 
+Con fin de ahorrar tener que normalizar dichas 
+predicciones por medio de la regresión logística como propone Zhang y su colaboradores, 
+nos centraremos en la métrica de correlación de SROCC por sus propiedades de invarianza 
+a la escala. 
+}
 
 \begin{frame}
   \frametitle{Modificaciones VQA-PC}
@@ -159,6 +205,24 @@
   \end{enumerate}
 \end{table}
 \end{frame}
+
+\note{
+Dada la naturaleza de nuestras etiquetas, comparamos el modelo pre-entrenado 
+sobre SJTU con las etiquetas estándares y sus versiones normalizadas por tipo 
+de distorsión. Además, observamos que el modelo VQA-PC durante el entrenamiento 
+recorta una zona aleatoria de la imagen a un tamaño 224x224. Dicho proceso, 
+conocido como aumentación de datos incrementa el número de ejemplos y, habitualmente, 
+previene el sobreajuste. Sin embargo, debido a que las nubes de puntos ocupan 
+principalmente la zona central de la imagen y en poca proporción, dichos recortes 
+pueden provocar ejemplos sin o con muy poca información. 
+Esto puede ser perjudicial al modelo, es por ello que se propone un reescalado 
+uniforme de la imagen entera.
+Los resultados son prometedores. 
+Con la implementación estándar, ya de por sí, logramos superar la línea del 70\% de correlación.
+Vemos además, que normalizar las métricas es perjudicial. 
+Y, sobre todo, destaca el reescalado de la imagen.
+Para finalizar, nos centraremos en la característica principal de nuestro modelo. 
+}
 
 \begin{frame}
   \frametitle{Modificaciones VQA-PC}
@@ -216,3 +280,33 @@
   \vspace{-.1cm}
   \footcitetext{EnsemblePCQA}
 \end{frame}
+
+\note{
+Recordar que nuestro modelo intenta unificar las características estáticas con 
+las dinámicas. Es por ello que tenemos una etapa esencial de fusión de características.
+Experimentaremos modificar dicha etapa siguiendo el trabajo de Abouelazi y sus 
+colaboradores. En la publicación hablan de los siguientes métodos: 
+\begin{itemize}
+\item El método habitual de fusión por concatenación F0
+\item Métodos que permiten la interacción directa entre vectores características 
+  como por ejemplo a través de multiplicación F1 o convolución F2.
+\item Y, el más novedoso, la fusión, en el dominio de fourier, a través 
+  compact multi-linear pooling F3
+\end{itemize}
+Comparamos los modelos sin pre-entrenar en contra de los 
+modelos pre-entrenados sobre LS-PCQA, el conjunto de datos más grande. 
+Ambos utilizando imágenes reescaladas. 
+}
+
+\note{
+En la Tabla izquierda vemos que el método habitual F0 es el que obtiene  
+mejor media y mediana de correlación. De esta forma, se determina que las mejoras 
+F1-F3 no son significativas, al partir desde cero, para pequeños conjuntos de datos.
+No obstante, en la tabla a la derecha con modelos pre-entrenados,
+observamos que hemos logrado superar la línea del 80\% en todos.
+Se observa una mejora significativa en los métodos F2 y F3, y se logra 
+superar la barrera del 90\% en la mediana de los métodos F0 a F3.
+Gracias a la información adicional hemos logrado valores superiores, llegando a 
+obtener una correlación del 88\% de media, con mediana al 94\%, utilizando el modelo 
+F2 de fusión por convolución. 
+}

@@ -26,6 +26,30 @@
   \footcitetext{MinkowskiFailure}
 \end{frame}
 
+\note{
+  Para empezar, hay que tenerse en cuenta que existe 
+una demanda incremental de aplicaciones, tanto para el entretenimiento 
+como para el estudio biomédico. Donde la información visual cada vez tiene un rol 
+más importante. Sin embargo, la calidad de dicha información puede 
+verse mermada con las etapas de adquisición, procesado, transmisión 
+y reproducción.
+Es por ello que poder evaluar dicha calidad se ha vuelto un 
+tema cada vez más importante.
+Para resolver este problema es necesario tener en cuenta diversos factores como 
+el contenido de la imagen, nivel de contraste, posibles distorsiones y, por supuesto,
+conocimientos del sistema visual humano. 
+Por ello mismo presenta un alta complejidad.
+Por ejemplo, una aproximación sencilla sería optar por métodos de sensibilidad 
+al error o distancias. 
+No obstante, eso es imponer un conjunto de suposiciones cuestionables. 
+La más importante de ellas es que unifica la importancia de los factores 
+mencionados anteriomente. 
+Lamentable, eso no se cumple, como podemos observar en la imagen a la derecha.
+En ella, dos pares de imágenes (b) y (c), generadas al sumar la misma constante 
+pero permutando signo, presentan distinto nivel de agrado visual y aún así 
+se clasifican como iguales.
+}
+
 \begin{frame}
   \frametitle{Subproblemas}
   \vspace{-.5cm}
@@ -45,6 +69,27 @@
       \end{enumerate}
   \end{enumerate}
 \end{frame}
+
+\note{
+  Existen tres subproblemas presenten en el ámbito de IQA. 
+Dos de ellos serían similar al ejemplo anterior. 
+Donde tenemos acceso a la imagen original, o ciertas propiedades suyas, 
+y podemos aplicar métodos basados en diferencia de características.
+Se denominan con referencia o con referencia reducida si disponemos de información 
+parcial.
+
+No obstante, en el caso de la medicina no disponemos de dicha información de referencia. 
+Es por ello que nos centraremos en el último subproblema, considerado el más 
+difícil del campo.
+Este sería la imagen (b), estimación sin referencia.
+Para resolver este tipo de problemas, debemos disponer de conocimientos de la 
+naturaleza de las imágenes y los efectos de las 
+distorsiones sobre ellas. 
+Lo que se denomina estadísticas de escena naturales. 
+Veremos más ejemplos en adelante.
+
+Primeramente, me gustaría hablar de las aplicaciones.
+}
 
 
 \subsection{Motivación}
@@ -69,6 +114,20 @@
   \end{figure}
   \end{columns}
 \end{frame}
+
+\note{
+De ellas, destacan:
+\begin{itemize}
+\item Comparación de algoritmos de compresión, estimando la pérdida de información que producen.
+ 
+\item Generación de mapas de calidad para el estudio de métodos de recuperación de 
+información. Un ejemplo sería la imagen de la derecha donde se eliminan reflejos 
+gracias una famosa medida de calidad 2D, BRISQUE.
+
+\item Por último, este campo nos permite determinar la calidad de los servicios de transmisión y
+entre otros.
+\end{itemize}
+}
 
 \begin{frame}
   \frametitle{Motivación}
@@ -95,6 +154,22 @@
   \footcitetext{Slicer3D}
 \end{frame}
 
+\note{
+Nuestra motivación viene dos grandes razones. 
+La primera es que cada vez más frecuentemente se emplean volúmenes 3D, 
+como tomografías computarizadas o
+resonancias magnéticas en lugar de radiografías convencionales. 
+Esto es porque proporcionan una visión más completa y detallada de la anatomía 
+y las estructuras internas del cuerpo, como en la imagen a la derecha. 
+
+Por todo ello, las contribuciones relativas al IQA en el 
+ámbito biomédico son claramente bienvenidas, resultando en 
+una potencial reducción de costes, 
+de tiempo de consulta, y mejora en la calidad del diagnóstico médico. 
+
+La dificultad nace de la naturaleza de dichas imágenes, que no permiten el uso 
+directo de los modelos IQA habituales. Si no que, necesitan que se adapten metódicamente.
+}
 
 \begin{frame}
   \frametitle{Motivación}
@@ -118,6 +193,20 @@
   \footcitetext{MoreMedicalDistortion}
 \end{frame}
 
+\note{
+Dichos exámenes generan múltiples planos anatómicos 2D del cuerpo que luego se representan en 3D.
+Y es evidente, que las distorsiones que sufren en 2D afectan al modelo 3D reconstruido.
+
+Por otro lado, habitualmente, la adquisición de 
+datos a través de escaneo, segmentación u obtenidos de algoritmos de reconstrucción 
+3D proporcionan información geométrica ya en forma de nubes de puntos.
+Es decir, no en todos los casos, tendremos acceso a las imágenes de las que parten 
+dichas reconstrucciones, como en es el caso del escaneo láser en investigación forense.
+
+No obstante, el número de métodos propuestos para la estimación de calidad decrece 
+al desplazarnos a tres dimensiones. Más aún si se trata del ámbito biomédico. 
+}
+
 \subsection{Objetivos}
 \begin{frame}
   \frametitle{Objetivos}
@@ -139,3 +228,15 @@
 
   \end{columns}
 \end{frame}
+
+\note{
+Con todo esto, nuestro objetivo se puede descomponer en una serie de metas parciales: 
+\begin{itemize}
+\item Realizar una revisión exhaustiva del estado del arte
+\item Estudiar los patrones de distorsión que afectan a las imágenes biomédicas.
+\item Analizar los enfoques más prometedores. 
+\item Y, finalmente, generar un conjunto de datos sintético que permita validar 
+    las adaptaciones de dichos métodos. Todo ello por medio de un estudio experimental.
+\end{itemize}
+Resolvamos la primera meta parcial. 
+}

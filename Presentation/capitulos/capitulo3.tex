@@ -22,6 +22,17 @@
     \footcitetext{SJTU}
 \end{frame}
 
+\note{
+Para el desarrollo de este proyecto, hemos hecho uso de diversos conjuntos de datos: 
+El primero de ellos parte de 10 nubes de puntos 
+a las cuales se aplican 7 tipos de distorsiones en 6 niveles de intensidad distintos. 
+Luego, se obtiene una opinión media o MOS por sus siglas en inglés 
+de 10 individuos para las 420 nubes de puntos. 
+Dicho MOS sirve como medida de calidad de las mismas y para evaluar las 
+predicciones del modelo. Es el procedimiento habitual.
+
+}
+
 \begin{frame}
     \frametitle{Materiales: datos generalistas (WPC)}
     \begin{columns}
@@ -43,6 +54,12 @@
     \footcitetext{WPC1}
 \end{frame}
 
+\note{
+A continuación uno similar: WPC, pero en este caso tenemos más nubes de puntos 
+de partida y, mayoritariamente, distorsiones de compresión. Los niveles de 
+distorsión dependen del tipo de compresión. En total tendremos 741 nubes de puntos. 
+}
+
 \begin{frame}
   \frametitle{Materiales: datos generalistas (LS-PCQA)}
   \begin{columns}
@@ -62,6 +79,13 @@
   \end{columns}
   \footcitetext{ResSCNN}
 \end{frame}
+
+\note{
+Luego, tenemos el reciente conjunto de datos sintético publicado en 2022.
+Dicho conjunto de datos es considerado el mayor hasta la fecha, llegando a un 
+total de 22000 nubes de puntos con 31 tipos de distorsiones distintas a 7 niveles 
+de intensidad. 
+}
 
 \subsection{Materiales: datos sintéticos}
 \begin{frame}
@@ -83,6 +107,20 @@
       \item \textbf{7 niveles} de intensidad para un \textbf{total de 385 nubes de puntos}.
     \end{enumerate}
 \end{frame}
+
+\note{
+Por último, 
+para la validación sobre un conjunto de datos médicos fue necesaria la creación 
+de un conjunto de datos sintético. La razón es que 
+no existe un conjunto de datos públicos para este análisis. 
+Para ello estudiamos y fabricamos las 
+distorsiones más comunes del ámbito biomédico con respecto a las reconstrucciones 3D. 
+Disponemos de 11 nubes de puntos originales, 
+sobre las cuáles se simulan 5 tipos de distorsiones 
+a 7 niveles de intensidad cada una. Para un total de 385 representaciones.
+En las distorsiones se simula tanto errores de transmisión, 
+compresión, como el movimiento del paciente.
+}
 
 \begin{frame}
   \frametitle{Materiales: Generación de etiquetas}
@@ -116,6 +154,20 @@
 \end{table}
 \footnotetext[9]{\cite{ResSCNN}}
 \end{frame}
+
+\note{
+Para evitar el problema logístico del etiquetado a través de la 
+evaluación humana sobre el dataset sintético, 
+fue necesario estudiar el problema PCQA con referencia y hacer uso de las métricas 
+más empleadas. 
+Dichas métricas demostraron una alta correlación con el sistema visual humano, 
+justificando así su uso para generar etiquetas artificiales.
+Para ello, agrupamos las mejores métricas por tipo de distorsión al igual 
+que en el trabajo de Liu y sus colaboradores. Donde, en la tabla inferior, 
+se puede observar la alta correlación de las etiquetas sintéticas 
+en dos conjuntos de validación. 
+Parte I usado para elegir las métricas y Parte II un conjunto distinto.
+}
 
 \begin{frame}
   \frametitle{Métricas}
@@ -199,6 +251,17 @@ $
 \end{adjustwidth} 
 \end{frame}
 
+\note{
+Las métricas visualizadas anteriomente son las medidas más utilizadas 
+en el campo. Dichas métricas miden la relación entre conjuntos, pongamos 
+x para el valor real e y para el valor predicho. 
+Estas son correlación lineal de Pearson, de rangos de Spearman, de rango de Kendall 
+y la raíz del error cuadrático medio.
+Las tres primeras al ser coeficientes de correlación toman valores en el intervalo [-1, 1].
+Donde ambos extremos serían buenos resultados.
+Y Por último, el RMSE es una métrica que mide la diferencia entre los valores, 
+donde un valor más bajo indica un mejor ajuste o precisión del modelo.
+}
 
 \subsection{Métodos}
 \begin{frame}
@@ -227,6 +290,27 @@ $
     \end{columns}
 \end{frame}
 
+\note{
+Antes de probar directamente con modelos de DL, experimentamos con un método de 
+ML. Dicho método está basado en la extracción de características de escena y entrenamiento de un 
+modelo de vectores soporte para la regresión. 
+Zhang y sus colaboradores proponen utilizar características geométricas y de 
+color. Para la primera, extraen la curvatura, 
+anisotropía, linealidad , 
+planaridad y esfericidad de los puntos. 
+Estas características se pueden extraer del vecindario 
+de un punto por medio de la matriz de covarianza y los valores singulares 
+de los K-vecinos más cercanos. Se calcularan para todos los puntos. 
+Utilizaremos los valores medios y la entropía de estas características.
+Además, calcularemos sus distancias a las distribuciones gaussiana y gamma, 
+dado que se observó que la distribución de estas se veía afectada por la intensidad 
+de las distorsiones. 
+Las características lumínicas la descartamos, 
+ya que información de textura o color no existe en los volúmenes
+médicos habituales. 
+
+}
+
 \begin{frame}
   \frametitle{Modelo VQA-PC\footnote[frame]{\cite{VQA-PC}}}
   \begin{columns}
@@ -249,6 +333,20 @@ $
     \end{figure}
   \end{columns}
 \end{frame}
+
+\note{
+Por otro lado, en DL se propone un modelo de estimación de calidad de nubes 
+de puntos utilizando proyecciones 2D, pero desde múltiples perspectivas. 
+Zhang y colaboradores argumentan que los métodos anteriores de proyección 
+se basan en la hipótesis de que los humanos percibimos la calidad de modelos 
+3D desde una perspectiva estática, cosa que no 
+es cierta en la práctica dado que los objetos 3D permiten operaciones geométricas 
+de rotación y escalado.
+Y por ello, siguiendo la motivación de que las deformaciones geométricas 
+no deseados se presentan de forma abrupta según la perspectiva, proponen 
+unificar la percepción estática con la dinámica tratando 
+a las nubes de puntos como vídeos del objeto 3D rotando.
+}
 
 \subsection{Entorno}
 \begin{frame}
@@ -298,3 +396,13 @@ $
       \end{tabular}
   \end{table}
 \end{frame}
+
+\note{
+Para el desarrollo y ejecución de los modelos fue necesario el uso de
+la librería de DL Pytorch junto con las librerías CUDA para poder ejecutar 
+los modelos en las tarjetas gráficas de NVIDIA. Para los cálculos numéricos y 
+el manejo de datos se utilizaron Numpy y Polars. Además, para el
+cálculo de las métricas la librería de scikit-learn.
+Para la visualización y fácil manipulación de las nubes de puntos se hizo uso 
+de la librería de Open3D y Pyntcloud.
+}
