@@ -148,11 +148,11 @@ compresión, como el movimiento del paciente.
     \hline
   \end{tabular}
   \caption[Correlación de métricas sintéticas.]{
-    Correlación de métricas sintéticas con experimento subjetivo de Liu et al\footnotemark[9].
+    Correlación de métricas sintéticas con experimento subjetivo de Liu et al\footnotemark[8].
 }
   \label{tab:PseudoCorr}
 \end{table}
-\footnotetext[9]{\cite{ResSCNN}}
+\footnotetext[8]{\cite{ResSCNN}}
 \end{frame}
 
 \note{
@@ -165,13 +165,12 @@ justificando así su uso para generar etiquetas artificiales.
 Para ello, agrupamos las mejores métricas por tipo de distorsión al igual 
 que en el trabajo de Liu y sus colaboradores. Donde, en la tabla inferior, 
 se puede observar la alta correlación de las etiquetas sintéticas 
-en dos conjuntos de validación. 
-Parte I usado para elegir las métricas y Parte II un conjunto distinto.
+en dos conjuntos de validación, ya que los valores son cercanos a 1 o 100\%. 
+Parte I es el conjunto usado para elegir las métricas y Parte II un conjunto distinto.
 }
 
 \begin{frame}
   \frametitle{Métricas}
-  \vspace{-.4cm}
   \begin{adjustwidth}{-.5cm}{}
   \begin{table}
       \setlength{\tabcolsep}{12pt}
@@ -209,43 +208,7 @@ $
   \footnotesize
   Evalúa la relación lineal entre los \textbf{\emph{rankings}}.
   \vspace{.5cm}
-    \
 }
-\\
-\parbox[c]{5cm}{\centering \textbf{Correlación de orden de rango de Kendall (KROCC)}}
-& 
-\textbf{Raíz del error cuadrático medio (RMSE)} 
-\\
- \parbox[c]{5cm}{
-   \centering
-   \vskip5pt
-   $
-  KROCC(x,y) = \frac{C-D}{\frac{1}{2} m (m-1)}
-    $
-        \vspace{.3cm}
-  }
-& 
-\parbox[c]{5cm}{
-  \centering
-  $
-  RMSE(x,y) = \sqrt{\frac{1}{m}\sum_{i=1}^m (x_i - y_i)^2}
-  $
-}
-\\
-\parbox[c]{5cm}{
-  \centering
-  \footnotesize
-    Evalúa la \textbf{concordancia y discordancia} de relación entre pares.
-  }
-  & 
-\parbox[c]{5cm}{
-  \centering
-  \footnotesize
-  Evalúa la \textbf{diferencia media} de los pares de valores.
-   
-  }
-  \\
-
       \end{tabular}
   \end{table}
 \end{adjustwidth} 
@@ -255,12 +218,11 @@ $
 Las métricas visualizadas anteriomente son las medidas más utilizadas 
 en el campo. Dichas métricas miden la relación entre conjuntos, pongamos 
 x para el valor real e y para el valor predicho. 
-Estas son correlación lineal de Pearson, de rangos de Spearman, de rango de Kendall 
-y la raíz del error cuadrático medio.
-Las tres primeras al ser coeficientes de correlación toman valores en el intervalo [-1, 1].
-Donde ambos extremos serían buenos resultados.
-Y Por último, el RMSE es una métrica que mide la diferencia entre los valores, 
-donde un valor más bajo indica un mejor ajuste o precisión del modelo.
+Estas son correlación lineal de Pearson y la de rangos de Spearman.
+Dichas métricas, al ser coeficientes de correlación toman valores en el intervalo [-1, 1].
+Donde un valor cercano a -1 siginifica que tienen una relación inversa, 
+donde una crece la otra decrece, y un valor cercano 1 indica que tienen la 
+misma pendiente. 
 }
 
 \subsection{Métodos}
@@ -301,7 +263,7 @@ planaridad y esfericidad de los puntos.
 Estas características se pueden extraer del vecindario 
 de un punto por medio de la matriz de covarianza y los valores singulares 
 de los K-vecinos más cercanos. Se calcularan para todos los puntos. 
-Utilizaremos los valores medios y la entropía de estas características.
+Utilizaremos los valores medios, desviación y la entropía de estas características.
 Además, calcularemos sus distancias a las distribuciones gaussiana y gamma, 
 dado que se observó que la distribución de estas se veía afectada por la intensidad 
 de las distorsiones. 
@@ -329,7 +291,7 @@ médicos habituales.
       \begin{center}
         \includegraphics[width=\textwidth]{imagenes/chapter3/PipelineCompleto}
       \end{center}
-      \caption{Estructura del modelo VQA-PC\footnotemark[11]}
+      \caption{Estructura del modelo VQA-PC\footnotemark[10]}
     \end{figure}
   \end{columns}
 \end{frame}

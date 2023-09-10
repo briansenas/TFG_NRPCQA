@@ -4,6 +4,11 @@
   \frametitle{Introducción}
   \begin{enumerate}
     \item Para la validación hacemos uso de \textbf{validación cruzada ó \emph{K-fold}}.
+      \begin{itemize}
+        \item 9-fold en SJTU.
+        \item 5-fold en WPC. 
+        \item 11-fold en el biomédico.
+      \end{itemize}
     \item Primeramente, \textbf{replicamos los resultados} de las publicaciones originales.
       \begin{itemize}
         \item Modelo NR3DQA.
@@ -28,7 +33,7 @@ de imágenes médicas y, con ello, proponemos mejoras y adaptaciones.
 
 
 \begin{frame}
-  \frametitle{Modelo NR3DQA\footnotemark[10]}
+  \frametitle{Modelo NR3DQA\footnotemark[9]}
 \begin{table}[htp]
   \small
   \begin{center}
@@ -55,22 +60,22 @@ de imágenes médicas y, con ello, proponemos mejoras y adaptaciones.
     \end{tabular}
   \end{center}
   \caption[Resultados de prueba preliminar con NR3DQA.]{
-    Resultados de prueba preliminar con NR3DQA\footnotemark[10]. 
+    Resultados de prueba preliminar con NR3DQA\footnotemark[9]. 
   }
   \label{tab:MedicalNR3DQA}
 \end{table}
-\footnotetext[10]{\cite{NR3DQA}}
+\footnotetext[9]{\cite{NR3DQA}}
 \end{frame}
 
 \note{
 Con el modelo NR3DQA seguimos el protocolo de experimentación especificado por sus 
-autores. Logramos obtener resultados similares.
+autores. Logramos obtener resultados similares como se observan en las dos primeras filas.
 No obstante, utilizando las mismas funciones para el caso de los imágenes médicas 
 y experimentando con múltiples modelos de regresión y escalado de características, 
 observamos, que el método no parece ser capaz
 de determinar con precisión la calidad de dichas imágenes, 
 ya que la correlación es cercana a 0.
-En la tabla podéis ver los mejores resultados, 
+En las últimas 3 filas podéis ver los mejores resultados, 
 reafirmando así la dificultad de aplicar métodos IQA directamente a imágenes médicas.
 }
 
@@ -153,16 +158,16 @@ el nivel de distorsiones de nuestras imágenes médicas.
     \end{tabular}
   \end{center}
   \caption[Resultados de experimento preliminar VQA-PC en SJTU.]{
-    Resultados de experimento preliminar VQA-PC\footnotemark[11]. 
+    Resultados de experimento preliminar VQA-PC\footnotemark[10]. 
   }
   \label{tab:PreTestResults}
 \end{table}
 \begin{enumerate}
-  \item Las predicciones del modelo no tienen porque estar en la misma escala.
-  \item Seria necesario utilizar regresión logística-5 para normalizar la escala. 
+  \item Las predicciones del modelo no tienen por qué estar en la misma escala.
+  \item Sería necesario utilizar regresión logística-5 para normalizar la escala. 
   \item Pero podemos centrarnos en el \textbf{SROCC} que es \textbf{invariante a la escala}.
 \end{enumerate}
-\footnotetext[11]{\cite{VQA-PC}}
+\footnotetext[10]{\cite{VQA-PC}}
 \end{frame}
 
 \note{
@@ -305,8 +310,8 @@ F1-F3 no son significativas, al partir desde cero, para pequeños conjuntos de d
 No obstante, en la tabla a la derecha con modelos pre-entrenados,
 observamos que hemos logrado superar la línea del 80\% en todos.
 Se observa una mejora significativa en los métodos F2 y F3, y se logra 
-superar la barrera del 90\% en la mediana de los métodos F0 a F3.
-Gracias a la información adicional hemos logrado valores superiores, llegando a 
-obtener una correlación del 88\% de media, con mediana al 94\%, utilizando el modelo 
-F2 de fusión por convolución. 
+superar la barrera del 90\% en la mediana de los tres primeros métodos.
+Gracias a la información adicional hemos logrado valores mucho mejores, llegando a 
+obtener una correlación del 88\% de media utilizando el modelo F2 de fusión 
+por convolución. 
 }

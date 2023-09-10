@@ -177,7 +177,7 @@ directo de los modelos IQA habituales. Si no que, necesitan que se adapten metó
   \begin{columns}
     \column{0.5\textwidth}
   \begin{enumerate}
-    \item As veces no tenemos acceso a las imágenes médicas 2D.
+    \item A veces no tenemos acceso a las imágenes médicas 2D.
     \item Las distorsiones sobre dichas imágenes \textbf{afectan al volumen 3D generado}. 
     \item Dichas reconstrucciones suelen ser en forma de nubes de puntos.
     \item El número de métodos propuestos para 3D \textbf{decrece sustancialmente}.
@@ -194,17 +194,18 @@ directo de los modelos IQA habituales. Si no que, necesitan que se adapten metó
 \end{frame}
 
 \note{
-Dichos exámenes generan múltiples planos anatómicos 2D del cuerpo que luego se representan en 3D.
-Y es evidente, que las distorsiones que sufren en 2D afectan al modelo 3D reconstruido.
-
-Por otro lado, habitualmente, la adquisición de 
+Además, la representación 3D de esos exámenes médicos provienen de
+múltjples cortes anatómicos 2D. Dichos cortes pueden sufrir diversas 
+distorsiones durante la prueba médica, resultando, a su vez, en reconstrucciones 
+3D distorsionadas. 
+O incluso, habitualmente, la adquisición de 
 datos a través de escaneo, segmentación u obtenidos de algoritmos de reconstrucción 
 3D proporcionan información geométrica ya en forma de nubes de puntos.
 Es decir, no en todos los casos, tendremos acceso a las imágenes de las que parten 
 dichas reconstrucciones, como en es el caso del escaneo láser en investigación forense.
 
-No obstante, el número de métodos propuestos para la estimación de calidad decrece 
-al desplazarnos a tres dimensiones. Más aún si se trata del ámbito biomédico. 
+A pesar de ello, el número de métodos propuestos para la estimación de calidad 3D 
+decrece sustancialmente. Más aún si se trata del ámbito biomédico. 
 }
 
 \subsection{Objetivos}
@@ -233,7 +234,7 @@ al desplazarnos a tres dimensiones. Más aún si se trata del ámbito biomédico
 Con todo esto, nuestro objetivo se puede descomponer en una serie de metas parciales: 
 \begin{itemize}
 \item Realizar una revisión exhaustiva del estado del arte
-\item Estudiar los patrones de distorsión que afectan a las imágenes biomédicas.
+\item Estudiar los patrones de distorsión que afectan a las imágenes biomédicas 3D.
 \item Analizar los enfoques más prometedores. 
 \item Y, finalmente, generar un conjunto de datos sintético que permita validar 
     las adaptaciones de dichos métodos. Todo ello por medio de un estudio experimental.
