@@ -127,7 +127,7 @@ compresión, como el movimiento del paciente.
   \begin{enumerate}
     \item Evitamos el problema logístico de obtención de la opinión media de calidad (MOS).
       \begin{itemize}
-        \item Evaluación manual por grupo de personas en un entorno controlado.
+        \item Evaluación manual por un grupo de personas en un entorno controlado.
       \end{itemize}
     \item Hacemos uso de las mejores métricas con referencia.
       \begin{itemize}
@@ -263,14 +263,10 @@ planaridad y esfericidad de los puntos.
 Estas características se pueden extraer del vecindario 
 de un punto por medio de la matriz de covarianza y los valores singulares 
 de los K-vecinos más cercanos. Se calcularan para todos los puntos. 
-Utilizaremos los valores medios, desviación y la entropía de estas características.
-Además, calcularemos sus distancias a las distribuciones gaussiana y gamma, 
-dado que se observó que la distribución de estas se veía afectada por la intensidad 
-de las distorsiones. 
+
 Las características lumínicas la descartamos, 
 ya que información de textura o color no existe en los volúmenes
 médicos habituales. 
-
 }
 
 \begin{frame}
